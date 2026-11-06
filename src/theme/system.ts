@@ -11,15 +11,15 @@ export const SYSTEM_COLOR = {
 };
 
 export const SYSTEM_BRAND_COLOR = {
-  "primary": "#4d291c",
+  "primary": "#c2410c",
   "on_primary": "#ffffff",
-  "primary_hover": "#452519",
-  "primary_tint": "#f8f3f2",
+  "primary_hover": "#a83a0b",
+  "primary_tint": "#efe3dd",
   "primary_border": "#d4d4d4",
   "surface": "#ffffff",
-  "surface_alt": "#f5f5f5",
-  "text": "#0a0a0a",
-  "text_muted": "#525252"
+  "surface_alt": "#f5f5f4",
+  "text": "#2a2622",
+  "text_muted": "#605f5e"
 };
 
 export const SYSTEM_RADIUS = {

@@ -14,7 +14,7 @@ function DefaultExample() {
     <SiteFooter
       storeName="온기상점"
       business={business}
-      hosting="EZPG"
+      hosting="자사닷"
       closing="10월 3일은 휴무입니다."
       policies={[
         { key: "terms", title: "이용약관" },
@@ -29,7 +29,7 @@ function NoBusinessExample() {
     <SiteFooter
       storeName="온기상점"
       business={null}
-      hosting="EZPG"
+      hosting="자사닷"
       policies={[
         { key: "terms", title: "이용약관" },
         { key: "privacy", title: "개인정보처리방침" },

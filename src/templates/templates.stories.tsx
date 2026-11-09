@@ -82,7 +82,7 @@ function Page({ main, letter }: { main: TemplateMain; letter: string }) {
             </section>
           ))}
         </main>
-        <SiteFooter storeName="스토어 이름" business={business} hosting="EZPG" policies={[{ key: "terms", title: "이용약관" }, { key: "privacy", title: "개인정보처리방침" }]} variant={t.footer} />
+        <SiteFooter storeName="스토어 이름" business={business} hosting="자사닷" policies={[{ key: "terms", title: "이용약관" }, { key: "privacy", title: "개인정보처리방침" }]} variant={t.footer} />
       </div>
     </ThemeRoot>
   );

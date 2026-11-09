@@ -12,7 +12,7 @@ export const SYSTEM_COLOR = {
 
 export const SYSTEM_BRAND_COLOR = {
   "primary": "#ed6431",
-  "on_primary": "#ffffff",
+  "on_primary": "#1a1a1a",
   "primary_hover": "#d55a2c",
   "primary_tint": "#fdf0ea",
   "primary_border": "#d4d4d4",

@@ -12,6 +12,7 @@ const photos = ["https://picsum.photos/seed/ezpg-vase/720/900", "https://picsum.
 
 const doc: DetailDocValue = {
   version: 2,
+  background: "#EFE7DC",
   blocks: [
     { id: "b1", layout: "image", layers: [{ id: "p1", type: "image", url: photos[0] }] },
     {

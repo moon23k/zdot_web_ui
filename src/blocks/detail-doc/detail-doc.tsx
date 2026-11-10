@@ -23,7 +23,7 @@ export type DetailBlock = {
   background?: { color?: string | null; url?: string | null };
   layers: DetailLayer[];
 };
-export type DetailDocValue = { version?: number; blocks?: DetailBlock[] };
+export type DetailDocValue = { version?: number; background?: string | null; blocks?: DetailBlock[] };
 
 export const DETAIL_FONTS: Record<DetailFont, { family: string; href: string }> = {
   gothic: {
@@ -151,7 +151,7 @@ export function DetailDoc({ doc }: { doc: DetailDocValue | null | undefined }) {
   const fonts = new Set<DetailFont>();
   for (const b of blocks) for (const l of b.layers) if (l.type === "text") fonts.add(l.style?.font ?? "gothic");
   return (
-    <section data-slot="detail-doc" aria-label="상세 정보" className="ez:mx-auto ez:grid ez:w-full ez:max-w-180">
+    <section data-slot="detail-doc" aria-label="상세 정보" className="ez:mx-auto ez:grid ez:w-full ez:max-w-180" style={{ backgroundColor: doc?.background ?? undefined }}>
       {[...fonts].map((f) => (
         <link key={f} rel="stylesheet" href={DETAIL_FONTS[f].href} precedence="default" />
       ))}

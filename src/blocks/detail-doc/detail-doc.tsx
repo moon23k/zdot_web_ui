@@ -8,6 +8,8 @@ export type DetailTextStyle = {
   color?: string;
   align?: "left" | "center" | "right";
   effect?: "none" | "shadow" | "outline" | "band";
+  line?: number;
+  tracking?: number;
 };
 export type DetailLayer = {
   id: string;
@@ -21,6 +23,8 @@ export type DetailBlock = {
   id: string;
   layout: "text" | "image" | "image_top" | "text_top" | "side" | "two_images" | "card";
   background?: { color?: string | null; url?: string | null };
+  space_top?: number;
+  space_bottom?: number;
   layers: DetailLayer[];
 };
 export type DetailDocValue = { version?: number; background?: string | null; blocks?: DetailBlock[] };
@@ -41,6 +45,20 @@ export function detailFontSize(size = 5): number {
   return 12 + (Math.min(10, Math.max(1, size)) - 1) * 2;
 }
 
+const clamp = (value: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, value));
+
+export function detailLineHeight(line = 5): number {
+  return 1.05 + clamp(line, 1, 10) * 0.08;
+}
+
+export function detailTracking(tracking = 0): number {
+  return clamp(tracking, -5, 10) * 0.01;
+}
+
+export function detailBlockSpace(space = 0): number {
+  return clamp(space, 0, 10) * 8;
+}
+
 function textStyle(style: DetailTextStyle | null | undefined): CSSProperties {
   const s = style ?? {};
   const font = DETAIL_FONTS[s.font ?? "gothic"];
@@ -50,7 +68,8 @@ function textStyle(style: DetailTextStyle | null | undefined): CSSProperties {
     fontWeight: WEIGHT[s.weight ?? "regular"],
     color: s.color,
     textAlign: s.align ?? "left",
-    lineHeight: 1.45,
+    lineHeight: detailLineHeight(s.line),
+    letterSpacing: `${detailTracking(s.tracking)}em`,
     whiteSpace: "pre-line",
     margin: 0,
   };
@@ -87,6 +106,8 @@ function Block({ block }: { block: DetailBlock }) {
     backgroundImage: block.background?.url ? `url(${block.background.url})` : undefined,
     backgroundSize: "cover",
     backgroundPosition: "center",
+    paddingTop: detailBlockSpace(block.space_top) || undefined,
+    paddingBottom: detailBlockSpace(block.space_bottom) || undefined,
   };
   let body: ReactNode;
   switch (block.layout) {

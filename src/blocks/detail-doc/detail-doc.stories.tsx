@@ -18,8 +18,10 @@ const doc: DetailDocValue = {
     {
       id: "b2",
       layout: "text",
+      space_top: 4,
+      space_bottom: 4,
       layers: [
-        { id: "t1", type: "text", text: "한 송이만 꽂아도\n달라지는 자리", style: { font: "serif", size: 8, weight: "bold", align: "center" } },
+        { id: "t1", type: "text", text: "한 송이만 꽂아도\n달라지는 자리", style: { font: "serif", size: 8, weight: "bold", align: "center", line: 3, tracking: -2 } },
         { id: "t2", type: "text", text: "손으로 빚어 유약을 두 번 입힌 화병", style: { size: 4, align: "center" } },
       ],
     },

@@ -29,6 +29,7 @@ export {
 export { GuestLookupForm } from "./blocks/guest-lookup-form";
 export { ReviewForm } from "./blocks/review-form";
 export { ReviewList, type ReviewItem } from "./blocks/review-list";
+export { DetailDoc, DETAIL_FONTS, detailFontSize, type DetailBlock, type DetailDocValue, type DetailLayer, type DetailTextStyle, type DetailFont } from "./blocks/detail-doc";
 export { AddressBook, type AddressRow } from "./blocks/address-book";
 export { PolicyDoc } from "./blocks/policy-doc";
 export { AccountShell } from "./blocks/account-shell";

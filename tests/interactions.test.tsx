@@ -13,6 +13,7 @@ const product: ProductDetail = {
   sale_price: 52000,
   cover_url: null,
   sold_out: false,
+  sample: false,
   slot_scope: "none",
   option_name: "사이즈",
   variants: [
@@ -93,6 +94,14 @@ describe("BuyBox", () => {
     await expectNoA11yViolations(container);
     await userEvent.click(screen.getByRole("button", { name: "장바구니 담기" }));
     expect(await screen.findByRole("dialog", { name: "장바구니에 담았어요" })).toBeInTheDocument();
+  });
+
+  it("shows a sample product without any way to buy", () => {
+    render(<BuyBox product={{ ...product, sample: true }} addAction={async () => ({})} />);
+    expect(screen.getByText("예시")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "예시 상품은 구매할 수 없어요" })).toBeDisabled();
+    expect(screen.queryByRole("button", { name: "장바구니 담기" })).toBeNull();
+    expect(screen.queryByText("바로 구매")).toBeNull();
   });
 
   it("offers only a restock alert when sold out", () => {

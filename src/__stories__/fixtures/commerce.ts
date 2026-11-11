@@ -9,6 +9,7 @@ export const productDetail: ProductDetail = {
   sale_price: 52000,
   cover_url: null,
   sold_out: false,
+  sample: false,
   option_name: "사이즈",
   variants: [
     { id: "v1", label: "S", price: 42000, in_stock: true, arrivals: 0 },

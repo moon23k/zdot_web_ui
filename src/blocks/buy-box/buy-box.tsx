@@ -42,6 +42,7 @@ export function BuyBox({
     if (next.ok) setSheetOpen(true);
     return next;
   }, {});
+  const sample = product.sample;
   const soldOut = product.sold_out || (product.variants.length > 0 && !product.variants.some((v) => v.in_stock));
   const variant = product.variants.find((v) => v.id === variantId);
   const blocked = !selling || soldOut || !variant?.in_stock;
@@ -52,6 +53,7 @@ export function BuyBox({
   return (
     <form data-slot="buy-box" action={add} className="ez:grid ez:max-w-120 ez:gap-4 ez:text-fg">
       <div className="ez:grid ez:gap-1">
+        {sample && <Badge className="ez:justify-self-start">예시</Badge>}
         <h1 className="ez:m-0 ez:font-display ez:font-title ez:text-2xl ez:tracking-brand">{product.name}</h1>
         {soldOut ? (
           <span className="ez:flex ez:items-center ez:gap-2">
@@ -76,7 +78,7 @@ export function BuyBox({
         </p>
       )}
       {options ? (
-        <fieldset disabled={!selling} className={cn(fieldset, !selling && "ez:opacity-50")}>
+        <fieldset disabled={!selling || sample} className={cn(fieldset, (!selling || sample) && "ez:opacity-50")}>
           <legend className={legend}>{product.option_name ?? "옵션"}</legend>
           {product.variants.map((v) => (
             <label
@@ -107,7 +109,11 @@ export function BuyBox({
       ) : (
         <input type="hidden" name="variant_id" value={variantId} />
       )}
-      {soldOut ? (
+      {sample ? (
+        <Button variant="outline" disabled block>
+          예시 상품은 구매할 수 없어요
+        </Button>
+      ) : soldOut ? (
         restockAction ? (
           <Button type="submit" variant="outline" formAction={restockAction} block>
             {bell}

@@ -8,6 +8,19 @@ export interface Schemas {
     address_detail: string | null;
     is_default: boolean;
   };
+  CancelQuoteOut: {
+    rate: number;
+    refund: number;
+    fee: number;
+  };
+  CancelTermsOut: {
+    name: string;
+    unit: "day" | "hour";
+    free_minutes: number;
+    tiers: Schemas["Tier"][];
+    no_show_refund_rate: number;
+    has_peak: boolean;
+  };
   CartLineOut: {
     variant_id: string;
     product_id: string;
@@ -71,6 +84,7 @@ export interface Schemas {
     sale_price: number;
     cover_url: string | null;
     sold_out: boolean;
+    sample: boolean;
     external?: Schemas["ExternalLink"] | null;
     slot_scope: string;
     season?: ("upcoming" | "ended") | null;
@@ -89,6 +103,8 @@ export interface Schemas {
     inputs: Schemas["InputSpec"][];
     methods: ("ship" | "pickup" | "local" | "visit")[];
     dispatch?: Schemas["DispatchOut"] | null;
+    cancel_terms?: Schemas["CancelTermsOut"] | null;
+    adult_only: boolean;
   };
   CustomerProductSummary: {
     id: string;
@@ -97,6 +113,7 @@ export interface Schemas {
     sale_price: number;
     cover_url: string | null;
     sold_out: boolean;
+    sample: boolean;
     external?: Schemas["ExternalLink"] | null;
     slot_scope: string;
     season?: ("upcoming" | "ended") | null;
@@ -174,6 +191,7 @@ export interface Schemas {
     non_returnable: boolean;
     slot_starts_at?: string | null;
     inputs?: Schemas["InputValue"][] | null;
+    image_url?: string | null;
   };
   OrderKind: "normal" | "custom";
   OrderOut: {
@@ -205,6 +223,9 @@ export interface Schemas {
     completed_at: string | null;
     canceled_at: string | null;
     cancel_reason: Schemas["app__commerce__order__models__CancelReason"] | null;
+    cancel_detail?: string | null;
+    seller_refund?: Schemas["SellerRefundOut"] | null;
+    sold_out_candidates: string[];
     ship_due_at?: string | null;
     ready_at?: string | null;
     pickup?: Schemas["PickupOut"] | null;
@@ -213,12 +234,17 @@ export interface Schemas {
     shipments: Schemas["ShipmentOut"][];
     deposit?: Schemas["DepositOut"] | null;
     needs_refund_account: boolean;
+    receipt_url?: string | null;
+    cancel_terms: Schemas["CancelTermsOut"][];
+    cancel_quote?: Schemas["CancelQuoteOut"] | null;
+    cancel_fee: number;
   };
   OrderStatus: "pending_payment" | "paid" | "preparing" | "shipped" | "delivered" | "completed" | "canceled";
   OrderSummary: {
     id: string;
     number: string;
     status: Schemas["OrderStatus"];
+    fulfillment: Schemas["Fulfillment"];
     orderer_name: string;
     total: number;
     created_at: string;
@@ -270,6 +296,10 @@ export interface Schemas {
     appeal_note: string | null;
     created_at: string;
   };
+  SellerRefundOut: {
+    cash: number;
+    points: number;
+  };
   ShipmentOut: {
     carrier: string;
     carrier_name?: string | null;
@@ -278,6 +308,12 @@ export interface Schemas {
     shipped_at: string | null;
     delivered_at: string | null;
   };
-  app__commerce__order__models__CancelReason: "customer" | "seller" | "expired" | "out_of_stock" | "amount_mismatch" | "sale_stopped" | "slot_canceled" | "operator";
+  Tier: {
+    before: number;
+    refund_rate: number;
+    season: "any" | "peak" | "off";
+    daytype: "any" | "weekday" | "weekend";
+  };
+  app__commerce__order__models__CancelReason: "customer" | "seller" | "expired" | "out_of_stock" | "amount_mismatch" | "sale_stopped" | "slot_canceled" | "operator" | "no_show";
   app__commerce__review__models__ReviewStatus: "visible" | "hidden";
 }

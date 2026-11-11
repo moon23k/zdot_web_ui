@@ -1,4 +1,5 @@
 import NextLink from "next/link";
+import { Badge } from "../../components/badge";
 import { Photo } from "../../components/photo";
 import type { ProductSummary } from "../../types";
 import { cn, won } from "../../utils/cn";
@@ -23,6 +24,7 @@ export function ProductCard({
       href={`/products/${product.id}`}
       data-slot="product-card"
       data-sold-out={product.sold_out || undefined}
+      data-sample={product.sample || undefined}
       className={cn(
         "ez:group ez:flex ez:flex-col ez:gap-1.5 ez:rounded-md ez:text-fg ez:no-underline",
         "ez:border-solid ez:border-primary-border ez:[border-width:var(--ezd-line)] ez:[padding:calc(var(--ezd-line)*6)]",
@@ -37,6 +39,7 @@ export function ProductCard({
           tone={tone}
           className={cn(product.sold_out && "ez:[&>svg]:hidden", ratio && "ez:absolute ez:inset-0 ez:aspect-auto ez:h-full")}
         />
+        {product.sample && <Badge className="ez:absolute ez:left-2 ez:top-2 ez:z-1">예시</Badge>}
         {product.sold_out && (
           <span className="ez:absolute ez:inset-0 ez:flex ez:items-center ez:justify-center ez:rounded-md ez:bg-[rgb(28_27_25/0.45)] ez:font-semibold ez:text-[#ffffff]">
             품절

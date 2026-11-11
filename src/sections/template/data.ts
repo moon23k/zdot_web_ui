@@ -16,7 +16,7 @@ export type Session = {
 
 export type ClassCard = { id: string; name: string; image?: string | null; chips?: string[]; price?: string; next?: string; href?: string };
 
-export type Room = { id: string; name: string; image?: string | null; specs: string[]; price: string; left?: number | null; href?: string };
+export type Room = { id: string; name: string; image?: string | null; specs: string[]; price: string; left?: number | null; href?: string; sample?: boolean };
 
 export type Case = { id: string; title: string; image?: string | null; meta?: string; scope?: string; href?: string };
 

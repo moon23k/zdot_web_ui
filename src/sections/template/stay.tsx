@@ -1,5 +1,7 @@
+import { Badge } from "../../components/badge";
 import { ButtonLink } from "../../components/button";
 import type { SectionProps } from "../../renderer/registry";
+import { cn } from "../../utils/cn";
 import { Bar, BlankButton, BlankPrice, Block, Card, Cols, Lines, Pic, Rows, Title } from "../kit";
 
 export function SearchBar({ data }: SectionProps<"search_bar">) {
@@ -166,17 +168,20 @@ export function RoomList({ data, blank }: SectionProps<"room_list">) {
       <Title>{data.title ?? "객실"}</Title>
       <Cols m={1} pc={3}>
         {rooms.map((r, i) => (
-          <Card key={r.id} className="ez:flex ez:flex-col">
-            <Pic src={r.image} ratio={1.5} tone={i} />
+          <Card key={r.id} className="ez:flex ez:flex-col" data-sample={r.sample || undefined}>
+            <span className="ez:relative ez:block">
+              <Pic src={r.image} ratio={1.5} tone={i} />
+              {r.sample && <Badge className="ez:absolute ez:left-2 ez:top-2">예시</Badge>}
+            </span>
             <strong className="ez:font-display ez:text-site-item">{r.name}</strong>
             <span className="ez:text-site-note ez:text-muted">{r.specs.join(" · ")}</span>
             <strong className="ez:text-primary ez:tabular-nums">{r.price}</strong>
             {r.left != null && <span className="ez:text-site-note ez:text-muted">{`남은 객실 ${r.left}`}</span>}
-            <span className="ez:mt-auto ez:grid ez:grid-cols-2 ez:gap-2">
+            <span className={cn("ez:mt-auto ez:grid ez:gap-2", !r.sample && "ez:grid-cols-2")}>
               <ButtonLink href={r.href ?? "#"} variant="outline">
                 자세히
               </ButtonLink>
-              <ButtonLink href={r.href ?? "#"}>예약</ButtonLink>
+              {!r.sample && <ButtonLink href={r.href ?? "#"}>예약</ButtonLink>}
             </span>
           </Card>
         ))}

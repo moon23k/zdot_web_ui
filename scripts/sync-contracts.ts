@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
-const SOURCE = process.env.EZPG_CONTRACTS ?? new URL("../../EZPG/contracts/types/generated/api.d.ts", import.meta.url).pathname;
+const SOURCE = process.env.ZDOT_CONTRACTS ?? new URL("../../EZPG/contracts/types/generated/api.d.ts", import.meta.url).pathname;
 const ROOTS = [
   "OrderOut",
   "OrderSummary",

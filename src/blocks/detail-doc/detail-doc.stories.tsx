@@ -8,7 +8,7 @@ const meta: Meta<typeof DetailDoc> = {
 };
 export default meta;
 
-const photos = ["https://picsum.photos/seed/ezpg-vase/720/900", "https://picsum.photos/seed/ezpg-shelf/720/720"];
+const photos = ["https://picsum.photos/seed/zdot-vase/720/900", "https://picsum.photos/seed/zdot-shelf/720/720"];
 
 const doc: DetailDocValue = {
   version: 2,

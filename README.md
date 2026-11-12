@@ -47,7 +47,7 @@ import { SiteRenderer } from "@ezpg/web-ui";
 ```
 
 - 지원하는 섹션 kind는 `manifest.json`에 있다. 목록에 없는 kind는 건너뛴다.
-- 섹션별 data 타입은 `SectionData`(`src/renderer/registry.ts`)이고, EZPG_API `brand/site/service.py`의 `_section()`과 맞춘다.
+- 섹션별 data 타입은 `SectionData`(`src/renderer/registry.ts`)이고, ZDOT_API `brand/site/service.py`의 `_section()`과 맞춘다.
 - `when`이 있는 섹션은 `context.flags[when]`이 참일 때만 그린다.
 
 ## 개발
@@ -61,10 +61,10 @@ import { SiteRenderer } from "@ezpg/web-ui";
 | `npm test` | 단위 테스트 · 조작 테스트(axe 접근성 검사 포함, 명도 대비 제외) |
 | `npm run sync:contracts` | EZPG 계약에서 블록이 쓰는 스키마를 `src/types/contract.ts`로 복사 |
 | `npm run manifest` | registry에서 `manifest.json` 생성 |
-| `npm run check:consumer` | 패키지 빌드 후 EZPG_WEB · EZPG_ADMIN 타입체크 · `next build` (EZPG API가 `API_URL`, 기본 8001에 떠 있어야 함) |
+| `npm run check:consumer` | 패키지 빌드 후 ZDOT_WEB · ZDOT_ADMIN 타입체크 · `next build` (EZPG API가 `API_URL`, 기본 8001에 떠 있어야 함) |
 
 - 클래스 이름을 조립하지 않는다(`` `ez:bg-${x}` `` 금지). Tailwind가 찾지 못한다.
-- `src/styles/legacy.css`는 EZPG_WEB 앱 코드가 직접 쓰는 옛 `.ez-*` 클래스다. 새 코드는 쓰지 않고, 앱이 컴포넌트로 옮기면 지운다.
+- `src/styles/legacy.css`는 ZDOT_WEB 앱 코드가 직접 쓰는 옛 `.ez-*` 클래스다. 새 코드는 쓰지 않고, 앱이 컴포넌트로 옮기면 지운다.
 
 ## 배포
 

@@ -8,7 +8,7 @@ import handPill from "./themes/hand-pill.json";
 import serifRounded from "./themes/serif-rounded.json";
 
 const themes: Record<string, Design | null> = {
-  ezpg: null,
+  zdot: null,
   "bold-square": boldSquare as Design,
   "hand-pill": handPill as Design,
   "serif-rounded": serifRounded as Design,
@@ -31,7 +31,7 @@ const preview: Preview = {
         title: "테마",
         icon: "paintbrush",
         items: [
-          { value: "ezpg", title: "EZPG 기본" },
+          { value: "zdot", title: "EZPG 기본" },
           { value: "bold-square", title: "bold-square" },
           { value: "hand-pill", title: "hand-pill" },
           { value: "serif-rounded", title: "serif-rounded" },
@@ -40,7 +40,7 @@ const preview: Preview = {
       },
     },
   },
-  initialGlobals: { theme: "ezpg" },
+  initialGlobals: { theme: "zdot" },
   parameters: {
     layout: "fullscreen",
     nextjs: { appDirectory: true },

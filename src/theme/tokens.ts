@@ -85,6 +85,6 @@ export function applyTemplate(design: Design | null | undefined, template: Templ
     ...d,
     font,
     shape: { ...shape, line: look.line ? 1 : 0 },
-    color: { ...d.color, surface: tone.surface, surface_alt: tone["surface-alt"] },
+    color: d.palette ? d.color : { ...d.color, surface: tone.surface, surface_alt: tone["surface-alt"] },
   };
 }

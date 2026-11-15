@@ -29,6 +29,7 @@ export type Design = {
       string
     >
   >;
+  palette?: { color: string; harmony: "tonal" | "analogous" | "complementary" };
 };
 
 export type Section = { kind: string; v?: number; when?: string; data: Record<string, unknown> };

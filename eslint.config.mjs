@@ -6,6 +6,6 @@ export default defineConfig([
   ...nextVitals,
   ...nextTs,
   { rules: { "@next/next/no-html-link-for-pages": "off" } },
-  { files: ["src/blocks/site-header/site-logo.tsx"], rules: { "@next/next/no-img-element": "off" } },
+  { files: ["src/blocks/site-header/site-logo.tsx", "src/blocks/brand-art/brand-art.tsx"], rules: { "@next/next/no-img-element": "off" } },
   globalIgnores(["dist/**", ".dist-next/**", ".dist-old/**", ".next/**", "storybook-static/**"]),
 ]);

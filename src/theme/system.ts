@@ -25,7 +25,8 @@ export const SYSTEM_BRAND_COLOR = {
 export const SYSTEM_RADIUS = {
   "sm": 6,
   "md": 8,
-  "lg": 12
+  "lg": 12,
+  "xl": 20
 };
 
 export const SYSTEM_TONE = {

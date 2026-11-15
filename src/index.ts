@@ -4,6 +4,17 @@ export { applyTemplate, fontHref } from "./theme/tokens";
 export { ThemeRoot } from "./theme/theme-root";
 export { SiteHeader } from "./blocks/site-header";
 export { SiteFooter } from "./blocks/site-footer";
+export {
+  BRAND_ART_SIZE,
+  BRAND_SCENES,
+  BrandCover,
+  BrandKit,
+  BrandMark,
+  BrandScene,
+  BrandSpecimen,
+  type BrandArtData,
+  type BrandSceneKind,
+} from "./blocks/brand-art";
 export { ProductCard } from "./blocks/product-card";
 export { ProductGrid } from "./blocks/product-grid";
 export { BuyBox } from "./blocks/buy-box";

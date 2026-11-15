@@ -17,7 +17,7 @@ export type BrandSceneKind = "card" | "box" | "post" | "sign";
 export const BRAND_ART_SIZE = {
   cover: [328, 400],
   type: [328, 400],
-  kit: [328, 380],
+  kit: [328, 368],
   scene: [320, 400],
 } as const;
 

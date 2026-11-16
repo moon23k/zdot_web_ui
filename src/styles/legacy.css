@@ -68,9 +68,13 @@
   --ezd-wrap: var(--ezd-wrap-home);
 }
 @media (min-width: 768px) {
-  .ez-root:has([data-slot="site-renderer"]) {
+  .ez-root:has([data-slot="site-renderer"]),
+  .ez-root[data-frame="gallery"] {
     --ezd-pad: var(--ezd-pad-home);
   }
+}
+.ez-root[data-frame="gallery"] {
+  font-size: var(--ez-text-site-note);
 }
 .ez-muted {
   color: var(--ezd-muted);

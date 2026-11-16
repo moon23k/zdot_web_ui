@@ -9,24 +9,25 @@ export const buttonVariants = cva(
   [
     "ez:inline-flex ez:items-center ez:justify-center ez:gap-1.5 ez:box-border ez:m-0",
     "ez:rounded-button ez:border ez:border-solid ez:border-transparent",
-    "ez:font-body ez:font-semibold ez:no-underline ez:cursor-pointer ez:select-none",
+    "ez:font-body ez:no-underline ez:cursor-pointer ez:select-none",
     "ez:transition-colors ez:disabled:cursor-not-allowed ez:disabled:opacity-45",
     focusRing,
   ],
   {
     variants: {
       variant: {
-        primary: "ez:bg-primary ez:text-on-primary ez:hover:bg-primary-hover",
-        secondary: "ez:bg-transparent ez:border-primary-border ez:text-fg ez:hover:bg-primary-tint",
-        ghost: "ez:bg-transparent ez:text-fg ez:hover:bg-primary-tint",
-        outline: "ez:bg-transparent ez:border-[1.5px] ez:border-primary ez:text-primary ez:hover:bg-primary-tint",
+        primary: "ez:bg-primary-tint ez:text-primary ez:font-semibold ez:hover:border-primary-border",
+        secondary: "ez:bg-transparent ez:border-hairline ez:text-fg ez:font-medium ez:hover:border-muted",
+        ghost: "ez:bg-transparent ez:text-fg ez:font-medium ez:hover:bg-primary-tint",
+        outline: "ez:bg-transparent ez:border-hairline ez:text-fg ez:font-medium ez:hover:border-muted",
         danger: "ez:bg-danger ez:text-on-danger ez:hover:bg-danger/90",
       } satisfies Record<ButtonVariant, string>,
       size: {
-        md: "ez:min-h-12 ez:px-5 ez:text-base",
-        sm: "ez:min-h-9 ez:px-3 ez:text-sm",
+        md: "ez:min-h-(--ezd-control) ez:px-7 ez:text-site-note",
+        sm: "ez:min-h-9.5 ez:px-4 ez:text-site-small",
       } satisfies Partial<Record<ButtonSize, string>>,
       block: { true: "ez:w-full" },
+      icon: { true: "ez:aspect-square ez:px-0" },
     },
     defaultVariants: { variant: "primary", size: "md" },
   },
@@ -38,6 +39,7 @@ export function Button({
   variant,
   size,
   block,
+  icon,
   loading = false,
   disabled,
   className,
@@ -51,7 +53,7 @@ export function Button({
       data-slot="button"
       aria-busy={loading || undefined}
       disabled={disabled || loading}
-      className={cn(buttonVariants({ variant, size, block }), className)}
+      className={cn(buttonVariants({ variant, size, block, icon }), className)}
       {...rest}
     >
       {loading && (
@@ -65,8 +67,8 @@ export function Button({
   );
 }
 
-export function ButtonLink({ variant, size, block, className, ...rest }: Variants & ComponentProps<typeof NextLink>) {
+export function ButtonLink({ variant, size, block, icon, className, ...rest }: Variants & ComponentProps<typeof NextLink>) {
   return (
-    <NextLink data-slot="button" className={cn(buttonVariants({ variant, size, block }), className)} {...rest} />
+    <NextLink data-slot="button" className={cn(buttonVariants({ variant, size, block, icon }), className)} {...rest} />
   );
 }

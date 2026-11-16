@@ -15,7 +15,18 @@ function buttonRadius(design: Design): string {
   return `${shape.radius_md ?? SYSTEM_RADIUS.md}px`;
 }
 
-export function designVars(design: Design | null | undefined): Record<string, string> {
+function galleryVars(): Record<string, string> {
+  return {
+    "--ezd-wrap": `${SYSTEM_SITE.gallery}px`,
+    "--ezd-wrap-home": `${SYSTEM_SITE.gallery}px`,
+    "--ezd-wrap-narrow": `${SYSTEM_SITE["gallery-narrow"]}px`,
+    "--ezd-pad-home": `${SYSTEM_SITE["gallery-pad"]}px`,
+    "--ezd-section-gap": `${SYSTEM_SITE["gallery-section"]}px`,
+    "--ezd-control": `${SYSTEM_SITE["gallery-control"]}px`,
+  };
+}
+
+export function designVars(design: Design | null | undefined, frame?: string): Record<string, string> {
   const d = design ?? {};
   const color = { ...FALLBACK, ...(d.color ?? {}) };
   const ratio = (d.imagery?.photo_ratio ?? "1:1").replace(":", " / ");
@@ -55,6 +66,9 @@ export function designVars(design: Design | null | undefined): Record<string, st
     "--ezd-duration": `${d.motion?.duration_ms ?? SYSTEM_DURATION}ms`,
     "--ezd-photo-ratio": ratio,
     "--ezd-overlay": String(d.imagery?.overlay_opacity ?? 0.35),
+    "--ezd-wrap-narrow": `${SYSTEM_SITE["content-narrow"]}px`,
+    "--ezd-control": "48px",
+    ...(frame === "gallery" ? galleryVars() : {}),
   };
 }
 
@@ -66,6 +80,19 @@ export function fontHref(design: Design | null | undefined): string | null {
   if (!load.length) return null;
   const families = load.map(({ family, weights }) => `family=${encodeURIComponent(family)}:wght@${weights.join(";")}`);
   return `https://fonts.googleapis.com/css2?${families.join("&")}&display=swap`;
+}
+
+function plainTitles(font: Design["font"]): Design["font"] {
+  const body = font?.body;
+  const plain = { weight: 500, style: "normal" as const };
+  const load = font?.load?.filter((f) => f.family === body);
+  return {
+    ...font,
+    display: body,
+    display_weight: 500,
+    load: load?.length ? load : undefined,
+    styles: { ...font?.styles, title: plain, subtitle: plain },
+  };
 }
 
 const CORNERS = { 0: [0, 0, 0], 4: [4, 4, 6], 6: [6, 6, 8], 16: [8, 12, 16] } as const;
@@ -80,7 +107,8 @@ export function applyTemplate(design: Design | null | undefined, template: Templ
     ? { radius_sm: corners[0], radius_md: corners[1], radius_lg: corners[2], button_shape: look.radius === 0 ? "square" : "rounded" }
     : { ...d.shape, button_shape: "pill" };
   const templateFont: Design["font"] = look.font === "serif" ? { display: "Noto Serif KR", display_weight: 600 } : look.font === "light" ? { display_weight: 300 } : undefined;
-  const font = d.font ?? templateFont;
+  const picked = d.font ?? templateFont;
+  const font = look.frame === "gallery" ? plainTitles(picked) : picked;
   return {
     ...d,
     font,

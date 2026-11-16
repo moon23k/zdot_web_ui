@@ -9,6 +9,13 @@ describe.skipIf(!existsSync(FRAME))("template slots", () => {
 
   it.each(list)("%s matches the frame rule", (_, main, template) => {
     const frame = JSON.parse(readFileSync(FRAME, "utf8")) as { mains: Record<string, { home: Record<string, string[]> }> };
-    expect(frame.mains[main].home[template.letter]).toEqual(template.home.map((slot) => slot.kind));
+    const rule = frame.mains[main].home[template.letter];
+    const kinds = template.home.map((slot) => slot.kind);
+    if (template.look.frame !== "gallery") {
+      expect(rule).toEqual(kinds);
+      return;
+    }
+    expect(kinds.filter((kind) => !rule.includes(kind))).toEqual([]);
+    expect(rule.filter((kind) => kinds.includes(kind))).toEqual(kinds);
   });
 });

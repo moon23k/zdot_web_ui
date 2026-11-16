@@ -5,13 +5,13 @@ import { cn } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
 
 const step = cn(
-  "ez:m-0 ez:p-0 ez:border-0 ez:bg-transparent ez:text-fg ez:cursor-pointer",
+  "ez:m-0 ez:p-0 ez:border-0 ez:bg-transparent ez:text-muted ez:cursor-pointer ez:hover:text-fg",
   "ez:disabled:cursor-not-allowed ez:disabled:opacity-35",
   focusRing,
 );
 
 const sizes = {
-  md: { box: "ez:rounded-sm", step: "ez:size-11 ez:text-lg", input: "ez:w-10" },
+  md: { box: "ez:h-9", step: "ez:size-9 ez:text-base", input: "ez:w-7" },
   sm: { box: "ez:h-8 ez:rounded-md", step: "ez:size-8 ez:text-base", input: "ez:w-8" },
 };
 
@@ -47,7 +47,7 @@ export function Quantity({
     <span
       data-slot="quantity"
       className={cn(
-        "ez:inline-flex ez:items-center ez:box-border ez:border ez:border-solid ez:border-primary-border ez:bg-surface",
+        "ez:inline-flex ez:items-center ez:box-border ez:border ez:border-solid ez:border-hairline ez:bg-transparent",
         z.box,
         className,
       )}
@@ -61,7 +61,7 @@ export function Quantity({
         readOnly
         aria-label={`${prefix}수량`}
         inputMode="numeric"
-        className={cn(z.input, "ez:m-0 ez:p-0 ez:border-0 ez:bg-transparent ez:text-center ez:text-fg ez:font-body ez:text-base ez:tabular-nums")}
+        className={cn(z.input, "ez:m-0 ez:p-0 ez:border-0 ez:bg-transparent ez:text-center ez:text-fg ez:font-body ez:text-site-small ez:tabular-nums")}
       />
       <button type="button" className={cn(step, z.step)} aria-label={`${prefix}수량 늘리기`} onClick={() => set(current + 1)} disabled={current >= max}>
         +

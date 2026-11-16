@@ -2,20 +2,21 @@ export type TemplateMain = "shop" | "class" | "stay" | "quote";
 
 export type TemplateLetter = "a" | "b" | "c" | "d";
 
-export type SurfaceTone = "white" | "paper" | "cream" | "warm" | "mist";
+export type SurfaceTone = "white" | "paper" | "cream" | "warm" | "mist" | "gallery";
 
 export type Look = {
   tone: SurfaceTone;
   radius: 0 | 4 | 6 | 16 | "pill";
   line: boolean;
   font: "sans" | "serif" | "light";
+  frame?: "gallery";
 };
 
-export type HeaderVariant = "center" | "transparent" | "dark" | "left" | "pill" | "cta" | "band";
+export type HeaderVariant = "center" | "transparent" | "dark" | "left" | "pill" | "cta" | "band" | "gallery";
 
 export type FooterVariant = "full" | "line";
 
-export type HeroVariant = "box" | "full" | "slide" | "rounded" | "card" | "text";
+export type HeroVariant = "box" | "full" | "slide" | "rounded" | "card" | "text" | "gallery";
 
 export type GridSpec = { m: 1 | 2 | 3; pc: 3 | 4 | 6; ratio: number; meta?: "price" | "status" };
 

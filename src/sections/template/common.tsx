@@ -1,11 +1,27 @@
 import { ButtonLink } from "../../components/button";
 import type { SectionProps } from "../../renderer/registry";
-import { cn } from "../../utils/cn";
+import { Icon } from "../../components/icon";
+import { cn, won } from "../../utils/cn";
 import { Bar, BlankButton, BlankStars, Block, Cols, Lines, Pic, Rows, Steps, Title } from "../kit";
 
-export function NoticeBar({ data, blank }: SectionProps<"notice_bar">) {
-  if (!data.text && !blank) return null;
-  if (!data.text) {
+export function NoticeBar({ data, context, variant, blank }: SectionProps<"notice_bar">) {
+  const free = context.shipping?.free_threshold;
+  const text = data.text ?? (variant === "gallery" && free != null ? `${won(free)} 이상 무료 배송` : null);
+  if (!text && !blank) return null;
+  if (variant === "gallery") {
+    return (
+      <p
+        data-slot="notice-bar"
+        data-variant="gallery"
+        data-blank={text ? undefined : ""}
+        className="ez:m-0 ez:-mt-6 ez:mx-[calc(50%-50vw)] ez:flex ez:min-h-8.5 ez:items-center ez:justify-center ez:gap-2 ez:bg-primary-tint ez:px-page ez:text-site-caption ez:tracking-[0.01em] ez:text-primary"
+      >
+        <Icon name="truck" size="sm" />
+        {text ?? <Bar size="long" />}
+      </p>
+    );
+  }
+  if (!text) {
     return (
       <div data-slot="notice-bar" data-blank="" className="ez:bg-primary ez:px-page ez:py-2 ez:text-center ez:text-site-note">
         <Bar size="long" strong />
@@ -14,7 +30,7 @@ export function NoticeBar({ data, blank }: SectionProps<"notice_bar">) {
   }
   return (
     <p data-slot="notice-bar" className="ez:m-0 ez:bg-primary ez:px-page ez:py-2 ez:text-center ez:text-site-note ez:text-on-primary">
-      {data.text}
+      {text}
     </p>
   );
 }

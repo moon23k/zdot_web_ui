@@ -49,6 +49,10 @@ export const SYSTEM_TONE = {
   "mist": {
     "surface": "#f4f3ef",
     "surface-alt": "#e5dfd3"
+  },
+  "gallery": {
+    "surface": "#fbfaf7",
+    "surface-alt": "#f3f1ec"
   }
 };
 
@@ -59,7 +63,12 @@ export const SYSTEM_DURATION = 200;
 export const SYSTEM_SITE = {
   "content": 1320,
   "content-narrow": 1080,
-  "pad": 64
+  "pad": 64,
+  "gallery": 1200,
+  "gallery-narrow": 1040,
+  "gallery-pad": 40,
+  "gallery-section": 88,
+  "gallery-control": 50
 };
 
 export const SYSTEM_BLANK = {

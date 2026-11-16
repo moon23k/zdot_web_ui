@@ -2,7 +2,9 @@ import NextLink from "next/link";
 import type { Business } from "../../types";
 import { cn } from "../../utils/cn";
 
-const link = "ez:inline-flex ez:min-h-10 ez:items-center ez:text-fg ez:no-underline ez:hover:underline";
+const link = "ez:inline-flex ez:min-h-10 ez:items-center ez:text-muted ez:no-underline ez:hover:underline ez:md:min-h-0";
+
+const STAY_LABEL: Record<string, string> = { returns: "취소·환불 규정" };
 
 export function SiteFooter({
   storeName,
@@ -13,6 +15,7 @@ export function SiteFooter({
   policyHref = (key) => `/policy/${key}`,
   lookupHref = "/orders/lookup",
   variant = "full",
+  main,
 }: {
   storeName: string;
   business: Business | null;
@@ -22,7 +25,9 @@ export function SiteFooter({
   policyHref?: (key: string) => string;
   lookupHref?: string;
   variant?: "full" | "line";
+  main?: string;
 }) {
+  const stay = main === "stay";
   const legal = (
     [
       ["상호", [business?.name || storeName, business?.ceo_name && `대표 ${business.ceo_name}`].filter(Boolean).join(" · ")],
@@ -34,26 +39,30 @@ export function SiteFooter({
     ] as [string, string | null | undefined][]
   ).filter((row): row is [string, string] => Boolean(row[1]));
   return (
-    <footer data-slot="site-footer" data-variant={variant} className="ez:bg-surface-alt ez:text-[13px] ez:text-muted">
-      <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-3 ez:px-page ez:pt-4 ez:pb-8">
-        <nav aria-label="약관" className="ez:flex ez:flex-wrap ez:gap-x-4">
+    <footer
+      data-slot="site-footer"
+      data-variant={variant}
+      className="ez:mt-16 ez:border-0 ez:border-t ez:border-solid ez:border-hairline ez:text-site-caption ez:text-muted ez:md:mt-30"
+    >
+      <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-3 ez:px-page ez:pt-10 ez:pb-14 ez:md:grid-cols-[1fr_auto] ez:md:gap-x-20">
+        <nav aria-label="약관" className="ez:flex ez:flex-wrap ez:gap-x-4 ez:md:col-start-2 ez:md:row-span-4 ez:md:row-start-1 ez:md:grid ez:md:content-start ez:md:gap-1">
           {policies.map((p) => (
             <NextLink key={p.key} href={policyHref(p.key)} className={cn(link, p.key === "privacy" && "ez:font-bold")}>
-              {p.title}
+              {(stay && STAY_LABEL[p.key]) || p.title}
             </NextLink>
           ))}
           <NextLink href={lookupHref} className={link}>
-            비회원 주문 조회
+            {stay ? "비회원 예약 조회" : "비회원 주문 조회"}
           </NextLink>
         </nav>
         {variant === "line" ? (
-          <p className="ez:m-0 ez:max-w-180 ez:leading-normal">{legal.map(([label, value]) => `${label} ${value}`).join(" · ")}</p>
+          <p className="ez:m-0 ez:max-w-140 ez:leading-normal ez:md:col-start-1 ez:md:row-start-1">{legal.map(([label, value]) => `${label} ${value}`).join(" · ")}</p>
         ) : (
         <dl className="ez:m-0 ez:grid ez:max-w-180 ez:grid-cols-[auto_minmax(0,1fr)] ez:gap-x-4 ez:gap-y-1 ez:leading-normal">
           {legal.map(([label, value]) => (
             <div key={label} className="ez:contents">
               <dt>{label}</dt>
-              <dd className="ez:m-0 ez:text-fg">{value}</dd>
+              <dd className="ez:m-0">{value}</dd>
             </div>
           ))}
         </dl>

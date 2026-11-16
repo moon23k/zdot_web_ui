@@ -30,8 +30,8 @@ const STATUS: Record<ClaimKindName, Record<ClaimStatusName, string>> = {
   },
   return: {
     requested: "반품 요청",
-    collecting: "회수 중",
-    collected: "회수 완료 · 환불 대기",
+    collecting: "수거 중",
+    collected: "수거 완료 · 환불 대기",
     held: "반품 보류",
     completed: "환불 완료",
     rejected: "반품 거절",
@@ -39,8 +39,8 @@ const STATUS: Record<ClaimKindName, Record<ClaimStatusName, string>> = {
   },
   exchange: {
     requested: "교환 요청",
-    collecting: "회수 중",
-    collected: "회수 완료 · 재발송 대기",
+    collecting: "수거 중",
+    collected: "수거 완료 · 재배송 대기",
     held: "교환 보류",
     completed: "교환 상품 발송",
     rejected: "교환 거절",

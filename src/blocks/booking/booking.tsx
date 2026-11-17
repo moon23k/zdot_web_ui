@@ -2,7 +2,7 @@ import NextLink from "next/link";
 import type { ReactNode } from "react";
 import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
-import { figure, pointTag } from "../../utils/styles";
+import { pointTag } from "../../utils/styles";
 
 export function BookingFrame({ action, main, card }: { action: string; main: ReactNode; card: ReactNode }) {
   return (

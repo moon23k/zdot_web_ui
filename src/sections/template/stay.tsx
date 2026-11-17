@@ -4,7 +4,7 @@ import type { SectionProps } from "../../renderer/registry";
 import NextLink from "next/link";
 import { Icon } from "../../components/icon";
 import { cn } from "../../utils/cn";
-import { chip, countSup, figure, pointTag, textLink } from "../../utils/styles";
+import { chip, countSup, figure, pointTag, sectionTitle, textLink } from "../../utils/styles";
 import { Bar, BlankButton, BlankPrice, Block, Card, Cols, Lines, Pairs, Pic, Rows, Split, Title } from "../kit";
 import type { Room } from "./data";
 
@@ -211,7 +211,7 @@ function RoomRow({ room, i }: { room: Room | null; i: number }) {
   const out = room?.left === 0;
   const body = (
     <>
-      <span className={cn(figure, "ez:text-[1.75rem] ez:leading-tight ez:max-lg:hidden")}>{String(i + 1).padStart(2, "0")}</span>
+      <span className={cn(figure, "ez:text-site-section ez:max-lg:hidden")}>{room ? String(i + 1).padStart(2, "0") : null}</span>
       <span className="ez:relative ez:block">
         <Pic src={room?.image} ratio={1.53} tone={i} />
         {room?.sample && <Badge className="ez:absolute ez:left-2.5 ez:top-2.5">예시</Badge>}
@@ -224,7 +224,7 @@ function RoomRow({ room, i }: { room: Room | null; i: number }) {
               {room.left}객실 남음
             </span>
           )}
-          <span className="ez:text-site-page-sm ez:font-light ez:tracking-[-0.035em] ez:lg:text-[2.25rem] ez:lg:leading-tight">{room ? room.name : <Bar />}</span>
+          <span className="ez:text-site-page-sm ez:font-light ez:tracking-[-0.035em] ez:lg:text-site-name">{room ? room.name : <Bar />}</span>
         </span>
         <span className="ez:flex ez:flex-wrap ez:gap-2">
           {(room?.specs ?? ["", ""]).map((s, k) => (
@@ -256,7 +256,7 @@ function GalleryRooms({ title, rooms }: { title?: string | null; rooms: Room[] }
   return (
     <section data-slot="room-list" data-variant="gallery" id="rooms" data-blank={rooms.length ? undefined : ""} className="ez:grid ez:gap-8 ez:text-fg ez:lg:gap-12">
       <h2 className="ez:m-0 ez:text-site-section">
-        {title ?? "객실"}
+        {sectionTitle(title, "객실")}
         {rooms.length > 0 && <span className={countSup}>{rooms.length}</span>}
       </h2>
       <div className="ez:grid">

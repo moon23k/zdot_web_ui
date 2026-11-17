@@ -19,6 +19,7 @@ export const quote: TemplateDesign[] = [
       { kind: "price_tiers", variant: "gallery" },
       { kind: "process_steps", variant: "gallery" },
       { kind: "reviews", variant: "gallery" },
+      { kind: "faq" },
     ],
     detail: [
       { kind: "gallery", variant: "tall" },

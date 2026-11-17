@@ -40,13 +40,13 @@ export function ProductCard({
       </span>
       <span className="ez:flex ez:flex-col ez:gap-1">
         {tag && (
-          <span className={pointTag}>
-            <span aria-hidden="true" className="ez:size-1.25 ez:rounded-full ez:bg-primary" />
+          <span className={cn(pointTag, product.sold_out && "ez:text-muted")}>
+            <span aria-hidden="true" className={cn("ez:size-1.25 ez:rounded-full", product.sold_out ? "ez:bg-muted" : "ez:bg-primary")} />
             {tag}
           </span>
         )}
         <span className="ez:flex ez:items-baseline ez:gap-2.5">
-          {rank != null && <span className="ez:font-figure ez:text-[1.625rem] ez:leading-none ez:italic ez:text-primary">{rank}</span>}
+          {rank != null && <span className="ez:font-figure ez:text-site-rank ez:italic ez:text-primary">{rank}</span>}
           <span className="ez:line-clamp-2 ez:text-site-lead ez:group-hover:underline ez:underline-offset-4">{product.name}</span>
         </span>
         <span className="ez:flex ez:items-baseline ez:tabular-nums ez:whitespace-nowrap">

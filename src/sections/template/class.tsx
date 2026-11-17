@@ -3,7 +3,7 @@ import { Badge } from "../../components/badge";
 import { ButtonLink } from "../../components/button";
 import type { SectionProps } from "../../renderer/registry";
 import { cn } from "../../utils/cn";
-import { countSup, focusRing } from "../../utils/styles";
+import { countSup, focusRing, sectionTitle } from "../../utils/styles";
 import { Bar, BlankButton, BlankPrice, Block, Card, Cols, Pic, statusText, Title } from "../kit";
 import type { Session } from "./data";
 
@@ -116,11 +116,14 @@ function GalleryRow({ s, i }: { s: Session | null; i: number }) {
   const full = s?.status === "full";
   return (
     <li className={cn("ez:grid ez:grid-cols-[1fr_auto] ez:items-center ez:gap-x-6 ez:gap-y-2 ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-5 ez:lg:grid-cols-[140px_96px_minmax(0,1fr)_140px_120px_120px]", full && "ez:text-muted")}>
-      <span className="ez:text-site-heading ez:tabular-nums">{s ? s.time : <Bar size="short" />}</span>
+      <span className="ez:flex ez:flex-col">
+        <span className="ez:text-site-heading ez:tabular-nums">{s ? (s.day ?? s.date) : <Bar size="short" />}</span>
+        {s && <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{s.time}</span>}
+      </span>
       <Pic src={s?.image} tone={i} className={cn("ez:aspect-[4/3] ez:w-24 ez:max-lg:hidden", full && "ez:opacity-45")} />
       <span className="ez:col-span-2 ez:flex ez:flex-col ez:lg:col-span-1">
         <span className="ez:text-site-item ez:font-normal">{s ? s.name : <Bar />}</span>
-        <span className="ez:text-site-small ez:text-muted">{s ? [s.date, s.length].filter(Boolean).join(" · ") : <Bar size="short" />}</span>
+        <span className="ez:text-site-small ez:text-muted">{s ? s.length : <Bar size="short" />}</span>
       </span>
       <span className={cn("ez:text-site-small", s?.status === "few" && "ez:font-medium ez:text-primary")}>{s ? (full ? "마감" : `${s.seats_left ?? 0}자리 남음`) : null}</span>
       <span className="ez:font-medium ez:tabular-nums ez:lg:text-right">{s?.price}</span>
@@ -198,7 +201,7 @@ export function ClassList({ data, variant, blank }: SectionProps<"class_list">) 
     return (
       <section data-slot="class-list" data-variant="gallery" id="classes" data-blank={classes.length ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-9">
         <h2 className="ez:m-0 ez:text-site-section">
-          {data.title ?? "클래스"}
+          {sectionTitle(data.title, "클래스")}
           {classes.length > 0 && <span className={countSup}>{classes.length}</span>}
         </h2>
         <div className="ez:grid ez:gap-x-gutter ez:gap-y-10 ez:md:grid-cols-3 ez:lg:gap-y-14">

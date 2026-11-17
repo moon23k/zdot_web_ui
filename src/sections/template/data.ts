@@ -5,6 +5,7 @@ export type Tile = { title: string; image?: string | null; href?: string };
 export type Session = {
   id: string;
   date: string;
+  day?: string;
   time: string;
   name: string;
   length?: string;

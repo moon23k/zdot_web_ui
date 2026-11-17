@@ -34,7 +34,7 @@ export function ProductGallery({ images, name }: { images: (string | null)[]; na
       <div className={cn("ez:relative ez:order-1 ez:lg:order-2", shown.length < 2 && "ez:lg:col-span-2")}>
         <Photo src={shown[at]} alt={name} preload sizes="(max-width: 1024px) 100vw, 640px" tone={at} className="ez:aspect-[4/5]" />
         {shown.length > 1 && (
-          <span aria-hidden="true" className={cn(figure, "ez:absolute ez:right-5 ez:bottom-4 ez:text-[1.25rem]")}>
+          <span aria-hidden="true" className={cn(figure, "ez:absolute ez:right-5 ez:bottom-4 ez:text-site-counter")}>
             {at + 1} / {shown.length}
           </span>
         )}

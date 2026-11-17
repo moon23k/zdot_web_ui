@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 import { Link } from "../../components/link";
-import { textLink } from "../../utils/styles";
+import { sectionTitle, textLink } from "../../utils/styles";
 import { cn } from "../../utils/cn";
 import { ProductGrid } from "../../blocks/product-grid";
 import type { SectionProps } from "../../renderer/registry";
@@ -38,7 +38,7 @@ export function ProductList({ data, context, grid, variant, blank }: SectionProp
     return (
       <section data-slot="product-grid" data-variant="gallery" className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-9">
         <div className="ez:flex ez:items-end ez:justify-between ez:gap-3">
-          <h2 className="ez:m-0 ez:text-site-section">{data.title ?? "신상품"}</h2>
+          <h2 className="ez:m-0 ez:text-site-section">{sectionTitle(data.title, "신상품")}</h2>
           <NextLink href="/products" className={cn(textLink, "ez:shrink-0 ez:text-site-small")}>
             전체 보기
           </NextLink>

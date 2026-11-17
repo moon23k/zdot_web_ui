@@ -30,8 +30,8 @@ export function PriceTiers({ data, variant, blank }: SectionProps<"price_tiers">
           <ol className="ez:m-0 ez:list-none ez:p-0">
             {(items.length ? items : [null, null, null]).map((it, i) => (
               <li key={i} className="ez:grid ez:grid-cols-[40px_1fr_auto] ez:items-baseline ez:gap-6 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:py-7 ez:lg:grid-cols-[56px_1fr_200px]">
-                <span className={cn(figure, "ez:text-site-heading ez:text-primary")}>{String(i + 1).padStart(2, "0")}</span>
-                <span className="ez:text-site-heading ez:font-light ez:tracking-[-0.03em] ez:lg:text-[2rem] ez:lg:leading-tight">{it ? it.label : <Bar />}</span>
+                <span className={cn(figure, "ez:text-site-heading ez:text-primary")}>{it ? String(i + 1).padStart(2, "0") : null}</span>
+                <span className="ez:text-site-heading ez:font-light ez:tracking-[-0.03em] ez:lg:text-site-logo">{it ? it.label : <Bar />}</span>
                 <span className="ez:text-right ez:font-medium ez:tabular-nums">{it ? it.value : <BlankPrice />}</span>
               </li>
             ))}

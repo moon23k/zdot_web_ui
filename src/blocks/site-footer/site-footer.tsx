@@ -2,7 +2,7 @@ import NextLink from "next/link";
 import type { Business } from "../../types";
 import { ButtonLink } from "../../components/button";
 import { cn } from "../../utils/cn";
-import { wordmark } from "../../utils/styles";
+import { footerMark } from "../../utils/styles";
 import { PathSwitch } from "../site-header/path-switch";
 
 const link = "ez:text-fg ez:no-underline ez:hover:text-primary";
@@ -21,7 +21,6 @@ export function SiteFooter({
   business,
   hosting,
   policies,
-  closing,
   hours,
   policyHref = (key) => `/policy/${key}`,
   main = "shop",
@@ -67,7 +66,7 @@ export function SiteFooter({
             {business?.cs_phone && (
               <>
                 <span className="ez:text-site-small ez:text-muted">고객센터</span>
-                <a href={`tel:${business.cs_phone}`} className="ez:text-[2.25rem] ez:leading-tight ez:font-light ez:tracking-[-0.035em] ez:text-fg ez:no-underline">
+                <a href={`tel:${business.cs_phone}`} className="ez:text-site-name ez:tracking-[-0.035em] ez:text-fg ez:no-underline">
                   {business.cs_phone}
                 </a>
               </>
@@ -95,10 +94,9 @@ export function SiteFooter({
         </div>
         <div className="ez:mt-14 ez:flex ez:flex-wrap ez:items-end ez:justify-between ez:gap-10 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-7 ez:lg:mt-18">
           <div className="ez:grid ez:max-w-180 ez:gap-2 ez:text-site-small ez:text-muted">
-            {closing && <p className="ez:m-0">{closing}</p>}
             <p className="ez:m-0">{legal}</p>
           </div>
-          <span aria-hidden="true" className={cn("ez:text-[3.5rem] ez:leading-[0.9] ez:text-site-faint ez:max-md:hidden", wordmark(storeName))}>
+          <span aria-hidden="true" className={cn("ez:text-site-faint ez:max-md:hidden", footerMark(storeName))}>
             {storeName}
           </span>
         </div>

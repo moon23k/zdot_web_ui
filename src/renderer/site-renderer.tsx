@@ -44,6 +44,7 @@ export function SiteRenderer({
         if (section.when && !context.flags[section.when]) return null;
         if (!isKind(section.kind)) return null;
         if (section.kind === "category_menu" && hasGrid) return null;
+        if (section.kind === "free_shipping_bar" && template && template.main !== "shop") return null;
         const Component = sections[section.kind] as ComponentType<SectionProps>;
         return <Component key={`${section.kind}-${i}`} data={section.data ?? {}} context={context} variant={section.variant} grid={section.grid} lead={lead} blank={Boolean(template)} />;
       })}

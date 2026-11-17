@@ -56,14 +56,14 @@ export function BuyBox({
   const from = new Set(prices).size > 1 ? Math.min(...prices) : null;
   const options = product.variants.length > 1;
   const base = Math.min(...(prices.length ? prices : [unit]));
-  const sale = product.list_price > unit ? Math.floor(((product.list_price - unit) / product.list_price) * 100) : 0;
+  const sale = from === null && product.list_price > unit ? Math.floor(((product.list_price - unit) / product.list_price) * 100) : 0;
   return (
     <form data-slot="buy-box" action={add} className="ez:grid ez:gap-7 ez:text-fg">
       <div className="ez:grid ez:gap-3">
         {sample && <Badge className="ez:justify-self-start">예시</Badge>}
         {soldOut && (
-          <span className={pointTag}>
-            <span aria-hidden="true" className="ez:size-1.25 ez:rounded-full ez:bg-primary" />
+          <span className={cn(pointTag, "ez:text-muted")}>
+            <span aria-hidden="true" className="ez:size-1.25 ez:rounded-full ez:bg-muted" />
             품절
           </span>
         )}

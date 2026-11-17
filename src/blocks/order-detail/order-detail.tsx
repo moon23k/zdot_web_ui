@@ -92,7 +92,7 @@ export function statusTone(status: OrderStatus): string {
 
 type Step = OrderStatus | "ready";
 
-const STEPS: Record<string, [Step, string][]> = {
+export const STEPS: Record<string, [Step, string][]> = {
   ship: [
     ["paid", "결제 완료"],
     ["preparing", "상품 준비"],

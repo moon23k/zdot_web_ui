@@ -4,12 +4,12 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 export function PathSwitch({ prefix, match, rest }: { prefix: string; match: ReactNode; rest: ReactNode }) {
-  const path = usePathname();
+  const path = usePathname() ?? "";
   return path === prefix || path.startsWith(`${prefix}/`) ? match : rest;
 }
 
 export function CheckoutSteps({ className }: { className?: string }) {
-  const path = usePathname();
+  const path = usePathname() ?? "";
   const at = path.startsWith("/checkout/result") ? 2 : path.startsWith("/checkout") ? 1 : 0;
   return <Steps at={at} className={className} />;
 }

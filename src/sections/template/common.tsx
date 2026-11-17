@@ -8,8 +8,13 @@ import { countSup, figure } from "../../utils/styles";
 import type { Review } from "./data";
 import { Bar, BlankButton, BlankStars, Block, Cols, Lines, Pairs, Pic, Rows, Split, Steps, Title } from "../kit";
 
-export function NoticeBar() {
-  return null;
+export function NoticeBar({ data, context, blank }: SectionProps<"notice_bar">) {
+  if (data.text || context.shipping?.free_threshold != null || !blank) return null;
+  return (
+    <div data-slot="notice-bar" data-blank="" className="ez:mx-[calc(50%-50vw)] ez:-mt-8 ez:flex ez:min-h-9.5 ez:items-center ez:justify-center ez:bg-surface-alt ez:text-site-small">
+      <Bar size="long" />
+    </div>
+  );
 }
 
 export function Intro({ data, lead, variant, blank }: SectionProps<"intro">) {
@@ -19,13 +24,22 @@ export function Intro({ data, lead, variant, blank }: SectionProps<"intro">) {
     return (
       <section data-slot="intro" data-variant="gallery" data-blank={data.title ? undefined : ""} className="ez:grid ez:gap-12 ez:pt-4 ez:text-fg ez:lg:gap-16 ez:lg:pt-14">
         <div className="ez:grid ez:gap-8 ez:lg:grid-cols-[8fr_4fr] ez:lg:items-end ez:lg:gap-6">
-          <h1 className="ez:m-0 ez:text-site-page ez:font-light ez:tracking-[-0.04em] ez:text-balance ez:lg:text-[5.5rem] ez:lg:leading-[1.08]">{data.title ?? <Bar size="long" />}</h1>
+          {data.title ? (
+            <h1 className="ez:m-0 ez:text-site-page ez:font-light ez:tracking-[-0.04em] ez:text-balance ez:lg:text-site-hero">{data.title}</h1>
+          ) : (
+            <span className="ez:text-site-page ez:lg:text-site-hero">
+              <Bar size="long" />
+            </span>
+          )}
           <div className="ez:flex ez:flex-col ez:items-start ez:gap-7 ez:lg:pb-3.5">
-            {data.body && <p className="ez:m-0 ez:text-muted">{data.body}</p>}
-            <ButtonLink href="/quote">
-              견적 요청
-              <Icon name="right" size="sm" />
-            </ButtonLink>
+            {data.title ? (
+              <ButtonLink href="/quote">
+                견적 요청
+                <Icon name="right" size="sm" />
+              </ButtonLink>
+            ) : (
+              <BlankButton>견적 요청</BlankButton>
+            )}
           </div>
         </div>
         {images.length > 0 && (

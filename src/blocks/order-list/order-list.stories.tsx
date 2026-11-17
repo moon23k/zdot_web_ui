@@ -13,10 +13,16 @@ function DefaultExample() {
   return <OrderList orders={orders} />;
 }
 
+function CountsExample() {
+  return <OrderList orders={orders} counts />;
+}
+
 function EmptyExample() {
   return <OrderList orders={[]} />;
 }
 
 export const Default: StoryObj = { render: () => <DefaultExample /> };
+
+export const Counts: StoryObj = { render: () => <CountsExample /> };
 
 export const Empty: StoryObj = { render: () => <EmptyExample /> };

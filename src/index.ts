@@ -9,7 +9,8 @@ export { ProductGrid } from "./blocks/product-grid";
 export { CatalogView, Crumbs, ProductShelf, type CatalogLink } from "./blocks/catalog-view";
 export { ProductGallery } from "./blocks/product-gallery";
 export { AnchorTabs } from "./blocks/anchor-tabs";
-export { BookingFrame, BookingHead, CardCells, CardPrice, CardRow, CardTotal, NumberedList, PhotoCollage, RoomShelf, SectionSplit, TimeTiles } from "./blocks/booking";
+export { Fold } from "./sections/kit";
+export { BookingFrame, BookingHead, CardCells, CardPrice, CardRow, CardTotal, PhotoCollage, RoomShelf, SectionSplit, TimeTiles } from "./blocks/booking";
 export { BuyBox } from "./blocks/buy-box";
 export { CartLine } from "./blocks/cart-line";
 export { CartView } from "./blocks/cart-view";
@@ -20,7 +21,7 @@ export {
   GUEST_PRIVACY_TEXT,
   type ConsentTerm,
 } from "./blocks/consent-form";
-export { CheckoutLayout, CheckoutLines, CheckoutSection } from "./blocks/checkout-layout";
+export { CheckoutLayout, CheckoutLines, CheckoutSection, ChipChoice, DropZone, FormLayout, StepList } from "./blocks/checkout-layout";
 export { CheckoutItems, type CheckoutLine } from "./blocks/checkout-items";
 export { PayWidget, type PayRequest } from "./blocks/pay-widget";
 export { DepositInfo } from "./blocks/parts/deposit-info";

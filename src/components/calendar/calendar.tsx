@@ -83,7 +83,7 @@ export function Calendar({
   };
   const pages = list.slice(page, page + months);
   const nav = cn(
-    "ez:flex ez:size-9 ez:items-center ez:justify-center ez:rounded-full ez:border ez:border-solid ez:border-site-line ez:bg-transparent ez:text-fg ez:cursor-pointer ez:disabled:opacity-30 ez:disabled:cursor-default",
+    "ez:flex ez:size-9 ez:items-center ez:justify-center ez:rounded-full ez:border ez:border-solid ez:border-site-edge ez:bg-transparent ez:font-body ez:text-site-lead ez:text-fg ez:cursor-pointer ez:disabled:text-site-off ez:disabled:cursor-default",
     focusRing,
   );
   return (
@@ -91,11 +91,16 @@ export function Calendar({
       <div className={cn("ez:grid ez:gap-10", months > 1 && "ez:md:grid-cols-2")}>
         {pages.map((key, k) => {
           const [y, m] = key.split("-").map(Number);
-          const shownDays = days.filter((d) => d.date.startsWith(key));
-          const blanks = shownDays.length ? weekday(shownDays[0].date) : 0;
+          const known = new Map(days.filter((d) => d.date.startsWith(key)).map((d) => [d.date, d]));
+          const size = new Date(Date.UTC(y, m, 0)).getUTCDate();
+          const shownDays = Array.from({ length: size }, (_, i) => {
+            const iso = `${key}-${String(i + 1).padStart(2, "0")}`;
+            return known.get(iso) ?? ({ date: iso, disabled: true, outside: true } as CalendarDate & { outside?: boolean });
+          });
+          const blanks = weekday(shownDays[0].date);
           return (
             <div key={key} className="ez:grid ez:gap-3">
-              <div className="ez:flex ez:items-center ez:justify-between">
+              <div className="ez:flex ez:h-9 ez:items-center ez:justify-between">
                 <strong className="ez:font-medium">{`${y}년 ${m}월`}</strong>
                 <span className="ez:flex ez:gap-1.5">
                   {k === 0 && (
@@ -122,19 +127,22 @@ export function Calendar({
                 {shownDays.map((day) => {
                   const look = state(day.date);
                   const blocked = Boolean(day.disabled) && !canEnd(day.date);
+                  const outside = "outside" in day && Boolean(day.outside);
                   return (
                     <li key={day.date} className={look === "inside" ? "ez:bg-point-soft" : undefined}>
                       <button
                         type="button"
                         onClick={() => pick(day)}
                         disabled={blocked}
+                        data-outside={outside || undefined}
                         aria-pressed={look === "edge"}
                         aria-label={[dayText(day.date), `${WEEKDAYS[weekday(day.date)]}요일`, day.label].filter(Boolean).join(" ")}
                         className={cn(
                           "ez:relative ez:mx-auto ez:grid ez:size-11 ez:content-center ez:rounded-full ez:border-0 ez:bg-transparent ez:p-0 ez:font-body ez:text-site-note ez:tabular-nums ez:text-fg ez:cursor-pointer",
                           look === "edge" && "ez:bg-point-soft ez:font-semibold ez:text-primary ez:shadow-[inset_0_0_0_1px_var(--ezd-primary)]",
                           dots && !blocked && look === "none" && "ez:after:absolute ez:after:bottom-1.5 ez:after:left-1/2 ez:after:size-1 ez:after:-translate-x-1/2 ez:after:rounded-full ez:after:bg-primary",
-                          "ez:disabled:cursor-not-allowed ez:disabled:text-site-off ez:disabled:line-through",
+                          "ez:disabled:cursor-not-allowed ez:disabled:text-site-off",
+                          blocked && !outside && "ez:line-through",
                           focusRing,
                         )}
                       >

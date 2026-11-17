@@ -22,3 +22,13 @@ export const hairline = "ez:border-0 ez:border-solid ez:border-site-line";
 export function wordmark(name: string): string {
   return /[ㄱ-ㆎ가-힣]/.test(name) ? "ez:font-body ez:font-normal ez:tracking-[-0.03em]" : figure;
 }
+
+const GENERIC: Record<string, string> = { "대표 물건": "신상품", "클래스 안내": "클래스", "객실 안내": "객실" };
+
+export function sectionTitle(title: string | null | undefined, fallback: string): string {
+  return !title ? fallback : (GENERIC[title] ?? title);
+}
+
+export function footerMark(name: string): string {
+  return /[ㄱ-ㆎ가-힣]/.test(name) ? "ez:font-body ez:font-light ez:text-site-figure-lg ez:tracking-[-0.03em]" : `${figure} ez:text-site-display-md`;
+}

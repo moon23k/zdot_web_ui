@@ -7,7 +7,7 @@ import { cn, won } from "../../utils/cn";
 import { textLink } from "../../utils/styles";
 import { Bar, BlankButton, Lines, line, Pic } from "../kit";
 
-function Heading({ title, sub, inverse }: { title?: string | null; sub?: string | null; inverse?: boolean }) {
+function Heading({ title, inverse }: { title?: string | null; inverse?: boolean }) {
   if (!title) {
     return (
       <div className="ez:grid ez:w-full ez:max-w-xl ez:gap-4">
@@ -28,7 +28,6 @@ function Heading({ title, sub, inverse }: { title?: string | null; sub?: string 
       >
         {title}
       </h1>
-      {sub && <p className={cn("ez:m-0 ez:max-w-2xl", inverse ? "ez:text-on-primary" : "ez:text-muted")}>{sub}</p>}
     </>
   );
 }
@@ -61,7 +60,6 @@ export function Hero({ data, variant, blank }: SectionProps<"hero">) {
           ) : (
             <div className="ez:grid ez:gap-5">
               <h1 className="ez:m-0 ez:text-site-page-sm ez:font-light ez:tracking-[-0.04em] ez:text-balance ez:lg:text-site-display">{data.title}</h1>
-              {data.sub && <p className="ez:m-0 ez:text-muted">{data.sub}</p>}
             </div>
           )}
           <div className="ez:flex ez:flex-wrap ez:items-center ez:gap-7">
@@ -73,15 +71,17 @@ export function Hero({ data, variant, blank }: SectionProps<"hero">) {
                 <Icon name="right" size="sm" />
               </ButtonLink>
             )}
-            <NextLink href="/classes" className={textLink}>
-              클래스 전체
-            </NextLink>
+            {!empty && (
+              <NextLink href="/classes" className={textLink}>
+                클래스 전체
+              </NextLink>
+            )}
           </div>
           {facts.length > 0 && (
             <dl className="ez:m-0 ez:mt-4 ez:flex ez:gap-10 ez:self-stretch ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-7">
               {facts.map((f) => (
                 <div key={f.label} className="ez:flex ez:flex-col">
-                  <dd className="ez:order-1 ez:m-0 ez:font-figure ez:text-[2.5rem] ez:leading-[1.1] ez:italic">{f.value}</dd>
+                  <dd className="ez:order-1 ez:m-0 ez:font-figure ez:text-site-figure-lg ez:italic">{f.value}</dd>
                   <dt className="ez:order-2 ez:text-site-small ez:text-muted">{f.label}</dt>
                 </div>
               ))}
@@ -104,7 +104,6 @@ export function Hero({ data, variant, blank }: SectionProps<"hero">) {
           ) : (
             <div className="ez:grid ez:gap-4">
               <h1 className="ez:m-0 ez:max-w-3xl ez:text-site-page-sm ez:font-light ez:tracking-[-0.04em] ez:text-balance ez:lg:text-site-display">{data.title}</h1>
-              {data.sub && <p className="ez:m-0 ez:text-muted">{data.sub}</p>}
             </div>
           )}
           {facts.length > 0 && (
@@ -138,7 +137,6 @@ export function Hero({ data, variant, blank }: SectionProps<"hero">) {
           ) : (
             <div className="ez:grid ez:gap-5">
               <h1 className="ez:m-0 ez:text-site-page-sm ez:font-light ez:tracking-[-0.04em] ez:text-balance ez:lg:text-site-display">{data.title}</h1>
-              {data.sub && <p className="ez:m-0 ez:max-w-xl ez:text-muted">{data.sub}</p>}
             </div>
           )}
           <div className="ez:flex ez:flex-wrap ez:items-center ez:gap-7">
@@ -181,7 +179,7 @@ export function Hero({ data, variant, blank }: SectionProps<"hero">) {
       <section data-slot="hero" data-variant="box" data-blank={empty ? "" : undefined} className={cn("ez:grid ez:text-fg ez:md:grid-cols-2", line)}>
         <Pic src={image} ratio={1} tone={0} />
         <div className="ez:grid ez:content-center ez:justify-items-start ez:gap-4 ez:p-6 ez:md:p-10">
-          <Heading title={data.title} sub={data.sub} />
+          <Heading title={data.title} />
           {action()}
         </div>
       </section>
@@ -204,7 +202,7 @@ export function Hero({ data, variant, blank }: SectionProps<"hero">) {
         <Photo src={image} alt="" preload sizes="100vw" tone={0} strong iconClassName="ez:-translate-y-16" className="ez:absolute ez:inset-0 ez:aspect-auto ez:h-full ez:rounded-none" />
         <div className="ez:absolute ez:inset-0 ez:bg-[rgb(0_0_0/var(--ezd-overlay))]" aria-hidden="true" />
         <div className="ez:relative ez:grid ez:content-end ez:justify-items-start ez:gap-4 ez:p-6 ez:md:p-12">
-          <Heading title={data.title} sub={data.sub} inverse />
+          <Heading title={data.title} inverse />
           {action("ez:bg-surface ez:text-fg ez:hover:bg-surface-alt")}
           {variant === "slide" && count > 1 && (
             <span className="ez:text-site-note ez:text-on-primary" aria-hidden="true">
@@ -219,7 +217,7 @@ export function Hero({ data, variant, blank }: SectionProps<"hero">) {
   if (variant === "text") {
     return (
       <section data-slot="hero" data-variant="text" data-blank={empty ? "" : undefined} className="ez:grid ez:justify-items-center ez:gap-6 ez:text-center ez:text-fg">
-        <Heading title={data.title} sub={data.sub} />
+        <Heading title={data.title} />
         {(image || empty) && <Pic src={image} ratio={1.4} tone={0} className="ez:md:max-w-3xl" />}
       </section>
     );
@@ -228,7 +226,7 @@ export function Hero({ data, variant, blank }: SectionProps<"hero">) {
   return (
     <section data-slot="hero" data-blank={empty ? "" : undefined} className={cn("ez:grid ez:gap-6 ez:text-fg", (image || empty) && "ez:md:grid-cols-2 ez:md:items-center ez:md:gap-10")}>
       <div className="ez:grid ez:justify-items-start ez:gap-4">
-        <Heading title={data.title} sub={data.sub} />
+        <Heading title={data.title} />
         {action()}
       </div>
       {(image || empty) && <Photo src={image} alt="" preload sizes="(max-width: 768px) 100vw, 540px" tone={0} className="ez:aspect-[4/3] ez:rounded-lg" />}

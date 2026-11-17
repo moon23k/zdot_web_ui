@@ -73,10 +73,10 @@ describe("store font", () => {
     expect(fontHref({})).toBeNull();
   });
 
-  it("keeps the store font over the template default", () => {
+  it("sets titles in the store body font under every template", () => {
     const serif = resolveTemplate("class", "b");
     expect(serif?.look.font).toBe("serif");
-    expect(applyTemplate(design, serif).font?.display).toBe("Jua");
-    expect(applyTemplate({}, serif).font?.display).toBe("Noto Serif KR");
+    expect(applyTemplate(design, serif).font?.display).toBe("Noto Sans KR");
+    expect(designVars(applyTemplate({}, serif))["--ezd-font-display"]).toContain("Pretendard");
   });
 });

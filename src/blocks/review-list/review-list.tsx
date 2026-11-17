@@ -62,7 +62,7 @@ export function ReviewList({
           </h2>
           {mean !== null && (
             <div className="ez:flex ez:items-baseline ez:gap-4">
-              <span className={`${figure} ez:text-[5.5rem] ez:leading-none`}>{mean.toFixed(1)}</span>
+              <span className={`${figure} ez:text-site-figure-xl`}>{mean.toFixed(1)}</span>
               <StarRow rating={mean} />
             </div>
           )}
@@ -75,7 +75,7 @@ export function ReviewList({
           )}
         </div>
         <div className="ez:grid ez:content-start">
-          {!items.length && <p className="ez:m-0 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:py-7 ez:text-muted">아직 후기가 없어요</p>}
+          {!items.length && <p className="ez:m-0 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:py-7 ez:text-muted">아직 {title}가 없어요</p>}
           <ul className={lineList}>
             {items.map((r) => (
               <li key={r.id} className="ez:grid ez:gap-2.5 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:py-7">

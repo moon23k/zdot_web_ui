@@ -29,7 +29,7 @@ function IconLink({ href, icon, label, count }: { href: string; icon: IconName; 
     >
       <Icon name={icon} />
       {count ? (
-        <span className="ez:absolute ez:top-1.5 ez:right-0.5 ez:flex ez:h-4 ez:min-w-4 ez:items-center ez:justify-center ez:rounded-full ez:bg-point-soft ez:px-1 ez:text-[11px] ez:font-semibold ez:leading-none ez:tracking-normal ez:text-primary ez:tabular-nums">
+        <span className="ez:absolute ez:top-1.5 ez:right-0.5 ez:flex ez:h-4 ez:min-w-4 ez:items-center ez:justify-center ez:rounded-full ez:bg-point-soft ez:px-1 ez:text-site-badge ez:leading-none ez:tracking-normal ez:text-primary ez:tabular-nums">
           {count}
         </span>
       ) : null}
@@ -39,7 +39,7 @@ function IconLink({ href, icon, label, count }: { href: string; icon: IconName; 
 
 function Logo({ name, logoUrl }: { name: string; logoUrl?: string | null }) {
   return (
-    <NextLink href="/" className={cn("ez:min-w-0 ez:truncate ez:text-[2rem] ez:leading-none ez:text-fg ez:no-underline", wordmark(name))}>
+    <NextLink href="/" className={cn("ez:min-w-0 ez:truncate ez:text-site-logo ez:text-fg ez:no-underline", wordmark(name))}>
       <SiteLogo name={name} src={logoUrl} />
     </NextLink>
   );

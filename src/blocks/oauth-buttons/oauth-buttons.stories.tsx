@@ -12,4 +12,10 @@ function DefaultExample() {
   return <OAuthButtons next="/checkout" />;
 }
 
+function PanelExample() {
+  return <OAuthButtons next="/me" title="로그인" guestHref="/orders/lookup" />;
+}
+
 export const Default: StoryObj = { render: () => <DefaultExample /> };
+
+export const Panel: StoryObj = { render: () => <PanelExample /> };

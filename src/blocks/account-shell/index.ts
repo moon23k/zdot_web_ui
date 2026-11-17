@@ -1,1 +1,1 @@
-export { AccountShell } from "./account-shell";
+export { AccountShell, type AccountSummary } from "./account-shell";

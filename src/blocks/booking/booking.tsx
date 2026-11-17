@@ -53,7 +53,7 @@ export function BookingHead({ tag, title, rating, chips, facts }: { tag?: string
           </span>
         )}
         <div className="ez:flex ez:flex-wrap ez:items-end ez:justify-between ez:gap-4">
-          <h1 className="ez:m-0 ez:text-site-page ez:font-light ez:tracking-[-0.04em] ez:lg:text-[3.5rem] ez:lg:leading-[1.15]">{title}</h1>
+          <h1 className="ez:m-0 ez:text-site-page ez:font-light ez:tracking-[-0.04em] ez:lg:text-site-display-md">{title}</h1>
           {rating && rating.count > 0 && (
             <a href="#reviews" className="ez:flex ez:items-center ez:gap-2 ez:pb-2 ez:text-site-small ez:text-fg ez:no-underline">
               <svg viewBox="0 0 24 24" aria-hidden="true" className="ez:size-3.25 ez:text-primary">
@@ -176,20 +176,6 @@ export function SectionSplit({ id, title, children }: { id?: string; title: stri
       <h2 className="ez:m-0 ez:text-site-heading">{title}</h2>
       <div className="ez:min-w-0">{children}</div>
     </section>
-  );
-}
-
-export function NumberedList({ items }: { items: { title: string; note?: string | null }[] }) {
-  return (
-    <ol className="ez:m-0 ez:grid ez:list-none ez:p-0">
-      {items.map((it, i) => (
-        <li key={`${it.title}-${i}`} className="ez:grid ez:grid-cols-[56px_1fr_auto] ez:items-baseline ez:gap-4 ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-5">
-          <span className={cn(figure, "ez:text-site-heading ez:text-primary")}>{i + 1}</span>
-          <span>{it.title}</span>
-          {it.note && <span className="ez:text-site-small ez:text-muted">{it.note}</span>}
-        </li>
-      ))}
-    </ol>
   );
 }
 

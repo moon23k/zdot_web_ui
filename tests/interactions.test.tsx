@@ -87,12 +87,12 @@ describe("BuyBox", () => {
   it("updates the total for the chosen option and opens the sheet after adding", async () => {
     const { container } = render(<BuyBox product={product} addAction={async () => ({ ok: true, message: "담았어요" })} />);
     await userEvent.click(screen.getByLabelText(/^M/));
-    expect(screen.getByText("부터").parentElement).toHaveTextContent("42,000원부터");
+    expect(screen.getByText("부터").parentElement).toHaveTextContent("42,000원 부터");
     expect(screen.queryByText(/%$/)).toBeNull();
-    expect(screen.getByText("총 상품금액").parentElement?.querySelector("strong")).toHaveTextContent("52,000원");
+    expect(screen.getByText("총 상품 금액").parentElement?.querySelector("strong")).toHaveTextContent("52,000원");
     expect(screen.getByRole("link", { name: "바로 구매" })).toHaveAttribute("href", "/checkout?item=v2&qty=1");
     await expectNoA11yViolations(container);
-    await userEvent.click(screen.getByRole("button", { name: "장바구니 담기" }));
+    await userEvent.click(screen.getByRole("button", { name: "장바구니" }));
     expect(await screen.findByRole("dialog", { name: "장바구니에 담았어요" })).toBeInTheDocument();
   });
 
@@ -100,14 +100,14 @@ describe("BuyBox", () => {
     render(<BuyBox product={{ ...product, sample: true }} addAction={async () => ({})} />);
     expect(screen.getByText("예시")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "예시 상품은 구매할 수 없어요" })).toBeDisabled();
-    expect(screen.queryByRole("button", { name: "장바구니 담기" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "장바구니" })).toBeNull();
     expect(screen.queryByText("바로 구매")).toBeNull();
   });
 
   it("offers only a restock alert when sold out", () => {
     render(<BuyBox product={{ ...product, sold_out: true }} addAction={async () => ({})} restockAction={async () => {}} />);
     expect(screen.getByRole("button", { name: "재입고 알림" })).toBeEnabled();
-    expect(screen.queryByRole("button", { name: "장바구니 담기" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "장바구니" })).toBeNull();
     expect(screen.queryByText("바로 구매")).toBeNull();
   });
 });
@@ -137,7 +137,7 @@ describe("CartView", () => {
     const order = screen.getByRole("link", { name: "주문하기" });
     expect(order).toHaveAttribute("href", "/checkout?items=a,b");
     expect(screen.getByText("2/2")).toBeInTheDocument();
-    expect(screen.getByText("결제 예정 금액").nextElementSibling).toHaveTextContent("30,000원");
+    expect(screen.getByText("합계").nextElementSibling).toHaveTextContent("30,000원");
     expect(screen.getByText("구매할 수 없는 상품 1개")).toBeInTheDocument();
     expect(screen.queryByRole("checkbox", { name: "액자 선택" })).toBeNull();
     expect(screen.getByRole("button", { name: "모두 삭제" })).toBeEnabled();
@@ -217,7 +217,7 @@ describe("SiteRenderer", () => {
   it("follows the template order unless the partner arranged the page", () => {
     const template = resolveTemplate("quote", "a");
     const { unmount } = render(<SiteRenderer page={{ sections }} context={context} template={template} />);
-    expect(headings()).toEqual(["작업 사례", "가격", "진행 순서", "후기", "자주 묻는 질문"]);
+    expect(headings()).toEqual(["작업", "가격", "진행 순서", "후기", "자주 묻는 질문"]);
     unmount();
     render(<SiteRenderer page={{ sections, arranged: true }} context={context} template={template} />);
     expect(headings()).toEqual(["진행 순서", "가격"]);

@@ -38,7 +38,7 @@ export function CategoryMenu({ context, variant, blank }: SectionProps<"category
     }
     if (!blank) return null;
     return (
-      <div data-slot="category-menu" data-variant="header" data-blank="" aria-hidden="true" className="ez:flex ez:justify-center ez:gap-11 ez:text-site-lead ez:max-lg:hidden">
+      <div data-slot="category-menu" data-variant="header" data-blank="" aria-hidden="true" className="ez:flex ez:justify-center ez:gap-11 ez:text-site-lead ez:lg:hidden">
         {[0, 1, 2, 3].map((i) => (
           <Bar key={i} size="short" />
         ))}

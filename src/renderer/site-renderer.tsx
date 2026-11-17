@@ -41,6 +41,7 @@ export function SiteRenderer({
 }) {
   const hasGrid = !template && context.products.length > 0 && page.sections.some((s) => s.kind === "product_grid");
   const placed = place(page.sections, template, page.arranged);
+  const ctx = template ? { ...context, main: template.main } : context;
   const lead = !placed.some((s) => s.kind === "hero");
   return (
     <div data-slot="site-renderer" data-template={template?.id} className="ez:grid ez:gap-section ez:text-site-body">
@@ -51,7 +52,7 @@ export function SiteRenderer({
         if (section.kind === "free_shipping_bar" && template && template.main !== "shop") return null;
         if (section.kind === "maker_profile" && template) return null;
         const Component = sections[section.kind] as ComponentType<SectionProps>;
-        return <Component key={`${section.kind}-${i}`} data={section.data ?? {}} context={context} variant={section.variant} grid={section.grid} lead={lead} blank={Boolean(template)} />;
+        return <Component key={`${section.kind}-${i}`} data={section.data ?? {}} context={ctx} variant={section.variant} grid={section.grid} lead={lead} blank={Boolean(template)} />;
       })}
     </div>
   );

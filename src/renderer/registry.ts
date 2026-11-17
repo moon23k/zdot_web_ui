@@ -17,6 +17,7 @@ export type SiteContext = {
   faqs: Faq[];
   shipping: Shipping | null;
   flags: Record<string, boolean>;
+  main?: string;
 };
 
 export type SectionData = {

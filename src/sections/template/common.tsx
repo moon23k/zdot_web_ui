@@ -1,10 +1,11 @@
+import NextLink from "next/link";
 import type { ReactNode } from "react";
 import { ButtonLink } from "../../components/button";
 import type { SectionProps } from "../../renderer/registry";
 import { Icon } from "../../components/icon";
 import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
-import { countSup, figure } from "../../utils/styles";
+import { countSup, figure, textLink } from "../../utils/styles";
 import type { Review } from "./data";
 import { Bar, BlankButton, BlankStars, Block, Lines, Pairs, Pic, Split } from "../kit";
 
@@ -56,12 +57,12 @@ export function Intro({ data, lead, variant, blank }: SectionProps<"intro">) {
     <Block
       slot="intro"
       blank={!data.title}
-      className={cn(statement ? "ez:pt-6 ez:lg:pt-14" : "ez:lg:grid-cols-[4fr_8fr] ez:lg:gap-6", lead && !statement && "ez:pt-6")}
+      className={cn(statement ? "ez:pt-6 ez:lg:pt-14" : "ez:lg:grid-cols-[3fr_9fr] ez:lg:gap-6", lead && !statement && "ez:pt-6")}
     >
       {!statement && <span aria-hidden="true" className="ez:max-lg:hidden" />}
-      <div className="ez:grid ez:justify-items-start ez:gap-6">
+      <div className={cn("ez:grid ez:justify-items-start", statement ? "ez:gap-6" : "ez:gap-10")}>
         {data.title ? (
-          <h2 className={cn("ez:m-0 ez:max-w-4xl ez:font-light ez:tracking-[-0.035em] ez:text-balance", statement ? "ez:text-site-page ez:lg:text-site-display" : "ez:text-site-page-sm ez:lg:text-site-page")}>
+          <h2 className={cn("ez:m-0 ez:max-w-4xl ez:text-left ez:font-light ez:tracking-[-0.035em] ez:text-balance", statement ? "ez:text-site-page ez:lg:text-site-display" : "ez:text-site-page-sm ez:lg:text-site-page")}>
             {data.title}
           </h2>
         ) : (
@@ -70,9 +71,9 @@ export function Intro({ data, lead, variant, blank }: SectionProps<"intro">) {
           </span>
         )}
         {data.title && data.button && (
-          <ButtonLink href={data.href ?? "/products"} variant="outline" size="sm">
+          <NextLink href={data.href ?? "/products"} className={textLink}>
             {data.button}
-          </ButtonLink>
+          </NextLink>
         )}
       </div>
     </Block>

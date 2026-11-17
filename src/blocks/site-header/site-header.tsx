@@ -1,41 +1,46 @@
 import NextLink from "next/link";
-import { Suspense, type ReactNode } from "react";
+import { Suspense } from "react";
 import { ButtonLink } from "../../components/button";
 import { Icon, type IconName } from "../../components/icon";
 import type { HeaderVariant } from "../../templates/types";
 import { cn } from "../../utils/cn";
-import { LiveNavLinks, NavLinks } from "./header-nav";
+import { wordmark } from "../../utils/styles";
+import { LiveNavLinks, NavLinks, type NavCategory } from "./header-nav";
+import { CheckoutSteps, PathSwitch } from "./path-switch";
 import { SiteLogo } from "./site-logo";
 
-const ACTIONS: Record<string, { href: string; label: string }> = {
-  search: { href: "/search", label: "검색" },
-  class_booking: { href: "/classes", label: "수업 예약" },
-  room_booking: { href: "/products", label: "객실 예약" },
-  portfolio: { href: "/cases", label: "작업 사례" },
+const LINKS: Record<string, { label: string; signed: string; guest: string }> = {
+  stay: { label: "예약 조회", signed: "/orders", guest: "/orders/lookup" },
+  class: { label: "예약 내역", signed: "/orders", guest: "/orders/lookup" },
+  quote: { label: "견적 조회", signed: "/quote/lookup", guest: "/quote/lookup" },
 };
 
-const shell: Record<HeaderVariant, string> = {
-  center: "ez:border-b ez:border-primary-border ez:bg-surface",
-  left: "ez:border-b ez:border-primary-border ez:bg-surface",
-  transparent: "ez:bg-surface",
-  dark: "ez:bg-primary",
-  band: "ez:bg-primary",
-  pill: "ez:bg-surface ez:pt-3",
-  cta: "ez:border-b ez:border-primary-border ez:bg-surface",
-  gallery: "ez:bg-transparent",
+const CTA: Record<string, { label: string; href: string }> = {
+  stay: { label: "예약하기", href: "/#rooms" },
+  quote: { label: "견적 요청", href: "/quote" },
 };
 
-function IconLink({ href, icon, label, count, inverse }: { href: string; icon: IconName; label: string; count?: number; inverse?: boolean }) {
+function IconLink({ href, icon, label, count }: { href: string; icon: IconName; label: string; count?: number }) {
   return (
     <NextLink
       href={href}
       aria-label={count ? `${label} ${count}` : label}
-      className={cn("ez:relative ez:inline-flex ez:min-h-11 ez:items-center ez:no-underline", inverse ? "ez:text-on-primary" : "ez:text-fg ez:hover:text-primary")}
+      className="ez:relative ez:inline-flex ez:size-11 ez:items-center ez:justify-center ez:rounded-full ez:text-fg ez:no-underline ez:hover:text-primary"
     >
       <Icon name={icon} />
       {count ? (
-        <sup className={cn("ez:-ml-1 ez:self-start ez:pt-2 ez:text-site-label ez:tabular-nums", inverse ? "ez:text-on-primary" : "ez:text-primary")}>{count}</sup>
+        <span className="ez:absolute ez:top-1.5 ez:right-0.5 ez:flex ez:h-4 ez:min-w-4 ez:items-center ez:justify-center ez:rounded-full ez:bg-point-soft ez:px-1 ez:text-[11px] ez:font-semibold ez:leading-none ez:tracking-normal ez:text-primary ez:tabular-nums">
+          {count}
+        </span>
       ) : null}
+    </NextLink>
+  );
+}
+
+function Logo({ name, logoUrl }: { name: string; logoUrl?: string | null }) {
+  return (
+    <NextLink href="/" className={cn("ez:min-w-0 ez:truncate ez:text-[2rem] ez:leading-none ez:text-fg ez:no-underline", wordmark(name))}>
+      <SiteLogo name={name} src={logoUrl} />
     </NextLink>
   );
 }
@@ -45,10 +50,10 @@ export function SiteHeader({
   logoUrl,
   cartCount,
   signedIn,
-  variant = "left",
   main = "shop",
-  actions,
   cta,
+  notice,
+  categories,
 }: {
   name: string;
   logoUrl?: string | null;
@@ -58,99 +63,63 @@ export function SiteHeader({
   main?: string;
   actions?: string[];
   cta?: { label: string; href: string } | null;
+  notice?: string | null;
+  categories?: NavCategory[];
 }) {
-  const inverse = variant === "dark" || variant === "band";
-  const gallery = variant === "gallery";
-  const text = cn(
-    "ez:inline-flex ez:min-h-11 ez:items-center ez:no-underline ez:hover:underline",
-    inverse ? "ez:text-on-primary" : "ez:text-fg",
-    variant === "cta" && cta && "ez:max-md:hidden",
-  );
-  const extra = (actions ?? []).map((a) => ACTIONS[a]).filter(Boolean);
-  const account = signedIn ? "/me" : "/login";
-  const stay = main === "stay";
-  const logo = (
-    <NextLink
-      href="/"
-      className={cn(
-        "ez:truncate ez:font-title ez:no-underline",
-        gallery ? "ez:font-body ez:text-site-item ez:tracking-[0.01em]" : "ez:font-display ez:text-lg",
-        inverse ? "ez:text-on-primary" : "ez:text-fg",
-        variant === "center" && "ez:justify-self-center ez:max-md:justify-self-start",
+  const shop = main === "shop";
+  const link = LINKS[main];
+  const action = cta ?? CTA[main] ?? null;
+  const full = (
+    <header data-slot="site-header" data-variant="site" className="ez:bg-surface">
+      {notice && (
+        <p
+          data-slot="notice-bar"
+          className="ez:m-0 ez:flex ez:min-h-9.5 ez:items-center ez:justify-center ez:gap-2 ez:bg-surface-alt ez:px-page ez:text-site-small ez:text-fg"
+        >
+          <Icon name="truck" size="sm" />
+          {notice}
+        </p>
       )}
-    >
-      <SiteLogo name={name} src={logoUrl} />
-    </NextLink>
-  );
-  const icons: ReactNode = gallery ? (
-    <>
-      {stay ? (
-        <NextLink href={signedIn ? "/orders" : "/orders/lookup"} className="ez:inline-flex ez:min-h-11 ez:items-center ez:text-fg ez:no-underline ez:hover:text-primary">
-          예약 조회
-        </NextLink>
-      ) : (
-        <IconLink href="/products?search=1" icon="search" label="검색" />
-      )}
-      <IconLink href={account} icon="user" label={signedIn ? "내 정보" : "로그인"} />
-      {!stay && <IconLink href={signedIn ? "/me/likes" : "/login"} icon="heart" label="찜" />}
-      {!stay && <IconLink href="/cart" icon="bag" label="장바구니" count={cartCount} />}
-    </>
-  ) : (
-    <>
-      <IconLink href={account} icon="user" label={signedIn ? "내 정보" : "로그인"} inverse={inverse} />
-      <IconLink href="/cart" icon="bag" label="장바구니" count={cartCount} inverse={inverse} />
-    </>
-  );
-  const menu = (
-    <nav aria-label="주요 메뉴" className={cn("ez:flex ez:shrink-0 ez:items-center ez:justify-self-end", gallery ? "ez:gap-4.5 ez:text-site-small" : "ez:gap-4 ez:text-[0.95rem]")}>
-      {!gallery &&
-        (extra.length ? (
-          extra.map((a) => (
-            <NextLink key={a.href} href={a.href} className={cn(text, "ez:max-md:hidden")}>
-              {a.label}
-            </NextLink>
-          ))
-        ) : (
-          <NextLink href="/products" className={text}>
-            상품
-          </NextLink>
-        ))}
-      {icons}
-      {variant === "cta" && cta && (
-        <ButtonLink href={cta.href} size="sm">
-          {cta.label}
-        </ButtonLink>
-      )}
-    </nav>
-  );
-  if (gallery) {
-    return (
-      <header data-slot="site-header" data-variant={variant} className={shell.gallery}>
-        <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:grid-cols-[1fr_auto] ez:items-center ez:gap-3 ez:px-page ez:py-3 ez:md:min-h-19 ez:md:grid-cols-[1fr_auto_1fr]">
-          {logo}
-          <nav aria-label="상품 메뉴" className="ez:flex ez:gap-8.5 ez:text-site-small ez:tracking-[0.02em] ez:max-md:hidden">
-            <Suspense fallback={<NavLinks main={main} />}>
-              <LiveNavLinks main={main} />
+      <div className="ez:border-0 ez:border-b ez:border-solid ez:border-site-line">
+        <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:grid-cols-[1fr_auto] ez:items-center ez:gap-3 ez:px-page ez:min-h-16 ez:lg:min-h-20 ez:lg:grid-cols-[minmax(0,260px)_1fr_minmax(0,260px)]">
+          <Logo name={name} logoUrl={logoUrl} />
+          <nav aria-label="주요 메뉴" className="ez:flex ez:justify-center ez:gap-10 ez:text-site-lead ez:max-lg:hidden">
+            <Suspense fallback={<NavLinks main={main} categories={categories} />}>
+              <LiveNavLinks main={main} categories={categories} />
             </Suspense>
           </nav>
-          {menu}
+          <div className="ez:flex ez:items-center ez:justify-end ez:gap-1">
+            {link && (
+              <NextLink href={signedIn ? link.signed : link.guest} className="ez:mr-4 ez:text-site-small ez:text-fg ez:no-underline ez:hover:text-primary ez:max-md:hidden">
+                {link.label}
+              </NextLink>
+            )}
+            {shop && <IconLink href="/products?search=1" icon="search" label="검색" />}
+            <IconLink href={signedIn ? "/me" : "/login"} icon="user" label={signedIn ? "내 정보" : "로그인"} />
+            {shop && <IconLink href={signedIn ? "/me/likes" : "/login"} icon="heart" label="찜" />}
+            {shop && <IconLink href="/cart" icon="bag" label="장바구니" count={cartCount} />}
+            {action && (
+              <ButtonLink href={action.href} size="sm" className="ez:ml-2 ez:max-md:hidden">
+                {action.label}
+              </ButtonLink>
+            )}
+          </div>
         </div>
-      </header>
-    );
-  }
-  return (
-    <header data-slot="site-header" data-variant={variant} className={cn("ez:sticky ez:top-0 ez:z-10 ez:border-0 ez:border-solid", shell[variant])}>
-      <div
-        className={cn(
-          "ez:mx-auto ez:max-w-wrap ez:items-center ez:gap-3 ez:px-page ez:py-3",
-          variant === "center" ? "ez:grid ez:grid-cols-[1fr_auto] ez:md:grid-cols-[1fr_auto_1fr]" : "ez:flex ez:justify-between",
-          variant === "pill" && "ez:rounded-full ez:border ez:border-solid ez:border-primary-border ez:py-2",
-        )}
-      >
-        {variant === "center" && <span aria-hidden="true" className="ez:max-md:hidden" />}
-        {logo}
-        {menu}
       </div>
     </header>
   );
+  if (!shop) return full;
+  const compact = (
+    <header data-slot="site-header" data-variant="checkout" className="ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:bg-surface">
+      <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:grid-cols-[1fr_auto] ez:items-center ez:gap-3 ez:px-page ez:min-h-16 ez:lg:min-h-20 ez:md:grid-cols-[minmax(0,260px)_1fr_minmax(0,260px)]">
+        <Logo name={name} logoUrl={logoUrl} />
+        <CheckoutSteps className="ez:justify-center ez:max-md:hidden" />
+        <NextLink href="/cart" className="ez:inline-flex ez:items-center ez:justify-self-end ez:gap-2 ez:text-site-small ez:text-fg ez:no-underline ez:hover:text-primary">
+          <Icon name="left" size="sm" />
+          장바구니
+        </NextLink>
+      </div>
+    </header>
+  );
+  return <PathSwitch prefix="/checkout" match={compact} rest={full} />;
 }

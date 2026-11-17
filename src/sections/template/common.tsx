@@ -1,38 +1,13 @@
 import { ButtonLink } from "../../components/button";
 import type { SectionProps } from "../../renderer/registry";
-import { Icon } from "../../components/icon";
-import { cn, won } from "../../utils/cn";
+import { Photo } from "../../components/photo";
+import { cn } from "../../utils/cn";
+import { countSup } from "../../utils/styles";
+import type { Review } from "./data";
 import { Bar, BlankButton, BlankStars, Block, Cols, Lines, Pic, Rows, Steps, Title } from "../kit";
 
-export function NoticeBar({ data, context, variant, blank }: SectionProps<"notice_bar">) {
-  const free = context.shipping?.free_threshold;
-  const text = data.text ?? (variant === "gallery" && free != null ? `${won(free)} 이상 무료 배송` : null);
-  if (!text && !blank) return null;
-  if (variant === "gallery") {
-    return (
-      <p
-        data-slot="notice-bar"
-        data-variant="gallery"
-        data-blank={text ? undefined : ""}
-        className="ez:m-0 ez:-mt-6 ez:mx-[calc(50%-50vw)] ez:flex ez:min-h-8.5 ez:items-center ez:justify-center ez:gap-2 ez:bg-primary-tint ez:px-page ez:text-site-caption ez:tracking-[0.01em] ez:text-primary"
-      >
-        <Icon name="truck" size="sm" />
-        {text ?? <Bar size="long" />}
-      </p>
-    );
-  }
-  if (!text) {
-    return (
-      <div data-slot="notice-bar" data-blank="" className="ez:bg-primary ez:px-page ez:py-2 ez:text-center ez:text-site-note">
-        <Bar size="long" strong />
-      </div>
-    );
-  }
-  return (
-    <p data-slot="notice-bar" className="ez:m-0 ez:bg-primary ez:px-page ez:py-2 ez:text-center ez:text-site-note ez:text-on-primary">
-      {text}
-    </p>
-  );
+export function NoticeBar() {
+  return null;
 }
 
 export function Intro({ data, lead, blank }: SectionProps<"intro">) {
@@ -75,7 +50,52 @@ export function PhotoBand({ data, blank }: SectionProps<"photo_band">) {
   );
 }
 
-export function Testimonial({ data, blank }: SectionProps<"testimonial">) {
+export function StarRow({ rating, className }: { rating: number; className?: string }) {
+  return (
+    <span role="img" aria-label={`별점 ${rating}점`} className={cn("ez:inline-flex ez:gap-0.5 ez:text-primary", className)}>
+      {[1, 2, 3, 4, 5].map((n) => (
+        <svg key={n} viewBox="0 0 24 24" aria-hidden="true" className={cn("ez:size-3.25", n > Math.round(rating) && "ez:opacity-25")}>
+          <path fill="currentColor" d="M12 3.8l2.5 5.2 5.7.8-4.1 4 1 5.6-5.1-2.7-5.1 2.7 1-5.6-4.1-4 5.7-.8z" />
+        </svg>
+      ))}
+    </span>
+  );
+}
+
+function GalleryReviews({ items, count, products }: { items: Review[]; count?: number | null; products: SectionProps["context"]["products"] }) {
+  return (
+    <section data-slot="testimonial" data-variant="gallery" id="reviews" data-blank={items.length ? undefined : ""} className="ez:grid ez:gap-2 ez:text-fg">
+      <h2 className="ez:m-0 ez:text-site-section">
+        리뷰
+        {count ? <span className={countSup}>{count}</span> : null}
+      </h2>
+      <div className="ez:grid ez:gap-x-12 ez:md:grid-cols-3">
+        {(items.length ? items.slice(0, 3) : [null, null, null]).map((r, i) => {
+          const product = r?.product ? products.find((p) => p.id === r.product) : undefined;
+          return (
+            <article key={r ? `${r.name}-${r.body}` : i} className="ez:flex ez:flex-col ez:gap-5 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:py-8">
+              {r ? <StarRow rating={r.rating} /> : <BlankStars />}
+              {r ? <p className="ez:m-0 ez:min-h-18.5 ez:text-site-item ez:font-normal">{r.body}</p> : <Lines />}
+              <span className="ez:flex ez:items-center ez:gap-3.5">
+                {product && <Photo src={product.cover_url} alt="" sizes="52px" tone={i} className="ez:size-13 ez:rounded-sm" />}
+                <span className="ez:flex ez:flex-col ez:text-site-small">
+                  {product && <span>{product.name}</span>}
+                  <span className="ez:text-muted">{r ? [r.name, r.date].filter(Boolean).join(" · ") : <Bar size="short" />}</span>
+                </span>
+              </span>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+export function Testimonial({ data, context, variant, blank }: SectionProps<"testimonial">) {
+  if (variant === "gallery") {
+    if (!data.items?.length && !blank) return null;
+    return <GalleryReviews items={data.items ?? []} count={data.count} products={context.products} />;
+  }
   if (!data.quote && !blank) return null;
   if (!data.quote) {
     return (

@@ -68,13 +68,44 @@
   --ezd-wrap: var(--ezd-wrap-home);
 }
 @media (min-width: 768px) {
-  .ez-root:has([data-slot="site-renderer"]),
+  .ez-root:has([data-slot="site-renderer"]) {
+    --ezd-pad: var(--ezd-pad-home);
+  }
+  .ez-root[data-frame="gallery"] {
+    --ezd-pad: 40px;
+  }
+}
+@media (min-width: 1024px) {
   .ez-root[data-frame="gallery"] {
     --ezd-pad: var(--ezd-pad-home);
   }
 }
 .ez-root[data-frame="gallery"] {
-  font-size: var(--ez-text-site-note);
+  overflow-x: clip;
+  font-size: var(--ez-text-site-body);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  font-feature-settings: "tnum" 1;
+}
+:where(.ez-root[data-frame="gallery"]) .ez-main {
+  padding-top: 32px;
+  padding-bottom: 120px;
+}
+:where(.ez-root[data-frame="gallery"]) h1 {
+  font-size: clamp(1.75rem, 4vw, var(--ez-text-site-page));
+  line-height: 1.2;
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  margin: 0 0 40px;
+}
+:where(.ez-root[data-frame="gallery"]) h2 {
+  font-size: clamp(1.25rem, 3vw, var(--ez-text-site-heading));
+  line-height: 1.4;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+:where(.ez-root[data-frame="gallery"]) .ez-muted {
+  font-size: var(--ez-text-site-small);
 }
 .ez-muted {
   color: var(--ezd-muted);
@@ -245,4 +276,77 @@
   display: grid;
   gap: 16px;
   justify-items: center;
+}
+:where(.ez-root[data-frame="gallery"]) .ez-btn {
+  min-height: var(--ezd-control);
+  padding: 0 28px;
+  font-weight: 500;
+  background: var(--ezd-point-soft);
+  color: var(--ezd-primary);
+}
+:where(.ez-root[data-frame="gallery"]) .ez-btn--secondary {
+  background: transparent;
+  border-color: var(--ez-color-site-edge);
+  color: var(--ezd-text);
+}
+:where(.ez-root[data-frame="gallery"]) .ez-input {
+  min-height: var(--ezd-control);
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--ez-color-site-field);
+  border-radius: 0;
+  background: transparent;
+}
+:where(.ez-root[data-frame="gallery"]) .ez-input:focus-visible {
+  outline: 0;
+  border-bottom-color: var(--ezd-primary);
+}
+:where(.ez-root[data-frame="gallery"]) .ez-input[readonly] {
+  background: transparent;
+  color: var(--ezd-muted);
+}
+:where(.ez-root[data-frame="gallery"]) .ez-line,
+:where(.ez-root[data-frame="gallery"]) .ez-faq details,
+:where(.ez-root[data-frame="gallery"]) .ez-reviews li {
+  border-bottom-color: var(--ez-color-site-line);
+}
+:where(.ez-root[data-frame="gallery"]) .ez-line__name {
+  font-weight: 500;
+}
+:where(.ez-root[data-frame="gallery"]) .ez-faq summary {
+  font-weight: 400;
+}
+:where(.ez-root[data-frame="gallery"]) .ez-categories a {
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 16px;
+  border-color: var(--ez-color-site-line);
+  font-size: var(--ez-text-site-note);
+}
+:where(.ez-root[data-frame="gallery"]) .ez-categories a[aria-current="page"] {
+  border-color: var(--ezd-primary);
+  color: var(--ezd-primary);
+  font-weight: 500;
+}
+:where(.ez-root[data-frame="gallery"]) table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ez-text-site-small);
+}
+:where(.ez-root[data-frame="gallery"]) :is(th, td) {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ez-color-site-line);
+  text-align: left;
+  font-weight: 400;
+  vertical-align: top;
+}
+:where(.ez-root[data-frame="gallery"]) th {
+  color: var(--ezd-muted);
+  width: 32%;
+  padding-right: 16px;
+}
+.ez-liked {
+  color: var(--ezd-primary);
+  fill: currentColor;
 }

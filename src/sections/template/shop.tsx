@@ -1,4 +1,7 @@
+import NextLink from "next/link";
+import { Icon } from "../../components/icon";
 import type { SectionProps } from "../../renderer/registry";
+import { countSup } from "../../utils/styles";
 import { Bar, Block, Card, Cols, Pic, Rows, Title } from "../kit";
 import type { Tile } from "./data";
 
@@ -11,9 +14,45 @@ function blankTiles(count: number, ratio: number) {
   ));
 }
 
-export function CategoryTiles({ data, context, blank }: SectionProps<"category_tiles">) {
-  const items: Tile[] = data.items?.length ? data.items : context.categories.map((c) => ({ title: c.name, href: `/products?category=${c.id}` }));
+function GalleryTiles({ items }: { items: (Tile & { count?: number | null })[] }) {
+  if (!items.length) {
+    return (
+      <section data-slot="category-tiles" data-variant="gallery" data-blank="" className="ez:grid ez:grid-cols-2 ez:gap-gutter ez:lg:grid-cols-4">
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} className="ez:grid ez:gap-4">
+            <Pic ratio={0.8} tone={i} />
+            <span className="ez:text-site-heading">
+              <Bar size="short" />
+            </span>
+          </div>
+        ))}
+      </section>
+    );
+  }
+  return (
+    <section data-slot="category-tiles" data-variant="gallery" className="ez:grid ez:grid-cols-2 ez:gap-gutter ez:lg:grid-cols-4">
+      {items.slice(0, 4).map((t, i) => (
+        <NextLink key={t.title} href={t.href ?? "/products"} className="ez:group ez:grid ez:gap-4 ez:text-fg ez:no-underline">
+          <Pic src={t.image} ratio={0.8} tone={i} />
+          <span className="ez:flex ez:items-center ez:justify-between ez:gap-3">
+            <span className="ez:text-site-heading">
+              {t.title}
+              {t.count ? <span className={countSup}>{t.count}</span> : null}
+            </span>
+            <Icon name="right" className="ez:transition-transform ez:group-hover:translate-x-1" />
+          </span>
+        </NextLink>
+      ))}
+    </section>
+  );
+}
+
+export function CategoryTiles({ data, context, variant, blank }: SectionProps<"category_tiles">) {
+  const items: (Tile & { count?: number | null })[] = data.items?.length
+    ? data.items
+    : context.categories.map((c) => ({ title: c.name, href: `/products?category=${c.id}`, count: c.product_count }));
   if (!items.length && !blank) return null;
+  if (variant === "gallery") return <GalleryTiles items={items} />;
   if (!items.length) {
     return (
       <section data-slot="category-tiles" data-blank="">

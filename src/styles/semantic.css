@@ -8,6 +8,7 @@
   --color-surface-alt: var(--ezd-surface-alt);
   --color-fg: var(--ezd-text);
   --color-muted: var(--ezd-muted);
+  --color-point-soft: var(--ezd-point-soft);
 
   --radius-sm: var(--ezd-radius-sm);
   --radius-md: var(--ezd-radius-md);
@@ -16,6 +17,7 @@
 
   --font-display: var(--ezd-font-display);
   --font-body: var(--ezd-font-body);
+  --font-figure: var(--ezd-font-figure);
   --font-weight-title: var(--ezd-display-weight);
   --tracking-brand: var(--ezd-tracking);
 

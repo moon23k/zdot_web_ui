@@ -7,7 +7,7 @@ import { focusRing } from "../../utils/styles";
 
 export const buttonVariants = cva(
   [
-    "ez:inline-flex ez:items-center ez:justify-center ez:gap-1.5 ez:box-border ez:m-0",
+    "ez:inline-flex ez:items-center ez:justify-center ez:gap-2.5 ez:box-border ez:m-0 ez:whitespace-nowrap",
     "ez:rounded-button ez:border ez:border-solid ez:border-transparent",
     "ez:font-body ez:no-underline ez:cursor-pointer ez:select-none",
     "ez:transition-colors ez:disabled:cursor-not-allowed ez:disabled:opacity-45",
@@ -16,15 +16,15 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "ez:bg-primary-tint ez:text-primary ez:font-semibold ez:hover:border-primary-border",
-        secondary: "ez:bg-transparent ez:border-hairline ez:text-fg ez:font-medium ez:hover:border-muted",
-        ghost: "ez:bg-transparent ez:text-fg ez:font-medium ez:hover:bg-primary-tint",
-        outline: "ez:bg-transparent ez:border-hairline ez:text-fg ez:font-medium ez:hover:border-muted",
+        primary: "ez:bg-point-soft ez:text-primary ez:font-medium ez:hover:border-primary",
+        secondary: "ez:bg-transparent ez:border-site-edge ez:text-fg ez:font-medium ez:hover:border-muted",
+        ghost: "ez:bg-transparent ez:text-fg ez:font-medium ez:hover:bg-surface-alt",
+        outline: "ez:bg-transparent ez:border-site-edge ez:text-fg ez:font-medium ez:hover:border-muted",
         danger: "ez:bg-danger ez:text-on-danger ez:hover:bg-danger/90",
       } satisfies Record<ButtonVariant, string>,
       size: {
-        md: "ez:min-h-(--ezd-control) ez:px-7 ez:text-site-note",
-        sm: "ez:min-h-9.5 ez:px-4 ez:text-site-small",
+        md: "ez:min-h-(--ezd-control) ez:px-7 ez:text-site-lead ez:font-medium",
+        sm: "ez:min-h-(--ezd-control-sm) ez:px-4.5 ez:text-site-small ez:font-medium",
       } satisfies Partial<Record<ButtonSize, string>>,
       block: { true: "ez:w-full" },
       icon: { true: "ez:aspect-square ez:px-0" },

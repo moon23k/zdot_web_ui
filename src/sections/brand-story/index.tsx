@@ -18,6 +18,23 @@ export function BrandStory({ data, variant, blank }: SectionProps<"story">) {
       </section>
     );
   }
+  if (variant === "gallery") {
+    return (
+      <section data-slot="story" data-variant="gallery" id="story" className="ez:mx-[calc(50%-50vw)] ez:bg-surface-alt ez:text-fg">
+        <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-8 ez:px-page ez:py-16 ez:lg:grid-cols-[5fr_1fr_6fr] ez:lg:items-center ez:lg:py-30">
+          <h2 className="ez:m-0 ez:text-site-page-sm ez:font-light ez:tracking-[-0.035em] ez:text-balance ez:lg:text-site-page">{data.title}</h2>
+          <span aria-hidden="true" className="ez:max-lg:hidden" />
+          <div className="ez:grid ez:gap-4 ez:text-site-item ez:font-normal">
+            {body.map((p) => (
+              <p key={p} className="ez:m-0">
+                {p}
+              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
   return (
     <section data-slot="story" data-variant={variant} className={cn("ez:grid ez:gap-6 ez:text-fg", variant === "band" && "ez:justify-items-center ez:py-8 ez:text-center")}>
       <div className="ez:grid ez:max-w-170 ez:gap-3">

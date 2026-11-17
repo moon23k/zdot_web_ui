@@ -1,4 +1,7 @@
+import NextLink from "next/link";
 import { Link } from "../../components/link";
+import { textLink } from "../../utils/styles";
+import { cn } from "../../utils/cn";
 import { ProductGrid } from "../../blocks/product-grid";
 import type { SectionProps } from "../../renderer/registry";
 import { CategoryChips } from "../category-menu";
@@ -31,6 +34,19 @@ export function ProductList({ data, context, grid, variant, blank }: SectionProp
     );
   }
   const shown = context.products.slice(0, fullRows(Math.min(context.products.length, SHOWN), grid?.m ?? 2, grid?.pc ?? 4));
+  if (variant === "gallery") {
+    return (
+      <section data-slot="product-grid" data-variant="gallery" className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-9">
+        <div className="ez:flex ez:items-end ez:justify-between ez:gap-3">
+          <h2 className="ez:m-0 ez:text-site-section">{data.title ?? "신상품"}</h2>
+          <NextLink href="/products" className={cn(textLink, "ez:shrink-0 ez:text-site-small")}>
+            전체 보기
+          </NextLink>
+        </div>
+        <ProductGrid products={context.products.slice(0, SHOWN)} eager={4} grid={grid} />
+      </section>
+    );
+  }
   return (
     <section data-slot="product-grid" className="ez:grid ez:gap-4 ez:text-fg">
       <div className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">

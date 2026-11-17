@@ -9,7 +9,7 @@ import { Status } from "../parts/status";
 const LOW_STOCK = 5;
 
 const stepButton = cn(
-  "ez:size-8 ez:m-0 ez:p-0 ez:border-0 ez:bg-transparent ez:text-base ez:text-fg ez:cursor-pointer",
+  "ez:size-11 ez:m-0 ez:p-0 ez:border-0 ez:bg-transparent ez:text-base ez:text-fg ez:cursor-pointer",
   "ez:disabled:cursor-not-allowed ez:disabled:text-muted/50",
   focusRing,
 );
@@ -34,23 +34,23 @@ export function CartLine({
     <li
       data-slot="cart-line"
       data-available={available || undefined}
-      className="ez:flex ez:gap-3 ez:border-0 ez:border-b ez:border-solid ez:border-primary-border ez:py-4"
+      className="ez:flex ez:gap-4 ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-7 ez:lg:gap-6"
     >
       {selector}
       <NextLink
         href={`/products/${line.product_id}`}
         tabIndex={-1}
         aria-hidden="true"
-        className={cn("ez:w-18 ez:shrink-0 ez:rounded-md", focusRing, !available && "ez:opacity-45")}
+        className={cn("ez:w-20 ez:shrink-0 ez:lg:w-30", focusRing, !available && "ez:opacity-45")}
       >
-        <Photo src={imageSrc} alt={line.name} sizes="72px" className="ez:aspect-[4/5]" />
+        <Photo src={imageSrc} alt={line.name} sizes="120px" className="ez:aspect-[4/5]" />
       </NextLink>
       <div className="ez:flex ez:min-w-0 ez:flex-1 ez:flex-col">
         <div className="ez:flex ez:items-start ez:gap-1">
           <NextLink
             href={`/products/${line.product_id}`}
             className={cn(
-              "ez:flex-1 ez:text-base ez:font-semibold ez:leading-[22px] ez:tracking-[-0.01em] ez:no-underline ez:hover:underline",
+              "ez:flex-1 ez:text-site-item ez:font-normal ez:no-underline ez:hover:underline ez:underline-offset-4",
               available ? "ez:text-fg" : "ez:text-muted",
             )}
           >
@@ -71,7 +71,7 @@ export function CartLine({
             </form>
           )}
         </div>
-        <div className="ez:mt-1 ez:flex ez:items-baseline ez:justify-between ez:gap-2 ez:text-[13px] ez:leading-[18px] ez:whitespace-nowrap">
+        <div className="ez:mt-1.5 ez:flex ez:items-baseline ez:justify-between ez:gap-2 ez:text-site-small ez:whitespace-nowrap">
           {!line.sellable ? (
             <Status icon="alert" tone="danger">판매 중지</Status>
           ) : !line.enough_stock ? (
@@ -83,7 +83,7 @@ export function CartLine({
           )}
           {discount > 0 && available && (
             <span className="ez:flex ez:items-baseline ez:gap-1.5">
-              <span className="ez:font-semibold ez:text-primary">{discount}%</span>
+              <span className="ez:font-medium ez:text-primary">{discount}%</span>
               <s className="ez:tabular-nums ez:text-muted">
                 <span className="ez:sr-only">정가 </span>
                 {won(listTotal)}
@@ -91,16 +91,16 @@ export function CartLine({
             </span>
           )}
         </div>
-        <div className="ez:mt-auto ez:flex ez:items-end ez:justify-between ez:pt-3">
+        <div className="ez:mt-auto ez:flex ez:items-center ez:justify-between ez:pt-4">
           {available ? (
-            <form action={updateAction} className="ez:inline-flex ez:h-8 ez:items-center ez:rounded-md ez:border ez:border-solid ez:border-primary-border">
+            <form action={updateAction} className="ez:inline-flex ez:h-11 ez:items-center ez:rounded-full ez:border ez:border-solid ez:border-site-line">
               <input type="hidden" name="variant_id" value={line.variant_id} />
               <button type="submit" name="quantity" value={line.quantity - 1} disabled={line.quantity <= 1} aria-label={`${line.name} 수량 줄이기`} className={stepButton}>
                 −
               </button>
               <span
                 aria-label={`수량 ${line.quantity}개`}
-                className={cn("ez:w-8 ez:text-center ez:text-base ez:tabular-nums", line.enough_stock ? "ez:text-fg" : "ez:font-semibold ez:text-danger")}
+                className={cn("ez:w-7 ez:text-center ez:font-medium ez:tabular-nums", line.enough_stock ? "ez:text-fg" : "ez:text-danger")}
               >
                 {line.quantity}
               </span>
@@ -109,9 +109,9 @@ export function CartLine({
               </button>
             </form>
           ) : (
-            <span className="ez:text-[13px] ez:tabular-nums ez:text-muted">{line.quantity}개</span>
+            <span className="ez:text-site-small ez:tabular-nums ez:text-muted">{line.quantity}개</span>
           )}
-          <strong className={cn("ez:text-base ez:font-semibold ez:leading-[22px] ez:tracking-[-0.01em] ez:tabular-nums", available ? "ez:text-fg" : "ez:text-muted")}>
+          <strong className={cn("ez:text-site-item ez:font-medium ez:tabular-nums", available ? "ez:text-fg" : "ez:text-muted")}>
             {discount > 0 && available && <span className="ez:sr-only">할인가 </span>}
             {won(line.line_total)}
           </strong>

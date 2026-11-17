@@ -35,7 +35,7 @@ export function ProductGrid({
     <div
       data-slot="product-grid"
       className={cn(
-        "ez:grid ez:gap-gutter",
+        "ez:grid ez:gap-x-gutter ez:gap-y-10 ez:lg:gap-y-14",
         { 1: "ez:grid-cols-1", 2: "ez:grid-cols-2", 3: "ez:grid-cols-3" }[grid?.m ?? 2],
         pcCols(grid?.pc ?? 4, fit ? products.length : Number.POSITIVE_INFINITY),
       )}

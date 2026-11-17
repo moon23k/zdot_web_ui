@@ -1,10 +1,20 @@
 import NextLink from "next/link";
 import type { Business } from "../../types";
+import { ButtonLink } from "../../components/button";
 import { cn } from "../../utils/cn";
+import { wordmark } from "../../utils/styles";
+import { PathSwitch } from "../site-header/path-switch";
 
-const link = "ez:inline-flex ez:min-h-10 ez:items-center ez:text-muted ez:no-underline ez:hover:underline ez:md:min-h-0";
+const link = "ez:text-fg ez:no-underline ez:hover:text-primary";
 
-const STAY_LABEL: Record<string, string> = { returns: "취소·환불 규정" };
+const GUIDE: Record<string, { title: string; returns: string; account: [string, string][]; lookup: [string, string] }> = {
+  shop: { title: "쇼핑 안내", returns: "교환 · 반품", account: [["주문 내역", "/orders"], ["찜", "/me/likes"]], lookup: ["비회원 주문 조회", "/orders/lookup"] },
+  stay: { title: "예약 안내", returns: "취소 · 환불 규정", account: [["예약 내역", "/orders"]], lookup: ["예약 조회", "/orders/lookup"] },
+  class: { title: "수강 안내", returns: "예약 변경 · 취소", account: [["예약 내역", "/orders"]], lookup: ["예약 조회", "/orders/lookup"] },
+  quote: { title: "의뢰 안내", returns: "취소 · 환불 규정", account: [["견적 내역", "/quote/lookup"]], lookup: ["견적 조회", "/quote/lookup"] },
+};
+
+const LEGAL = new Set(["terms", "privacy"]);
 
 export function SiteFooter({
   storeName,
@@ -12,64 +22,89 @@ export function SiteFooter({
   hosting,
   policies,
   closing,
+  hours,
   policyHref = (key) => `/policy/${key}`,
-  lookupHref = "/orders/lookup",
-  variant = "full",
-  main,
+  main = "shop",
 }: {
   storeName: string;
   business: Business | null;
   hosting: string;
   policies: { key: string; title: string }[];
   closing?: string | null;
+  hours?: string | null;
   policyHref?: (key: string) => string;
   lookupHref?: string;
   variant?: "full" | "line";
   main?: string;
 }) {
-  const stay = main === "stay";
-  const legal = (
-    [
-      ["상호", [business?.name || storeName, business?.ceo_name && `대표 ${business.ceo_name}`].filter(Boolean).join(" · ")],
-      ["주소", business?.address],
-      ["사업자등록번호", business?.registration_no],
-      ["통신판매업 신고", business?.mail_order_no],
-      ["고객센터", business?.cs_phone],
-      ["이메일", business?.cs_email],
-    ] as [string, string | null | undefined][]
-  ).filter((row): row is [string, string] => Boolean(row[1]));
-  return (
-    <footer
-      data-slot="site-footer"
-      data-variant={variant}
-      className="ez:mt-16 ez:border-0 ez:border-t ez:border-solid ez:border-hairline ez:text-site-caption ez:text-muted ez:md:mt-30"
-    >
-      <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-3 ez:px-page ez:pt-10 ez:pb-14 ez:md:grid-cols-[1fr_auto] ez:md:gap-x-20">
-        <nav aria-label="약관" className="ez:flex ez:flex-wrap ez:gap-x-4 ez:md:col-start-2 ez:md:row-span-4 ez:md:row-start-1 ez:md:grid ez:md:content-start ez:md:gap-1">
-          {policies.map((p) => (
-            <NextLink key={p.key} href={policyHref(p.key)} className={cn(link, p.key === "privacy" && "ez:font-bold")}>
-              {(stay && STAY_LABEL[p.key]) || p.title}
-            </NextLink>
-          ))}
-          <NextLink href={lookupHref} className={link}>
-            {stay ? "비회원 예약 조회" : "비회원 주문 조회"}
-          </NextLink>
-        </nav>
-        {variant === "line" ? (
-          <p className="ez:m-0 ez:max-w-140 ez:leading-normal ez:md:col-start-1 ez:md:row-start-1">{legal.map(([label, value]) => `${label} ${value}`).join(" · ")}</p>
-        ) : (
-        <dl className="ez:m-0 ez:grid ez:max-w-180 ez:grid-cols-[auto_minmax(0,1fr)] ez:gap-x-4 ez:gap-y-1 ez:leading-normal">
-          {legal.map(([label, value]) => (
-            <div key={label} className="ez:contents">
-              <dt>{label}</dt>
-              <dd className="ez:m-0">{value}</dd>
+  const guide = GUIDE[main] ?? GUIDE.shop;
+  const legal = [
+    [business?.name || storeName, business?.ceo_name && `대표 ${business.ceo_name}`].filter(Boolean).join(" · "),
+    business?.address,
+    business?.registration_no && `사업자등록번호 ${business.registration_no}`,
+    business?.mail_order_no && `통신판매업 신고 ${business.mail_order_no}`,
+    business?.cs_phone && `고객센터 ${business.cs_phone}`,
+    business?.cs_email && `이메일 ${business.cs_email}`,
+    `호스팅 제공 ${hosting}`,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  const columns: { title: string; items: [string, string, boolean?][] }[] = [
+    { title: guide.title, items: policies.filter((p) => !LEGAL.has(p.key)).map((p) => [p.key === "returns" ? guide.returns : p.title, policyHref(p.key)]) },
+    { title: "계정", items: [["로그인", "/login"], ...guide.account] },
+    { title: "약관", items: policies.filter((p) => LEGAL.has(p.key)).map((p) => [p.title, policyHref(p.key), p.key === "privacy"]) },
+  ];
+  const line = (
+    <footer data-slot="site-footer" data-variant="line" className="ez:border-0 ez:border-t ez:border-solid ez:border-site-line">
+      <p className="ez:m-0 ez:mx-auto ez:max-w-wrap ez:px-page ez:py-10 ez:text-site-small ez:text-muted">{legal}</p>
+    </footer>
+  );
+  const full = (
+    <footer data-slot="site-footer" data-variant="full" className="ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:text-site-lead">
+      <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-14 ez:pb-10 ez:lg:pt-18">
+        <div className="ez:grid ez:gap-10 ez:md:grid-cols-[5fr_2fr_2fr_2fr] ez:md:gap-6">
+          <div className="ez:flex ez:flex-col ez:gap-3.5">
+            {business?.cs_phone && (
+              <>
+                <span className="ez:text-site-small ez:text-muted">고객센터</span>
+                <a href={`tel:${business.cs_phone}`} className="ez:text-[2.25rem] ez:leading-tight ez:font-light ez:tracking-[-0.035em] ez:text-fg ez:no-underline">
+                  {business.cs_phone}
+                </a>
+              </>
+            )}
+            {hours && <span className="ez:text-site-small ez:text-muted">{hours}</span>}
+            <div className="ez:mt-2.5 ez:flex ez:flex-wrap ez:gap-2">
+              <ButtonLink href="/inquiries/new" variant="outline" size="sm">
+                1:1 문의
+              </ButtonLink>
+              <ButtonLink href={guide.lookup[1]} variant="outline" size="sm">
+                {guide.lookup[0]}
+              </ButtonLink>
             </div>
+          </div>
+          {columns.map((c) => (
+            <nav key={c.title} aria-label={c.title} className="ez:flex ez:flex-col ez:gap-3">
+              <span className="ez:mb-1 ez:text-site-small ez:text-muted">{c.title}</span>
+              {c.items.map(([label, href, strong]) => (
+                <NextLink key={href} href={href} className={cn(link, strong && "ez:font-medium")}>
+                  {label}
+                </NextLink>
+              ))}
+            </nav>
           ))}
-        </dl>
-        )}
-        {closing && <p className="ez:m-0">{closing}</p>}
-        <p className="ez:m-0">호스팅 제공 {hosting}</p>
+        </div>
+        <div className="ez:mt-14 ez:flex ez:flex-wrap ez:items-end ez:justify-between ez:gap-10 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-7 ez:lg:mt-18">
+          <div className="ez:grid ez:max-w-180 ez:gap-2 ez:text-site-small ez:text-muted">
+            {closing && <p className="ez:m-0">{closing}</p>}
+            <p className="ez:m-0">{legal}</p>
+          </div>
+          <span aria-hidden="true" className={cn("ez:text-[3.5rem] ez:leading-[0.9] ez:text-site-faint ez:max-md:hidden", wordmark(storeName))}>
+            {storeName}
+          </span>
+        </div>
       </div>
     </footer>
   );
+  if (main !== "shop") return full;
+  return <PathSwitch prefix="/checkout" match={line} rest={full} />;
 }

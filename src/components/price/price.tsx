@@ -1,16 +1,12 @@
 import { cn, won } from "../../utils/cn";
 
-export function Price({ value, list, className }: { value: number; list?: number; className?: string }) {
+export function Price({ value, list, rate = true, className }: { value: number; list?: number; rate?: boolean; className?: string }) {
   const discounted = list !== undefined && list > value;
   return (
-    <span data-slot="price" className={cn("ez:inline-flex ez:flex-wrap ez:items-baseline ez:gap-1.5 ez:tabular-nums", className)}>
-      {discounted && (
-        <>
-          <span className="ez:font-bold ez:text-primary">{Math.floor(((list - value) / list) * 100)}%</span>
-          <s className="ez:text-[0.85em] ez:text-muted">{won(list)}</s>
-        </>
-      )}
-      <strong className="ez:font-bold ez:text-fg">{won(value)}</strong>
+    <span data-slot="price" className={cn("ez:inline-flex ez:flex-wrap ez:items-baseline ez:gap-2 ez:tabular-nums", className)}>
+      {discounted && rate && <span className="ez:font-medium ez:text-primary">{Math.floor(((list - value) / list) * 100)}%</span>}
+      <strong className="ez:font-medium ez:text-fg">{won(value)}</strong>
+      {discounted && <s className="ez:text-[0.85em] ez:font-normal ez:text-muted">{won(list)}</s>}
     </span>
   );
 }

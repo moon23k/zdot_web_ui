@@ -1,6 +1,6 @@
 import type { TemplateDesign } from "../templates/types";
 import type { Design } from "../types";
-import { SYSTEM_COLOR, SYSTEM_DURATION, SYSTEM_FONT, SYSTEM_RADIUS, SYSTEM_SITE, SYSTEM_TONE } from "./system";
+import { SYSTEM_COLOR, SYSTEM_DURATION, SYSTEM_FIGURE_FONT, SYSTEM_FONT, SYSTEM_RADIUS, SYSTEM_SITE, SYSTEM_TONE } from "./system";
 
 const FALLBACK: Required<NonNullable<Design["color"]>> = SYSTEM_COLOR;
 
@@ -15,7 +15,7 @@ function buttonRadius(design: Design): string {
   return `${shape.radius_md ?? SYSTEM_RADIUS.md}px`;
 }
 
-function galleryVars(): Record<string, string> {
+function siteVars(): Record<string, string> {
   return {
     "--ezd-wrap": `${SYSTEM_SITE.gallery}px`,
     "--ezd-wrap-home": `${SYSTEM_SITE.gallery}px`,
@@ -23,10 +23,12 @@ function galleryVars(): Record<string, string> {
     "--ezd-pad-home": `${SYSTEM_SITE["gallery-pad"]}px`,
     "--ezd-section-gap": `${SYSTEM_SITE["gallery-section"]}px`,
     "--ezd-control": `${SYSTEM_SITE["gallery-control"]}px`,
+    "--ezd-control-sm": `${SYSTEM_SITE["gallery-control-sm"]}px`,
+    "--ezd-gutter": "24px",
   };
 }
 
-export function designVars(design: Design | null | undefined, frame?: string): Record<string, string> {
+export function designVars(design: Design | null | undefined, site?: boolean): Record<string, string> {
   const d = design ?? {};
   const color = { ...FALLBACK, ...(d.color ?? {}) };
   const ratio = (d.imagery?.photo_ratio ?? "1:1").replace(":", " / ");
@@ -36,6 +38,7 @@ export function designVars(design: Design | null | undefined, frame?: string): R
     "--ezd-on-primary": color.on_primary,
     "--ezd-primary-hover": color.primary_hover,
     "--ezd-primary-tint": color.primary_tint,
+    "--ezd-point-soft": `color-mix(in srgb, ${color.primary} 8%, ${color.surface})`,
     "--ezd-primary-border": color.primary_border,
     "--ezd-surface": color.surface,
     "--ezd-surface-alt": color.surface_alt,
@@ -55,6 +58,7 @@ export function designVars(design: Design | null | undefined, frame?: string): R
     "--ezd-gutter": `${d.density?.grid_gutter ?? 20}px`,
     "--ezd-font-display": family(d.font?.display),
     "--ezd-font-body": family(d.font?.body),
+    "--ezd-font-figure": `var(--zdot-font-figure, ${SYSTEM_FIGURE_FONT})`,
     "--ezd-display-weight": String(styles?.title?.weight ?? d.font?.display_weight ?? 600),
     "--ezd-title-weight": String(styles?.title?.weight ?? 700),
     "--ezd-title-style": styles?.title?.style ?? "normal",
@@ -68,7 +72,8 @@ export function designVars(design: Design | null | undefined, frame?: string): R
     "--ezd-overlay": String(d.imagery?.overlay_opacity ?? 0.35),
     "--ezd-wrap-narrow": `${SYSTEM_SITE["content-narrow"]}px`,
     "--ezd-control": "48px",
-    ...(frame === "gallery" ? galleryVars() : {}),
+    "--ezd-control-sm": "40px",
+    ...(site ? siteVars() : {}),
   };
 }
 
@@ -84,35 +89,27 @@ export function fontHref(design: Design | null | undefined): string | null {
 
 function plainTitles(font: Design["font"]): Design["font"] {
   const body = font?.body;
-  const plain = { weight: 500, style: "normal" as const };
+  const plain = { weight: 400, style: "normal" as const };
   const load = font?.load?.filter((f) => f.family === body);
   return {
     ...font,
     display: body,
-    display_weight: 500,
+    display_weight: 400,
     load: load?.length ? load : undefined,
-    styles: { ...font?.styles, title: plain, subtitle: plain },
+    styles: { ...font?.styles, title: plain, subtitle: { weight: 500, style: "normal" } },
   };
 }
 
-const CORNERS = { 0: [0, 0, 0], 4: [4, 4, 6], 6: [6, 6, 8], 16: [8, 12, 16] } as const;
+const SITE_SHAPE: Design["shape"] = { radius_sm: 8, radius_md: 14, radius_lg: 0, button_shape: "pill", line: 0 };
 
 export function applyTemplate(design: Design | null | undefined, template: TemplateDesign | null | undefined): Design {
   const d = design ?? {};
   if (!template) return d;
-  const { look } = template;
-  const tone = SYSTEM_TONE[look.tone];
-  const corners = look.radius === "pill" ? null : CORNERS[look.radius];
-  const shape: Design["shape"] = corners
-    ? { radius_sm: corners[0], radius_md: corners[1], radius_lg: corners[2], button_shape: look.radius === 0 ? "square" : "rounded" }
-    : { ...d.shape, button_shape: "pill" };
-  const templateFont: Design["font"] = look.font === "serif" ? { display: "Noto Serif KR", display_weight: 600 } : look.font === "light" ? { display_weight: 300 } : undefined;
-  const picked = d.font ?? templateFont;
-  const font = look.frame === "gallery" ? plainTitles(picked) : picked;
+  const tone = SYSTEM_TONE.gallery;
   return {
     ...d,
-    font,
-    shape: { ...shape, line: look.line ? 1 : 0 },
-    color: d.palette ? d.color : { ...d.color, surface: tone.surface, surface_alt: tone["surface-alt"] },
+    font: plainTitles(d.font),
+    shape: SITE_SHAPE,
+    color: d.palette ? d.color : { ...d.color, surface: tone.surface, surface_alt: tone["surface-alt"], text: tone.text, text_muted: tone["text-muted"] },
   };
 }

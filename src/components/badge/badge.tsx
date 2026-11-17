@@ -4,12 +4,12 @@ import type { Tone } from "../../theme/contract";
 import { cn } from "../../utils/cn";
 
 const badgeVariants = cva(
-  "ez:inline-flex ez:items-center ez:rounded-full ez:px-2 ez:py-0.5 ez:text-xs ez:font-bold ez:whitespace-nowrap",
+  "ez:inline-flex ez:items-center ez:rounded-full ez:px-2 ez:py-0.5 ez:text-site-caption ez:font-medium ez:whitespace-nowrap",
   {
     variants: {
       tone: {
         neutral: "ez:bg-surface-alt ez:text-fg",
-        primary: "ez:bg-primary-tint ez:text-primary",
+        primary: "ez:bg-point-soft ez:text-primary",
         danger: "ez:bg-danger-tint ez:text-danger",
       } satisfies Partial<Record<Tone, string>>,
     },

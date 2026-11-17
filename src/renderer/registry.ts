@@ -20,7 +20,15 @@ export type SiteContext = {
 };
 
 export type SectionData = {
-  hero: { title?: string | null; sub?: string | null; button?: string | null; href?: string | null; image?: string | null; images?: string[] };
+  hero: {
+    title?: string | null;
+    sub?: string | null;
+    button?: string | null;
+    href?: string | null;
+    image?: string | null;
+    images?: string[];
+    products?: { id: string; name: string; sale_price?: number; cover_url?: string | null; href?: string }[];
+  };
   story: { title?: string | null; body?: string[]; strengths?: { title: string; body: string }[] };
   product_grid: { title?: string | null; lines?: Record<string, string> };
   maker_profile: { line?: string | null };

@@ -1,15 +1,16 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import NextLink from "next/link";
+import { useActionState, useState, type ReactNode } from "react";
 import { Badge } from "../../components/badge";
 import { Button, ButtonLink } from "../../components/button";
 import { Photo } from "../../components/photo";
-import { Price } from "../../components/price";
 import { Quantity } from "../../components/quantity";
 import { Sheet } from "../../components/sheet";
 import type { FormAction, FormState, ProductDetail } from "../../types";
+import { StarRow } from "../../sections/template/common";
 import { cn, won } from "../../utils/cn";
-import { fieldset, legend } from "../parts/choice";
+import { chip, pointTag } from "../../utils/styles";
 import { Notice } from "../parts/notice";
 import { Status } from "../parts/status";
 
@@ -26,12 +27,16 @@ export function BuyBox({
   restockAction,
   selling = true,
   checkoutPath = "/checkout",
+  rating,
+  aside,
 }: {
   product: ProductDetail;
   addAction: FormAction;
   restockAction?: (data: FormData) => void | Promise<void>;
   selling?: boolean;
   checkoutPath?: string;
+  rating?: { average: number; count: number } | null;
+  aside?: ReactNode;
 }) {
   const first = product.variants.find((v) => v.in_stock) ?? product.variants[0];
   const [variantId, setVariantId] = useState(first?.id ?? "");
@@ -50,61 +55,71 @@ export function BuyBox({
   const prices = product.variants.map((v) => v.price);
   const from = new Set(prices).size > 1 ? Math.min(...prices) : null;
   const options = product.variants.length > 1;
+  const base = Math.min(...(prices.length ? prices : [unit]));
+  const sale = product.list_price > unit ? Math.floor(((product.list_price - unit) / product.list_price) * 100) : 0;
   return (
-    <form data-slot="buy-box" action={add} className="ez:grid ez:max-w-120 ez:gap-4 ez:text-fg">
-      <div className="ez:grid ez:gap-1">
+    <form data-slot="buy-box" action={add} className="ez:grid ez:gap-7 ez:text-fg">
+      <div className="ez:grid ez:gap-3">
         {sample && <Badge className="ez:justify-self-start">예시</Badge>}
-        <h1 className="ez:m-0 ez:font-display ez:font-title ez:text-2xl ez:tracking-brand">{product.name}</h1>
-        {soldOut ? (
-          <span className="ez:flex ez:items-center ez:gap-2">
-            <strong className="ez:text-lg ez:font-bold ez:tabular-nums ez:text-muted">
-              {won(from ?? product.sale_price)}
-              {from !== null && <span className="ez:font-normal">부터</span>}
-            </strong>
-            <Badge tone="danger">품절</Badge>
+        {soldOut && (
+          <span className={pointTag}>
+            <span aria-hidden="true" className="ez:size-1.25 ez:rounded-full ez:bg-primary" />
+            품절
           </span>
-        ) : from !== null ? (
-          <span className="ez:text-lg ez:tabular-nums">
-            <strong className="ez:font-bold">{won(from)}</strong>
-            <span className="ez:text-muted">부터</span>
-          </span>
-        ) : (
-          <Price value={unit} list={product.list_price > unit ? product.list_price : undefined} className="ez:text-lg" />
+        )}
+        <h1 className="ez:m-0 ez:text-site-page-sm ez:font-light ez:tracking-[-0.035em] ez:lg:text-site-page">{product.name}</h1>
+        {rating && rating.count > 0 && (
+          <NextLink href="#reviews" className="ez:flex ez:items-center ez:gap-2 ez:text-site-small ez:text-fg ez:no-underline">
+            <StarRow rating={rating.average} />
+            <span className="ez:font-medium ez:tabular-nums">{rating.average.toFixed(1)}</span>
+            <span className="ez:text-muted">리뷰 {rating.count}</span>
+          </NextLink>
         )}
       </div>
+      <p className="ez:m-0 ez:flex ez:flex-wrap ez:items-baseline ez:gap-2 ez:text-site-heading ez:font-medium ez:tabular-nums">
+        {sale > 0 && !soldOut && <span className="ez:text-primary">{sale}%</span>}
+        <span className={soldOut ? "ez:text-muted" : undefined}>
+          {won(from ?? unit)}
+          {from !== null && <span className="ez:text-site-lead ez:font-normal ez:text-muted"> 부터</span>}
+        </span>
+        {sale > 0 && !soldOut && <s className="ez:text-site-small ez:font-normal ez:text-muted">{won(product.list_price)}</s>}
+      </p>
+      {options && <hr className="ez:m-0 ez:h-px ez:border-0 ez:bg-site-line" />}
       {!selling && !soldOut && (
-        <p className="ez:m-0 ez:flex ez:items-center ez:gap-2 ez:rounded-md ez:bg-surface-alt ez:p-3 ez:text-sm">
+        <p className="ez:m-0 ez:flex ez:items-center ez:gap-2 ez:rounded-md ez:bg-surface-alt ez:p-3 ez:text-site-small">
           <Status icon="alert">지금은 주문을 받지 않는 스토어예요</Status>
         </p>
       )}
       {options ? (
-        <fieldset disabled={!selling || sample} className={cn(fieldset, (!selling || sample) && "ez:opacity-50")}>
-          <legend className={legend}>{product.option_name ?? "옵션"}</legend>
-          {product.variants.map((v) => (
-            <label
-              key={v.id}
-              className={cn(
-                "ez:flex ez:cursor-pointer ez:items-center ez:justify-between ez:gap-3 ez:rounded-md ez:border ez:border-solid ez:border-primary-border ez:p-3",
-                "ez:has-checked:border-[1.5px] ez:has-checked:border-primary ez:has-checked:bg-primary-tint ez:has-focus-visible:outline-2 ez:has-focus-visible:outline-offset-2 ez:has-focus-visible:outline-primary",
-                "ez:has-disabled:cursor-not-allowed ez:has-disabled:text-muted/70",
-              )}
-            >
-              <input
-                type="radio"
-                name="variant_id"
-                value={v.id}
-                checked={selling && !soldOut && variantId === v.id}
-                disabled={!v.in_stock}
-                onChange={() => setVariantId(v.id)}
-                className="ez:sr-only"
-              />
-              <span className="ez:min-w-0">
-                {!v.in_stock && "(품절) "}
+        <fieldset disabled={!selling || sample} className={cn("ez:m-0 ez:grid ez:gap-3 ez:border-0 ez:p-0", (!selling || sample) && "ez:opacity-50")}>
+          <legend className="ez:mb-3 ez:flex ez:w-full ez:justify-between ez:p-0 ez:text-site-small">
+            <span className="ez:text-muted">{product.option_name ?? "옵션"}</span>
+            <span>{variant?.label}</span>
+          </legend>
+          <div className="ez:flex ez:flex-wrap ez:gap-2">
+            {product.variants.map((v) => (
+              <label
+                key={v.id}
+                className={cn(
+                  chip,
+                  "ez:has-checked:border-primary ez:has-checked:text-primary ez:has-checked:font-medium ez:has-focus-visible:outline-2 ez:has-focus-visible:outline-offset-2 ez:has-focus-visible:outline-primary",
+                  "ez:has-disabled:cursor-not-allowed ez:has-disabled:text-site-off ez:has-disabled:line-through",
+                )}
+              >
+                <input
+                  type="radio"
+                  name="variant_id"
+                  value={v.id}
+                  checked={selling && !soldOut && variantId === v.id}
+                  disabled={!v.in_stock}
+                  onChange={() => setVariantId(v.id)}
+                  className="ez:sr-only"
+                />
                 {v.label ?? "기본"}
-              </span>
-              <span className="ez:shrink-0 ez:whitespace-nowrap ez:text-sm ez:tabular-nums">{won(v.price)}</span>
-            </label>
-          ))}
+                {v.price > base && <span className="ez:tabular-nums">+{won(v.price - base)}</span>}
+              </label>
+            ))}
+          </div>
         </fieldset>
       ) : (
         <input type="hidden" name="variant_id" value={variantId} />
@@ -114,42 +129,46 @@ export function BuyBox({
           예시 상품은 구매할 수 없어요
         </Button>
       ) : soldOut ? (
-        restockAction ? (
-          <Button type="submit" variant="outline" formAction={restockAction} block>
-            {bell}
-            재입고 알림
-          </Button>
-        ) : (
-          <Button variant="outline" disabled block>
-            품절
-          </Button>
-        )
+        <div className="ez:flex ez:gap-2">
+          {restockAction ? (
+            <Button type="submit" variant="outline" formAction={restockAction} className="ez:flex-1">
+              {bell}
+              재입고 알림
+            </Button>
+          ) : (
+            <Button variant="outline" disabled className="ez:flex-1">
+              품절
+            </Button>
+          )}
+          {aside}
+        </div>
       ) : selling ? (
         <>
-          <div className="ez:flex ez:items-center ez:justify-between">
-            <span className="ez:text-sm ez:font-semibold">수량</span>
-            <Quantity value={quantity} onChange={setQuantity} size="sm" />
-          </div>
-          <div className="ez:grid ez:gap-1.5">
-            <p className="ez:m-0 ez:flex ez:items-baseline ez:justify-between ez:gap-3">
-              <span>총 상품금액</span>
-              <strong className="ez:text-xl ez:font-semibold ez:tracking-[-0.02em] ez:tabular-nums ez:whitespace-nowrap">
-                {(unit * quantity).toLocaleString("ko-KR")}
-                <span className="ez:text-base">원</span>
-              </strong>
-            </p>
+          <div className="ez:grid ez:gap-2 ez:border-0 ez:border-y ez:border-solid ez:border-site-line ez:py-4.5">
+            <div className="ez:flex ez:flex-wrap ez:items-center ez:justify-between ez:gap-3">
+              <Quantity value={quantity} onChange={setQuantity} />
+              <p className="ez:m-0 ez:flex ez:items-baseline ez:gap-3.5">
+                <span className="ez:text-site-small ez:text-muted">총 상품 금액</span>
+                <strong className="ez:text-site-heading ez:font-medium ez:tabular-nums ez:whitespace-nowrap">{won(unit * quantity)}</strong>
+              </p>
+            </div>
             {product.non_returnable && <Status icon="ban">교환·반품 불가</Status>}
           </div>
           {state.error && <Notice tone="error">{state.error}</Notice>}
-          <div className="ez:grid ez:grid-cols-2 ez:gap-2">
-            <Button type="submit" variant="outline" disabled={blocked || pending}>
-              장바구니 담기
+          <div className="ez:flex ez:gap-2">
+            <Button type="submit" variant="outline" disabled={blocked || pending} className="ez:flex-1">
+              장바구니
             </Button>
             {blocked ? (
-              <Button disabled>바로 구매</Button>
+              <Button disabled className="ez:flex-1">
+                바로 구매
+              </Button>
             ) : (
-              <ButtonLink href={`${checkoutPath}?item=${encodeURIComponent(variantId)}&qty=${quantity}`}>바로 구매</ButtonLink>
+              <ButtonLink href={`${checkoutPath}?item=${encodeURIComponent(variantId)}&qty=${quantity}`} className="ez:flex-1">
+                바로 구매
+              </ButtonLink>
             )}
+            {aside}
           </div>
         </>
       ) : null}
@@ -166,7 +185,7 @@ export function BuyBox({
         </div>
         <div className="ez:grid ez:grid-cols-2 ez:gap-2">
           <Button variant="secondary" onClick={() => setSheetOpen(false)}>
-            계속 쇼핑하기
+            쇼핑 계속하기
           </Button>
           <ButtonLink href="/cart">장바구니 보기</ButtonLink>
         </div>

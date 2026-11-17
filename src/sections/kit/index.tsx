@@ -62,10 +62,10 @@ export function Pic({
 export function Rows({ rows }: { rows: Row[] }) {
   if (!rows.length) return null;
   return (
-    <table className="ez:w-full ez:border-collapse ez:text-site-note">
+    <table className="ez:w-full ez:border-collapse ez:text-site-small">
       <tbody>
         {rows.map((r, i) => (
-          <tr key={i} className="ez:border-0 ez:border-b ez:border-solid ez:border-primary-border">
+          <tr key={i} className="ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:last:border-b-0">
             {typeof r.label === "string" ? (
               <th scope="row" className="ez:py-2.5 ez:pr-3 ez:text-left ez:font-normal ez:text-muted">
                 {r.label}
@@ -114,8 +114,8 @@ export function Chips({ items, current = 0 }: { items: string[]; current?: numbe
 
 export function Fold({ title, children, open }: { title: string; children: ReactNode; open?: boolean }) {
   return (
-    <details open={open} className="ez:group ez:border-0 ez:border-b ez:border-solid ez:border-primary-border">
-      <summary className="ez:flex ez:min-h-12 ez:cursor-pointer ez:list-none ez:items-center ez:justify-between ez:gap-3 ez:py-3 ez:font-semibold ez:[&::-webkit-details-marker]:hidden">
+    <details open={open} className="ez:group ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:last:border-b">
+      <summary className="ez:flex ez:min-h-14 ez:cursor-pointer ez:list-none ez:items-center ez:justify-between ez:gap-3 ez:py-4.5 ez:font-normal ez:[&::-webkit-details-marker]:hidden">
         {title}
         <span aria-hidden="true" className="ez:text-muted ez:transition-transform ez:group-open:rotate-45">
           +

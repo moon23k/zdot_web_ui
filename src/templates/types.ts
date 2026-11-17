@@ -22,7 +22,7 @@ export type GridSpec = { m: 1 | 2 | 3; pc: 3 | 4 | 6; ratio: number; meta?: "pri
 
 export type HomeSlot = { kind: string; variant?: string; grid?: GridSpec };
 
-export type DetailSlot = { kind: string; variant?: string; side?: boolean };
+export type DetailSlot = { kind: string; variant?: string; side?: boolean; full?: boolean };
 
 export type TemplateDesign = {
   id: string;

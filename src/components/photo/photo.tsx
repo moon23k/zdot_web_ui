@@ -62,7 +62,7 @@ export function Photo({
       data-slot="photo"
       data-empty={src ? undefined : ""}
       className={cn(
-        "ez:relative ez:box-border ez:flex ez:w-full ez:items-center ez:justify-center ez:aspect-photo ez:overflow-hidden ez:rounded-md",
+        "ez:relative ez:box-border ez:flex ez:w-full ez:items-center ez:justify-center ez:aspect-photo ez:overflow-hidden ez:rounded-lg",
         tiles[(tone ?? seed(alt)) % tiles.length],
         strong ? "ez:text-tile-ink-strong" : "ez:text-tile-ink",
         className

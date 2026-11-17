@@ -80,7 +80,7 @@ export type Quote = Pick<
 
 export type Faq = { id: string; question: string; answer: string };
 
-export type Category = { id: string; name: string };
+export type Category = { id: string; name: string; product_count?: number | null };
 
 export type FormState = { ok?: boolean; error?: string; message?: string; redirect?: string; fields?: Record<string, string> };
 

@@ -6,8 +6,8 @@ import { focusRing } from "../../utils/styles";
 import { BlankChips } from "../kit";
 
 const chip = cn(
-  "ez:inline-flex ez:min-h-10 ez:shrink-0 ez:items-center ez:rounded-full ez:border ez:border-solid ez:border-primary-border ez:px-4 ez:text-site-note ez:text-fg ez:no-underline ez:hover:bg-primary-tint",
-  "ez:aria-[current=page]:border-primary ez:aria-[current=page]:bg-primary ez:aria-[current=page]:text-on-primary",
+  "ez:inline-flex ez:h-9.5 ez:shrink-0 ez:items-center ez:rounded-full ez:border ez:border-solid ez:border-site-line ez:px-4 ez:text-site-note ez:text-fg ez:no-underline ez:hover:border-site-edge",
+  "ez:aria-[current=page]:border-primary ez:aria-[current=page]:text-primary ez:aria-[current=page]:font-medium",
   focusRing,
 );
 

@@ -20,13 +20,13 @@ export type Room = { id: string; name: string; image?: string | null; specs: str
 
 export type Case = { id: string; title: string; image?: string | null; meta?: string; scope?: string; href?: string };
 
-export type Review = { rating: number; body: string; name: string; date?: string };
+export type Review = { rating: number; body: string; name: string; date?: string; product?: string | null };
 
 export type TemplateSectionData = {
   notice_bar: { text?: string | null };
   photo_band: { title?: string | null; image?: string | null };
   category_tiles: { items?: Tile[] };
-  testimonial: { quote?: string | null; name?: string | null };
+  testimonial: { quote?: string | null; name?: string | null; count?: number | null; items?: Review[] };
   intro: { title?: string | null; body?: string | null; button?: string | null; href?: string | null };
   curation: { title?: string | null; items?: Tile[] };
   store_info: { title?: string | null; address?: string | null; hours?: string | null; phone?: string | null; image?: string | null };

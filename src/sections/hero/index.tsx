@@ -1,7 +1,10 @@
 import { ButtonLink } from "../../components/button";
 import { Photo } from "../../components/photo";
 import type { SectionProps } from "../../renderer/registry";
-import { cn } from "../../utils/cn";
+import NextLink from "next/link";
+import { Icon } from "../../components/icon";
+import { cn, won } from "../../utils/cn";
+import { textLink } from "../../utils/styles";
 import { Bar, BlankButton, Lines, line, Pic } from "../kit";
 
 function Heading({ title, sub, inverse }: { title?: string | null; sub?: string | null; inverse?: boolean }) {
@@ -44,6 +47,59 @@ export function Hero({ data, variant, blank }: SectionProps<"hero">) {
         {button}
       </ButtonLink>
     );
+
+  if (variant === "gallery") {
+    const pick = data.products?.find((p) => p.cover_url) ?? data.products?.[0];
+    return (
+      <section data-slot="hero" data-variant="gallery" data-blank={empty ? "" : undefined} className="ez:grid ez:gap-8 ez:text-fg ez:lg:grid-cols-[5fr_7fr] ez:lg:items-end ez:lg:gap-6">
+        <div className="ez:flex ez:flex-col ez:items-start ez:gap-6 ez:lg:gap-10 ez:lg:pb-2">
+          {empty ? (
+            <div className="ez:grid ez:w-full ez:max-w-xl ez:gap-4">
+              <span className="ez:text-site-page-sm ez:lg:text-site-display">
+                <Bar size="long" />
+              </span>
+              <Lines />
+            </div>
+          ) : (
+            <div className="ez:grid ez:gap-5">
+              <h1 className="ez:m-0 ez:text-site-page-sm ez:font-light ez:tracking-[-0.04em] ez:text-balance ez:lg:text-site-display">{data.title}</h1>
+              {data.sub && <p className="ez:m-0 ez:max-w-xl ez:text-muted">{data.sub}</p>}
+            </div>
+          )}
+          <div className="ez:flex ez:flex-wrap ez:items-center ez:gap-7">
+            {empty ? (
+              <BlankButton>둘러보기</BlankButton>
+            ) : (
+              <ButtonLink href={href}>
+                {button}
+                <Icon name="right" size="sm" />
+              </ButtonLink>
+            )}
+            {href !== "/products" && (
+              <NextLink href="/products" className={textLink}>
+                전체 상품
+              </NextLink>
+            )}
+          </div>
+        </div>
+        <div className="ez:relative">
+          <Photo src={image} alt="" preload sizes="(max-width: 1024px) 100vw, 740px" tone={0} className="ez:aspect-[4/3] ez:lg:aspect-auto ez:lg:h-150" />
+          {pick && !empty && (
+            <NextLink
+              href={pick.href ?? `/products/${pick.id}`}
+              className="ez:absolute ez:bottom-6 ez:left-6 ez:flex ez:items-center ez:gap-3.5 ez:rounded-md ez:bg-surface/92 ez:py-2.5 ez:pr-5 ez:pl-2.5 ez:text-fg ez:no-underline ez:max-md:hidden"
+            >
+              <Photo src={pick.cover_url} alt="" sizes="56px" tone={1} className="ez:size-14 ez:rounded-sm" />
+              <span className="ez:flex ez:flex-col ez:text-site-small">
+                <span>{pick.name}</span>
+                {pick.sale_price != null && <span className="ez:font-medium ez:tabular-nums">{won(pick.sale_price)}</span>}
+              </span>
+            </NextLink>
+          )}
+        </div>
+      </section>
+    );
+  }
 
   if (variant === "box") {
     return (

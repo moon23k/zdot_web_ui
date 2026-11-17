@@ -51,12 +51,16 @@ export const SYSTEM_TONE = {
     "surface-alt": "#e5dfd3"
   },
   "gallery": {
-    "surface": "#fbfaf7",
-    "surface-alt": "#f3f1ec"
+    "surface": "#ffffff",
+    "surface-alt": "#f4f4f1",
+    "text": "#1d1d1b",
+    "text-muted": "#6a6a65"
   }
 };
 
 export const SYSTEM_FONT = '"Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif';
+
+export const SYSTEM_FIGURE_FONT = '"Instrument Serif", "Times New Roman", serif';
 
 export const SYSTEM_DURATION = 200;
 
@@ -64,11 +68,12 @@ export const SYSTEM_SITE = {
   "content": 1320,
   "content-narrow": 1080,
   "pad": 64,
-  "gallery": 1200,
-  "gallery-narrow": 1040,
-  "gallery-pad": 40,
-  "gallery-section": 88,
-  "gallery-control": 50
+  "gallery": 1440,
+  "gallery-narrow": 1440,
+  "gallery-pad": 80,
+  "gallery-section": 120,
+  "gallery-control": 52,
+  "gallery-control-sm": 40
 };
 
 export const SYSTEM_BLANK = {

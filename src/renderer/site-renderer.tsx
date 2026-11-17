@@ -7,13 +7,17 @@ const isKind = (kind: string): kind is keyof typeof sections => kind in sections
 
 const KEEP = new Set(["free_shipping_bar", "maker_profile"]);
 
+const LEAD = new Set(["hero", "intro"]);
+
 type Placed = Section & { variant?: string; grid?: TemplateDesign["home"][number]["grid"] };
 
 function place(sections: Section[], template: TemplateDesign | null | undefined, arranged = false): Placed[] {
   if (!template) return sections;
   if (arranged) {
     const slots = new Map(template.home.map((slot) => [slot.kind, slot]));
-    return sections.flatMap((s) => {
+    const lead = LEAD.has(template.home[0]?.kind ?? "") ? template.home[0].kind : null;
+    const ordered = lead ? [...sections.filter((s) => s.kind === lead), ...sections.filter((s) => s.kind !== lead)] : sections;
+    return ordered.flatMap((s) => {
       const slot = slots.get(s.kind);
       if (slot) return [{ ...s, variant: slot.variant, grid: slot.grid }];
       return KEEP.has(s.kind) ? [s] : [];
@@ -45,6 +49,7 @@ export function SiteRenderer({
         if (!isKind(section.kind)) return null;
         if (section.kind === "category_menu" && hasGrid) return null;
         if (section.kind === "free_shipping_bar" && template && template.main !== "shop") return null;
+        if (section.kind === "maker_profile" && template) return null;
         const Component = sections[section.kind] as ComponentType<SectionProps>;
         return <Component key={`${section.kind}-${i}`} data={section.data ?? {}} context={context} variant={section.variant} grid={section.grid} lead={lead} blank={Boolean(template)} />;
       })}

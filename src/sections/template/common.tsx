@@ -215,7 +215,7 @@ export function TrustLine({ data, variant, blank }: SectionProps<"trust_line">) 
   if (!items.length && !blank) return null;
   if (variant === "gallery") {
     return (
-      <ul data-slot="trust-line" data-variant="gallery" data-blank={items.length ? undefined : ""} className="ez:m-0 ez:-mt-12 ez:flex ez:list-none ez:flex-wrap ez:gap-x-10 ez:gap-y-2 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:p-0 ez:pt-6 ez:text-site-small ez:text-muted ez:lg:-mt-16">
+      <ul data-slot="trust-line" data-variant="gallery" data-blank={items.length ? undefined : ""} className="ez:m-0 ez:flex ez:list-none ez:flex-wrap ez:gap-x-10 ez:gap-y-2 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:p-0 ez:pt-6 ez:text-site-small ez:text-muted">
         {(items.length ? items : ["", ""]).map((t, i) => (
           <li key={`${t}-${i}`} className="ez:flex ez:items-center ez:gap-2">
             <span aria-hidden="true" className="ez:size-1.25 ez:rounded-full ez:bg-primary" />

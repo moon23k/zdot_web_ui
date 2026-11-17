@@ -108,7 +108,18 @@ export function SiteHeader({
       </div>
     </header>
   );
-  if (!shop) return full;
+  const login = (
+    <header data-slot="site-header" data-variant="login" className="ez:bg-surface">
+      <div className="ez:mx-auto ez:flex ez:max-w-wrap ez:items-center ez:justify-between ez:gap-3 ez:px-page ez:min-h-16 ez:lg:min-h-20">
+        <Logo name={name} logoUrl={logoUrl} />
+        <NextLink href="/" className="ez:inline-flex ez:items-center ez:gap-2 ez:text-site-small ez:text-fg ez:no-underline ez:hover:text-primary">
+          닫기
+          <Icon name="x" size="sm" />
+        </NextLink>
+      </div>
+    </header>
+  );
+  if (!shop) return <PathSwitch prefix="/login" match={login} rest={full} />;
   const compact = (
     <header data-slot="site-header" data-variant="checkout" className="ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:bg-surface">
       <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:grid-cols-[1fr_auto] ez:items-center ez:gap-3 ez:px-page ez:min-h-16 ez:lg:min-h-20 ez:md:grid-cols-[minmax(0,260px)_1fr_minmax(0,260px)]">
@@ -121,5 +132,5 @@ export function SiteHeader({
       </div>
     </header>
   );
-  return <PathSwitch prefix="/checkout" match={compact} rest={full} />;
+  return <PathSwitch prefix="/login" match={login} rest={<PathSwitch prefix="/checkout" match={compact} rest={full} />} />;
 }

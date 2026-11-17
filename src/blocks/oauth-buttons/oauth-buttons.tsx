@@ -2,6 +2,7 @@ import NextLink from "next/link";
 import type { ReactNode } from "react";
 import { buttonVariants } from "../../components/button";
 import { Icon } from "../../components/icon";
+import { Photo } from "../../components/photo";
 import type { CustomerProvider } from "../../types";
 import { cn } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
@@ -50,6 +51,7 @@ export function OAuthButtons({
   startHref = (provider) => `/api/auth/${provider}/start`,
   title,
   guestHref,
+  image,
   children,
 }: {
   next?: string;
@@ -57,6 +59,7 @@ export function OAuthButtons({
   startHref?: (provider: CustomerProvider) => string;
   title?: string;
   guestHref?: string;
+  image?: string | null;
   children?: ReactNode;
 }) {
   const query = next ? `?next=${encodeURIComponent(next)}` : "";
@@ -75,7 +78,7 @@ export function OAuthButtons({
     </div>
   );
   if (!title && !guestHref && !children) return buttons;
-  return (
+  const panel = (
     <section data-slot="login-panel" className="ez:mx-auto ez:grid ez:w-full ez:max-w-95 ez:gap-10 ez:pt-6 ez:text-fg ez:lg:pt-18">
       {title && <h1 className="ez:m-0 ez:text-site-page ez:font-light ez:tracking-[-0.035em]">{title}</h1>}
       {buttons}
@@ -89,5 +92,12 @@ export function OAuthButtons({
         </div>
       )}
     </section>
+  );
+  if (!image) return panel;
+  return (
+    <div data-slot="login-split" className="ez:grid ez:gap-10 ez:lg:grid-cols-2 ez:lg:items-center ez:lg:gap-24">
+      <Photo src={image} alt="" preload sizes="(max-width: 1024px) 100vw, 640px" tone={0} className="ez:aspect-[4/3] ez:lg:aspect-auto ez:lg:h-175 ez:max-lg:hidden" />
+      {panel}
+    </div>
   );
 }

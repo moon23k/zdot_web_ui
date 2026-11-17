@@ -24,6 +24,7 @@ export function AccountShell({
   summary = [],
   counts = {},
   logoutAction,
+  main,
   children,
 }: {
   current: string;
@@ -31,8 +32,10 @@ export function AccountShell({
   summary?: AccountSummary[];
   counts?: Partial<Record<string, number>>;
   logoutAction?: FormAction;
+  main?: string;
   children: ReactNode;
 }) {
+  const tabs = main === "shop" ? TABS.map((t) => (t.href === "/me/reviews" ? { ...t, label: "리뷰" } : t)) : TABS;
   const head = Boolean(name || summary.length);
   return (
     <div
@@ -64,7 +67,7 @@ export function AccountShell({
           head ? "ez:lg:row-start-2" : "ez:lg:row-start-1",
         )}
       >
-        {TABS.map((t) => {
+        {tabs.map((t) => {
           const on = t.href === current;
           const count = counts[t.href];
           return (

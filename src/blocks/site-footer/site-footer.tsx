@@ -103,6 +103,6 @@ export function SiteFooter({
       </div>
     </footer>
   );
-  if (main !== "shop") return full;
-  return <PathSwitch prefix="/checkout" match={line} rest={full} />;
+  if (main !== "shop") return <PathSwitch prefix="/login" match={null} rest={full} />;
+  return <PathSwitch prefix="/login" match={null} rest={<PathSwitch prefix="/checkout" match={line} rest={full} />} />;
 }

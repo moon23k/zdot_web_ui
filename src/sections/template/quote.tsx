@@ -127,9 +127,9 @@ export function CaseGrid({ data, variant, blank }: SectionProps<"case_grid">) {
             const body = (
               <>
                 <Pic src={c?.image} tone={i} className={cn("ez:aspect-[4/3] ez:lg:aspect-auto", tall[i], "ez:[&>[data-slot=photo]]:h-full ez:[&>[data-slot=photo]]:aspect-auto")} />
-                <span className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
+                <span className="ez:grid ez:min-w-0 ez:gap-1">
                   <span className="ez:text-site-heading">{c ? c.title : <Bar />}</span>
-                  {c?.meta && <span className="ez:text-site-small ez:text-muted">{c.meta}</span>}
+                  {c?.meta && <span className="ez:truncate ez:text-site-small ez:text-muted">{c.meta}</span>}
                 </span>
               </>
             );

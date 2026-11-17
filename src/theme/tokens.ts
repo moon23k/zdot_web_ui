@@ -87,10 +87,14 @@ export function fontHref(design: Design | null | undefined): string | null {
   return `https://fonts.googleapis.com/css2?${families.join("&")}&display=swap`;
 }
 
+const LIGHT = new Set(["Noto Sans KR", "Gothic A1", "IBM Plex Sans KR", "Noto Serif KR"]);
+
 function plainTitles(font: Design["font"]): Design["font"] {
   const body = font?.body;
   const plain = { weight: 400, style: "normal" as const };
-  const load = font?.load?.filter((f) => f.family === body);
+  const load = font?.load
+    ?.filter((f) => f.family === body)
+    .map((f) => (LIGHT.has(f.family) ? { ...f, weights: [...new Set([300, ...f.weights, 500])].sort((x, y) => x - y) } : f));
   return {
     ...font,
     display: body,

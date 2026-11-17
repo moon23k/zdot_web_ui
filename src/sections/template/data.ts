@@ -51,7 +51,7 @@ export type TemplateSectionData = {
   room_list: { title?: string | null; rooms?: Room[] };
   room_box: { title?: string | null; body?: string | null; names?: string[]; image?: string | null; href?: string | null };
   price_tiers: { title?: string | null; items?: Row[] };
-  package_cards: { title?: string | null; tabs?: string[]; items?: { name: string; price: string; includes?: string[]; href?: string }[] };
+  package_cards: { title?: string | null; tabs?: string[]; items?: { name: string; price: string; image?: string | null; includes?: string[]; href?: string }[] };
   case_grid: { title?: string | null; categories?: string[]; cases?: Case[] };
   case_cards: { title?: string | null; categories?: string[]; cases?: Case[] };
   before_after: { before?: string | null; after?: string | null };

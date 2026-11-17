@@ -18,9 +18,9 @@ function Summary({ data, variant }: DetailBlockProps) {
   if (!data.title) return null;
   return (
     <div data-slot="detail-summary" className="ez:grid ez:gap-2 ez:text-fg">
-      <h1 className="ez:m-0 ez:font-display ez:font-title ez:text-2xl ez:tracking-brand ez:md:text-3xl">{data.title}</h1>
-      {data.price && <strong className="ez:text-xl ez:tabular-nums">{data.price}</strong>}
-      {variant === "status" && data.status && <span className="ez:text-sm ez:text-primary">{data.status}</span>}
+      <h1 className="ez:m-0 ez:text-site-page-sm ez:font-light ez:tracking-[-0.035em] ez:lg:text-site-page">{data.title}</h1>
+      {data.price && <strong className="ez:text-site-heading ez:font-medium ez:tabular-nums">{data.price}</strong>}
+      {variant === "status" && data.status && <span className="ez:text-site-small ez:text-primary">{data.status}</span>}
       {data.chips && <Chips items={data.chips} current={-1} />}
     </div>
   );
@@ -29,7 +29,12 @@ function Summary({ data, variant }: DetailBlockProps) {
 function ShipLine({ data, variant }: DetailBlockProps) {
   const text = variant === "status" ? [data.status, data.ship].filter(Boolean).join(" · ") : data.ship;
   if (!text) return null;
-  return <p className="ez:m-0 ez:text-sm ez:text-primary">{text}</p>;
+  return (
+    <p className="ez:m-0 ez:inline-flex ez:items-center ez:gap-1.5 ez:text-site-small ez:font-medium ez:text-primary">
+      <span aria-hidden="true" className="ez:size-1.25 ez:rounded-full ez:bg-primary" />
+      {text}
+    </p>
+  );
 }
 
 function PriceTable({ data }: DetailBlockProps) {
@@ -227,7 +232,7 @@ function Availability({ data }: DetailBlockProps) {
             key={d.day}
             className={cn(
               "ez:grid ez:gap-0.5 ez:rounded-sm ez:py-1.5 ez:tabular-nums",
-              d.state === "picked" ? "ez:bg-primary ez:text-on-primary" : "ez:bg-surface-alt",
+              d.state === "picked" ? "ez:bg-point-soft ez:font-medium ez:text-primary ez:shadow-[inset_0_0_0_1px_var(--ezd-primary)]" : "ez:bg-transparent",
               d.state === "closed" && "ez:text-muted ez:line-through",
             )}
           >

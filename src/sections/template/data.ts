@@ -26,7 +26,7 @@ export type Review = { rating: number; body: string; name: string; date?: string
 
 export type TemplateSectionData = {
   notice_bar: { text?: string | null };
-  photo_band: { title?: string | null; image?: string | null };
+  photo_band: { title?: string | null; image?: string | null; images?: string[] };
   category_tiles: { items?: Tile[] };
   testimonial: { quote?: string | null; name?: string | null; count?: number | null; items?: Review[] };
   intro: { title?: string | null; body?: string | null; button?: string | null; href?: string | null; images?: string[] };

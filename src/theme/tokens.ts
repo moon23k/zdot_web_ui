@@ -104,16 +104,33 @@ function plainTitles(font: Design["font"]): Design["font"] {
   };
 }
 
-const SITE_SHAPE: Design["shape"] = { radius_sm: 8, radius_md: 14, radius_lg: 0, button_shape: "pill", line: 0 };
+const PHOTO_CORNER: Record<string, number> = { "0": 0, "4": 4, "6": 6, "16": 16, pill: 16 };
+
+const SERIF = new Set(["Noto Serif KR", "Nanum Myeongjo", "Gowun Batang", "Hahmlet", "Song Myung"]);
+
+function lookTitles(font: Design["font"], look: TemplateDesign["look"]): Design["font"] {
+  if (look.frame === "gallery") return plainTitles(font);
+  const picked: Design["font"] = font ?? (look.font === "serif" ? { display: "Noto Serif KR", load: [{ family: "Noto Serif KR", weights: [400, 600] }] } : undefined);
+  if (!picked?.display || !SERIF.has(picked.display)) return plainTitles(picked);
+  const light = { weight: 300, style: "normal" as const };
+  return {
+    ...picked,
+    display_weight: 300,
+    load: picked.load?.map((f) => (LIGHT.has(f.family) ? { ...f, weights: [...new Set([300, ...f.weights])].sort((x, y) => x - y) } : f)),
+    styles: { ...picked.styles, title: light, subtitle: { weight: 500, style: "normal" } },
+  };
+}
 
 export function applyTemplate(design: Design | null | undefined, template: TemplateDesign | null | undefined): Design {
   const d = design ?? {};
   if (!template) return d;
-  const tone = SYSTEM_TONE.gallery;
+  const { look } = template;
+  const tone = SYSTEM_TONE[look.frame === "gallery" ? "gallery" : look.tone];
+  const ink = SYSTEM_TONE.gallery;
   return {
     ...d,
-    font: plainTitles(d.font),
-    shape: SITE_SHAPE,
-    color: d.palette ? d.color : { ...d.color, surface: tone.surface, surface_alt: tone["surface-alt"], text: tone.text, text_muted: tone["text-muted"] },
+    font: lookTitles(d.font, look),
+    shape: { radius_sm: 8, radius_md: 14, radius_lg: PHOTO_CORNER[String(look.radius)] ?? 0, button_shape: "pill", line: 0 },
+    color: d.palette ? d.color : { ...d.color, surface: tone.surface, surface_alt: tone["surface-alt"], text: ink.text, text_muted: ink["text-muted"] },
   };
 }

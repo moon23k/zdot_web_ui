@@ -6,7 +6,7 @@ import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
 import { countSup, figure } from "../../utils/styles";
 import type { Review } from "./data";
-import { Bar, BlankButton, BlankStars, Block, Cols, Lines, Pairs, Pic, Rows, Split, Steps, Title } from "../kit";
+import { Bar, BlankButton, BlankStars, Block, Lines, Pairs, Pic, Split } from "../kit";
 
 export function NoticeBar({ data, context, blank }: SectionProps<"notice_bar">) {
   if (data.text || context.shipping?.free_threshold != null || !blank) return null;
@@ -51,40 +51,43 @@ export function Intro({ data, lead, variant, blank }: SectionProps<"intro">) {
       </section>
     );
   }
-  if (!data.title) {
-    return (
-      <Block slot="intro" blank className={cn("ez:justify-items-center ez:text-center", lead && "ez:py-16")}>
-        <span className={lead ? "ez:font-display ez:text-site-page-sm ez:md:text-site-page" : "ez:font-display ez:text-site-section"}>
-          <Bar size="long" />
-        </span>
-        <Lines className="ez:max-w-xl" />
-      </Block>
-    );
-  }
+  const statement = variant === "statement";
   return (
-    <Block slot="intro" className={cn("ez:justify-items-center ez:text-center", lead && "ez:py-16")}>
-      <h2 className={cn("ez:m-0 ez:max-w-2xl ez:text-balance", lead ? "ez:font-display ez:text-site-page-sm ez:md:text-site-page" : "ez:font-display ez:text-site-section")}>{data.title}</h2>
-      {data.body && <p className="ez:m-0 ez:max-w-xl ez:text-muted">{data.body}</p>}
-      {data.button && <ButtonLink href={data.href ?? "/products"}>{data.button}</ButtonLink>}
+    <Block
+      slot="intro"
+      blank={!data.title}
+      className={cn(statement ? "ez:pt-6 ez:lg:pt-14" : "ez:lg:grid-cols-[4fr_8fr] ez:lg:gap-6", lead && !statement && "ez:pt-6")}
+    >
+      {!statement && <span aria-hidden="true" className="ez:max-lg:hidden" />}
+      <div className="ez:grid ez:justify-items-start ez:gap-6">
+        {data.title ? (
+          <h2 className={cn("ez:m-0 ez:max-w-4xl ez:font-light ez:tracking-[-0.035em] ez:text-balance", statement ? "ez:text-site-page ez:lg:text-site-display" : "ez:text-site-page-sm ez:lg:text-site-page")}>
+            {data.title}
+          </h2>
+        ) : (
+          <span className="ez:w-full ez:max-w-xl ez:text-site-page-sm ez:lg:text-site-page">
+            <Bar size="long" />
+          </span>
+        )}
+        {data.title && data.button && (
+          <ButtonLink href={data.href ?? "/products"} variant="outline" size="sm">
+            {data.button}
+          </ButtonLink>
+        )}
+      </div>
     </Block>
   );
 }
 
 export function PhotoBand({ data, blank }: SectionProps<"photo_band">) {
-  const empty = !data.image && !data.title;
-  if (empty && !blank) return null;
+  const images = data.images?.length ? data.images.slice(0, 4) : data.image ? [data.image] : [];
+  if (!images.length && !blank) return null;
+  const shown: (string | null)[] = images.length ? images : [null, null, null, null];
   return (
-    <section data-slot="photo-band" data-blank={empty ? "" : undefined} className="ez:relative ez:grid ez:place-items-center ez:overflow-hidden ez:rounded-lg ez:text-center">
-      <Pic src={data.image} ratio={2.4} tone={1} strong iconClassName="ez:-translate-y-11" />
-      <div aria-hidden="true" className="ez:absolute ez:inset-0 ez:bg-[rgb(0_0_0/var(--ezd-overlay))]" />
-      {empty && (
-        <span className="ez:absolute ez:font-display ez:text-site-item">
-          <Bar strong />
-        </span>
-      )}
-      {data.title && (
-        <p className="ez:absolute ez:m-0 ez:px-page ez:font-display ez:text-site-item ez:text-on-primary ez:drop-shadow">{data.title}</p>
-      )}
+    <section data-slot="photo-band" data-blank={images.length ? undefined : ""} className={cn("ez:mx-[calc(50%-50vw)] ez:grid", shown.length > 1 ? "ez:grid-cols-2 ez:lg:grid-cols-4" : "ez:grid-cols-1")}>
+      {shown.map((src, i) => (
+        <Pic key={i} src={src} ratio={shown.length > 1 ? 1 : 2.4} tone={i} className="ez:[&>[data-slot=photo]]:rounded-none" />
+      ))}
     </section>
   );
 }
@@ -166,147 +169,60 @@ export function Testimonial({ data, context, variant, blank }: SectionProps<"tes
   );
 }
 
-const stars = (n: number) => "★★★★★".slice(0, Math.round(n)).padEnd(5, "☆");
 
-export function Reviews({ data, context, variant, blank }: SectionProps<"reviews">) {
+export function Reviews({ data, context, blank }: SectionProps<"reviews">) {
   const items = data.items ?? [];
   if (!items.length && !blank) return null;
-  if (variant === "gallery") return <GalleryReviews items={items} count={data.count} products={context.products} title="후기" slot="reviews" />;
-  if (!items.length) {
-    return (
-      <Block slot="reviews" blank>
-        <Title>후기</Title>
-        <Cols m={1} pc={3}>
-          {[0, 1, 2].map((i) => (
-            <div key={i} className="ez:grid ez:content-start ez:gap-2 ez:border-0 ez:border-b ez:border-solid ez:border-primary-border ez:pb-4">
-              <BlankStars />
-              <Lines />
-              <span className="ez:text-site-note">
-                <Bar size="short" />
-              </span>
-            </div>
-          ))}
-        </Cols>
-      </Block>
-    );
-  }
-  return (
-    <Block slot="reviews">
-      <Title aside={data.average ? <span className="ez:text-site-note ez:text-muted">{`${data.average.toFixed(1)} · ${data.count ?? items.length}`}</span> : null}>
-        후기
-      </Title>
-      <Cols m={1} pc={3}>
-        {items.slice(0, 3).map((r) => (
-          <article key={`${r.name}-${r.body}`} className="ez:grid ez:content-start ez:gap-1.5 ez:border-0 ez:border-b ez:border-solid ez:border-primary-border ez:pb-4">
-            <span aria-label={`별점 ${r.rating}`} className="ez:text-primary">
-              {stars(r.rating)}
-            </span>
-            <p className="ez:m-0">{r.body}</p>
-            <span className="ez:text-site-note ez:text-muted">{[r.name, r.date].filter(Boolean).join(" · ")}</span>
-          </article>
-        ))}
-      </Cols>
-    </Block>
-  );
+  return <GalleryReviews items={items} count={data.count} products={context.products} title="후기" slot="reviews" />;
 }
 
-export function TrustLine({ data, variant, blank }: SectionProps<"trust_line">) {
+export function TrustLine({ data, blank }: SectionProps<"trust_line">) {
   const items = data.items ?? [];
   if (!items.length && !blank) return null;
-  if (variant === "gallery") {
-    return (
-      <ul data-slot="trust-line" data-variant="gallery" data-blank={items.length ? undefined : ""} className="ez:m-0 ez:flex ez:list-none ez:flex-wrap ez:gap-x-10 ez:gap-y-2 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:p-0 ez:pt-6 ez:text-site-small ez:text-muted">
-        {(items.length ? items : ["", ""]).map((t, i) => (
-          <li key={`${t}-${i}`} className="ez:flex ez:items-center ez:gap-2">
-            <span aria-hidden="true" className="ez:size-1.25 ez:rounded-full ez:bg-primary" />
-            {t || <Bar size="short" />}
-          </li>
-        ))}
-      </ul>
-    );
-  }
-  if (!items.length) {
-    return (
-      <ul data-slot="trust-line" data-blank="" className="ez:m-0 ez:flex ez:list-none ez:flex-wrap ez:gap-x-4 ez:gap-y-1 ez:p-0 ez:font-semibold ez:text-fg">
-        {["평점", "후기"].map((label) => (
-          <li key={label} className="ez:flex ez:items-center ez:gap-1.5">
-            {label}
-            <Bar size="short" />
-          </li>
-        ))}
-      </ul>
-    );
-  }
   return (
-    <ul data-slot="trust-line" className="ez:m-0 ez:flex ez:list-none ez:flex-wrap ez:gap-x-4 ez:gap-y-1 ez:p-0 ez:font-semibold ez:text-fg">
-      {items.map((t) => (
-        <li key={t}>{t}</li>
+    <ul data-slot="trust-line" data-variant="gallery" data-blank={items.length ? undefined : ""} className="ez:m-0 ez:flex ez:list-none ez:flex-wrap ez:gap-x-10 ez:gap-y-2 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:p-0 ez:pt-6 ez:text-site-small ez:text-muted">
+      {(items.length ? items : ["", ""]).map((t, i) => (
+        <li key={`${t}-${i}`} className="ez:flex ez:items-center ez:gap-2">
+          <span aria-hidden="true" className="ez:size-1.25 ez:rounded-full ez:bg-primary" />
+          {t || <Bar size="short" />}
+        </li>
       ))}
     </ul>
   );
 }
 
-export function ProcessSteps({ data, variant, blank }: SectionProps<"process_steps">) {
+export function ProcessSteps({ data, blank }: SectionProps<"process_steps">) {
   const steps = data.steps ?? [];
   if (!steps.length && !blank) return null;
-  if (variant === "gallery") {
-    return (
-      <section data-slot="process-steps" data-variant="gallery" id="process" data-blank={steps.length ? undefined : ""} className="ez:grid ez:gap-10 ez:text-fg ez:lg:gap-14">
-        <h2 className="ez:m-0 ez:text-site-section">{data.title ?? "진행 과정"}</h2>
-        <ol className="ez:m-0 ez:grid ez:list-none ez:gap-8 ez:p-0 ez:md:auto-cols-fr ez:md:grid-flow-col ez:md:gap-6">
-          {(steps.length ? steps : ["", "", "", ""]).map((s, i) => (
-            <li key={`${s}-${i}`} className="ez:grid ez:gap-5">
-              <span aria-hidden="true" className="ez:flex ez:items-center ez:gap-3">
-                <span className="ez:size-2.25 ez:rounded-full ez:bg-primary" />
-                <span className="ez:h-px ez:flex-1 ez:bg-site-line" />
-              </span>
-              <span className={cn(figure, "ez:text-site-section ez:leading-none")}>{i + 1}</span>
-              <span className="ez:text-site-heading">{s || <Bar size="short" />}</span>
-            </li>
-          ))}
-        </ol>
-      </section>
-    );
-  }
-  if (!steps.length) {
-    return (
-      <Block slot="process-steps" blank>
-        <Title>{data.title ?? "진행 순서"}</Title>
-        <Steps steps={[0, 1, 2, 3].map((i) => <Bar key={i} size="short" />)} />
-      </Block>
-    );
-  }
   return (
-    <Block slot="process-steps">
-      <Title>{data.title ?? "진행 순서"}</Title>
-      <Steps steps={steps} />
-    </Block>
+    <section data-slot="process-steps" data-variant="gallery" id="process" data-blank={steps.length ? undefined : ""} className="ez:grid ez:gap-10 ez:text-fg ez:lg:gap-14">
+      <h2 className="ez:m-0 ez:text-site-section">{data.title ?? "진행 과정"}</h2>
+      <ol className="ez:m-0 ez:grid ez:list-none ez:gap-8 ez:p-0 ez:md:auto-cols-fr ez:md:grid-flow-col ez:md:gap-6">
+        {(steps.length ? steps : ["", "", "", ""]).map((s, i) => (
+          <li key={`${s}-${i}`} className="ez:grid ez:gap-5">
+            <span aria-hidden="true" className="ez:flex ez:items-center ez:gap-3">
+              <span className="ez:size-2.25 ez:rounded-full ez:bg-primary" />
+              <span className="ez:h-px ez:flex-1 ez:bg-site-line" />
+            </span>
+            <span className={cn(figure, "ez:text-site-section ez:leading-none")}>{i + 1}</span>
+            <span className="ez:text-site-heading">{s || <Bar size="short" />}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
   );
 }
 
 export function Numbers({ data, blank }: SectionProps<"numbers">) {
   const items = data.items ?? [];
   if (!items.length && !blank) return null;
-  if (!items.length) {
-    return (
-      <div data-slot="numbers" data-blank="" className="ez:grid ez:grid-cols-3 ez:gap-2 ez:rounded-md ez:bg-surface-alt ez:p-6 ez:text-center ez:text-fg">
-        {["개업", "수강생", "평점"].map((label) => (
-          <div key={label} className="ez:grid ez:gap-1">
-            <span className="ez:text-site-figure">
-              <Bar size="short" />
-            </span>
-            <span className="ez:text-site-note ez:text-muted">{label}</span>
-          </div>
-        ))}
-      </div>
-    );
-  }
+  const shown = items.length ? items : ["평점", "후기"].map((label) => ({ label, value: "" }));
   return (
-    <dl data-slot="numbers" className="ez:m-0 ez:grid ez:grid-cols-3 ez:gap-2 ez:rounded-md ez:bg-surface-alt ez:p-6 ez:text-center ez:text-fg">
-      {items.map((n) => (
-        <div key={n.label} className="ez:grid ez:gap-1">
-          <dt className="ez:order-2 ez:text-site-note ez:text-muted">{n.label}</dt>
-          <dd className="ez:order-1 ez:m-0 ez:text-site-figure ez:tabular-nums">{n.value}</dd>
+    <dl data-slot="numbers" data-blank={items.length ? undefined : ""} className="ez:m-0 ez:grid ez:grid-cols-2 ez:gap-y-6 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-7 ez:text-fg ez:md:grid-cols-4">
+      {shown.map((n) => (
+        <div key={n.label} className="ez:flex ez:items-baseline ez:gap-3">
+          <dd className={cn(figure, "ez:order-1 ez:m-0 ez:text-site-figure-lg")}>{n.value || <Bar size="short" />}</dd>
+          <dt className="ez:order-2 ez:text-site-small ez:text-muted">{n.label}</dt>
         </div>
       ))}
     </dl>
@@ -331,99 +247,55 @@ export function Gallery({ data, variant, blank }: SectionProps<"gallery">) {
   }
   const shown: (string | null)[] = images.length ? images.slice(0, 6) : [null, null, null];
   return (
-    <section data-slot="gallery" data-blank={images.length ? undefined : ""} className="ez:grid ez:grid-cols-3 ez:gap-2">
+    <section data-slot="gallery" id="gallery" data-blank={images.length ? undefined : ""} className="ez:grid ez:grid-cols-2 ez:gap-gutter ez:md:grid-cols-3">
       {shown.map((src, i) => (
-        <Pic key={i} src={src} ratio={1.5} tone={i} />
+        <Pic key={i} src={src} ratio={4 / 3} tone={i} />
       ))}
     </section>
   );
 }
 
-export function Location({ data, variant, blank }: SectionProps<"location">) {
+export function Location({ data, blank }: SectionProps<"location">) {
   if (!data.address && !blank) return null;
-  if (variant === "gallery") {
-    return (
-      <Split slot="location" id="location" title="오시는 길" blank={!data.address}>
-        <div className="ez:grid ez:justify-items-start ez:gap-5">
-          <p className="ez:m-0 ez:text-site-heading">{data.address ?? <Bar size="long" />}</p>
-          {data.note && <p className="ez:m-0 ez:text-muted">{data.note}</p>}
-          {data.href && (
-            <ButtonLink href={data.href} variant="outline" size="sm">
-              지도 보기
-            </ButtonLink>
-          )}
-        </div>
-      </Split>
-    );
-  }
-  if (!data.address) {
-    return (
-      <Block slot="location" blank>
-        <Title>오시는 길</Title>
-        <Rows rows={[{ label: "주소", value: <Bar size="long" /> }, { label: "안내", value: <Bar /> }]} />
-        <BlankButton variant="outline">지도 보기</BlankButton>
-      </Block>
-    );
-  }
   return (
-    <Block slot="location">
-      <Title>오시는 길</Title>
-      <Rows rows={[{ label: "주소", value: data.address }, ...(data.note ? [{ label: "안내", value: data.note }] : [])]} />
-      {data.href && (
-        <ButtonLink href={data.href} variant="outline">
-          지도 보기
-        </ButtonLink>
-      )}
-    </Block>
+    <Split slot="location" id="location" title="오시는 길" blank={!data.address}>
+      <div className="ez:grid ez:justify-items-start ez:gap-5">
+        <p className="ez:m-0 ez:text-site-heading">{data.address ?? <Bar size="long" />}</p>
+        {data.note && <p className="ez:m-0 ez:text-muted">{data.note}</p>}
+        {data.href && (
+          <ButtonLink href={data.href} variant="outline" size="sm">
+            지도 보기
+          </ButtonLink>
+        )}
+      </div>
+    </Split>
   );
 }
 
 const full = (value: ReactNode) => typeof value === "string" && value.startsWith("100%");
 
-export function PayPlan({ data, variant, blank }: SectionProps<"pay_plan">) {
+export function PayPlan({ data, blank }: SectionProps<"pay_plan">) {
   const rows = data.rows ?? [];
   const groups = data.groups ?? [];
   if (!rows.length && !groups.length && !blank) return null;
-  if (variant === "gallery") {
-    const empty = !rows.length && !groups.length;
-    return (
-      <Split slot="pay-plan" id="refund" title={data.title ?? "취소 · 환불 규정"} blank={empty}>
-        <div className="ez:grid ez:gap-8">
-          {empty && <Pairs rows={["예약금", "잔금", "취소 규정"].map((label) => ({ label, value: <Bar size="short" /> }))} />}
-          {rows.length > 0 && <Pairs rows={rows} accent={full} />}
-          {groups.map((group) => (
-            <details key={group.title} className="ez:group">
-              <summary className="ez:flex ez:min-h-12 ez:cursor-pointer ez:list-none ez:items-center ez:justify-between ez:gap-3 ez:text-site-item ez:font-normal ez:[&::-webkit-details-marker]:hidden">
-                {group.title}
-                <span aria-hidden="true" className="ez:text-muted ez:transition-transform ez:group-open:rotate-45">
-                  +
-                </span>
-              </summary>
-              <Pairs rows={group.rows} accent={full} />
-            </details>
-          ))}
-        </div>
-      </Split>
-    );
-  }
-  if (!rows.length && !groups.length) {
-    return (
-      <Block slot="pay-plan" blank>
-        <Title>{data.title ?? "결제 일정 · 취소 규정"}</Title>
-        <Rows rows={["예약금", "잔금", "취소 규정"].map((label) => ({ label, value: <Bar size="short" /> }))} />
-      </Block>
-    );
-  }
+  const empty = !rows.length && !groups.length;
   return (
-    <Block slot="pay-plan">
-      <Title>{data.title ?? "결제 일정 · 취소 규정"}</Title>
-      {rows.length > 0 && <Rows rows={rows} />}
-      {groups.map((group) => (
-        <div key={group.title} className="ez:grid ez:gap-2">
-          <strong className="ez:font-display ez:text-site-item">{group.title}</strong>
-          <Rows rows={group.rows} />
-        </div>
-      ))}
-    </Block>
+    <Split slot="pay-plan" id="refund" title={data.title ?? "취소 · 환불 규정"} blank={empty}>
+      <div className="ez:grid ez:gap-8">
+        {empty && <Pairs rows={["예약금", "잔금", "취소 규정"].map((label) => ({ label, value: <Bar size="short" /> }))} />}
+        {rows.length > 0 && <Pairs rows={rows} accent={full} />}
+        {groups.map((group) => (
+          <details key={group.title} className="ez:group">
+            <summary className="ez:flex ez:min-h-12 ez:cursor-pointer ez:list-none ez:items-center ez:justify-between ez:gap-3 ez:text-site-item ez:font-normal ez:[&::-webkit-details-marker]:hidden">
+              {group.title}
+              <span aria-hidden="true" className="ez:text-muted ez:transition-transform ez:group-open:rotate-45">
+                +
+              </span>
+            </summary>
+            <Pairs rows={group.rows} accent={full} />
+          </details>
+        ))}
+      </div>
+    </Split>
   );
 }

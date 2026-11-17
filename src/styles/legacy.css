@@ -394,3 +394,24 @@
 .ez-card-select {
   width: 96px;
 }
+.ez-root:has([data-slot="hero"][data-variant="full"]):has([data-slot="site-header"][data-variant="overlay"]) {
+  position: relative;
+}
+.ez-root:has([data-slot="hero"][data-variant="full"]) [data-slot="site-header"][data-variant="overlay"] {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 20;
+  background: transparent;
+}
+.ez-root:has([data-slot="hero"][data-variant="full"]) [data-slot="site-header"][data-variant="overlay"] > div {
+  border-bottom-color: transparent;
+}
+.ez-root:has([data-slot="hero"][data-variant="full"]) [data-slot="site-header"][data-variant="overlay"] :is(a, span, svg) {
+  color: #ffffff;
+}
+.ez-root:has([data-slot="hero"][data-variant="full"]) [data-slot="site-header"][data-variant="overlay"] [aria-current="page"] span:last-child {
+  background: #ffffff;
+}
+.ez-root:has([data-slot="hero"][data-variant="full"]):has([data-slot="site-header"][data-variant="overlay"]) .ez-main {
+  padding-top: 0;
+}

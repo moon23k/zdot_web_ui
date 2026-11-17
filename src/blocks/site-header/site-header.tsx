@@ -50,6 +50,7 @@ export function SiteHeader({
   logoUrl,
   cartCount,
   signedIn,
+  variant,
   main = "shop",
   cta,
   notice,
@@ -69,45 +70,85 @@ export function SiteHeader({
   const shop = main === "shop";
   const link = LINKS[main];
   const action = cta ?? CTA[main] ?? null;
-  const full = (
-    <header data-slot="site-header" data-variant="site" className="ez:bg-surface">
-      {notice && (
-        <p
-          data-slot="notice-bar"
-          className="ez:m-0 ez:flex ez:min-h-9.5 ez:items-center ez:justify-center ez:gap-2 ez:bg-surface-alt ez:px-page ez:text-site-small ez:text-fg"
-        >
-          <Icon name="truck" size="sm" />
-          {notice}
-        </p>
+  const nav = (
+    <Suspense fallback={<NavLinks main={main} categories={categories} />}>
+      <LiveNavLinks main={main} categories={categories} />
+    </Suspense>
+  );
+  const actions = (
+    <div className="ez:flex ez:items-center ez:justify-end ez:gap-1">
+      {link && (
+        <NextLink href={signedIn ? link.signed : link.guest} className="ez:mr-4 ez:text-site-small ez:text-fg ez:no-underline ez:hover:text-primary ez:max-md:hidden">
+          {link.label}
+        </NextLink>
       )}
-      <div className="ez:border-0 ez:border-b ez:border-solid ez:border-site-line">
-        <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:grid-cols-[1fr_auto] ez:items-center ez:gap-3 ez:px-page ez:min-h-16 ez:lg:min-h-20 ez:lg:grid-cols-[minmax(0,260px)_1fr_minmax(0,260px)]">
-          <Logo name={name} logoUrl={logoUrl} />
-          <nav aria-label="주요 메뉴" className="ez:flex ez:justify-center ez:gap-10 ez:text-site-lead ez:max-lg:hidden">
-            <Suspense fallback={<NavLinks main={main} categories={categories} />}>
-              <LiveNavLinks main={main} categories={categories} />
-            </Suspense>
-          </nav>
-          <div className="ez:flex ez:items-center ez:justify-end ez:gap-1">
-            {link && (
-              <NextLink href={signedIn ? link.signed : link.guest} className="ez:mr-4 ez:text-site-small ez:text-fg ez:no-underline ez:hover:text-primary ez:max-md:hidden">
-                {link.label}
-              </NextLink>
+      {shop && variant !== "center" && <IconLink href="/products?search=1" icon="search" label="검색" />}
+      <IconLink href={signedIn ? "/me" : "/login"} icon="user" label={signedIn ? "내 정보" : "로그인"} />
+      {shop && <IconLink href={signedIn ? "/me/likes" : "/login"} icon="heart" label="찜" />}
+      {shop && <IconLink href="/cart" icon="bag" label="장바구니" count={cartCount} />}
+      {action && (
+        <ButtonLink href={action.href} size="sm" className="ez:ml-2 ez:max-md:hidden">
+          {action.label}
+        </ButtonLink>
+      )}
+    </div>
+  );
+  const noticeRow = notice && (
+    <p data-slot="notice-bar" className="ez:m-0 ez:flex ez:min-h-9.5 ez:items-center ez:justify-center ez:gap-2 ez:bg-surface-alt ez:px-page ez:text-site-small ez:text-fg">
+      <Icon name="truck" size="sm" />
+      {notice}
+    </p>
+  );
+  const row = "ez:mx-auto ez:grid ez:max-w-wrap ez:grid-cols-[1fr_auto] ez:items-center ez:gap-3 ez:px-page ez:min-h-16 ez:lg:min-h-20";
+  const split = variant === "dark" || variant === "band";
+  const full =
+    variant === "center" ? (
+      <header data-slot="site-header" data-variant="center" className="ez:bg-surface">
+        {noticeRow}
+        <div className={cn(row, "ez:lg:min-h-21 ez:lg:grid-cols-[minmax(0,300px)_1fr_minmax(0,300px)]")}>
+          <NextLink
+            href="/products?search=1"
+            className="ez:flex ez:h-11 ez:items-center ez:gap-2.5 ez:border-0 ez:border-b ez:border-solid ez:border-site-field ez:text-site-small ez:text-muted ez:no-underline ez:max-lg:hidden"
+          >
+            <Icon name="search" size="sm" />
+            상품 검색
+          </NextLink>
+          <span className="ez:lg:justify-self-center">
+            <Logo name={name} logoUrl={logoUrl} />
+          </span>
+          {actions}
+        </div>
+        <nav aria-label="주요 메뉴" className="ez:flex ez:min-h-13 ez:items-end ez:justify-center ez:gap-11 ez:border-0 ez:border-y ez:border-solid ez:border-site-line ez:pb-1 ez:text-site-lead ez:max-lg:hidden">
+          {nav}
+        </nav>
+      </header>
+    ) : (
+      <header data-slot="site-header" data-variant={variant === "transparent" ? "overlay" : split ? "split" : "site"} className="ez:bg-surface">
+        {noticeRow}
+        <div className="ez:border-0 ez:border-b ez:border-solid ez:border-site-line">
+          <div className={cn(row, "ez:lg:grid-cols-[minmax(0,420px)_1fr_minmax(0,420px)]", !split && "ez:lg:grid-cols-[minmax(0,260px)_1fr_minmax(0,260px)]")}>
+            {split ? (
+              <>
+                <nav aria-label="주요 메뉴" className="ez:flex ez:gap-9 ez:text-site-lead ez:max-lg:hidden">
+                  {nav}
+                </nav>
+                <span className="ez:max-lg:order-first ez:lg:justify-self-center">
+                  <Logo name={name} logoUrl={logoUrl} />
+                </span>
+              </>
+            ) : (
+              <>
+                <Logo name={name} logoUrl={logoUrl} />
+                <nav aria-label="주요 메뉴" className="ez:flex ez:justify-center ez:gap-10 ez:text-site-lead ez:max-lg:hidden">
+                  {nav}
+                </nav>
+              </>
             )}
-            {shop && <IconLink href="/products?search=1" icon="search" label="검색" />}
-            <IconLink href={signedIn ? "/me" : "/login"} icon="user" label={signedIn ? "내 정보" : "로그인"} />
-            {shop && <IconLink href={signedIn ? "/me/likes" : "/login"} icon="heart" label="찜" />}
-            {shop && <IconLink href="/cart" icon="bag" label="장바구니" count={cartCount} />}
-            {action && (
-              <ButtonLink href={action.href} size="sm" className="ez:ml-2 ez:max-md:hidden">
-                {action.label}
-              </ButtonLink>
-            )}
+            {actions}
           </div>
         </div>
-      </div>
-    </header>
-  );
+      </header>
+    );
   const login = (
     <header data-slot="site-header" data-variant="login" className="ez:bg-surface">
       <div className="ez:mx-auto ez:flex ez:max-w-wrap ez:items-center ez:justify-between ez:gap-3 ez:px-page ez:min-h-16 ez:lg:min-h-20">

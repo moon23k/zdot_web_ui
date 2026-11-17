@@ -59,7 +59,7 @@ export function BlankPrice({ before, after = "원", className }: { before?: stri
 export function BlankChips({ count = 3, first }: { count?: number; first?: string }) {
   return (
     <div aria-hidden="true" data-slot="blank-chips" className="ez:flex ez:gap-2">
-      {first && <span className="ez:inline-flex ez:min-h-10 ez:items-center ez:rounded-full ez:bg-primary ez:px-4 ez:text-site-note ez:text-on-primary">{first}</span>}
+      {first && <span className="ez:inline-flex ez:min-h-10 ez:items-center ez:rounded-full ez:border ez:border-solid ez:border-primary ez:px-4 ez:text-site-note ez:font-medium ez:text-primary">{first}</span>}
       {Array.from({ length: count }, (_, i) => (
         <span key={i} className="ez:inline-flex ez:min-h-10 ez:items-center ez:rounded-full ez:border ez:border-solid ez:border-primary-border ez:px-4 ez:text-site-note">
           <Bar size="short" />

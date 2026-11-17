@@ -73,10 +73,12 @@ describe("store font", () => {
     expect(fontHref({})).toBeNull();
   });
 
-  it("sets titles in the store body font under every template", () => {
+  it("sets sans titles in the store body font and serif titles light", () => {
     const serif = resolveTemplate("class", "b");
     expect(serif?.look.font).toBe("serif");
     expect(applyTemplate(design, serif).font?.display).toBe("Noto Sans KR");
-    expect(designVars(applyTemplate({}, serif))["--ezd-font-display"]).toContain("Pretendard");
+    const vars = designVars(applyTemplate({}, serif));
+    expect(vars["--ezd-font-display"]).toContain("Noto Serif KR");
+    expect(vars["--ezd-title-weight"]).toBe("300");
   });
 });

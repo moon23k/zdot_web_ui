@@ -1,49 +1,35 @@
+import { Icon } from "../../components/icon";
 import type { SectionProps } from "../../renderer/registry";
-import { Bar, Block, Title } from "../kit";
+import { Bar, Split } from "../kit";
 
 export function FaqSection({ context, blank }: SectionProps<"faq">) {
   if (!context.faqs.length && !blank) return null;
   if (!context.faqs.length) {
     return (
-      <Block slot="faq" blank>
-        <Title>자주 묻는 질문</Title>
-        <div>
+      <Split slot="faq" id="faq" title="자주 묻는 질문" blank>
+        <div className="ez:border-0 ez:border-t ez:border-solid ez:border-site-line">
           {[0, 1, 2].map((i) => (
-            <div key={i} className="ez:flex ez:min-h-12 ez:items-center ez:border-0 ez:border-b ez:border-solid ez:border-primary-border ez:py-3">
+            <div key={i} className="ez:flex ez:min-h-14 ez:items-center ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-4">
               <Bar size="long" />
             </div>
           ))}
         </div>
-      </Block>
+      </Split>
     );
   }
   return (
-    <section data-slot="faq" className="ez:grid ez:gap-2 ez:text-fg">
-      <h2 className="ez:m-0 ez:font-display ez:text-site-section">자주 묻는 질문</h2>
-      <div>
+    <Split slot="faq" id="faq" title="자주 묻는 질문">
+      <div className="ez:border-0 ez:border-t ez:border-solid ez:border-site-line">
         {context.faqs.map((f) => (
-          <details key={f.id} className="ez:group ez:border-0 ez:border-b ez:border-solid ez:border-primary-border">
-            <summary className="ez:flex ez:min-h-12 ez:cursor-pointer ez:list-none ez:items-center ez:justify-between ez:gap-3 ez:py-3 ez:font-semibold ez:[&::-webkit-details-marker]:hidden">
+          <details key={f.id} className="ez:group ez:border-0 ez:border-b ez:border-solid ez:border-site-line">
+            <summary className="ez:flex ez:min-h-14 ez:cursor-pointer ez:list-none ez:items-center ez:justify-between ez:gap-3 ez:py-4 ez:font-normal ez:[&::-webkit-details-marker]:hidden">
               {f.question}
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-                className="ez:shrink-0 ez:text-fg ez:transition-transform ez:group-open:rotate-180"
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
+              <Icon name="down" size="sm" className="ez:text-muted ez:transition-transform ez:group-open:rotate-180" />
             </summary>
-            <p className="ez:m-0 ez:pb-4 ez:whitespace-pre-line ez:text-muted">{f.answer}</p>
+            <p className="ez:m-0 ez:pb-5 ez:whitespace-pre-line ez:text-muted">{f.answer}</p>
           </details>
         ))}
       </div>
-    </section>
+    </Split>
   );
 }

@@ -14,9 +14,9 @@ export function AddressText({
   return (
     <address data-slot="address" className="ez:grid ez:gap-0.5 ez:not-italic ez:text-fg">
       {recipient && (
-        <span className="ez:font-semibold">
+        <span>
           {recipient}
-          {phone && <span className="ez:ml-2 ez:font-normal ez:text-muted">{phone}</span>}
+          {phone && <span className="ez:ml-2 ez:text-muted">{phone}</span>}
         </span>
       )}
       <span className="ez:text-[13px]">

@@ -51,8 +51,8 @@ export function AddressBook({
           <li key={a.id} className="ez:grid ez:gap-2.5 ez:border-0 ez:border-b ez:border-solid ez:border-primary-border ez:py-4">
             <div className="ez:grid ez:gap-0.5">
               <span>
-                <strong className="ez:font-semibold">{a.recipient}</strong>
-                {a.is_default && <span className="ez:ml-1.5 ez:text-[13px] ez:font-semibold ez:text-primary">기본 배송지</span>}
+                <span>{a.recipient}</span>
+                {a.is_default && <span className="ez:ml-1.5 ez:text-[13px] ez:font-medium ez:text-primary">기본 배송지</span>}
               </span>
               <span className="ez:text-[13px] ez:text-muted">{a.phone}</span>
               <AddressText recipient="" postalCode={a.postal_code} address={a.address} detail={a.address_detail} />

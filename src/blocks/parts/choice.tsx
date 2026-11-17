@@ -3,7 +3,7 @@ import { cn } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
 
 export const fieldset = "ez:m-0 ez:grid ez:gap-2 ez:border-0 ez:p-0";
-export const legend = "ez:mb-1 ez:p-0 ez:text-sm ez:font-semibold ez:text-fg";
+export const legend = "ez:mb-1 ez:p-0 ez:text-site-small ez:font-normal ez:text-muted";
 
 export function Choice({
   label,

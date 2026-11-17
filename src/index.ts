@@ -21,7 +21,7 @@ export {
   GUEST_PRIVACY_TEXT,
   type ConsentTerm,
 } from "./blocks/consent-form";
-export { CheckoutLayout, CheckoutLines, CheckoutSection, ChipChoice, DropZone, FormLayout, StepList } from "./blocks/checkout-layout";
+export { CheckoutLayout, CheckoutLines, CheckoutSection, ChipChoice, DropZone, FormLayout, PhotoAttach, StepList } from "./blocks/checkout-layout";
 export { CheckoutItems, type CheckoutLine } from "./blocks/checkout-items";
 export { PayWidget, type PayRequest } from "./blocks/pay-widget";
 export { DepositInfo } from "./blocks/parts/deposit-info";

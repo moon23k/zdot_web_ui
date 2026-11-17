@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { describe, expect, it } from "vitest";
 import { expectNoA11yViolations } from "./a11y";
-import { AddressForm, BuyBox, Button, Calendar, CartView, Checkbox, ClaimForm, Dialog, Field, OrderSummary, Quantity, resolveTemplate, ReviewForm, Select, SiteRenderer, type ProductDetail } from "../src";
+import { AccountShell, AddressForm, BuyBox, Button, Calendar, CartView, Checkbox, ClaimForm, Dialog, Field, OrderSummary, PhotoAttach, Quantity, resolveTemplate, ReviewForm, reviewWord, Select, SiteRenderer, type ProductDetail } from "../src";
 
 
 const product: ProductDetail = {
@@ -166,6 +166,41 @@ describe("ReviewForm", () => {
     await userEvent.click(screen.getByRole("radio", { name: "4점" }));
     expect(screen.getByRole("button", { name: "후기 등록" })).toBeEnabled();
     await expectNoA11yViolations(container);
+  });
+});
+
+describe("review word", () => {
+  it("uses 리뷰 for shops and 후기 elsewhere, in the menu and the form", async () => {
+    expect([reviewWord("shop"), reviewWord("stay"), reviewWord("class"), reviewWord("quote"), reviewWord(undefined)]).toEqual(["리뷰", "후기", "후기", "후기", "후기"]);
+    render(
+      <AccountShell current="/me/reviews" main="shop">
+        <ReviewForm orderItemId="i1" productName="머그컵" word={reviewWord("shop")} action={async () => ({})} />
+      </AccountShell>,
+    );
+    expect(screen.getByRole("link", { name: "리뷰" })).toHaveAttribute("href", "/me/reviews");
+    expect(screen.getByRole("textbox", { name: "리뷰" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "리뷰 등록" })).toBeInTheDocument();
+    expect(screen.queryByText(/후기/)).toBeNull();
+  });
+});
+
+describe("PhotoAttach", () => {
+  it("opens the picker from a labelled button and removes a picked photo", async () => {
+    const picked: File[][] = [];
+    function Example() {
+      const [photos, setPhotos] = useState([{ key: "a", src: "/a.jpg" }]);
+      return <PhotoAttach count={photos.length} max={3} previews={photos} onPick={(files) => picked.push(files)} onRemove={(key) => setPhotos((list) => list.filter((p) => p.key !== key))} />;
+    }
+    const { container } = render(<Example />);
+    expect(container.querySelector("img")).toHaveAttribute("src", "/a.jpg");
+    const input = screen.getByLabelText(/사진 첨부/);
+    expect(input).toHaveAttribute("type", "file");
+    await userEvent.upload(input, new File(["x"], "a.png", { type: "image/png" }));
+    expect(picked[0]?.[0]?.name).toBe("a.png");
+    await expectNoA11yViolations(container);
+    await userEvent.click(screen.getByRole("button", { name: "사진 1 지우기" }));
+    expect(container.querySelector("img")).toBeNull();
+    expect(screen.getByLabelText(/사진 첨부/).closest("label")).toHaveTextContent("0/3");
   });
 });
 

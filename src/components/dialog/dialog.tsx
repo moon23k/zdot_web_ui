@@ -37,7 +37,7 @@ export function OverlayFrame({
         >
           <div className="ez:flex ez:items-start ez:justify-between ez:gap-3">
             <div className="ez:grid ez:gap-1">
-              <DialogPrimitive.Title className="ez:m-0 ez:text-lg ez:font-semibold">{title}</DialogPrimitive.Title>
+              <DialogPrimitive.Title className="ez:m-0 ez:text-lg ez:font-medium">{title}</DialogPrimitive.Title>
               {description && (
                 <DialogPrimitive.Description className="ez:m-0 ez:text-sm ez:text-muted">{description}</DialogPrimitive.Description>
               )}

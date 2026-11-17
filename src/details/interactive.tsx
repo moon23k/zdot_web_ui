@@ -54,7 +54,7 @@ export function BookingBox({ data }: DetailBlockProps) {
   const chosen = sessions.find((s) => s.id === pick);
   return (
     <section data-slot="booking-box" className="ez:grid ez:gap-3 ez:rounded-md ez:border ez:border-solid ez:border-site-line ez:bg-surface ez:p-6 ez:text-fg">
-      <strong className="ez:font-semibold">날짜 고르기</strong>
+      <strong className="ez:font-medium">날짜 고르기</strong>
       <ul className="ez:m-0 ez:grid ez:list-none ez:gap-1 ez:p-0">
         {sessions.map((s) => (
           <li key={s.id}>
@@ -91,7 +91,7 @@ export function QuoteForm({ data, variant }: DetailBlockProps) {
         </ol>
         {f.groups.map((g) => (
           <fieldset key={g.label} className="ez:m-0 ez:grid ez:gap-2 ez:border-0 ez:p-0">
-            <legend className="ez:mb-2 ez:font-semibold">{g.label}</legend>
+            <legend className="ez:mb-2 ez:font-medium">{g.label}</legend>
             <div className="ez:flex ez:flex-wrap ez:gap-2">
               {g.options.map((o, i) => (
                 <label key={o} className="ez:cursor-pointer">

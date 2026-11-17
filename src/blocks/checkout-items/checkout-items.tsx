@@ -13,7 +13,7 @@ export function CheckoutItems({ lines, imageSrc }: { lines: CheckoutLine[]; imag
     <details data-slot="checkout-items" className="ez:group ez:text-fg">
       <summary className={cn("ez:grid ez:cursor-pointer ez:list-none ez:gap-3 ez:rounded-md ez:[&::-webkit-details-marker]:hidden", focusRing)}>
         <span className="ez:flex ez:items-center ez:justify-between ez:gap-3">
-          <strong className="ez:font-semibold">주문 상품 {lines.length}개</strong>
+          <strong className="ez:font-medium">주문 상품 {lines.length}개</strong>
           <span className="ez:flex ez:items-center ez:gap-1.5 ez:tabular-nums ez:whitespace-nowrap">
             {won(lines.reduce((sum, l) => sum + l.line_total, 0))}
             <svg

@@ -66,7 +66,7 @@ export function AddressForm({
   };
   return (
     <fieldset data-slot="address-form" className={cn(fieldset, "ez:gap-6 ez:md:grid-cols-2", bare && "ez:md:col-span-2")}>
-      <legend className={cn(legend, "ez:mb-4 ez:text-site-heading ez:font-normal", bare && "ez:sr-only")}>배송지</legend>
+      <legend className={cn(legend, "ez:mb-4 ez:text-site-heading ez:text-fg", bare && "ez:sr-only")}>배송지</legend>
       <Field label="받는 분">
         <Input name="recipient" defaultValue={initial?.recipient} required maxLength={100} autoComplete="name" />
       </Field>

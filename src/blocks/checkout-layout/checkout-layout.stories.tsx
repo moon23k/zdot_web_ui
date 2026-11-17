@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { addresses, quote } from "../../__stories__/fixtures/commerce";
-import { AddressForm, CheckoutLayout, CheckoutLines, CheckoutSection, ChipChoice, DropZone, Field, FormLayout, Input, OrderSummary, StepList } from "../../index";
+import { AddressForm, CheckoutLayout, CheckoutLines, CheckoutSection, ChipChoice, DropZone, Field, FormLayout, Input, OrderSummary, PhotoAttach, StepList } from "../../index";
 
 const meta: Meta<typeof CheckoutLayout> = {
   title: "Blocks/CheckoutLayout",
@@ -51,6 +51,12 @@ function FormExample() {
   );
 }
 
+function AttachExample() {
+  return <PhotoAttach count={0} max={3} previews={[]} onPick={() => {}} onRemove={() => {}} />;
+}
+
 export const Default: StoryObj = { render: () => <DefaultExample /> };
 
 export const Form: StoryObj = { render: () => <FormExample /> };
+
+export const Attach: StoryObj = { render: () => <AttachExample /> };

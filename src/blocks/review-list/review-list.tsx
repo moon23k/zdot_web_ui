@@ -96,7 +96,7 @@ export function ReviewList({
           </ul>
           {notice && notice.length > 0 && (
             <details className="ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:pt-5 ez:text-site-small ez:text-muted">
-              <summary className="ez:cursor-pointer">후기 운영 기준</summary>
+              <summary className="ez:cursor-pointer">{title} 운영 기준</summary>
               <div className="ez:mt-2 ez:grid ez:gap-1">
                 {notice.map((n, i) => (
                   <p key={i} className="ez:m-0">

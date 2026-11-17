@@ -136,13 +136,16 @@
   gap: 4px;
   max-width: 480px;
 }
+:where(.ez-root) :is(strong, b, th) {
+  font-weight: 500;
+}
 :where(.ez-root) fieldset {
   border: 0;
   padding: 0;
   margin: 0 0 16px;
 }
 :where(.ez-root) legend {
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 8px;
 }
 
@@ -166,7 +169,7 @@
 }
 .ez-faq summary {
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 400;
   min-height: 44px;
 }
 .ez-categories {
@@ -215,7 +218,7 @@
   gap: 2px;
 }
 .ez-line__name {
-  font-weight: 600;
+  font-weight: 400;
   text-decoration: none;
 }
 .ez-line__option {
@@ -243,7 +246,7 @@
   border-radius: var(--ezd-button-radius);
   border: 1px solid transparent;
   font: inherit;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
   cursor: pointer;
   transition: background var(--ezd-duration), border-color var(--ezd-duration);

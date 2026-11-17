@@ -75,7 +75,7 @@ export function CatalogView({
   search?: ReactNode;
 }) {
   return (
-    <div data-slot="catalog-view" className="ez:grid ez:text-fg">
+    <div data-slot="catalog-view" className="ez:grid ez:grid-cols-1 ez:text-fg">
       <div className="ez:grid ez:gap-8 ez:pb-10 ez:lg:gap-14 ez:lg:pb-14">
         <Crumbs items={crumbs} />
         <h1 className="ez:m-0 ez:text-site-page ez:font-light ez:tracking-[-0.04em] ez:lg:text-site-display">

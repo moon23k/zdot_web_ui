@@ -43,7 +43,7 @@ export function EmptyState({
     return (
       <div data-slot="empty-state" className={cn("ez:grid ez:justify-items-center ez:gap-4 ez:px-4 ez:py-12 ez:text-center", className)}>
         <div className="ez:grid ez:gap-1">
-          <p className="ez:m-0 ez:font-semibold ez:text-fg">{title}</p>
+          <p className="ez:m-0 ez:font-medium ez:text-fg">{title}</p>
           {description && <p className="ez:m-0 ez:text-sm ez:text-muted">{description}</p>}
         </div>
         {action && <Action action={action} />}

@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { buttonVariants } from "../../components/button";
+import { Icon } from "../../components/icon";
 import { cn } from "../../utils/cn";
 import { figure } from "../../utils/styles";
 
@@ -147,6 +149,71 @@ export function DropZone({
           <path d="M21 16l-5-5-9 9" />
         </svg>
         {label}
+      </label>
+    </div>
+  );
+}
+
+export function PhotoAttach({
+  label = "사진 첨부",
+  count,
+  max,
+  previews,
+  disabled,
+  onPick,
+  onRemove,
+}: {
+  label?: string;
+  count: number;
+  max: number;
+  previews: { key: string; src: string }[];
+  disabled?: boolean;
+  onPick: (files: File[]) => void;
+  onRemove: (key: string) => void;
+}) {
+  return (
+    <div data-slot="photo-attach" className="ez:grid ez:justify-items-start ez:gap-3">
+      {previews.length > 0 && (
+        <ul className="ez:m-0 ez:flex ez:list-none ez:flex-wrap ez:gap-3 ez:p-0">
+          {previews.map((p, i) => (
+            <li key={p.key} className="ez:relative">
+              <img src={p.src} alt="" className="ez:block ez:size-16 ez:rounded-sm ez:object-cover" />
+              <button
+                type="button"
+                aria-label={`사진 ${i + 1} 지우기`}
+                onClick={() => onRemove(p.key)}
+                className="ez:absolute ez:-top-2 ez:-right-2 ez:inline-flex ez:size-6 ez:cursor-pointer ez:items-center ez:justify-center ez:rounded-full ez:border ez:border-solid ez:border-site-line ez:bg-surface ez:p-0 ez:text-fg ez:hover:border-muted"
+              >
+                <Icon name="x" size="sm" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <label
+        className={cn(
+          buttonVariants({ variant: "primary", size: "sm" }),
+          "ez:has-focus-visible:outline-2 ez:has-focus-visible:outline-offset-2 ez:has-focus-visible:outline-primary",
+          disabled && "ez:cursor-not-allowed ez:opacity-45",
+        )}
+      >
+        <input
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          multiple
+          disabled={disabled}
+          className="ez:sr-only"
+          onChange={(e) => {
+            const files = [...(e.target.files ?? [])];
+            e.target.value = "";
+            onPick(files);
+          }}
+        />
+        <Icon name="plus" size="sm" />
+        {label}
+        <span className="ez:tabular-nums">
+          {count}/{max}
+        </span>
       </label>
     </div>
   );

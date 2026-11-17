@@ -86,12 +86,14 @@ export function OrderList({
   orderHref = (number) => `/orders/${number}`,
   reviewHref = "/me/reviews",
   counts = false,
+  word = "후기",
 }: {
   orders: OrderRow[];
   labels?: Record<OrderStatus, string>;
   orderHref?: (number: string) => string;
   reviewHref?: string;
   counts?: boolean;
+  word?: string;
 }) {
   if (!orders.length) {
     return (
@@ -170,7 +172,7 @@ export function OrderList({
                   {o.status === "completed" && (
                     <span className="ez:col-span-2 ez:flex ez:justify-end ez:gap-2 ez:md:col-span-1">
                       <ButtonLink href={reviewHref} size="sm">
-                        후기 쓰기
+                        {word} 쓰기
                       </ButtonLink>
                     </span>
                   )}

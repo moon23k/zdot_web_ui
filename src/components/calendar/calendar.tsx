@@ -139,7 +139,7 @@ export function Calendar({
                         aria-label={[dayText(day.date), `${WEEKDAYS[weekday(day.date)]}요일`, day.label].filter(Boolean).join(" ")}
                         className={cn(
                           "ez:relative ez:mx-auto ez:grid ez:size-11 ez:content-center ez:rounded-full ez:border-0 ez:bg-transparent ez:p-0 ez:font-body ez:text-site-note ez:tabular-nums ez:text-fg ez:cursor-pointer",
-                          look === "edge" && "ez:bg-point-soft ez:font-semibold ez:text-primary ez:shadow-[inset_0_0_0_1px_var(--ezd-primary)]",
+                          look === "edge" && "ez:bg-point-soft ez:font-medium ez:text-primary ez:shadow-[inset_0_0_0_1px_var(--ezd-primary)]",
                           dots && !blocked && look === "none" && "ez:after:absolute ez:after:bottom-1.5 ez:after:left-1/2 ez:after:size-1 ez:after:-translate-x-1/2 ez:after:rounded-full ez:after:bg-primary",
                           "ez:disabled:cursor-not-allowed ez:disabled:text-site-off",
                           blocked && !outside && "ez:line-through",

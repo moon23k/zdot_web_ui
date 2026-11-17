@@ -87,7 +87,7 @@ export function trackingUrl(s: Shipment): string | undefined {
 }
 
 export function statusTone(status: OrderStatus): string {
-  return status === "completed" || status === "canceled" ? "ez:text-muted" : "ez:font-semibold ez:text-primary";
+  return status === "completed" || status === "canceled" ? "ez:text-muted" : "ez:font-medium ez:text-primary";
 }
 
 type Step = OrderStatus | "ready";
@@ -173,8 +173,8 @@ export function OrderDetail({
       <div className="ez:contents ez:lg:grid ez:lg:min-w-0 ez:lg:gap-5">
         <header className="ez:grid ez:gap-0.5">
           <div className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
-            <h1 className="ez:m-0 ez:font-body ez:text-base ez:font-semibold">{kstDate(order.created_at)} 주문</h1>
-            <span className={cn("ez:text-[13px]", partial ? "ez:font-semibold ez:text-primary" : statusTone(order.status))}>
+            <h1 className="ez:m-0 ez:font-body ez:text-base ez:font-normal">{kstDate(order.created_at)} 주문</h1>
+            <span className={cn("ez:text-[13px]", partial ? "ez:font-medium ez:text-primary" : statusTone(order.status))}>
               {partial ? "부분 환불" : order.deposit ? "입금 대기" : orderLabel(order, labels)}
             </span>
           </div>
@@ -203,7 +203,7 @@ export function OrderDetail({
                 aria-current={i === step ? "step" : undefined}
                 className={cn(
                   "ez:relative ez:grid ez:justify-items-center ez:gap-1.5 ez:text-[13px]",
-                  i === step ? "ez:font-bold ez:text-primary" : "ez:text-muted",
+                  i === step ? "ez:font-medium ez:text-primary" : "ez:text-muted",
                 )}
               >
                 <span
@@ -254,7 +254,7 @@ export function OrderDetail({
           {order.pickup && (
             <div data-slot="pickup-place" className="ez:grid ez:gap-0.5">
               <span className="ez:text-[13px] ez:text-muted">픽업 장소</span>
-              <span className="ez:font-semibold">{order.pickup.name}</span>
+              <span>{order.pickup.name}</span>
               <span className="ez:text-[13px]">{order.pickup.address}</span>
               {order.pickup.hours && <span className="ez:text-[13px] ez:text-muted">{order.pickup.hours}</span>}
             </div>

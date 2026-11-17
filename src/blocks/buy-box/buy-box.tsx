@@ -180,7 +180,7 @@ export function BuyBox({
             <span className="ez:text-[13px] ez:text-muted">
               {[options ? variant?.label : null, `${quantity}개`].filter(Boolean).join(" · ")}
             </span>
-            <strong className="ez:font-semibold ez:tabular-nums">{won(unit * quantity)}</strong>
+            <strong className="ez:font-medium ez:tabular-nums">{won(unit * quantity)}</strong>
           </div>
         </div>
         <div className="ez:grid ez:grid-cols-2 ez:gap-2">

@@ -48,7 +48,7 @@ export function BlankStars() {
 
 export function BlankPrice({ before, after = "원", className }: { before?: string; after?: string; className?: string }) {
   return (
-    <span className={cn("ez:inline-flex ez:items-center ez:gap-1 ez:font-semibold", className)}>
+    <span className={cn("ez:inline-flex ez:items-center ez:gap-1 ez:font-medium", className)}>
       {before}
       <Bar size="short" />
       {after}

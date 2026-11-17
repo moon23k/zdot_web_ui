@@ -70,9 +70,9 @@ export function InquiryGreeting({
   return (
     <section
       data-slot="inquiry-greeting"
-      className="ez:grid ez:max-w-180 ez:gap-2 ez:rounded-lg ez:border ez:border-solid ez:border-primary-border ez:p-3.5"
+      className="ez:grid ez:max-w-180 ez:gap-3"
     >
-      <strong className="ez:font-semibold">{greetingOf(store)}</strong>
+      <p className="ez:m-0">{greetingOf(store)}</p>
       {aiNotice && (
         <span className="ez:flex ez:items-center ez:gap-1 ez:text-[13px] ez:text-muted">
           <Sparkle />
@@ -126,14 +126,14 @@ export function InquiryList({
             className="ez:grid ez:gap-0.5 ez:border-0 ez:border-b ez:border-solid ez:border-primary-border ez:py-3.5 ez:text-fg ez:no-underline ez:hover:bg-surface-alt"
           >
             <span className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
-              <strong className="ez:line-clamp-1 ez:font-semibold">
+              <span className="ez:line-clamp-1">
                 {q.preview}
-              </strong>
+              </span>
               <span
                 className={cn(
                   "ez:shrink-0 ez:text-[13px]",
                   q.status === "answered"
-                    ? "ez:font-semibold ez:text-primary"
+                    ? "ez:font-medium ez:text-primary"
                     : "ez:text-muted"
                 )}
               >
@@ -185,7 +185,7 @@ export function InquiryThread({
             )}
           >
             <span className="ez:flex ez:items-center ez:gap-2 ez:text-[13px] ez:text-muted">
-              <span className="ez:font-semibold ez:text-fg">
+              <span className="ez:font-medium ez:text-fg">
                 {m.author === "customer" ? "나" : store}
               </span>
               <span className="ez:tabular-nums">{when(m.created_at)}</span>

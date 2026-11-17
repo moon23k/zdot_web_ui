@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import type { FormAction } from "../../types";
 import { cn } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
+import { reviewWord } from "../../utils/words";
 import { LogoutButton } from "./logout-button";
 
 const TABS = [
@@ -35,7 +36,7 @@ export function AccountShell({
   main?: string;
   children: ReactNode;
 }) {
-  const tabs = main === "shop" ? TABS.map((t) => (t.href === "/me/reviews" ? { ...t, label: "리뷰" } : t)) : TABS;
+  const tabs = TABS.map((t) => (t.href === "/me/reviews" ? { ...t, label: reviewWord(main) } : t));
   const head = Boolean(name || summary.length);
   return (
     <div

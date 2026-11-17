@@ -112,7 +112,7 @@ function Prep({ data }: DetailBlockProps) {
     <Cols m={1} pc={3}>
       {items.map((p) => (
         <div key={p.title} className="ez:grid ez:gap-1 ez:rounded-md ez:bg-surface-alt ez:p-4">
-          <strong className="ez:font-semibold">{p.title}</strong>
+          <strong className="ez:font-medium">{p.title}</strong>
           <span className="ez:text-sm ez:text-muted">{p.body}</span>
         </div>
       ))}
@@ -127,7 +127,7 @@ function Teacher({ data }: DetailBlockProps) {
     <section data-slot="teacher" className="ez:grid ez:grid-cols-[56px_1fr] ez:items-start ez:gap-4 ez:text-fg">
       <Pic src={t.image} ratio={1} className="ez:overflow-hidden ez:rounded-full" />
       <div className="ez:grid ez:gap-1">
-        <strong className="ez:font-semibold">{t.name}</strong>
+        <strong className="ez:font-medium">{t.name}</strong>
         <p className="ez:m-0 ez:text-sm ez:text-muted">{t.body}</p>
       </div>
     </section>
@@ -157,7 +157,7 @@ function Cohorts({ data }: DetailBlockProps) {
       <Cols m={1} pc={3}>
         {cohorts.map((c) => (
           <div key={c.title} className="ez:grid ez:content-start ez:gap-1.5 ez:rounded-md ez:border ez:border-solid ez:border-primary-border ez:p-4">
-            <strong className="ez:font-semibold ez:tabular-nums">{c.title}</strong>
+            <strong className="ez:font-medium ez:tabular-nums">{c.title}</strong>
             <span className="ez:text-sm ez:text-muted ez:tabular-nums">{`${c.period} · ${c.count}`}</span>
             <SessionStatus session={{ id: c.title, date: "", time: "", name: "", status: c.status, seats_left: c.seats_left }} />
             {c.dates && (
@@ -185,7 +185,7 @@ function Timetable({ data }: DetailBlockProps) {
               <span className="ez:sr-only">시간</span>
             </th>
             {t.days.map((d) => (
-              <th key={d} className="ez:p-2 ez:font-semibold">
+              <th key={d} className="ez:p-2 ez:font-medium">
                 {d}
               </th>
             ))}

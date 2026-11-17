@@ -206,12 +206,17 @@ export function Hero({ data, context, variant, blank }: SectionProps<"hero">) {
   if (variant === "frame") {
     return (
       <section data-slot="hero" data-variant="frame" data-blank={empty ? "" : undefined} className="ez:grid ez:gap-6 ez:text-fg ez:lg:relative ez:lg:h-160">
-        <Photo src={image} alt="" preload sizes="(max-width: 1024px) 100vw, 920px" tone={0} className="ez:aspect-[4/3] ez:lg:absolute ez:lg:inset-y-0 ez:lg:left-0 ez:lg:right-90 ez:lg:aspect-auto" />
-        <div className="ez:grid ez:gap-6 ez:lg:absolute ez:lg:bottom-0 ez:lg:left-0 ez:lg:bg-surface ez:lg:pt-9 ez:lg:pr-14">
+        <Photo src={image} alt="" preload sizes="(max-width: 1024px) 100vw, 1280px" tone={0} className="ez:aspect-[4/3] ez:lg:absolute ez:lg:inset-0 ez:lg:aspect-auto" />
+        <div className="ez:grid ez:justify-items-start ez:gap-8 ez:lg:absolute ez:lg:bottom-0 ez:lg:left-0 ez:lg:bg-surface ez:lg:pt-9 ez:lg:pr-14">
           {title("ez:text-site-page ez:lg:text-site-display")}
-        </div>
-        <div className="ez:grid ez:content-start ez:gap-5 ez:rounded-lg ez:border ez:border-solid ez:border-site-line ez:bg-surface ez:p-8 ez:lg:absolute ez:lg:top-10 ez:lg:right-0 ez:lg:w-120">
-          {empty ? <BlankButton>견적 요청</BlankButton> : <ButtonLink href={href === "/products" ? "/quote" : href} block>{button}<Icon name="right" size="sm" /></ButtonLink>}
+          {empty ? (
+            <BlankButton>견적 요청</BlankButton>
+          ) : (
+            <ButtonLink href="/quote">
+              {data.button ?? "견적 요청"}
+              <Icon name="right" size="sm" />
+            </ButtonLink>
+          )}
         </div>
       </section>
     );

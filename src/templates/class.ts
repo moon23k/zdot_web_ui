@@ -62,7 +62,7 @@ export const klass: TemplateDesign[] = [
     header: "left",
     footer: "line",
     home: [
-      { kind: "hero", variant: "rounded" },
+      { kind: "hero", variant: "split" },
       { kind: "class_schedule", variant: "upcoming" },
       { kind: "gates" },
       { kind: "story" },

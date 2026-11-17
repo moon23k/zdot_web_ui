@@ -1,6 +1,6 @@
 import type { Row, Status } from "../kit";
 
-export type Tile = { title: string; image?: string | null; href?: string };
+export type Tile = { title: string; image?: string | null; href?: string; price?: string | null };
 
 export type Session = {
   id: string;

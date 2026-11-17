@@ -18,7 +18,6 @@ export function CheckoutSection({ n, title, action, children, last }: { n: numbe
   return (
     <section
       data-slot="checkout-section"
-      aria-label={title}
       className={cn("ez:grid ez:gap-6 ez:border-0 ez:border-solid ez:border-site-line", !last && "ez:border-b ez:pb-10 ez:lg:pb-16")}
     >
       <div className="ez:flex ez:items-center ez:justify-between ez:gap-3">

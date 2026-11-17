@@ -40,7 +40,7 @@ export type TemplateSectionData = {
   class_schedule: { title?: string | null; sessions?: Session[] };
   class_list: { title?: string | null; classes?: ClassCard[] };
   gates: { items?: Tile[] };
-  search_bar: { href?: string | null };
+  search_bar: { href?: string | null; check_in?: string | null; check_out?: string | null; guests?: string | null; price?: string | null };
   booking_strip: { price?: string | null; href?: string | null; check_in?: string | null; check_out?: string | null; guests?: string | null };
   spec_icons: { items?: string[] };
   gallery: { images?: string[] };
@@ -49,7 +49,7 @@ export type TemplateSectionData = {
   pay_plan: { title?: string | null; rows?: Row[]; groups?: { title: string; rows: Row[] }[] };
   location: { address?: string | null; note?: string | null; href?: string | null };
   room_list: { title?: string | null; rooms?: Room[] };
-  room_box: { title?: string | null; body?: string | null; names?: string[]; image?: string | null; href?: string | null };
+  room_box: { title?: string | null; body?: string | null; names?: string[]; image?: string | null; href?: string | null; rooms?: Room[]; price?: string | null };
   price_tiers: { title?: string | null; items?: Row[] };
   package_cards: { title?: string | null; tabs?: string[]; items?: { name: string; price: string; image?: string | null; includes?: string[]; href?: string }[] };
   case_grid: { title?: string | null; categories?: string[]; cases?: Case[] };

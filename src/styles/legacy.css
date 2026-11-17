@@ -415,3 +415,12 @@
 .ez-root:has([data-slot="hero"][data-variant="full"]):has([data-slot="site-header"][data-variant="overlay"]) .ez-main {
   padding-top: 0;
 }
+.ez-root:has([data-slot="hero"][data-variant="full"]) [data-slot="site-header"][data-variant="overlay"] [data-slot="button"] {
+  background: transparent;
+  border-color: rgb(255 255 255 / 0.7);
+}
+@media (min-width: 1024px) {
+  [data-slot="hero"][data-variant="full"]:has(+ [data-slot="search-bar"]) > div:last-child {
+    bottom: 184px;
+  }
+}

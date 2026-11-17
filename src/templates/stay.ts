@@ -34,7 +34,7 @@ export const stay: TemplateDesign[] = [
     letter: "b",
     name: "객실 검색 · 카드형",
     look: { tone: "white", radius: 0, line: false, font: "sans" },
-    header: "left",
+    header: "transparent",
     footer: "line",
     home: [
       { kind: "hero", variant: "full" },

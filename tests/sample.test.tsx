@@ -11,7 +11,10 @@ describe("RoomList", () => {
   it("marks sample rooms and leaves them without a booking button", () => {
     render(<RoomList data={{ rooms }} context={{ products: [], categories: [], faqs: [], shipping: null, flags: {} } as never} />);
     expect(screen.getAllByText("예시")).toHaveLength(1);
-    expect(screen.getAllByRole("link", { name: "예약" })).toHaveLength(1);
-    expect(screen.getAllByRole("link", { name: "자세히" })).toHaveLength(2);
+    expect(screen.queryByRole("link", { name: /예약/ })).not.toBeInTheDocument();
+    expect(screen.getAllByRole("link").map((a) => [a.getAttribute("href"), a.hasAttribute("data-sample")])).toEqual([
+      ["/products/prd_1", true],
+      ["/products/prd_2", false],
+    ]);
   });
 });

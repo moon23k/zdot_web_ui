@@ -218,7 +218,7 @@ export function Hero({ data, variant, blank }: SectionProps<"hero">) {
   if (variant === "slide") {
     const side = (data.products ?? []).filter((p) => p.cover_url).slice(0, 2);
     return (
-      <section data-slot="hero" data-variant="slide" data-blank={empty ? "" : undefined} className="ez:grid ez:gap-gutter ez:text-fg ez:lg:grid-cols-[8fr_4fr]">
+      <section data-slot="hero" data-variant="slide" data-blank={empty ? "" : undefined} className={cn("ez:grid ez:gap-gutter ez:text-fg", side.length > 0 && "ez:lg:grid-cols-[8fr_4fr]")}>
         {(() => {
           const body = (
             <>

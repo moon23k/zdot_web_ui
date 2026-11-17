@@ -129,7 +129,7 @@ export function SiteHeader({
           <div className={cn(row, "ez:lg:grid-cols-[minmax(0,420px)_1fr_minmax(0,420px)]", !split && "ez:lg:grid-cols-[minmax(0,260px)_1fr_minmax(0,260px)]")}>
             {split ? (
               <>
-                <nav aria-label="주요 메뉴" className="ez:flex ez:gap-9 ez:text-site-lead ez:max-lg:hidden">
+                <nav aria-label="주요 메뉴" className="ez:flex ez:min-w-0 ez:gap-9 ez:overflow-hidden ez:whitespace-nowrap ez:text-site-lead ez:max-lg:hidden">
                   {nav}
                 </nav>
                 <span className="ez:max-lg:order-first ez:lg:justify-self-center">

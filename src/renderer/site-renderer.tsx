@@ -26,7 +26,7 @@ function place(sections: Section[], template: TemplateDesign | null | undefined,
   const byKind = new Map(sections.map((s) => [s.kind, s]));
   const placed: Placed[] = template.home.map((slot) => ({ ...(byKind.get(slot.kind) ?? { kind: slot.kind, data: {} }), variant: slot.variant, grid: slot.grid }));
   const used = new Set(template.home.map((s) => s.kind));
-  if (used.has("notice_bar")) used.add("free_shipping_bar");
+  if (used.has("notice_bar") || template.header === "transparent") used.add("free_shipping_bar");
   return [...placed, ...sections.filter((s) => !used.has(s.kind) && KEEP.has(s.kind))];
 }
 

@@ -41,21 +41,23 @@ export function ReviewList({
   items,
   notice,
   writeHref,
+  title = "리뷰",
 }: {
   count?: number;
   average?: number | null;
   items: ReviewItem[];
   notice?: { title?: string; body?: string }[];
   writeHref?: string;
+  title?: string;
 }) {
   const total = Math.max(count, items.length);
   const mean = !total ? null : (average ?? (items.length ? items.reduce((sum, r) => sum + r.rating, 0) / items.length : null));
   return (
-    <section data-slot="review-list" id="reviews" aria-label="리뷰" className="ez:mx-[calc(50%-50vw)] ez:bg-surface-alt ez:text-fg">
+    <section data-slot="review-list" id="reviews" aria-label={title} className="ez:mx-[calc(50%-50vw)] ez:bg-surface-alt ez:text-fg">
       <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-10 ez:px-page ez:py-16 ez:lg:grid-cols-[4fr_8fr] ez:lg:gap-6 ez:lg:py-24">
         <div className="ez:flex ez:flex-col ez:items-start ez:gap-7">
           <h2 className="ez:m-0 ez:text-site-section">
-            리뷰
+            {title}
             {total > 0 && <span className={countSup}>{total}</span>}
           </h2>
           {mean !== null && (

@@ -32,7 +32,7 @@ function dayText(iso: string): string {
   return `${m}월 ${d}일`;
 }
 
-function months(days: CalendarDate[]): string[] {
+function monthKeys(days: CalendarDate[]): string[] {
   return [...new Set(days.map((d) => d.date.slice(0, 7)))];
 }
 
@@ -44,6 +44,8 @@ export function Calendar({
   name = "date",
   startName = "in",
   endName = "out",
+  months = 1,
+  dots,
   className,
 }: {
   days: CalendarDate[];
@@ -53,14 +55,14 @@ export function Calendar({
   name?: string;
   startName?: string;
   endName?: string;
+  months?: 1 | 2;
+  dots?: boolean;
   className?: string;
 }) {
   const [own, setOwn] = useState<CalendarValue>(value ?? {});
   const current = value ?? own;
-  const list = months(days);
+  const list = monthKeys(days);
   const [page, setPage] = useState(() => Math.max(0, list.indexOf((current.start ?? "").slice(0, 7))));
-  const month = list[page] ?? list[0];
-  const shown = days.filter((d) => d.date.startsWith(month ?? ""));
   const set = (next: CalendarValue) => {
     setOwn(next);
     onChange?.(next);
@@ -79,71 +81,79 @@ export function Calendar({
     if (current.start && current.end && iso > current.start && iso < current.end) return "inside";
     return "none";
   };
-  const [y, m] = month ? month.split("-").map(Number) : [0, 0];
-  const blanks = shown.length ? weekday(shown[0].date) : 0;
+  const pages = list.slice(page, page + months);
+  const nav = cn(
+    "ez:flex ez:size-9 ez:items-center ez:justify-center ez:rounded-full ez:border ez:border-solid ez:border-site-line ez:bg-transparent ez:text-fg ez:cursor-pointer ez:disabled:opacity-30 ez:disabled:cursor-default",
+    focusRing,
+  );
   return (
     <div data-slot="calendar" className={cn("ez:grid ez:gap-3 ez:text-fg", className)}>
-      <div className="ez:flex ez:items-center ez:justify-between">
-        <button
-          type="button"
-          className={cn("ez:size-10 ez:border-0 ez:bg-transparent ez:text-fg ez:cursor-pointer ez:disabled:opacity-30 ez:disabled:cursor-default", focusRing)}
-          onClick={() => setPage(page - 1)}
-          disabled={page <= 0}
-          aria-label="이전 달"
-        >
-          ‹
-        </button>
-        <strong className="ez:font-title">{`${y}년 ${m}월`}</strong>
-        <button
-          type="button"
-          className={cn("ez:size-10 ez:border-0 ez:bg-transparent ez:text-fg ez:cursor-pointer ez:disabled:opacity-30 ez:disabled:cursor-default", focusRing)}
-          onClick={() => setPage(page + 1)}
-          disabled={page >= list.length - 1}
-          aria-label="다음 달"
-        >
-          ›
-        </button>
-      </div>
-      <ol className="ez:m-0 ez:grid ez:list-none ez:grid-cols-7 ez:gap-1 ez:p-0 ez:text-center">
-        {WEEKDAYS.map((w) => (
-          <li key={w} className="ez:text-sm ez:text-muted" aria-hidden="true">
-            {w}
-          </li>
-        ))}
-        {Array.from({ length: blanks }, (_, i) => (
-          <li key={`blank-${i}`} aria-hidden="true" />
-        ))}
-        {shown.map((day) => {
-          const look = state(day.date);
-          const blocked = Boolean(day.disabled) && !canEnd(day.date);
+      <div className={cn("ez:grid ez:gap-10", months > 1 && "ez:md:grid-cols-2")}>
+        {pages.map((key, k) => {
+          const [y, m] = key.split("-").map(Number);
+          const shownDays = days.filter((d) => d.date.startsWith(key));
+          const blanks = shownDays.length ? weekday(shownDays[0].date) : 0;
           return (
-            <li key={day.date}>
-              <button
-                type="button"
-                onClick={() => pick(day)}
-                disabled={blocked}
-                aria-pressed={look === "edge"}
-                aria-label={[dayText(day.date), `${WEEKDAYS[weekday(day.date)]}요일`, day.label].filter(Boolean).join(" ")}
-                className={cn(
-                  "ez:grid ez:w-full ez:min-h-12 ez:content-center ez:gap-0.5 ez:rounded-sm ez:border-0 ez:py-1 ez:tabular-nums ez:cursor-pointer",
-                  look === "edge" ? "ez:bg-primary ez:text-on-primary" : look === "inside" ? "ez:bg-primary-tint ez:text-fg" : "ez:bg-surface-alt ez:text-fg",
-                  "ez:disabled:cursor-not-allowed ez:disabled:bg-transparent ez:disabled:text-muted ez:disabled:line-through",
-                  focusRing,
-                )}
-              >
-                <span>{parts(day.date)[2]}</span>
-                {day.label && <span className="ez:text-xs ez:opacity-80">{day.label}</span>}
-              </button>
-            </li>
+            <div key={key} className="ez:grid ez:gap-3">
+              <div className="ez:flex ez:items-center ez:justify-between">
+                <strong className="ez:font-medium">{`${y}년 ${m}월`}</strong>
+                <span className="ez:flex ez:gap-1.5">
+                  {k === 0 && (
+                    <button type="button" className={nav} onClick={() => setPage(page - 1)} disabled={page <= 0} aria-label="이전 달">
+                      ‹
+                    </button>
+                  )}
+                  {k === pages.length - 1 && (
+                    <button type="button" className={nav} onClick={() => setPage(page + 1)} disabled={page + months >= list.length} aria-label="다음 달">
+                      ›
+                    </button>
+                  )}
+                </span>
+              </div>
+              <ol className="ez:m-0 ez:grid ez:list-none ez:grid-cols-7 ez:gap-y-1 ez:p-0 ez:text-center">
+                {WEEKDAYS.map((w) => (
+                  <li key={w} className="ez:py-2 ez:text-site-caption ez:text-muted" aria-hidden="true">
+                    {w}
+                  </li>
+                ))}
+                {Array.from({ length: blanks }, (_, i) => (
+                  <li key={`blank-${i}`} aria-hidden="true" />
+                ))}
+                {shownDays.map((day) => {
+                  const look = state(day.date);
+                  const blocked = Boolean(day.disabled) && !canEnd(day.date);
+                  return (
+                    <li key={day.date} className={look === "inside" ? "ez:bg-point-soft" : undefined}>
+                      <button
+                        type="button"
+                        onClick={() => pick(day)}
+                        disabled={blocked}
+                        aria-pressed={look === "edge"}
+                        aria-label={[dayText(day.date), `${WEEKDAYS[weekday(day.date)]}요일`, day.label].filter(Boolean).join(" ")}
+                        className={cn(
+                          "ez:relative ez:mx-auto ez:grid ez:size-11 ez:content-center ez:rounded-full ez:border-0 ez:bg-transparent ez:p-0 ez:font-body ez:text-site-note ez:tabular-nums ez:text-fg ez:cursor-pointer",
+                          look === "edge" && "ez:bg-point-soft ez:font-semibold ez:text-primary ez:shadow-[inset_0_0_0_1px_var(--ezd-primary)]",
+                          dots && !blocked && look === "none" && "ez:after:absolute ez:after:bottom-1.5 ez:after:left-1/2 ez:after:size-1 ez:after:-translate-x-1/2 ez:after:rounded-full ez:after:bg-primary",
+                          "ez:disabled:cursor-not-allowed ez:disabled:text-site-off ez:disabled:line-through",
+                          focusRing,
+                        )}
+                      >
+                        <span>{parts(day.date)[2]}</span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
           );
         })}
-      </ol>
+      </div>
       {mode === "range" ? (
         <>
           <input type="hidden" name={startName} value={current.start ?? ""} />
           <input type="hidden" name={endName} value={current.end ?? ""} />
           {current.start && (
-            <p className="ez:m-0 ez:text-sm">
+            <p className="ez:m-0 ez:text-site-small ez:text-muted">
               {current.end
                 ? `${dayText(current.start)} ~ ${dayText(current.end)} · ${nightsBetween(current.start, current.end)}박`
                 : `${dayText(current.start)} ~`}

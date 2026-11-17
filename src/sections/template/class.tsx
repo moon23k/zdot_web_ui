@@ -3,7 +3,7 @@ import { Badge } from "../../components/badge";
 import { ButtonLink } from "../../components/button";
 import type { SectionProps } from "../../renderer/registry";
 import { cn } from "../../utils/cn";
-import { focusRing } from "../../utils/styles";
+import { countSup, focusRing } from "../../utils/styles";
 import { Bar, BlankButton, BlankPrice, Block, Card, Cols, Pic, statusText, Title } from "../kit";
 import type { Session } from "./data";
 
@@ -112,9 +112,46 @@ export function NextSession({ data, blank }: SectionProps<"next_session">) {
   );
 }
 
+function GalleryRow({ s, i }: { s: Session | null; i: number }) {
+  const full = s?.status === "full";
+  return (
+    <li className={cn("ez:grid ez:grid-cols-[1fr_auto] ez:items-center ez:gap-x-6 ez:gap-y-2 ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-5 ez:lg:grid-cols-[140px_96px_minmax(0,1fr)_140px_120px_120px]", full && "ez:text-muted")}>
+      <span className="ez:text-site-heading ez:tabular-nums">{s ? s.time : <Bar size="short" />}</span>
+      <Pic src={s?.image} tone={i} className={cn("ez:aspect-[4/3] ez:w-24 ez:max-lg:hidden", full && "ez:opacity-45")} />
+      <span className="ez:col-span-2 ez:flex ez:flex-col ez:lg:col-span-1">
+        <span className="ez:text-site-item ez:font-normal">{s ? s.name : <Bar />}</span>
+        <span className="ez:text-site-small ez:text-muted">{s ? [s.date, s.length].filter(Boolean).join(" · ") : <Bar size="short" />}</span>
+      </span>
+      <span className={cn("ez:text-site-small", s?.status === "few" && "ez:font-medium ez:text-primary")}>{s ? (full ? "마감" : `${s.seats_left ?? 0}자리 남음`) : null}</span>
+      <span className="ez:font-medium ez:tabular-nums ez:lg:text-right">{s?.price}</span>
+      <span className="ez:flex ez:justify-end">
+        {s && !full ? (
+          <ButtonLink href={s.href ?? "#"} size="sm">
+            예약하기
+          </ButtonLink>
+        ) : s ? null : (
+          <BlankButton>예약하기</BlankButton>
+        )}
+      </span>
+    </li>
+  );
+}
+
 export function ClassSchedule({ data, variant, blank }: SectionProps<"class_schedule">) {
   const sessions = data.sessions ?? [];
   if (!sessions.length && !blank) return null;
+  if (variant === "gallery") {
+    return (
+      <section data-slot="class-schedule" data-variant="gallery" id="schedule" data-blank={sessions.length ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-8">
+        <h2 className="ez:m-0 ez:text-site-section">{data.title ?? "수업 일정"}</h2>
+        <ul className="ez:m-0 ez:list-none ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:p-0">
+          {(sessions.length ? sessions : [null, null, null]).map((s, i) => (
+            <GalleryRow key={s?.id ?? i} s={s} i={i} />
+          ))}
+        </ul>
+      </section>
+    );
+  }
   if (!sessions.length) {
     return (
       <Block slot="class-schedule" blank>
@@ -157,6 +194,41 @@ export function ClassSchedule({ data, variant, blank }: SectionProps<"class_sche
 export function ClassList({ data, variant, blank }: SectionProps<"class_list">) {
   const classes = data.classes ?? [];
   if (!classes.length && !blank) return null;
+  if (variant === "gallery") {
+    return (
+      <section data-slot="class-list" data-variant="gallery" id="classes" data-blank={classes.length ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-9">
+        <h2 className="ez:m-0 ez:text-site-section">
+          {data.title ?? "클래스"}
+          {classes.length > 0 && <span className={countSup}>{classes.length}</span>}
+        </h2>
+        <div className="ez:grid ez:gap-x-gutter ez:gap-y-10 ez:md:grid-cols-3 ez:lg:gap-y-14">
+          {(classes.length ? classes : [null, null, null]).map((c, i) => {
+            const body = (
+              <>
+                <Pic src={c?.image} ratio={4 / 3} tone={i} />
+                <span className="ez:flex ez:flex-col ez:gap-1.5">
+                  <span className="ez:text-site-heading">{c ? c.name : <Bar />}</span>
+                  <span className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
+                    <span className="ez:text-site-small ez:text-muted">{c?.next}</span>
+                    <span className="ez:font-medium ez:tabular-nums">{c ? c.price : <BlankPrice />}</span>
+                  </span>
+                </span>
+              </>
+            );
+            return c ? (
+              <NextLink key={c.id} href={c.href ?? "#"} className={cn("ez:grid ez:content-start ez:gap-3.5 ez:text-fg ez:no-underline", focusRing)}>
+                {body}
+              </NextLink>
+            ) : (
+              <div key={i} className="ez:grid ez:content-start ez:gap-3.5">
+                {body}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    );
+  }
   if (!classes.length) {
     return (
       <Block slot="class-list" blank>

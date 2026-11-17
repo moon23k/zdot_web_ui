@@ -14,7 +14,7 @@ export function OrderSummary({ quote }: { quote: Quote }) {
   return (
     <SummaryRows
       rows={rows.filter((row) => Number(row.value) > 0 || row.label === "배송비")}
-      total={{ label: "결제 금액", value: quote.total }}
+      total={{ label: "최종 결제 금액", value: quote.total }}
     />
   );
 }

@@ -28,6 +28,7 @@ export type SectionData = {
     image?: string | null;
     images?: string[];
     products?: { id: string; name: string; sale_price?: number; cover_url?: string | null; href?: string }[];
+    facts?: { label: string; value: string }[];
   };
   story: { title?: string | null; body?: string[]; strengths?: { title: string; body: string }[] };
   product_grid: { title?: string | null; lines?: Record<string, string> };

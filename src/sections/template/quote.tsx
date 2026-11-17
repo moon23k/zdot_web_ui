@@ -1,5 +1,8 @@
+import NextLink from "next/link";
 import { ButtonLink } from "../../components/button";
 import type { SectionProps } from "../../renderer/registry";
+import { cn } from "../../utils/cn";
+import { countSup, figure } from "../../utils/styles";
 import { Bar, BlankButton, BlankPrice, Block, Card, Chips, Cols, Pic, Rows, Title } from "../kit";
 
 function blankCases(count: number, ratio: number) {
@@ -16,9 +19,27 @@ function blankCases(count: number, ratio: number) {
   ));
 }
 
-export function PriceTiers({ data, blank }: SectionProps<"price_tiers">) {
+export function PriceTiers({ data, variant, blank }: SectionProps<"price_tiers">) {
   const items = data.items ?? [];
   if (!items.length && !blank) return null;
+  if (variant === "gallery") {
+    return (
+      <section data-slot="price-tiers" data-variant="gallery" id="services" data-blank={items.length ? undefined : ""} className="ez:mx-[calc(50%-50vw)] ez:bg-surface-alt ez:text-fg">
+        <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-8 ez:px-page ez:py-16 ez:lg:grid-cols-[4fr_8fr] ez:lg:gap-6 ez:lg:py-30">
+          <h2 className="ez:m-0 ez:text-site-section">{data.title ?? "서비스"}</h2>
+          <ol className="ez:m-0 ez:list-none ez:p-0">
+            {(items.length ? items : [null, null, null]).map((it, i) => (
+              <li key={i} className="ez:grid ez:grid-cols-[40px_1fr_auto] ez:items-baseline ez:gap-6 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:py-7 ez:lg:grid-cols-[56px_1fr_200px]">
+                <span className={cn(figure, "ez:text-site-heading ez:text-primary")}>{String(i + 1).padStart(2, "0")}</span>
+                <span className="ez:text-site-heading ez:font-light ez:tracking-[-0.03em] ez:lg:text-[2rem] ez:lg:leading-tight">{it ? it.label : <Bar />}</span>
+                <span className="ez:text-right ez:font-medium ez:tabular-nums">{it ? it.value : <BlankPrice />}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    );
+  }
   if (!items.length) {
     return (
       <Block slot="price-tiers" blank>
@@ -83,9 +104,49 @@ export function PackageCards({ data, blank }: SectionProps<"package_cards">) {
   );
 }
 
-export function CaseGrid({ data, blank }: SectionProps<"case_grid">) {
+export function CaseGrid({ data, variant, blank }: SectionProps<"case_grid">) {
   const cases = data.cases ?? [];
   if (!cases.length && !blank) return null;
+  if (variant === "gallery") {
+    const tall = ["ez:lg:h-130", "ez:lg:h-105", "ez:lg:h-80"];
+    return (
+      <section data-slot="case-grid" data-variant="gallery" id="work" data-blank={cases.length ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-9">
+        <div className="ez:flex ez:items-end ez:justify-between ez:gap-3">
+          <h2 className="ez:m-0 ez:text-site-section">
+            {data.title ?? "작업"}
+            {cases.length > 0 && <span className={countSup}>{cases.length}</span>}
+          </h2>
+          {cases.length > 3 && (
+            <NextLink href="/cases" className="ez:shrink-0 ez:border-0 ez:border-b ez:border-solid ez:border-site-faint ez:pb-1 ez:text-site-small ez:font-medium ez:text-fg ez:no-underline">
+              전체 보기
+            </NextLink>
+          )}
+        </div>
+        <div className="ez:grid ez:gap-gutter ez:md:grid-cols-[5fr_4fr_3fr] ez:md:items-start">
+          {(cases.length ? cases.slice(0, 3) : [null, null, null]).map((c, i) => {
+            const body = (
+              <>
+                <Pic src={c?.image} tone={i} className={cn("ez:aspect-[4/3] ez:lg:aspect-auto", tall[i], "ez:[&>[data-slot=photo]]:h-full ez:[&>[data-slot=photo]]:aspect-auto")} />
+                <span className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
+                  <span className="ez:text-site-heading">{c ? c.title : <Bar />}</span>
+                  {c?.meta && <span className="ez:text-site-small ez:text-muted">{c.meta}</span>}
+                </span>
+              </>
+            );
+            return c ? (
+              <NextLink key={c.id} href={c.href ?? "#"} className="ez:grid ez:gap-3.5 ez:text-fg ez:no-underline">
+                {body}
+              </NextLink>
+            ) : (
+              <div key={i} className="ez:grid ez:gap-3.5">
+                {body}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    );
+  }
   if (!cases.length) {
     return (
       <Block slot="case-grid" blank>

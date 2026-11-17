@@ -11,12 +11,13 @@ export type Session = {
   image?: string | null;
   status: Status;
   seats_left?: number | null;
+  price?: string;
   href?: string;
 };
 
 export type ClassCard = { id: string; name: string; image?: string | null; chips?: string[]; price?: string; next?: string; href?: string };
 
-export type Room = { id: string; name: string; image?: string | null; specs: string[]; price: string; left?: number | null; href?: string; sample?: boolean };
+export type Room = { id: string; name: string; image?: string | null; specs: string[]; price: string; amount?: string; unit?: string; left?: number | null; href?: string; sample?: boolean };
 
 export type Case = { id: string; title: string; image?: string | null; meta?: string; scope?: string; href?: string };
 
@@ -27,7 +28,7 @@ export type TemplateSectionData = {
   photo_band: { title?: string | null; image?: string | null };
   category_tiles: { items?: Tile[] };
   testimonial: { quote?: string | null; name?: string | null; count?: number | null; items?: Review[] };
-  intro: { title?: string | null; body?: string | null; button?: string | null; href?: string | null };
+  intro: { title?: string | null; body?: string | null; button?: string | null; href?: string | null; images?: string[] };
   curation: { title?: string | null; items?: Tile[] };
   store_info: { title?: string | null; address?: string | null; hours?: string | null; phone?: string | null; image?: string | null };
   reviews: { average?: number | null; count?: number | null; items?: Review[] };
@@ -39,7 +40,7 @@ export type TemplateSectionData = {
   class_list: { title?: string | null; classes?: ClassCard[] };
   gates: { items?: Tile[] };
   search_bar: { href?: string | null };
-  booking_strip: { price?: string | null; href?: string | null };
+  booking_strip: { price?: string | null; href?: string | null; check_in?: string | null; check_out?: string | null; guests?: string | null };
   spec_icons: { items?: string[] };
   gallery: { images?: string[] };
   amenities: { title?: string | null; items?: { name: string; group?: string }[] };

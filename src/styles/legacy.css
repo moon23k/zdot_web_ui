@@ -350,3 +350,47 @@
   color: var(--ezd-primary);
   fill: currentColor;
 }
+.ez-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (min-width: 768px) {
+  .ez-span {
+    grid-column: span 2;
+  }
+}
+.ez-aside-title {
+  margin: 0;
+  font-size: var(--ez-text-site-item);
+  line-height: var(--ez-text-site-item--line-height);
+  font-weight: 500;
+}
+.ez-count {
+  margin-left: 2px;
+  vertical-align: top;
+  font-size: var(--ez-text-site-small);
+  font-weight: 500;
+  color: var(--ezd-primary);
+}
+.ez-booking-dates {
+  display: grid;
+  gap: 20px;
+}
+.ez-booking-dates > h2 {
+  margin: 0;
+  font-size: var(--ez-text-site-heading);
+  font-weight: 400;
+}
+.ez-card-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ez-card-select {
+  width: 96px;
+}

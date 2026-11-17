@@ -48,6 +48,81 @@ export function Hero({ data, variant, blank }: SectionProps<"hero">) {
       </ButtonLink>
     );
 
+  if (variant === "class") {
+    const facts = data.facts ?? [];
+    return (
+      <section data-slot="hero" data-variant="class" data-blank={empty ? "" : undefined} className="ez:grid ez:gap-8 ez:text-fg ez:lg:grid-cols-[7fr_5fr] ez:lg:items-end ez:lg:gap-6">
+        <Photo src={image} alt="" preload sizes="(max-width: 1024px) 100vw, 740px" tone={0} className="ez:aspect-[4/3] ez:lg:aspect-auto ez:lg:h-160" />
+        <div className="ez:flex ez:flex-col ez:items-start ez:gap-8 ez:lg:gap-10 ez:lg:pb-2 ez:lg:pl-14">
+          {empty ? (
+            <span className="ez:w-full ez:text-site-page-sm ez:lg:text-site-display">
+              <Bar size="long" />
+            </span>
+          ) : (
+            <div className="ez:grid ez:gap-5">
+              <h1 className="ez:m-0 ez:text-site-page-sm ez:font-light ez:tracking-[-0.04em] ez:text-balance ez:lg:text-site-display">{data.title}</h1>
+              {data.sub && <p className="ez:m-0 ez:text-muted">{data.sub}</p>}
+            </div>
+          )}
+          <div className="ez:flex ez:flex-wrap ez:items-center ez:gap-7">
+            {empty ? (
+              <BlankButton>일정 보기</BlankButton>
+            ) : (
+              <ButtonLink href="#schedule">
+                일정 보기
+                <Icon name="right" size="sm" />
+              </ButtonLink>
+            )}
+            <NextLink href="/classes" className={textLink}>
+              클래스 전체
+            </NextLink>
+          </div>
+          {facts.length > 0 && (
+            <dl className="ez:m-0 ez:mt-4 ez:flex ez:gap-10 ez:self-stretch ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-7">
+              {facts.map((f) => (
+                <div key={f.label} className="ez:flex ez:flex-col">
+                  <dd className="ez:order-1 ez:m-0 ez:font-figure ez:text-[2.5rem] ez:leading-[1.1] ez:italic">{f.value}</dd>
+                  <dt className="ez:order-2 ez:text-site-small ez:text-muted">{f.label}</dt>
+                </div>
+              ))}
+            </dl>
+          )}
+        </div>
+      </section>
+    );
+  }
+
+  if (variant === "stay") {
+    const facts = data.facts ?? [];
+    return (
+      <section data-slot="hero" data-variant="stay" data-blank={empty ? "" : undefined} className="ez:grid ez:gap-10 ez:pt-4 ez:text-fg ez:lg:gap-14 ez:lg:pt-10">
+        <div className="ez:flex ez:flex-wrap ez:items-end ez:justify-between ez:gap-8">
+          {empty ? (
+            <span className="ez:w-full ez:max-w-xl ez:text-site-page-sm ez:lg:text-site-display">
+              <Bar size="long" />
+            </span>
+          ) : (
+            <div className="ez:grid ez:gap-4">
+              <h1 className="ez:m-0 ez:max-w-3xl ez:text-site-page-sm ez:font-light ez:tracking-[-0.04em] ez:text-balance ez:lg:text-site-display">{data.title}</h1>
+              {data.sub && <p className="ez:m-0 ez:text-muted">{data.sub}</p>}
+            </div>
+          )}
+          {facts.length > 0 && (
+            <dl className="ez:m-0 ez:grid ez:w-full ez:max-w-75 ez:gap-2 ez:pb-3 ez:text-site-small">
+              {facts.map((f) => (
+                <div key={f.label} className="ez:flex ez:justify-between ez:gap-6">
+                  <dt className="ez:text-muted">{f.label}</dt>
+                  <dd className="ez:m-0 ez:text-right">{f.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </div>
+        <Photo src={image} alt="" preload sizes="100vw" tone={0} className="ez:aspect-[4/3] ez:md:aspect-[2.06]" />
+      </section>
+    );
+  }
+
   if (variant === "gallery") {
     const pick = data.products?.find((p) => p.cover_url) ?? data.products?.[0];
     return (

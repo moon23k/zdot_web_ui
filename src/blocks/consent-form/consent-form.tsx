@@ -15,7 +15,7 @@ function Term({ term }: { term: ConsentTerm }) {
   const id = useId();
   return (
     <li className="ez:grid">
-      <div className="ez:flex ez:min-h-8 ez:items-center ez:justify-between ez:gap-2 ez:text-[13px] ez:text-muted">
+      <div className="ez:flex ez:min-h-8 ez:items-center ez:justify-between ez:gap-2 ez:text-site-small ez:text-muted">
         <span>{term.title}</span>
         <button
           type="button"
@@ -23,12 +23,12 @@ function Term({ term }: { term: ConsentTerm }) {
           aria-controls={id}
           aria-label={`${term.title} 보기`}
           onClick={() => setOpen((v) => !v)}
-          className={cn("ez:-mr-2 ez:h-8 ez:shrink-0 ez:border-0 ez:bg-transparent ez:px-2 ez:text-[13px] ez:text-muted ez:underline ez:cursor-pointer", focusRing)}
+          className={cn("ez:-mr-2 ez:h-8 ez:shrink-0 ez:border-0 ez:bg-transparent ez:px-2 ez:font-body ez:text-site-small ez:text-muted ez:underline ez:underline-offset-4 ez:cursor-pointer", focusRing)}
         >
           보기
         </button>
       </div>
-      <div id={id} hidden={!open} className="ez:pb-2 ez:text-[13px] ez:text-muted">
+      <div id={id} hidden={!open} className="ez:pb-2 ez:text-site-small ez:text-muted">
         {term.body}
       </div>
     </li>

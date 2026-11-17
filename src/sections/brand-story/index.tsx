@@ -6,6 +6,19 @@ export function BrandStory({ data, variant, blank }: SectionProps<"story">) {
   const body = data.body ?? [];
   const strengths = data.strengths ?? [];
   if (!data.title && !body.length && !blank) return null;
+  if (!data.title && !body.length && variant === "gallery") {
+    return (
+      <section data-slot="story" data-variant="gallery" id="story" data-blank="" className="ez:mx-[calc(50%-50vw)] ez:bg-surface-alt ez:text-fg">
+        <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-8 ez:px-page ez:py-16 ez:lg:grid-cols-[5fr_1fr_6fr] ez:lg:py-30">
+          <span className="ez:text-site-page-sm ez:lg:text-site-page">
+            <Bar size="long" />
+          </span>
+          <span aria-hidden="true" className="ez:max-lg:hidden" />
+          <Lines />
+        </div>
+      </section>
+    );
+  }
   if (!data.title && !body.length) {
     return (
       <section data-slot="story" data-blank="" data-variant={variant} className={cn("ez:grid ez:gap-6 ez:text-fg", variant === "band" && "ez:justify-items-center ez:py-8 ez:text-center")}>

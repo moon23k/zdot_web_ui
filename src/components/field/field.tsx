@@ -5,18 +5,20 @@ export function Field({
   label,
   hint,
   error,
+  wide,
   className,
   children,
 }: {
   label: string;
   hint?: string;
   error?: string;
+  wide?: boolean;
   className?: string;
   children: ReactNode;
 }) {
   return (
-    <div data-slot="field" className={cn("ez:grid ez:gap-1.5 ez:text-fg", className)}>
-      <label className="ez:grid ez:gap-1.5">
+    <div data-slot="field" className={cn("ez:grid ez:content-start ez:gap-2 ez:text-fg", wide && "ez:md:col-span-2", className)}>
+      <label className="ez:grid ez:gap-2">
         <span className="ez:text-site-small ez:text-muted">{label}</span>
         {children}
       </label>

@@ -38,10 +38,12 @@ export function AddressForm({
   initial,
   mock,
   onPostalChange,
+  bare,
 }: {
   initial?: AddressValue;
   mock?: boolean;
   onPostalChange?: (postal: string) => void;
+  bare?: boolean;
 }) {
   const [postal, setPostal] = useState(initial?.postal_code ?? "");
   const [address, setAddress] = useState(initial?.address ?? "");
@@ -63,8 +65,8 @@ export function AddressForm({
     }
   };
   return (
-    <fieldset data-slot="address-form" className={cn(fieldset, "ez:gap-3.5")}>
-      <legend className={cn(legend, "ez:mb-2 ez:text-lg ez:font-bold")}>배송지</legend>
+    <fieldset data-slot="address-form" className={cn(fieldset, "ez:gap-6 ez:md:grid-cols-2", bare && "ez:md:col-span-2")}>
+      <legend className={cn(legend, "ez:mb-4 ez:text-site-heading ez:font-normal", bare && "ez:sr-only")}>배송지</legend>
       <Field label="받는 분">
         <Input name="recipient" defaultValue={initial?.recipient} required maxLength={100} autoComplete="name" />
       </Field>
@@ -73,11 +75,11 @@ export function AddressForm({
       </Field>
       <input type="hidden" name="postal_code" value={postal} />
       <input type="hidden" name="address" value={address} />
-      <div className="ez:grid ez:gap-1.5">
-        <label htmlFor={addressId} className="ez:text-sm ez:font-semibold ez:text-fg">
+      <div className="ez:grid ez:gap-2 ez:md:col-span-2">
+        <label htmlFor={addressId} className="ez:text-site-small ez:text-muted">
           주소
         </label>
-        <div className="ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:gap-2">
+        <div className="ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-3 ez:border-0 ez:border-b ez:border-solid ez:border-site-field">
           <Input
             id={addressId}
             value={postal ? `(${postal}) ${address}` : ""}
@@ -85,19 +87,19 @@ export function AddressForm({
             required
             placeholder="주소 검색"
             onClick={search}
-            className="ez:cursor-pointer"
+            className="ez:cursor-pointer ez:border-b-0"
           />
-          <Button variant="secondary" onClick={search} aria-label="주소 검색">
-            검색
+          <Button variant="outline" size="sm" onClick={search}>
+            주소 검색
           </Button>
         </div>
         {failed && (
-          <span className="ez:text-xs ez:text-danger" role="alert">
+          <span className="ez:text-site-caption ez:text-danger" role="alert">
             주소 검색을 불러오지 못했어요. 잠시 후 다시 눌러 주세요.
           </span>
         )}
       </div>
-      <Field label="상세 주소">
+      <Field label="상세 주소" wide>
         <Input name="address_detail" defaultValue={initial?.address_detail ?? ""} maxLength={300} placeholder="동·호수 등" />
       </Field>
     </fieldset>

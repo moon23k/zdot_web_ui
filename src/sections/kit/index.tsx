@@ -19,6 +19,28 @@ export function Title({ children, aside }: { children: ReactNode; aside?: ReactN
   );
 }
 
+export function Split({ slot, id, title, children, blank }: { slot: string; id?: string; title: ReactNode; children: ReactNode; blank?: boolean }) {
+  return (
+    <section data-slot={slot} data-variant="gallery" id={id} data-blank={blank ? "" : undefined} className="ez:grid ez:gap-6 ez:text-fg ez:lg:grid-cols-[4fr_8fr]">
+      <h2 className="ez:m-0 ez:text-site-section">{title}</h2>
+      <div className="ez:min-w-0">{children}</div>
+    </section>
+  );
+}
+
+export function Pairs({ rows, cols = 1, accent }: { rows: Row[]; cols?: 1 | 2 | 3; accent?: (value: ReactNode) => boolean }) {
+  return (
+    <dl className={cn("ez:m-0 ez:grid ez:gap-x-12", { 1: "", 2: "ez:md:grid-cols-2", 3: "ez:md:grid-cols-3 ez:gap-x-6" }[cols])}>
+      {rows.map((r, i) => (
+        <div key={i} className="ez:flex ez:items-baseline ez:justify-between ez:gap-6 ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-3.5">
+          <dt className={r.value === undefined ? "ez:text-fg" : "ez:text-muted"}>{r.label}</dt>
+          {r.value !== undefined && <dd className={cn("ez:m-0 ez:text-right ez:tabular-nums", accent?.(r.value) && "ez:font-medium ez:text-primary")}>{r.value}</dd>}
+        </div>
+      ))}
+    </dl>
+  );
+}
+
 export function Block({ slot, children, className, blank }: { slot: string; children: ReactNode; className?: string; blank?: boolean }) {
   return (
     <section data-slot={slot} data-blank={blank ? "" : undefined} className={cn("ez:grid ez:gap-4 ez:text-fg", className)}>
@@ -101,8 +123,8 @@ export function Chips({ items, current = 0 }: { items: string[]; current?: numbe
         <li
           key={c}
           className={cn(
-            "ez:shrink-0 ez:rounded-button ez:px-3 ez:py-1.5 ez:text-site-note ez:whitespace-nowrap",
-            i === current ? "ez:bg-primary ez:text-on-primary" : "ez:bg-surface-alt ez:text-fg",
+            "ez:shrink-0 ez:rounded-full ez:border ez:border-solid ez:px-4 ez:py-1.5 ez:text-site-note ez:whitespace-nowrap",
+            i === current ? "ez:border-primary ez:font-medium ez:text-primary" : "ez:border-site-line ez:text-fg",
           )}
         >
           {c}

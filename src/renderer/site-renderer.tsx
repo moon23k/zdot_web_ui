@@ -5,7 +5,7 @@ import { sections, type SectionProps, type SiteContext } from "./registry";
 
 const isKind = (kind: string): kind is keyof typeof sections => kind in sections;
 
-const KEEP = new Set(["free_shipping_bar", "maker_profile"]);
+const KEEP = new Set(["maker_profile"]);
 
 const LEAD = new Set(["hero", "intro"]);
 
@@ -26,7 +26,6 @@ function place(sections: Section[], template: TemplateDesign | null | undefined,
   const byKind = new Map(sections.map((s) => [s.kind, s]));
   const placed: Placed[] = template.home.map((slot) => ({ ...(byKind.get(slot.kind) ?? { kind: slot.kind, data: {} }), variant: slot.variant, grid: slot.grid }));
   const used = new Set(template.home.map((s) => s.kind));
-  if (used.has("notice_bar") || template.header === "transparent") used.add("free_shipping_bar");
   return [...placed, ...sections.filter((s) => !used.has(s.kind) && KEEP.has(s.kind))];
 }
 
@@ -49,7 +48,6 @@ export function SiteRenderer({
         if (section.when && !context.flags[section.when]) return null;
         if (!isKind(section.kind)) return null;
         if (section.kind === "category_menu" && hasGrid) return null;
-        if (section.kind === "free_shipping_bar" && template && template.main !== "shop") return null;
         if (section.kind === "maker_profile" && template) return null;
         const Component = sections[section.kind] as ComponentType<SectionProps>;
         return <Component key={`${section.kind}-${i}`} data={section.data ?? {}} context={ctx} variant={section.variant} grid={section.grid} lead={lead} blank={Boolean(template)} />;

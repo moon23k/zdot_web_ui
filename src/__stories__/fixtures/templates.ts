@@ -29,7 +29,6 @@ const sessions = [
 
 export const homeSections: Record<TemplateMain, Section[]> = {
   shop: [
-    s("notice_bar", { text: "오늘 2시 전 주문은 오늘 발송해요" }),
     s("hero", { title: "계절을 담은 과일청", sub: "매주 들어오는 과일로 소량만 만듭니다.", button: "둘러보기", href: "/products" }),
     s("intro", { title: "작은 공방의 세 가지 그릇", body: "한 사람이 빚고 굽고 포장합니다.", button: "상품 보기", href: "/products" }),
     s("category_menu", {}),

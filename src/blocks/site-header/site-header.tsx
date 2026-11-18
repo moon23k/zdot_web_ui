@@ -53,7 +53,6 @@ export function SiteHeader({
   variant,
   main = "shop",
   cta,
-  notice,
   categories,
 }: {
   name: string;
@@ -64,7 +63,6 @@ export function SiteHeader({
   main?: string;
   actions?: string[];
   cta?: { label: string; href: string } | null;
-  notice?: string | null;
   categories?: NavCategory[];
 }) {
   const shop = main === "shop";
@@ -93,18 +91,11 @@ export function SiteHeader({
       )}
     </div>
   );
-  const noticeRow = notice && (
-    <p data-slot="notice-bar" className="ez:m-0 ez:flex ez:min-h-9.5 ez:items-center ez:justify-center ez:gap-2 ez:bg-surface-alt ez:px-page ez:text-site-small ez:text-fg">
-      <Icon name="truck" size="sm" />
-      {notice}
-    </p>
-  );
   const row = "ez:mx-auto ez:grid ez:max-w-wrap ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-3 ez:px-page ez:py-2 ez:min-h-16 ez:lg:min-h-20";
   const split = variant === "dark" || variant === "band";
   const full =
     variant === "center" ? (
       <header data-slot="site-header" data-variant="center" className="ez:bg-surface">
-        {noticeRow}
         <div className={cn(row, "ez:lg:min-h-21 ez:lg:grid-cols-[minmax(max-content,1fr)_max-content_minmax(max-content,1fr)]")}>
           <NextLink
             href="/products?search=1"
@@ -124,7 +115,6 @@ export function SiteHeader({
       </header>
     ) : (
       <header data-slot="site-header" data-variant={variant === "transparent" ? "overlay" : split ? "split" : "site"} className="ez:bg-surface">
-        {noticeRow}
         <div className="ez:border-0 ez:border-b ez:border-solid ez:border-site-line">
           <div className={cn(row, split ? "ez:lg:grid-cols-[minmax(0,1fr)_max-content_minmax(max-content,1fr)]" : "ez:lg:grid-cols-[minmax(max-content,1fr)_minmax(0,max-content)_minmax(max-content,1fr)]")}>
             {split ? (

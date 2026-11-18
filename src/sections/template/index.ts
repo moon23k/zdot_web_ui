@@ -1,11 +1,10 @@
 import { ClassList, ClassSchedule, Gates, NextSession } from "./class";
-import { Gallery, Intro, Location, NoticeBar, Numbers, PayPlan, PhotoBand, ProcessSteps, Reviews, Testimonial, TrustLine } from "./common";
+import { Gallery, Intro, Location, Numbers, PayPlan, PhotoBand, ProcessSteps, Reviews, Testimonial, TrustLine } from "./common";
 import { BeforeAfter, CaseCards, CaseGrid, PackageCards, PriceTiers } from "./quote";
 import { CategoryTiles, Curation, StoreInfo } from "./shop";
 import { Amenities, BookingStrip, HouseRules, RoomBox, RoomList, SearchBar, SpecIcons } from "./stay";
 
 export const templateSections = {
-  notice_bar: NoticeBar,
   intro: Intro,
   photo_band: PhotoBand,
   testimonial: Testimonial,

@@ -257,4 +257,18 @@ describe("SiteRenderer", () => {
     render(<SiteRenderer page={{ sections, arranged: true }} context={context} template={template} />);
     expect(headings()).toEqual(["진행 순서", "가격"]);
   });
+
+  it("draws nothing for removed section kinds left in a saved page", () => {
+    const old = [{ kind: "notice_bar", data: { text: "오늘 휴무" } }, { kind: "free_shipping_bar", when: "conditional_free_shipping", data: {} }, ...sections];
+    const flags = { conditional_free_shipping: true };
+    const shipping = { base_fee: 3000, free_threshold: 50000, return_fee: 3000, exchange_fee: 6000, return_days: 7 };
+    for (const template of [null, resolveTemplate("shop", "a")]) {
+      for (const arranged of [false, true]) {
+        const { container, unmount } = render(<SiteRenderer page={{ sections: old, arranged }} context={{ ...context, flags, shipping }} template={template} />);
+        expect(container.querySelector('[data-slot="notice-bar"], [data-slot="free-shipping-bar"]')).toBeNull();
+        expect(container.textContent).not.toContain("오늘 휴무");
+        unmount();
+      }
+    }
+  });
 });

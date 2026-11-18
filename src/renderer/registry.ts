@@ -2,7 +2,6 @@ import type { ComponentType } from "react";
 import { BrandStory } from "../sections/brand-story";
 import { CategoryMenu } from "../sections/category-menu";
 import { FaqSection } from "../sections/faq";
-import { FreeShippingBar } from "../sections/free-shipping-bar";
 import { Hero } from "../sections/hero";
 import { Maker } from "../sections/maker";
 import { ProductList } from "../sections/product-list";
@@ -36,7 +35,6 @@ export type SectionData = {
   maker_profile: { line?: string | null };
   faq: Record<string, never>;
   category_menu: Record<string, never>;
-  free_shipping_bar: Record<string, never>;
 } & TemplateSectionData;
 
 export type SectionKind = keyof SectionData;
@@ -50,6 +48,5 @@ export const sections: { [K in SectionKind]: ComponentType<SectionProps<K>> } = 
   maker_profile: Maker,
   faq: FaqSection,
   category_menu: CategoryMenu,
-  free_shipping_bar: FreeShippingBar,
   ...templateSections,
 };

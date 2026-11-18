@@ -25,7 +25,6 @@ export type Case = { id: string; title: string; image?: string | null; meta?: st
 export type Review = { rating: number; body: string; name: string; date?: string; product?: string | null };
 
 export type TemplateSectionData = {
-  notice_bar: { text?: string | null };
   photo_band: { title?: string | null; image?: string | null; images?: string[] };
   category_tiles: { items?: Tile[] };
   testimonial: { quote?: string | null; name?: string | null; count?: number | null; items?: Review[] };

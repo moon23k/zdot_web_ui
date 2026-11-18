@@ -10,7 +10,6 @@ export const shop: TemplateDesign[] = [
     header: "gallery",
     footer: "line",
     home: [
-      { kind: "notice_bar", variant: "gallery" },
       { kind: "hero", variant: "gallery" },
       { kind: "product_grid", variant: "gallery", grid: { m: 2, pc: 4, ratio: 0.8, meta: "price" } },
       { kind: "category_tiles", variant: "gallery" },
@@ -61,7 +60,6 @@ export const shop: TemplateDesign[] = [
     header: "center",
     footer: "full",
     home: [
-      { kind: "notice_bar" },
       { kind: "category_menu", variant: "header" },
       { kind: "hero", variant: "slide" },
       { kind: "curation" },
@@ -86,7 +84,6 @@ export const shop: TemplateDesign[] = [
     header: "dark",
     footer: "line",
     home: [
-      { kind: "notice_bar" },
       { kind: "intro", variant: "statement" },
       { kind: "product_grid", variant: "line", grid: { m: 2, pc: 4, ratio: 0.75, meta: "price" } },
       { kind: "story", variant: "band" },

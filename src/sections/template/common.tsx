@@ -9,15 +9,6 @@ import { countSup, figure, textLink } from "../../utils/styles";
 import type { Review } from "./data";
 import { Bar, BlankButton, BlankStars, Block, Lines, Pairs, Pic, Split } from "../kit";
 
-export function NoticeBar({ data, context, blank }: SectionProps<"notice_bar">) {
-  if (data.text || context.shipping?.free_threshold != null || !blank) return null;
-  return (
-    <div data-slot="notice-bar" data-blank="" className="ez:mx-[calc(50%-50vw)] ez:-mt-8 ez:flex ez:min-h-9.5 ez:items-center ez:justify-center ez:bg-surface-alt ez:text-site-small">
-      <Bar size="long" />
-    </div>
-  );
-}
-
 export function Intro({ data, lead, variant, blank }: SectionProps<"intro">) {
   if (!data.title && !blank) return null;
   if (variant === "gallery") {

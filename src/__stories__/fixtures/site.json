@@ -4,7 +4,6 @@
     "home": {
       "title": "홈",
       "sections": [
-        { "kind": "free_shipping_bar", "v": 1, "data": {} },
         { "kind": "hero", "v": 1, "data": { "title": "오늘 포장한 상품을 오늘 보내드려요", "sub": "매일 아침 검수한 상품만 보냅니다.", "button": "상품 보러 가기", "href": "/products?category=c1", "image": "/sample/hero.jpg" } },
         { "kind": "category_menu", "v": 1, "data": {} },
         { "kind": "product_grid", "v": 1, "data": { "title": "전체 상품", "lines": {} } },

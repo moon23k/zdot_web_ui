@@ -26,7 +26,7 @@ export interface Schemas {
     product_id: string;
     name: string;
     option_label: string | null;
-    image_key: string | null;
+    image_url: string | null;
     list_price: number;
     unit_price: number;
     quantity: number;
@@ -116,6 +116,7 @@ export interface Schemas {
     dispatch?: Schemas["DispatchOut"] | null;
     cancel_terms?: Schemas["CancelTermsOut"] | null;
     adult_only: boolean;
+    stay: boolean;
   };
   CustomerProductSummary: {
     id: string;

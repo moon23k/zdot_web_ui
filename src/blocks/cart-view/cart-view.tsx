@@ -66,16 +66,13 @@ export function CartView({
   updateAction,
   removeAction,
   checkoutHref = "/checkout",
-  imageSrc,
   freeThreshold,
   after,
 }: {
   lines: Line[];
-  itemsTotal?: number;
   updateAction: (data: FormData) => void | Promise<void>;
   removeAction: (data: FormData) => void | Promise<void>;
   checkoutHref?: string;
-  imageSrc?: Record<string, string | null>;
   freeThreshold?: number | null;
   after?: ReactNode;
 }) {
@@ -124,7 +121,6 @@ export function CartView({
       line={line}
       updateAction={updateAction}
       removeAction={removeAction}
-      imageSrc={imageSrc?.[line.variant_id] ?? null}
       selector={
         available ? (
           <Box checked={!unchecked.has(line.variant_id)} onChange={(on) => toggle(line.variant_id, on)} label={`${line.name} 선택`} />

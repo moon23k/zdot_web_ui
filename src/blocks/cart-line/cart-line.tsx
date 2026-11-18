@@ -19,13 +19,11 @@ export function CartLine({
   updateAction,
   removeAction,
   selector,
-  imageSrc,
 }: {
   line: Line;
   updateAction: (data: FormData) => void | Promise<void>;
   removeAction: (data: FormData) => void | Promise<void>;
   selector?: ReactNode;
-  imageSrc?: string | null;
 }) {
   const available = line.sellable && line.enough_stock;
   const listTotal = line.list_price * line.quantity;
@@ -43,7 +41,7 @@ export function CartLine({
         aria-hidden="true"
         className={cn("ez:w-20 ez:shrink-0 ez:lg:w-30", focusRing, !available && "ez:opacity-45")}
       >
-        <Photo src={imageSrc} alt={line.name} sizes="120px" className="ez:aspect-[4/5]" />
+        <Photo src={line.image_url} alt={line.name} sizes="120px" className="ez:aspect-[4/5]" />
       </NextLink>
       <div className="ez:flex ez:min-w-0 ez:flex-1 ez:flex-col">
         <div className="ez:flex ez:items-start ez:gap-1">

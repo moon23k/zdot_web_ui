@@ -124,7 +124,7 @@ describe("AddressForm", () => {
 });
 
 describe("CartView", () => {
-  const base = { product_id: "p", option_label: null, image_key: null, list_price: 10000, sellable: true, enough_stock: true, inputs: [] };
+  const base = { product_id: "p", option_label: null, image_url: null, list_price: 10000, sellable: true, enough_stock: true, inputs: [] };
   const lines = [
     { ...base, variant_id: "a", name: "머그컵", unit_price: 10000, quantity: 1, line_total: 10000 },
     { ...base, variant_id: "b", name: "쿠션", unit_price: 20000, quantity: 1, line_total: 20000 },

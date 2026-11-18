@@ -14,15 +14,15 @@ async function update() {
 }
 
 function BlockedExample() {
-  return <CartView lines={[...cartLines, blockedLine]} itemsTotal={220000} updateAction={update} removeAction={update} />;
+  return <CartView lines={[...cartLines, blockedLine]} updateAction={update} removeAction={update} />;
 }
 
 function DefaultExample() {
-  return <CartView lines={cartLines} itemsTotal={136000} updateAction={update} removeAction={update} />;
+  return <CartView lines={cartLines} updateAction={update} removeAction={update} />;
 }
 
 function EmptyExample() {
-  return <CartView lines={[]} itemsTotal={0} updateAction={update} removeAction={update} />;
+  return <CartView lines={[]} updateAction={update} removeAction={update} />;
 }
 
 export const Blocked: StoryObj = { render: () => <BlockedExample /> };

@@ -22,8 +22,8 @@ export const productDetail: ProductDetail = {
 };
 
 export const cartLines: CartLine[] = [
-  { variant_id: "v2", product_id: "p1", name: "린넨 셔츠", option_label: "M", image_key: null, list_price: 58000, unit_price: 52000, quantity: 1, line_total: 52000, sellable: true, enough_stock: true, inputs: [] },
-  { variant_id: "v9", product_id: "p2", name: "코튼 티셔츠", option_label: null, image_key: null, list_price: 42000, unit_price: 42000, quantity: 2, line_total: 84000, sellable: true, enough_stock: true, inputs: [] },
+  { variant_id: "v2", product_id: "p1", name: "린넨 셔츠", option_label: "M", image_url: null, list_price: 58000, unit_price: 52000, quantity: 1, line_total: 52000, sellable: true, enough_stock: true, inputs: [] },
+  { variant_id: "v9", product_id: "p2", name: "코튼 티셔츠", option_label: null, image_url: null, list_price: 42000, unit_price: 42000, quantity: 2, line_total: 84000, sellable: true, enough_stock: true, inputs: [] },
 ];
 
 export const blockedLine: CartLine = { ...cartLines[1], variant_id: "v10", name: "울 가디건", enough_stock: false, inputs: [] };

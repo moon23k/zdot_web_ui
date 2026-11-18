@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { extendTailwindMerge } from "tailwind-merge";
+import { SITE_TEXT_STEPS } from "../theme/system";
 
 const merge = extendTailwindMerge({
   prefix: "ez",
@@ -11,7 +12,7 @@ const merge = extendTailwindMerge({
       "font-weight": ["title"],
       tracking: ["brand"],
       aspect: ["photo"],
-      text: ["site-page", "site-page-sm", "site-section", "site-item", "site-figure", "site-body", "site-note", "site-display", "site-display-sm", "site-title", "site-heading", "site-lead", "site-small", "site-caption", "site-label", "site-hero", "site-display-lg", "site-display-md", "site-figure-xl", "site-figure-lg", "site-name", "site-logo", "site-rank", "site-counter", "site-badge"],
+      text: [...SITE_TEXT_STEPS],
       container: ["wrap"],
     },
   },

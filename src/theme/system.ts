@@ -83,3 +83,31 @@ export const SYSTEM_BLANK = {
   "tail": "61%"
 };
 
+export const SITE_TEXT_STEPS = [
+  "site-page",
+  "site-page-sm",
+  "site-section",
+  "site-item",
+  "site-figure",
+  "site-body",
+  "site-note",
+  "site-display",
+  "site-display-sm",
+  "site-title",
+  "site-heading",
+  "site-lead",
+  "site-small",
+  "site-caption",
+  "site-label",
+  "site-hero",
+  "site-display-lg",
+  "site-display-md",
+  "site-figure-xl",
+  "site-figure-lg",
+  "site-name",
+  "site-logo",
+  "site-rank",
+  "site-counter",
+  "site-badge"
+] as const;
+

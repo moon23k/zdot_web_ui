@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useRef, useState, type KeyboardEvent } from "react";
 import { ButtonLink } from "../components/button";
 import { Fold, statusText } from "../sections/kit";
 import { cn } from "../utils/cn";
@@ -11,17 +11,33 @@ export type DetailBlockProps = { data: DetailData; variant?: string };
 export function Info({ data, variant }: DetailBlockProps) {
   const items = data.info ?? [];
   const [tab, setTab] = useState(0);
+  const id = useId();
+  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   if (!items.length) return null;
+  const move = (event: KeyboardEvent<HTMLDivElement>) => {
+    const last = items.length - 1;
+    const next = { ArrowRight: tab === last ? 0 : tab + 1, ArrowLeft: tab === 0 ? last : tab - 1, Home: 0, End: last }[event.key];
+    if (next === undefined) return;
+    event.preventDefault();
+    setTab(next);
+    tabs.current[next]?.focus();
+  };
   if (variant === "tabs") {
     return (
       <section data-slot="detail-info" className="ez:grid ez:gap-4">
-        <div role="tablist" className="ez:flex ez:gap-9 ez:overflow-x-auto ez:border-0 ez:border-b ez:border-solid ez:border-site-line">
+        <div role="tablist" onKeyDown={move} className="ez:flex ez:gap-9 ez:overflow-x-auto ez:border-0 ez:border-b ez:border-solid ez:border-site-line">
           {items.map((it, i) => (
             <button
               key={it.title}
+              ref={(node) => {
+                tabs.current[i] = node;
+              }}
+              id={`${id}-tab-${i}`}
               role="tab"
               type="button"
               aria-selected={tab === i}
+              aria-controls={`${id}-panel`}
+              tabIndex={tab === i ? 0 : -1}
               onClick={() => setTab(i)}
               className={cn(
                 "ez:-mb-px ez:min-h-14 ez:shrink-0 ez:cursor-pointer ez:border-0 ez:border-b ez:border-solid ez:bg-transparent ez:px-0 ez:font-body ez:text-site-lead ez:text-fg",
@@ -32,7 +48,9 @@ export function Info({ data, variant }: DetailBlockProps) {
             </button>
           ))}
         </div>
-        <div role="tabpanel">{items[tab]?.node}</div>
+        <div role="tabpanel" id={`${id}-panel`} aria-labelledby={`${id}-tab-${tab}`}>
+          {items[tab]?.node}
+        </div>
       </section>
     );
   }

@@ -44,6 +44,7 @@ export function Intro({ data, lead, variant }: SectionProps<"intro">) {
     );
   }
   const statement = variant === "statement";
+  const Heading = lead ? "h1" : "h2";
   return (
     <Block
       slot="intro"
@@ -53,9 +54,9 @@ export function Intro({ data, lead, variant }: SectionProps<"intro">) {
       {!statement && <span aria-hidden="true" className="ez:max-lg:hidden" />}
       <div className={cn("ez:grid ez:justify-items-start", statement ? "ez:gap-6" : "ez:gap-10")}>
         {data.title ? (
-          <h2 className={cn("ez:m-0 ez:max-w-4xl ez:text-left ez:font-light ez:tracking-[-0.035em] ez:text-balance", statement ? "ez:text-site-page ez:lg:text-site-display" : "ez:text-site-page-sm ez:lg:text-site-page")}>
+          <Heading className={cn("ez:m-0 ez:max-w-4xl ez:text-left ez:font-light ez:tracking-[-0.035em] ez:text-balance", statement ? "ez:text-site-page ez:lg:text-site-display" : "ez:text-site-page-sm ez:lg:text-site-page")}>
             {data.title}
-          </h2>
+          </Heading>
         ) : (
           <span className="ez:w-full ez:max-w-xl ez:text-site-page-sm ez:lg:text-site-page">
             <Bar size="long" />

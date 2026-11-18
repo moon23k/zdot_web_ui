@@ -11,13 +11,12 @@ export function ProductGallery({ images, name }: { images: (string | null)[]; na
   return (
     <div data-slot="product-gallery" className="ez:grid ez:gap-3 ez:lg:grid-cols-[88px_minmax(0,1fr)] ez:lg:gap-4">
       {shown.length > 1 && (
-        <div role="tablist" aria-label="상품 사진" className="ez:order-2 ez:flex ez:gap-3 ez:overflow-x-auto ez:lg:order-1 ez:lg:flex-col">
+        <div role="group" aria-label="상품 사진" className="ez:order-2 ez:flex ez:gap-3 ez:overflow-x-auto ez:lg:order-1 ez:lg:flex-col">
           {shown.map((src, i) => (
             <button
               key={`${src}-${i}`}
               type="button"
-              role="tab"
-              aria-selected={at === i}
+              aria-pressed={at === i}
               aria-label={`사진 ${i + 1}`}
               onClick={() => setAt(i)}
               className={cn(

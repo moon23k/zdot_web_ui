@@ -4,7 +4,7 @@ import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
 
-export { Bar, BlankButton, BlankChips, BlankPrice, BlankStars, Lines } from "./blank";
+export { Bar, BlankButton, BlankPrice, BlankStars, Lines } from "./blank";
 
 export type Row = { label: ReactNode; value?: ReactNode };
 

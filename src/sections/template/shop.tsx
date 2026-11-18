@@ -4,17 +4,8 @@ import type { SectionProps } from "../../renderer/registry";
 import { ButtonLink } from "../../components/button";
 import { cn } from "../../utils/cn";
 import { countSup, focusRing, textLink } from "../../utils/styles";
-import { Bar, Card, Cols, Pairs, Pic, type Row } from "../kit";
+import { Bar, Pairs, Pic, type Row } from "../kit";
 import type { Tile } from "./data";
-
-function blankTiles(count: number, ratio: number) {
-  return Array.from({ length: count }, (_, i) => (
-    <Card key={i}>
-      <Pic ratio={ratio} tone={i} />
-      <Bar />
-    </Card>
-  ));
-}
 
 function GalleryTiles({ items }: { items: (Tile & { count?: number | null })[] }) {
   if (!items.length) {
@@ -49,36 +40,12 @@ function GalleryTiles({ items }: { items: (Tile & { count?: number | null })[] }
   );
 }
 
-export function CategoryTiles({ data, context, variant, blank }: SectionProps<"category_tiles">) {
+export function CategoryTiles({ data, context, blank }: SectionProps<"category_tiles">) {
   const items: (Tile & { count?: number | null })[] = data.items?.length
     ? data.items
     : context.categories.map((c) => ({ title: c.name, href: `/products?category=${c.id}`, count: c.product_count }));
   if (!items.length && !blank) return null;
-  if (variant === "gallery") return <GalleryTiles items={items} />;
-  if (!items.length) {
-    return (
-      <section data-slot="category-tiles" data-blank="">
-        <Cols m={1} pc={3}>
-          {blankTiles(3, 1.8)}
-        </Cols>
-      </section>
-    );
-  }
-  return (
-    <section data-slot="category-tiles">
-      <Cols m={1} pc={3}>
-        {items.map((t, i) => (
-          <Card key={t.title} href={t.href}>
-            <Pic src={t.image} ratio={1.8} tone={i} />
-            <span className="ez:flex ez:items-center ez:justify-between ez:gap-3 ez:text-site-item">
-              {t.title}
-              <Icon name="right" size="sm" />
-            </span>
-          </Card>
-        ))}
-      </Cols>
-    </section>
-  );
+  return <GalleryTiles items={items} />;
 }
 
 function Bundle({ items }: { items: (Tile | null)[] }) {

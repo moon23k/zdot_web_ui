@@ -5,7 +5,7 @@ import NextLink from "next/link";
 import { Icon } from "../../components/icon";
 import { cn } from "../../utils/cn";
 import { chip, countSup, figure, focusRing, pointTag, sectionTitle, textLink } from "../../utils/styles";
-import { Bar, BlankButton, BlankPrice, Block, Cols, Pairs, Pic, Rows, Split, Title } from "../kit";
+import { Bar, BlankButton, Block, Pairs, Pic, Rows, Split, Title } from "../kit";
 import type { Room } from "./data";
 
 type SearchData = SectionProps<"search_bar">["data"] & Partial<Pick<SectionProps<"booking_strip">["data"], "check_in" | "check_out" | "guests" | "price">>;
@@ -75,31 +75,9 @@ function GalleryStrip({ data }: { data: SectionProps<"booking_strip">["data"] })
   );
 }
 
-export function BookingStrip({ data, variant, blank }: SectionProps<"booking_strip">) {
+export function BookingStrip({ data, blank }: SectionProps<"booking_strip">) {
   if (!data.price && !blank) return null;
-  if (variant === "gallery") return <GalleryStrip data={data} />;
-  return (
-    <section data-slot="booking-strip" data-blank={data.price ? undefined : ""} className="ez:grid ez:gap-3 ez:rounded-md ez:bg-surface-alt ez:p-4 ez:text-fg ez:md:grid-cols-[1fr_auto] ez:md:items-center">
-      {data.price ? <strong className="ez:text-site-figure ez:tabular-nums">{data.price}</strong> : <BlankPrice before="1박" after="원부터" className="ez:font-display ez:text-site-item" />}
-      {data.price ? <ButtonLink href={data.href ?? "/booking"}>예약하기</ButtonLink> : <BlankButton>예약하기</BlankButton>}
-    </section>
-  );
-}
-
-export function SpecIcons({ data, blank }: SectionProps<"spec_icons">) {
-  const items = data.items ?? [];
-  if (!items.length && !blank) return null;
-  const empty = !items.length;
-  return (
-    <ul data-slot="spec-icons" data-blank={empty ? "" : undefined} className="ez:m-0 ez:flex ez:list-none ez:flex-wrap ez:gap-x-5 ez:gap-y-2 ez:p-0 ez:text-fg">
-      {(empty ? ["a", "b", "c", "d"] : items).map((t) => (
-        <li key={t} className="ez:flex ez:items-center ez:gap-2">
-          <span aria-hidden="true" className={empty ? "ez:size-2 ez:rounded-full ez:bg-tile-blank" : "ez:size-2 ez:rounded-full ez:bg-primary"} />
-          {empty ? <Bar size="short" /> : t}
-        </li>
-      ))}
-    </ul>
-  );
+  return <GalleryStrip data={data} />;
 }
 
 export function Amenities({ data, variant, blank }: SectionProps<"amenities">) {
@@ -117,27 +95,6 @@ export function Amenities({ data, variant, blank }: SectionProps<"amenities">) {
           ))}
         </ul>
       </Split>
-    );
-  }
-  if (variant === "groups" && items.length) {
-    const groups = [...new Set(items.map((i) => i.group ?? "기본"))];
-    return (
-      <Block slot="amenities">
-        <Title>{data.title ?? "편의시설"}</Title>
-        <Cols m={1} pc={3}>
-          {groups.map((g) => (
-            <div key={g} className="ez:grid ez:content-start ez:gap-1 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-4">
-              <span className="ez:font-medium">{g}</span>
-              <span className="ez:text-site-small ez:text-muted">
-                {items
-                  .filter((i) => (i.group ?? "기본") === g)
-                  .map((i) => i.name)
-                  .join(" · ")}
-              </span>
-            </div>
-          ))}
-        </Cols>
-      </Block>
     );
   }
   const empty = !items.length;

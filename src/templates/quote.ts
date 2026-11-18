@@ -1,17 +1,14 @@
 import type { TemplateDesign } from "./types";
 
-const estimate = { name: "견적서 · 결제", slots: [{ kind: "estimate" }, { kind: "pay_plan" }] };
-
 export const quote: TemplateDesign[] = [
   {
     id: "Q1",
     main: "quote",
     letter: "a",
     name: "사례 갤러리형",
-    look: { tone: "gallery", radius: 0, line: false, font: "sans", frame: "gallery" },
+    look: { tone: "gallery", radius: 0, font: "sans", frame: "gallery" },
     header: "cta",
     cta: "견적 요청",
-    footer: "line",
     home: [
       { kind: "intro", variant: "gallery" },
       { kind: "trust_line", variant: "gallery" },
@@ -27,17 +24,15 @@ export const quote: TemplateDesign[] = [
       { kind: "case_photos" },
       { kind: "reviews" },
     ],
-    extra: [estimate],
   },
   {
     id: "Q2",
     main: "quote",
     letter: "d",
     name: "시공 견적 계산형",
-    look: { tone: "white", radius: "pill", line: false, font: "sans" },
+    look: { tone: "white", radius: "pill", font: "sans" },
     header: "cta",
     cta: "견적 요청",
-    footer: "line",
     home: [
       { kind: "hero", variant: "frame" },
       { kind: "trust_line" },
@@ -47,17 +42,15 @@ export const quote: TemplateDesign[] = [
       { kind: "reviews" },
     ],
     detail: [{ kind: "quote_form", variant: "calculator" }],
-    extra: [estimate],
   },
   {
     id: "Q3",
     main: "quote",
     letter: "b",
     name: "패키지 확정가형",
-    look: { tone: "white", radius: "pill", line: false, font: "sans" },
+    look: { tone: "white", radius: "pill", font: "sans" },
     header: "cta",
     cta: "견적 요청",
-    footer: "line",
     home: [
       { kind: "intro", variant: "statement" },
       { kind: "trust_line" },
@@ -67,17 +60,15 @@ export const quote: TemplateDesign[] = [
       { kind: "faq" },
     ],
     detail: [{ kind: "quote_form", variant: "package" }],
-    extra: [estimate],
   },
   {
     id: "Q4",
     main: "quote",
     letter: "c",
     name: "프로젝트 문의형",
-    look: { tone: "white", radius: 16, line: false, font: "sans" },
+    look: { tone: "white", radius: 16, font: "sans" },
     header: "cta",
     cta: "견적 요청",
-    footer: "line",
     home: [
       { kind: "hero", variant: "card" },
       { kind: "trust_line" },
@@ -85,6 +76,5 @@ export const quote: TemplateDesign[] = [
       { kind: "reviews" },
     ],
     detail: [{ kind: "quote_form", variant: "steps" }],
-    extra: [estimate],
   },
 ];

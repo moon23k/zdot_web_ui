@@ -32,7 +32,7 @@ export type Design = {
   palette?: { color: string; harmony: "tonal" | "analogous" | "complementary" };
 };
 
-export type Section = { kind: string; v?: number; when?: string; data: Record<string, unknown> };
+export type Section = { kind: string; v?: number; data: Record<string, unknown> };
 
 export type ProductSummary = Schemas["CustomerProductSummary"];
 

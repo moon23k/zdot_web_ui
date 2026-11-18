@@ -7,16 +7,11 @@ export type SurfaceTone = "white" | "paper" | "cream" | "warm" | "mist" | "galle
 export type Look = {
   tone: SurfaceTone;
   radius: 0 | 4 | 6 | 16 | "pill";
-  line: boolean;
   font: "sans" | "serif" | "light";
   frame?: "gallery";
 };
 
 export type HeaderVariant = "center" | "transparent" | "dark" | "left" | "pill" | "cta" | "band" | "gallery";
-
-export type FooterVariant = "full" | "line";
-
-export type HeroVariant = "box" | "full" | "slide" | "rounded" | "card" | "text" | "gallery";
 
 export type GridSpec = { m: 1 | 2 | 3; pc: 3 | 4 | 6; ratio: number; meta?: "price" | "status" };
 
@@ -32,8 +27,6 @@ export type TemplateDesign = {
   look: Look;
   header: HeaderVariant;
   cta?: string;
-  footer: FooterVariant;
   home: HomeSlot[];
   detail: DetailSlot[];
-  extra?: { name: string; slots: DetailSlot[] }[];
 };

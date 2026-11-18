@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { resolveTemplate, SiteRenderer } from "../src/index";
 import type { TemplateMain } from "../src/templates/types";
 
-const context = { products: [], categories: [], faqs: [], shipping: null, flags: {} };
+const context = { products: [], categories: [], faqs: [], shipping: null };
 const designs: [TemplateMain, string][] = [
   ["shop", "a"],
   ["shop", "b"],
@@ -67,15 +67,10 @@ describe("blank scope", () => {
     expect(page("stay", "a", true).root.children).toHaveLength(0);
   });
 
-  it("stays hidden without a template", () => {
-    const { container } = render(<SiteRenderer page={{ sections: [{ kind: "reviews", data: {} }] }} context={context} />);
-    expect(container.querySelector('[data-slot="reviews"]')).not.toBeInTheDocument();
-  });
-
   it("shows cancel terms per room", () => {
     const groups = [{ title: "바다 앞 독채", rows: [{ label: "이용일 당일", value: "0% 환불" }] }];
     const { container } = render(
-      <SiteRenderer page={{ sections: [{ kind: "pay_plan", data: { groups } }] }} context={context} />,
+      <SiteRenderer page={{ sections: [{ kind: "pay_plan", data: { groups } }], arranged: true }} context={context} template={resolveTemplate("stay", "a")} />,
     );
     const block = container.querySelector('[data-slot="pay-plan"]');
     expect(block).not.toHaveAttribute("data-blank");

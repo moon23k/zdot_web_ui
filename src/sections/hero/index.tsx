@@ -7,31 +7,6 @@ import { cn, won } from "../../utils/cn";
 import { textLink } from "../../utils/styles";
 import { Bar, BlankButton, Lines } from "../kit";
 
-function Heading({ title, inverse }: { title?: string | null; inverse?: boolean }) {
-  if (!title) {
-    return (
-      <div className="ez:grid ez:w-full ez:max-w-xl ez:gap-4">
-        <span className="ez:font-display ez:text-site-page-sm ez:md:text-site-page">
-          <Bar size="long" strong={inverse} />
-        </span>
-        <Lines strong={inverse} />
-      </div>
-    );
-  }
-  return (
-    <>
-      <h1
-        className={cn(
-          "ez:m-0 ez:max-w-3xl ez:font-display ez:text-site-page-sm ez:text-balance ez:md:text-site-page",
-          inverse && "ez:text-on-primary",
-        )}
-      >
-        {title}
-      </h1>
-    </>
-  );
-}
-
 const BUTTON: Record<string, string> = { shop: "상품 보기", stay: "객실 보기", class: "클래스 보기", quote: "작업 보기" };
 
 export function Hero({ data, context, variant, blank }: SectionProps<"hero">) {
@@ -40,14 +15,6 @@ export function Hero({ data, context, variant, blank }: SectionProps<"hero">) {
   const href = data.href ?? "/products";
   const button = data.button ?? BUTTON[context.main ?? "shop"] ?? BUTTON.shop;
   const image = data.image ?? data.images?.[0];
-  const action = (className?: string) =>
-    empty ? (
-      <BlankButton className={className}>둘러보기</BlankButton>
-    ) : (
-      <ButtonLink href={href} className={className}>
-        {button}
-      </ButtonLink>
-    );
 
   if (variant === "class") {
     const facts = data.facts ?? [];
@@ -307,35 +274,23 @@ export function Hero({ data, context, variant, blank }: SectionProps<"hero">) {
     );
   }
 
-  if (variant === "text" || (variant === "full" && !image)) {
-    const facts = data.facts ?? [];
-    return (
-      <section data-slot="hero" data-variant="text" data-blank={empty ? "" : undefined} className="ez:grid ez:gap-8 ez:pt-4 ez:text-fg ez:lg:grid-cols-[7fr_5fr] ez:lg:items-end ez:lg:gap-6 ez:lg:pt-16">
-        <div className="ez:flex ez:flex-col ez:items-start ez:gap-10">
-          {title("ez:text-site-page ez:lg:text-site-display-lg")}
-          {!empty && variant === "full" && <ButtonLink href={href}>{button}</ButtonLink>}
-        </div>
-        {facts.length > 0 && (
-          <dl className="ez:m-0 ez:grid ez:gap-3 ez:pb-4">
-            {facts.map((f, i) => (
-              <div key={f.label} className={cn("ez:flex ez:justify-between ez:gap-6 ez:border-0 ez:border-solid ez:border-site-line ez:pb-3", i < facts.length - 1 && "ez:border-b")}>
-                <dt className="ez:text-muted">{f.label}</dt>
-                <dd className="ez:m-0 ez:text-right">{f.value}</dd>
-              </div>
-            ))}
-          </dl>
-        )}
-      </section>
-    );
-  }
-
+  const facts = data.facts ?? [];
   return (
-    <section data-slot="hero" data-blank={empty ? "" : undefined} className={cn("ez:grid ez:gap-6 ez:text-fg", (image || empty) && "ez:md:grid-cols-2 ez:md:items-center ez:md:gap-10")}>
-      <div className="ez:grid ez:justify-items-start ez:gap-4">
-        <Heading title={data.title} />
-        {action()}
+    <section data-slot="hero" data-variant="text" data-blank={empty ? "" : undefined} className="ez:grid ez:gap-8 ez:pt-4 ez:text-fg ez:lg:grid-cols-[7fr_5fr] ez:lg:items-end ez:lg:gap-6 ez:lg:pt-16">
+      <div className="ez:flex ez:flex-col ez:items-start ez:gap-10">
+        {title("ez:text-site-page ez:lg:text-site-display-lg")}
+        {!empty && variant === "full" && <ButtonLink href={href}>{button}</ButtonLink>}
       </div>
-      {(image || empty) && <Photo src={image} alt="" preload sizes="(max-width: 768px) 100vw, 540px" tone={0} className="ez:aspect-[4/3] ez:rounded-lg" />}
+      {facts.length > 0 && (
+        <dl className="ez:m-0 ez:grid ez:gap-3 ez:pb-4">
+          {facts.map((f, i) => (
+            <div key={f.label} className={cn("ez:flex ez:justify-between ez:gap-6 ez:border-0 ez:border-solid ez:border-site-line ez:pb-3", i < facts.length - 1 && "ez:border-b")}>
+              <dt className="ez:text-muted">{f.label}</dt>
+              <dd className="ez:m-0 ez:text-right">{f.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
     </section>
   );
 }

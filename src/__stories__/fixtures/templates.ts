@@ -43,7 +43,6 @@ export const homeSections: Record<TemplateMain, Section[]> = {
   ],
   class: [
     s("hero", { title: "도자 공방 물레 수업", sub: "흙을 처음 만져도 괜찮아요.", button: "수업 보기", href: "#" }),
-    s("next_session", { session: sessions[0] }),
     s("trust_line", { items: ["평점 4.9", "후기 243", "수강생 3,200명"] }),
     s("class_schedule", { title: "이번 달 수업", sessions }),
     s("class_list", {
@@ -65,7 +64,6 @@ export const homeSections: Record<TemplateMain, Section[]> = {
     s("hero", { title: "바다 앞 독채", sub: "하루 한 팀만 받습니다.", button: "예약하기", href: "#" }),
     s("booking_strip", { price: "1박 206,000원부터", href: "#" }),
     s("search_bar", {}),
-    s("spec_icons", { items: ["6인", "침실 3", "침대 4", "욕실 2"] }),
     s("intro", { title: "정원이 있는 한옥", body: "사랑채 · 안채 · 별채 세 채를 빌려 드립니다." }),
     s("story", { title: "숙소 소개", body: ["창을 열면 바로 바다가 보이는 이층 독채입니다."] }),
     s("gallery", { images: ["", "", ""] }),
@@ -248,18 +246,6 @@ export const detailData: Record<TemplateMain, DetailData> = {
       ],
       total: "1,850만원",
       button: "상담 신청",
-    },
-    estimate: {
-      no: "No. 0012",
-      valid: "유효 30일",
-      items: [
-        { label: "철거 · 목공", value: "6,200,000원" },
-        { label: "도배 · 바닥", value: "4,800,000원" },
-        { label: "욕실", value: "3,500,000원" },
-      ],
-      total: "14,500,000원",
-      deposit: "1,450,000원",
-      accept: "수락하고 예약금 결제",
     },
     pay,
   },

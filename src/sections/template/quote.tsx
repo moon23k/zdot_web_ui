@@ -6,42 +6,26 @@ import type { SectionProps } from "../../renderer/registry";
 import { cn } from "../../utils/cn";
 import { countSup, figure, focusRing, textLink } from "../../utils/styles";
 import type { Case, TemplateSectionData } from "./data";
-import { Bar, BlankButton, BlankPrice, Block, Chips, Pic, pcCols, Rows, Title } from "../kit";
+import { Bar, BlankButton, BlankPrice, Chips, Pic, pcCols } from "../kit";
 
-export function PriceTiers({ data, variant, blank }: SectionProps<"price_tiers">) {
+export function PriceTiers({ data, blank }: SectionProps<"price_tiers">) {
   const items = data.items ?? [];
   if (!items.length && !blank) return null;
-  if (variant === "gallery") {
-    return (
-      <section data-slot="price-tiers" data-variant="gallery" id="services" data-blank={items.length ? undefined : ""} className="ez:mx-[calc(50%-50vw)] ez:bg-surface-alt ez:text-fg">
-        <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-8 ez:px-page ez:py-16 ez:lg:grid-cols-[4fr_8fr] ez:lg:gap-6 ez:lg:py-30">
-          <h2 className="ez:m-0 ez:text-site-section">{data.title ?? "서비스"}</h2>
-          <ol className="ez:m-0 ez:list-none ez:p-0">
-            {(items.length ? items : [null, null, null]).map((it, i) => (
-              <li key={i} className="ez:grid ez:grid-cols-[40px_1fr_auto] ez:items-baseline ez:gap-6 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:py-7 ez:lg:grid-cols-[56px_1fr_200px]">
-                <span className={cn(figure, "ez:text-site-heading ez:text-primary")}>{it ? String(i + 1).padStart(2, "0") : null}</span>
-                <span className="ez:text-site-heading ez:font-light ez:tracking-[-0.03em] ez:lg:text-site-logo">{it ? it.label : <Bar />}</span>
-                <span className="ez:text-right ez:font-medium ez:tabular-nums">{it ? it.value : <BlankPrice />}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-    );
-  }
-  if (!items.length) {
-    return (
-      <Block slot="price-tiers" blank>
-        <Title>{data.title ?? "가격"}</Title>
-        <Rows rows={[0, 1, 2].map(() => ({ label: <Bar />, value: <BlankPrice /> }))} />
-      </Block>
-    );
-  }
   return (
-    <Block slot="price-tiers">
-      <Title>{data.title ?? "가격"}</Title>
-      <Rows rows={items} />
-    </Block>
+    <section data-slot="price-tiers" data-variant="gallery" id="services" data-blank={items.length ? undefined : ""} className="ez:mx-[calc(50%-50vw)] ez:bg-surface-alt ez:text-fg">
+      <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-8 ez:px-page ez:py-16 ez:lg:grid-cols-[4fr_8fr] ez:lg:gap-6 ez:lg:py-30">
+        <h2 className="ez:m-0 ez:text-site-section">{data.title ?? "서비스"}</h2>
+        <ol className="ez:m-0 ez:list-none ez:p-0">
+          {(items.length ? items : [null, null, null]).map((it, i) => (
+            <li key={i} className="ez:grid ez:grid-cols-[40px_1fr_auto] ez:items-baseline ez:gap-6 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:py-7 ez:lg:grid-cols-[56px_1fr_200px]">
+              <span className={cn(figure, "ez:text-site-heading ez:text-primary")}>{it ? String(i + 1).padStart(2, "0") : null}</span>
+              <span className="ez:text-site-heading ez:font-light ez:tracking-[-0.03em] ez:lg:text-site-logo">{it ? it.label : <Bar />}</span>
+              <span className="ez:text-right ez:font-medium ez:tabular-nums">{it ? it.value : <BlankPrice />}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
   );
 }
 

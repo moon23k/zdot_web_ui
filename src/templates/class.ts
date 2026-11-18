@@ -6,9 +6,8 @@ export const klass: TemplateDesign[] = [
     main: "class",
     letter: "a",
     name: "일정 먼저형",
-    look: { tone: "gallery", radius: "pill", line: false, font: "sans", frame: "gallery" },
+    look: { tone: "gallery", radius: "pill", font: "sans", frame: "gallery" },
     header: "transparent",
-    footer: "line",
     home: [
       { kind: "hero", variant: "class" },
       { kind: "class_schedule", variant: "gallery" },
@@ -32,9 +31,8 @@ export const klass: TemplateDesign[] = [
     main: "class",
     letter: "b",
     name: "클래스 카드형",
-    look: { tone: "warm", radius: "pill", line: false, font: "serif" },
+    look: { tone: "warm", radius: "pill", font: "serif" },
     header: "pill",
-    footer: "line",
     home: [
       { kind: "hero", variant: "rounded" },
       { kind: "trust_line" },
@@ -58,9 +56,8 @@ export const klass: TemplateDesign[] = [
     main: "class",
     letter: "c",
     name: "정규반 · 과정형",
-    look: { tone: "warm", radius: 6, line: false, font: "serif" },
+    look: { tone: "warm", radius: 6, font: "serif" },
     header: "left",
-    footer: "line",
     home: [
       { kind: "hero", variant: "split" },
       { kind: "class_schedule", variant: "upcoming" },

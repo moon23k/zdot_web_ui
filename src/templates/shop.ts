@@ -6,9 +6,8 @@ export const shop: TemplateDesign[] = [
     main: "shop",
     letter: "a",
     name: "갤러리형",
-    look: { tone: "gallery", radius: 0, line: false, font: "sans", frame: "gallery" },
+    look: { tone: "gallery", radius: 0, font: "sans", frame: "gallery" },
     header: "gallery",
-    footer: "line",
     home: [
       { kind: "hero", variant: "gallery" },
       { kind: "product_grid", variant: "gallery", grid: { m: 2, pc: 4, ratio: 0.8, meta: "price" } },
@@ -31,9 +30,8 @@ export const shop: TemplateDesign[] = [
     main: "shop",
     letter: "b",
     name: "소수 상품 쇼케이스형",
-    look: { tone: "white", radius: 0, line: false, font: "sans" },
+    look: { tone: "white", radius: 0, font: "sans" },
     header: "transparent",
-    footer: "line",
     home: [
       { kind: "hero", variant: "full" },
       { kind: "intro" },
@@ -56,9 +54,8 @@ export const shop: TemplateDesign[] = [
     main: "shop",
     letter: "c",
     name: "기획 묶음 · 매장형",
-    look: { tone: "white", radius: 0, line: false, font: "sans" },
+    look: { tone: "white", radius: 0, font: "sans" },
     header: "center",
-    footer: "full",
     home: [
       { kind: "category_menu", variant: "header" },
       { kind: "hero", variant: "slide" },
@@ -80,9 +77,8 @@ export const shop: TemplateDesign[] = [
     main: "shop",
     letter: "d",
     name: "브랜드 이야기형",
-    look: { tone: "cream", radius: 4, line: false, font: "serif" },
+    look: { tone: "cream", radius: 4, font: "serif" },
     header: "dark",
-    footer: "line",
     home: [
       { kind: "intro", variant: "statement" },
       { kind: "product_grid", variant: "line", grid: { m: 2, pc: 4, ratio: 0.75, meta: "price" } },

@@ -1,8 +1,8 @@
-import { ClassList, ClassSchedule, Gates, NextSession } from "./class";
+import { ClassList, ClassSchedule, Gates } from "./class";
 import { Gallery, Intro, Location, Numbers, PayPlan, PhotoBand, ProcessSteps, Reviews, Testimonial, TrustLine } from "./common";
 import { BeforeAfter, CaseCards, CaseGrid, PackageCards, PriceTiers } from "./quote";
 import { CategoryTiles, Curation, StoreInfo } from "./shop";
-import { Amenities, BookingStrip, HouseRules, RoomBox, RoomList, SearchBar, SpecIcons } from "./stay";
+import { Amenities, BookingStrip, HouseRules, RoomBox, RoomList, SearchBar } from "./stay";
 
 export const templateSections = {
   intro: Intro,
@@ -18,13 +18,11 @@ export const templateSections = {
   category_tiles: CategoryTiles,
   curation: Curation,
   store_info: StoreInfo,
-  next_session: NextSession,
   class_schedule: ClassSchedule,
   class_list: ClassList,
   gates: Gates,
   search_bar: SearchBar,
   booking_strip: BookingStrip,
-  spec_icons: SpecIcons,
   amenities: Amenities,
   house_rules: HouseRules,
   room_list: RoomList,

@@ -30,7 +30,7 @@ export type DetailData = {
   calendar?: { month: string; days: CalendarDay[] };
   total?: { rows: Row[]; total: string; button: string; href?: string; note?: string };
   form?: { steps: string[]; groups: { label: string; options: string[] }[]; total?: string; button: string };
-  estimate?: { no: string; valid: string; items: Row[]; total: string; deposit: string; accept: string; change?: string; href?: string };
+  estimate?: { href?: string };
   reviews?: { average?: number; count?: number; items: Review[] };
   photo_reviews?: string[];
 };

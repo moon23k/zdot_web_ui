@@ -30,7 +30,6 @@ const context: SiteContext = {
     { id: "f2", question: "교환 · 반품은 어떻게 하나요?", answer: "받은 날부터 7일 안에 신청해 주세요." },
   ],
   shipping: null,
-  flags: {},
 };
 
 function shopNodes(): { nodes: Record<string, React.ReactNode>; data: DetailData } {
@@ -75,14 +74,8 @@ function Page({ main, letter }: { main: TemplateMain; letter: string }) {
           <SiteRenderer page={{ sections: homeSections[main] }} context={context} template={t} />
           <hr className="ez:my-4 ez:border-0 ez:border-t ez:border-solid ez:border-primary-border" />
           <DetailLayout slots={t.detail} data={data} nodes={shop?.nodes} />
-          {t.extra?.map((x) => (
-            <section key={x.name} className="ez:grid ez:gap-6">
-              <hr className="ez:my-4 ez:border-0 ez:border-t ez:border-solid ez:border-primary-border" />
-              <DetailLayout slots={x.slots} data={data} />
-            </section>
-          ))}
         </main>
-        <SiteFooter storeName="스토어 이름" business={business} hosting="자사닷" policies={[{ key: "terms", title: "이용약관" }, { key: "privacy", title: "개인정보처리방침" }]} variant={t.footer} />
+        <SiteFooter storeName="스토어 이름" business={business} hosting="자사닷" policies={[{ key: "terms", title: "이용약관" }, { key: "privacy", title: "개인정보처리방침" }]} />
       </div>
     </ThemeRoot>
   );
@@ -95,7 +88,7 @@ function BlankPage({ main, letter }: { main: TemplateMain; letter: string }) {
       <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
         <SiteHeader name="스토어 이름" variant={t.header} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
         <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:gap-section ez:px-page ez:py-8">
-          <SiteRenderer page={{ sections: [] }} context={{ products: [], categories: [], faqs: [], shipping: null, flags: {} }} template={t} />
+          <SiteRenderer page={{ sections: [] }} context={{ products: [], categories: [], faqs: [], shipping: null }} template={t} />
         </main>
       </div>
     </ThemeRoot>
@@ -121,6 +114,7 @@ export const RoomTerms: StoryObj = {
   render: () => (
     <ThemeRoot>
       <SiteRenderer
+        template={resolveTemplate("stay", "a")}
         context={context}
         page={{
           sections: [

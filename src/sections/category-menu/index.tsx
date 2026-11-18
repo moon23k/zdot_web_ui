@@ -3,7 +3,7 @@ import type { SectionProps } from "../../renderer/registry";
 import type { Category } from "../../types";
 import { cn } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
-import { Bar, BlankChips } from "../kit";
+import { Bar } from "../kit";
 
 const chip = cn(
   "ez:inline-flex ez:h-9.5 ez:shrink-0 ez:items-center ez:rounded-full ez:border ez:border-solid ez:border-site-line ez:px-4 ez:text-site-note ez:text-fg ez:no-underline ez:hover:border-site-edge",
@@ -27,30 +27,20 @@ export function CategoryChips({ categories, current }: { categories: Category[];
   );
 }
 
-export function CategoryMenu({ context, variant, blank }: SectionProps<"category_menu">) {
-  if (variant === "header") {
-    if (context.categories.length) {
-      return (
-        <div className="ez:lg:hidden">
-          <CategoryChips categories={context.categories} />
-        </div>
-      );
-    }
-    if (!blank) return null;
+export function CategoryMenu({ context, blank }: SectionProps<"category_menu">) {
+  if (context.categories.length) {
     return (
-      <div data-slot="category-menu" data-variant="header" data-blank="" aria-hidden="true" className="ez:flex ez:justify-center ez:gap-11 ez:text-site-lead ez:lg:hidden">
-        {[0, 1, 2, 3].map((i) => (
-          <Bar key={i} size="short" />
-        ))}
+      <div className="ez:lg:hidden">
+        <CategoryChips categories={context.categories} />
       </div>
     );
   }
-  if (!context.categories.length && blank) {
-    return (
-      <div data-slot="category-menu" data-blank="">
-        <BlankChips first="전체" />
-      </div>
-    );
-  }
-  return <CategoryChips categories={context.categories} />;
+  if (!blank) return null;
+  return (
+    <div data-slot="category-menu" data-variant="header" data-blank="" aria-hidden="true" className="ez:flex ez:justify-center ez:gap-11 ez:text-site-lead ez:lg:hidden">
+      {[0, 1, 2, 3].map((i) => (
+        <Bar key={i} size="short" />
+      ))}
+    </div>
+  );
 }

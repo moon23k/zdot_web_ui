@@ -1,7 +1,6 @@
 import NextLink from "next/link";
 import type { ReactNode } from "react";
 import { Badge } from "../../components/badge";
-import { Link } from "../../components/link";
 import { ButtonLink } from "../../components/button";
 import { countSup, chip, chipOn, figure, focusRing, sectionTitle, textLink } from "../../utils/styles";
 import { cn, won } from "../../utils/cn";
@@ -9,7 +8,6 @@ import { ProductGrid } from "../../blocks/product-grid";
 import type { SectionProps } from "../../renderer/registry";
 import type { GridSpec } from "../../templates/types";
 import type { ProductSummary } from "../../types";
-import { CategoryChips } from "../category-menu";
 import { Bar, BlankPrice, Card, Cols, pcCols, Pic, Title } from "../kit";
 
 const SHOWN = 8;
@@ -147,7 +145,7 @@ export function ProductList({ data, context, grid, variant, blank }: SectionProp
   const products = context.products;
   if (!products.length && !blank) return null;
   const fallback = variant === "store" ? "전체 상품" : "신상품";
-  if (!products.length) return <BlankGrid title={variant ? sectionTitle(data.title, fallback) : (data.title ?? "상품")} grid={grid} />;
+  if (!products.length) return <BlankGrid title={sectionTitle(data.title, fallback)} grid={grid} />;
   const shown = products.slice(0, fullRows(Math.min(products.length, SHOWN), grid?.m ?? 2, grid?.pc ?? 4));
   const more = products.length > shown.length || products.length >= SHOWN;
   const count = products.length < SHOWN ? products.length : undefined;
@@ -206,25 +204,9 @@ export function ProductList({ data, context, grid, variant, blank }: SectionProp
       </section>
     );
   }
-  if (variant === "line") {
-    return (
-      <section data-slot="product-grid" data-variant="line" className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-9">
-        <Head title={sectionTitle(data.title, "신상품")} count={count} aside={<AllLink />} />
-        <ProductGrid products={shown} eager={2} grid={grid} fit />
-      </section>
-    );
-  }
   return (
-    <section data-slot="product-grid" className="ez:grid ez:gap-4 ez:text-fg">
-      <div className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
-        <h2 className="ez:m-0 ez:font-display ez:text-site-section">{data.title ?? "상품"}</h2>
-        {products.length > shown.length && (
-          <Link href="/products" className="ez:shrink-0 ez:text-site-note ez:text-muted">
-            전체 보기
-          </Link>
-        )}
-      </div>
-      {variant !== "plain" && <CategoryChips categories={context.categories} />}
+    <section data-slot="product-grid" data-variant="line" className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-9">
+      <Head title={sectionTitle(data.title, "신상품")} count={count} aside={<AllLink />} />
       <ProductGrid products={shown} eager={2} grid={grid} fit />
     </section>
   );

@@ -4,7 +4,7 @@ import { ButtonLink } from "../../components/button";
 import { Icon } from "../../components/icon";
 import type { SectionProps } from "../../renderer/registry";
 import { cn } from "../../utils/cn";
-import { countSup, figure, focusRing, pointTag, sectionTitle } from "../../utils/styles";
+import { countSup, figure, focusRing, sectionTitle } from "../../utils/styles";
 import { Bar, BlankButton, BlankPrice, Pic, statusText } from "../kit";
 import type { ClassCard, Session, Tile } from "./data";
 
@@ -45,50 +45,12 @@ export function SessionList({ sessions }: { sessions: Session[] }) {
   );
 }
 
-function BlankRows() {
-  return (
-    <div className="ez:grid ez:border-0 ez:border-t ez:border-solid ez:border-site-line">
-      {[0, 1, 2].map((i) => (
-        <div key={i} className={rowGrid}>
-          <Pic ratio={4 / 3} tone={i} />
-          <span className="ez:grid ez:gap-2">
-            <Bar size="long" />
-            <span className="ez:text-site-small">
-              <Bar />
-            </span>
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 function Heading({ children, count }: { children: ReactNode; count?: number }) {
   return (
     <h2 className="ez:m-0 ez:text-site-section">
       {children}
       {count ? <span className={countSup}>{count}</span> : null}
     </h2>
-  );
-}
-
-export function NextSession({ data, blank }: SectionProps<"next_session">) {
-  const s = data.session;
-  if (!s && !blank) return null;
-  return (
-    <section data-slot="next-session" data-blank={s ? undefined : ""} className="ez:grid ez:justify-items-start ez:gap-3 ez:rounded-lg ez:bg-surface-alt ez:p-8 ez:text-fg">
-      <span className={pointTag}>다음 수업</span>
-      <span className={cn(figure, "ez:text-site-figure-lg ez:leading-none ez:tabular-nums")}>{s ? `${s.day ?? s.date} ${s.time}` : <Bar size="long" />}</span>
-      <span className="ez:text-site-small ez:text-muted">{s ? [s.name, s.length].filter(Boolean).join(" · ") : <Bar />}</span>
-      {s && <SessionStatus session={s} />}
-      {s ? (
-        <ButtonLink href={s.href ?? "#"} size="sm">
-          예약하기
-        </ButtonLink>
-      ) : (
-        <BlankButton>예약하기</BlankButton>
-      )}
-    </section>
   );
 }
 
@@ -195,13 +157,7 @@ export function ClassSchedule({ data, variant, blank }: SectionProps<"class_sche
       </section>
     );
   }
-  if (variant === "upcoming") return <Cohorts title={data.title ?? "모집 중인 반"} sessions={sessions} />;
-  return (
-    <section data-slot="class-schedule" id="schedule" data-blank={sessions.length ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg">
-      <Heading>{data.title ?? "수업 일정"}</Heading>
-      {sessions.length ? <SessionList sessions={sessions} /> : <BlankRows />}
-    </section>
-  );
+  return <Cohorts title={data.title ?? "모집 중인 반"} sessions={sessions} />;
 }
 
 function ClassBox({ c, i }: { c: ClassCard | null; i: number }) {
@@ -280,26 +236,6 @@ export function ClassList({ data, variant, blank }: SectionProps<"class_list">) 
               </div>
             );
           })}
-        </div>
-      </section>
-    );
-  }
-  if (variant === "domain" && classes.length) {
-    return (
-      <section data-slot="class-list" data-variant="domain" id="classes" className="ez:grid ez:gap-gutter ez:text-fg ez:md:grid-cols-[7fr_5fr] ez:md:items-start">
-        <Pic src={classes[0].image} ratio={4 / 3} tone={3} />
-        <div className="ez:grid ez:gap-6">
-          <Heading count={classes.length}>{sectionTitle(data.title, "클래스")}</Heading>
-          <ul className="ez:m-0 ez:list-none ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:p-0">
-            {classes.map((c) => (
-              <li key={c.id} className="ez:border-0 ez:border-b ez:border-solid ez:border-site-line">
-                <NextLink href={c.href ?? "#"} className={cn("ez:flex ez:items-baseline ez:justify-between ez:gap-4 ez:py-4 ez:text-fg ez:no-underline", focusRing)}>
-                  <span className="ez:text-site-item">{c.name}</span>
-                  <span className="ez:text-site-small ez:font-medium ez:tabular-nums">{c.price}</span>
-                </NextLink>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
     );

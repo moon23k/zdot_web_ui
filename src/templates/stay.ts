@@ -6,9 +6,8 @@ export const stay: TemplateDesign[] = [
     main: "stay",
     letter: "a",
     name: "독채 한 페이지형",
-    look: { tone: "gallery", radius: "pill", line: false, font: "sans", frame: "gallery" },
+    look: { tone: "gallery", radius: "pill", font: "sans", frame: "gallery" },
     header: "left",
-    footer: "line",
     home: [
       { kind: "hero", variant: "stay" },
       { kind: "booking_strip", variant: "gallery" },
@@ -33,9 +32,8 @@ export const stay: TemplateDesign[] = [
     main: "stay",
     letter: "b",
     name: "객실 검색 · 카드형",
-    look: { tone: "white", radius: 0, line: false, font: "sans" },
+    look: { tone: "white", radius: 0, font: "sans" },
     header: "transparent",
-    footer: "line",
     home: [
       { kind: "hero", variant: "full" },
       { kind: "search_bar" },
@@ -57,9 +55,8 @@ export const stay: TemplateDesign[] = [
     main: "stay",
     letter: "c",
     name: "B&B 소개형",
-    look: { tone: "white", radius: 0, line: false, font: "light" },
+    look: { tone: "white", radius: 0, font: "light" },
     header: "band",
-    footer: "line",
     home: [
       { kind: "hero", variant: "text" },
       { kind: "intro" },

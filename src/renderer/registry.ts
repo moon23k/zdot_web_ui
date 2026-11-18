@@ -3,7 +3,6 @@ import { BrandStory } from "../sections/brand-story";
 import { CategoryMenu } from "../sections/category-menu";
 import { FaqSection } from "../sections/faq";
 import { Hero } from "../sections/hero";
-import { Maker } from "../sections/maker";
 import { ProductList } from "../sections/product-list";
 import { templateSections } from "../sections/template";
 import type { TemplateSectionData } from "../sections/template/data";
@@ -15,7 +14,7 @@ export type SiteContext = {
   categories: Category[];
   faqs: Faq[];
   shipping: Shipping | null;
-  flags: Record<string, boolean>;
+  flags?: Record<string, boolean>;
   main?: string;
 };
 
@@ -32,7 +31,6 @@ export type SectionData = {
   };
   story: { title?: string | null; body?: string[]; strengths?: { title: string; body: string }[] };
   product_grid: { title?: string | null; lines?: Record<string, string> };
-  maker_profile: { line?: string | null };
   faq: Record<string, never>;
   category_menu: Record<string, never>;
 } & TemplateSectionData;
@@ -45,7 +43,6 @@ export const sections: { [K in SectionKind]: ComponentType<SectionProps<K>> } = 
   hero: Hero,
   story: BrandStory,
   product_grid: ProductList,
-  maker_profile: Maker,
   faq: FaqSection,
   category_menu: CategoryMenu,
   ...templateSections,

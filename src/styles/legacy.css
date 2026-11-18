@@ -162,8 +162,7 @@
   gap: 16px;
   justify-items: start;
 }
-.ez-faq details,
-.ez-reviews li {
+.ez-faq details {
   border-bottom: 1px solid var(--ezd-primary-border);
   padding: 12px 0;
 }
@@ -171,18 +170,6 @@
   cursor: pointer;
   font-weight: 400;
   min-height: 44px;
-}
-.ez-categories {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 16px 0;
-}
-.ez-categories a {
-  padding: 8px 14px;
-  border: 1px solid var(--ezd-primary-border);
-  border-radius: 999px;
-  text-decoration: none;
 }
 
 .ez-product {
@@ -216,14 +203,6 @@
 .ez-line__info {
   display: grid;
   gap: 2px;
-}
-.ez-line__name {
-  font-weight: 400;
-  text-decoration: none;
-}
-.ez-line__option {
-  color: var(--ezd-muted);
-  font-size: 0.85rem;
 }
 .ez-order__actions {
   display: flex;
@@ -309,28 +288,11 @@
   color: var(--ezd-muted);
 }
 :where(.ez-root[data-frame="gallery"]) .ez-line,
-:where(.ez-root[data-frame="gallery"]) .ez-faq details,
-:where(.ez-root[data-frame="gallery"]) .ez-reviews li {
+:where(.ez-root[data-frame="gallery"]) .ez-faq details {
   border-bottom-color: var(--ez-color-site-line);
-}
-:where(.ez-root[data-frame="gallery"]) .ez-line__name {
-  font-weight: 500;
 }
 :where(.ez-root[data-frame="gallery"]) .ez-faq summary {
   font-weight: 400;
-}
-:where(.ez-root[data-frame="gallery"]) .ez-categories a {
-  display: inline-flex;
-  align-items: center;
-  height: 38px;
-  padding: 0 16px;
-  border-color: var(--ez-color-site-line);
-  font-size: var(--ez-text-site-note);
-}
-:where(.ez-root[data-frame="gallery"]) .ez-categories a[aria-current="page"] {
-  border-color: var(--ezd-primary);
-  color: var(--ezd-primary);
-  font-weight: 500;
 }
 :where(.ez-root[data-frame="gallery"]) table {
   width: 100%;

@@ -35,13 +35,11 @@ export type TemplateSectionData = {
   trust_line: { items?: string[] };
   process_steps: { title?: string | null; steps?: string[] };
   numbers: { items?: { value: string; label: string }[] };
-  next_session: { session?: Session | null };
   class_schedule: { title?: string | null; sessions?: Session[] };
   class_list: { title?: string | null; classes?: ClassCard[] };
   gates: { items?: Tile[] };
   search_bar: { href?: string | null; check_in?: string | null; check_out?: string | null; guests?: string | null; price?: string | null };
   booking_strip: { price?: string | null; href?: string | null; check_in?: string | null; check_out?: string | null; guests?: string | null };
-  spec_icons: { items?: string[] };
   gallery: { images?: string[] };
   amenities: { title?: string | null; items?: { name: string; group?: string }[] };
   house_rules: { check_in?: string | null; check_out?: string | null; rules?: string[] };

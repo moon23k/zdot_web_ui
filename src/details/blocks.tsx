@@ -12,7 +12,7 @@ import { cn } from "../utils/cn";
 export type { DetailBlockProps } from "./interactive";
 import type { DetailBlockProps } from "./interactive";
 
-const none: SiteContext = { products: [], categories: [], faqs: [], shipping: null, flags: {} };
+const none: SiteContext = { products: [], categories: [], faqs: [], shipping: null };
 
 function Summary({ data, variant }: DetailBlockProps) {
   if (!data.title) return null;
@@ -290,23 +290,6 @@ function CasePhotos({ data }: DetailBlockProps) {
   );
 }
 
-function Estimate({ data }: DetailBlockProps) {
-  const e = data.estimate;
-  if (!e) return null;
-  return (
-    <section data-slot="estimate" className="ez:grid ez:gap-4 ez:text-fg ez:md:max-w-2xl">
-      <Title aside={<span className="ez:text-sm ez:text-muted">{`${e.no} · ${e.valid}`}</span>}>견적서</Title>
-      <Rows rows={[...e.items, { label: "합계", value: e.total }, { label: "예약금", value: e.deposit }]} />
-      <div className="ez:grid ez:grid-cols-2 ez:gap-2">
-        <ButtonLink href="#change" variant="outline">
-          {e.change ?? "수정 요청"}
-        </ButtonLink>
-        <ButtonLink href={e.href ?? "#pay"}>{e.accept}</ButtonLink>
-      </div>
-    </section>
-  );
-}
-
 function AmenitiesBlock({ data, variant }: DetailBlockProps) {
   return <Amenities data={{ items: data.amenities }} context={none} variant={variant} />;
 }
@@ -329,7 +312,6 @@ function ReviewsBlock({ data }: DetailBlockProps) {
 
 export const detailBlocks: Record<string, (p: DetailBlockProps) => ReactNode> = {
   gallery: Gallery,
-  summary: Summary,
   ship_line: ShipLine,
   price_table: PriceTable,
   info: Info,
@@ -349,7 +331,6 @@ export const detailBlocks: Record<string, (p: DetailBlockProps) => ReactNode> = 
   case_info: CaseInfo,
   case_photos: CasePhotos,
   quote_form: QuoteForm,
-  estimate: Estimate,
   amenities: AmenitiesBlock,
   house_rules: RulesBlock,
   location: LocationBlock,

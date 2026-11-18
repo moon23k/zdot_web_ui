@@ -280,7 +280,7 @@ describe("Calendar", () => {
 });
 
 describe("SiteRenderer", () => {
-  const context = { products: [], categories: [], faqs: [{ id: "f1", question: "주차되나요?", answer: "네" }], shipping: null, flags: {} };
+  const context = { products: [], categories: [], faqs: [{ id: "f1", question: "주차되나요?", answer: "네" }], shipping: null };
   const sections = [
     { kind: "process_steps", data: { title: "진행 순서", steps: ["문의", "작업"] } },
     { kind: "price_tiers", data: { title: "가격", items: [{ label: "기본", value: "10만원" }] } },
@@ -297,14 +297,20 @@ describe("SiteRenderer", () => {
   });
 
   it("draws nothing for removed section kinds left in a saved page", () => {
-    const old = [{ kind: "notice_bar", data: { text: "오늘 휴무" } }, { kind: "free_shipping_bar", when: "conditional_free_shipping", data: {} }, ...sections];
-    const flags = { conditional_free_shipping: true };
+    const removed = [
+      { kind: "notice_bar", data: { text: "오늘 휴무" } },
+      { kind: "free_shipping_bar", when: "conditional_free_shipping", data: {} },
+      { kind: "maker_profile", data: { line: "만드는 사람 한 줄" } },
+      { kind: "next_session", data: { session: { id: "s1", date: "5/1", time: "10:00", name: "다음 수업 이름", status: "open" } } },
+      { kind: "spec_icons", data: { items: ["침실 3"] } },
+      { kind: "review_keywords", data: {} },
+    ];
     const shipping = { base_fee: 3000, free_threshold: 50000, return_fee: 3000, exchange_fee: 6000, return_days: 7 };
-    for (const template of [null, resolveTemplate("shop", "a")]) {
+    for (const template of [resolveTemplate("shop", "a"), resolveTemplate("class", "a"), resolveTemplate("stay", "a")]) {
       for (const arranged of [false, true]) {
-        const { container, unmount } = render(<SiteRenderer page={{ sections: old, arranged }} context={{ ...context, flags, shipping }} template={template} />);
-        expect(container.querySelector('[data-slot="notice-bar"], [data-slot="free-shipping-bar"]')).toBeNull();
-        expect(container.textContent).not.toContain("오늘 휴무");
+        const { container, unmount } = render(<SiteRenderer page={{ sections: [...removed, ...sections], arranged }} context={{ ...context, shipping }} template={template} />);
+        expect(container.querySelector('[data-slot="notice-bar"], [data-slot="free-shipping-bar"], [data-slot="maker"], [data-slot="next-session"], [data-slot="spec-icons"]')).toBeNull();
+        for (const text of ["오늘 휴무", "만드는 사람 한 줄", "다음 수업 이름", "침실 3"]) expect(container.textContent).not.toContain(text);
         unmount();
       }
     }

@@ -9,7 +9,7 @@ const rooms = [
 
 describe("RoomList", () => {
   it("marks sample rooms and leaves them without a booking button", () => {
-    render(<RoomList data={{ rooms }} context={{ products: [], categories: [], faqs: [], shipping: null, flags: {} } as never} />);
+    render(<RoomList data={{ rooms }} context={{ products: [], categories: [], faqs: [], shipping: null } as never} />);
     expect(screen.getAllByText("예시")).toHaveLength(1);
     expect(screen.queryByRole("link", { name: /예약/ })).not.toBeInTheDocument();
     expect(screen.getAllByRole("link").map((a) => [a.getAttribute("href"), a.hasAttribute("data-sample")])).toEqual([

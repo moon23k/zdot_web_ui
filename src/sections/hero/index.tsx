@@ -157,15 +157,21 @@ export function Hero({ data, context, variant, blank }: SectionProps<"hero">) {
 
   if (variant === "full" && image) {
     return (
-      <section data-slot="hero" data-variant="full" className="ez:relative ez:mx-[calc(50%-50vw)] ez:h-130 ez:overflow-hidden ez:text-[#ffffff] ez:lg:h-190">
+      <section data-slot="hero" data-variant="full" data-blank={empty ? "" : undefined} className="ez:relative ez:mx-[calc(50%-50vw)] ez:h-130 ez:overflow-hidden ez:text-[#ffffff] ez:lg:h-190">
         <Photo src={image} alt="" preload sizes="100vw" tone={0} className="ez:absolute ez:inset-0 ez:aspect-auto ez:h-full ez:rounded-none" />
         <span aria-hidden="true" className="ez:absolute ez:inset-0 ez:bg-[linear-gradient(rgb(20_20_18/0.34),rgb(20_20_18/0)_26%,rgb(20_20_18/0)_52%,rgb(20_20_18/0.46))]" />
         <div className="ez:absolute ez:inset-x-0 ez:bottom-10 ez:mx-auto ez:flex ez:max-w-wrap ez:flex-wrap ez:items-end ez:justify-between ez:gap-6 ez:px-page ez:lg:bottom-16">
-          <h1 className="ez:m-0 ez:text-site-page ez:font-light ez:tracking-[-0.04em] ez:text-balance ez:lg:text-site-display">{data.title}</h1>
-          <ButtonLink href={href} variant="outline" className={ghost}>
-            {button}
-            <Icon name="right" size="sm" />
-          </ButtonLink>
+          {title("ez:text-site-page ez:lg:text-site-display")}
+          {empty ? (
+            <BlankButton variant="outline" className={ghost}>
+              {button}
+            </BlankButton>
+          ) : (
+            <ButtonLink href={href} variant="outline" className={ghost}>
+              {button}
+              <Icon name="right" size="sm" />
+            </ButtonLink>
+          )}
         </div>
       </section>
     );

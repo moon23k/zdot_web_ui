@@ -63,6 +63,17 @@ describe.each(designs)("blank %s %s", (main, letter) => {
 });
 
 describe("blank scope", () => {
+  it("keeps a photo-only full hero blank", () => {
+    const { container } = render(
+      <SiteRenderer page={{ sections: [{ kind: "hero", data: { image: "https://img.test/a.jpg" } }], arranged: true }} context={context} template={resolveTemplate("shop", "b")} />,
+    );
+    const hero = container.querySelector('[data-slot="hero"][data-variant="full"]');
+    expect(hero).toHaveAttribute("data-blank");
+    expect(hero?.querySelector("h1")).toBeNull();
+    expect(hero?.querySelector("a")).toBeNull();
+    expect(hero?.querySelector('[data-slot="blank-bar"]')).not.toBeNull();
+  });
+
   it("leaves a partner arranged page alone", () => {
     expect(page("stay", "a", true).root.children).toHaveLength(0);
   });

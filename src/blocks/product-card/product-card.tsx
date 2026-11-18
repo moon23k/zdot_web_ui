@@ -2,7 +2,8 @@ import NextLink from "next/link";
 import { Badge } from "../../components/badge";
 import { Photo } from "../../components/photo";
 import type { ProductSummary } from "../../types";
-import { cn, won } from "../../utils/cn";
+import { cn } from "../../utils/cn";
+import { won } from "../../utils/format";
 import { focusRing, pointTag } from "../../utils/styles";
 
 export function ProductCard({

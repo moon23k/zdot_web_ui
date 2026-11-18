@@ -2,7 +2,8 @@ import NextLink from "next/link";
 import type { ReactNode } from "react";
 import { Photo } from "../../components/photo";
 import type { CartLineData as Line } from "../../types";
-import { cn, won } from "../../utils/cn";
+import { cn } from "../../utils/cn";
+import { won } from "../../utils/format";
 import { focusRing } from "../../utils/styles";
 import { Status } from "../parts/status";
 

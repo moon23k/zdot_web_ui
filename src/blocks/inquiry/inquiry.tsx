@@ -5,6 +5,7 @@ import { EmptyState } from "../../components/empty-state";
 import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
 import { lineList } from "../parts/line-item";
+import { kstMonthDayTime } from "../../utils/format";
 
 export type InquiryRow = {
   id: string;
@@ -100,15 +101,6 @@ export function InquiryGreeting({
   );
 }
 
-const when = (value: string) =>
-  new Intl.DateTimeFormat("ko-KR", {
-    timeZone: "Asia/Seoul",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(new Date(value));
-
 export function InquiryList({
   inquiries,
   href = (id) => `/inquiries/${id}`,
@@ -144,7 +136,7 @@ export function InquiryList({
               {[
                 q.product_name,
                 q.order_number && `주문 ${q.order_number}`,
-                when(q.last_message_at),
+                kstMonthDayTime(q.last_message_at),
               ]
                 .filter(Boolean)
                 .join(" · ")}
@@ -188,7 +180,7 @@ export function InquiryThread({
               <span className="ez:font-medium ez:text-fg">
                 {m.author === "customer" ? "나" : store}
               </span>
-              <span className="ez:tabular-nums">{when(m.created_at)}</span>
+              <span className="ez:tabular-nums">{kstMonthDayTime(m.created_at)}</span>
             </span>
             <p className="ez:m-0 ez:whitespace-pre-wrap">{m.body}</p>
             {m.photos && m.photos.length > 0 && (

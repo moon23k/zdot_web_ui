@@ -1,6 +1,6 @@
 import { ButtonLink } from "../../components/button";
 import { StarRow } from "../../sections/template/common";
-import { kstDate } from "../../utils/cn";
+import { kstDate } from "../../utils/format";
 import { countSup, figure } from "../../utils/styles";
 import { lineList } from "../parts/line-item";
 import { PencilIcon } from "../parts/empty-icons";

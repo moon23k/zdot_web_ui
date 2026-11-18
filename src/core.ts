@@ -1,5 +1,6 @@
 export type { Design } from "./types";
-export { cn, won, kstDate } from "./utils/cn";
+export { cn } from "./utils/cn";
+export { won, kstDate, dayLabel, kstToday } from "./utils/format";
 export { reviewWord } from "./utils/words";
 export { designVars } from "./theme/tokens";
 export { SYSTEM_BRAND_COLOR } from "./theme/system";

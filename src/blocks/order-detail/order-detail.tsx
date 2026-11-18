@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import { Photo } from "../../components/photo";
 import type { OrderStatus, Schemas } from "../../types";
-import { cn, kstDate, won } from "../../utils/cn";
+import { cn } from "../../utils/cn";
+import { kstDate, won, kstSchedule } from "../../utils/format";
 import { focusRing } from "../../utils/styles";
 import { AddressText } from "../parts/address-text";
 import { DepositInfo } from "../parts/deposit-info";
@@ -131,18 +132,6 @@ function orderLabel(order: OrderView, labels: Record<OrderStatus, string> = STAT
 
 const SLOT_LABEL: Record<string, string> = { pickup: "픽업 날짜 · 시간", visit: "수업 일시" };
 
-const when = (value: string) => {
-  const date = new Date(value);
-  const timed = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Seoul", hour: "2-digit", minute: "2-digit" }).format(date) !== "00:00";
-  return new Intl.DateTimeFormat("ko-KR", {
-    timeZone: "Asia/Seoul",
-    month: "long",
-    day: "numeric",
-    weekday: "short",
-    ...(timed ? { hour: "2-digit", minute: "2-digit" } : {}),
-  }).format(date);
-};
-
 const smallButton = "ez:inline-flex ez:h-8 ez:shrink-0 ez:items-center ez:rounded-md ez:border ez:border-solid ez:border-primary-border ez:px-3 ez:text-[13px] ez:text-fg ez:no-underline ez:hover:bg-primary-tint";
 
 export function OrderDetail({
@@ -253,7 +242,7 @@ export function OrderDetail({
         <section aria-label="배송" className="ez:grid ez:gap-3 ez:max-lg:order-2">
           {slotAt && (
             <p className="ez:m-0 ez:text-[13px]">
-              <span className="ez:text-muted">{SLOT_LABEL[order.fulfillment ?? "ship"] ?? "희망 배송일"}</span> {when(slotAt)}
+              <span className="ez:text-muted">{SLOT_LABEL[order.fulfillment ?? "ship"] ?? "희망 배송일"}</span> {kstSchedule(slotAt)}
             </p>
           )}
           {order.pickup && (

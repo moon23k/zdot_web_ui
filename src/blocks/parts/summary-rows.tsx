@@ -1,4 +1,5 @@
-import { cn, won } from "../../utils/cn";
+import { cn } from "../../utils/cn";
+import { won } from "../../utils/format";
 
 export type SummaryRow = { label: string; value: number | string; minus?: boolean; strong?: boolean };
 

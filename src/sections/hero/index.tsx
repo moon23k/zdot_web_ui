@@ -3,7 +3,8 @@ import { Photo } from "../../components/photo";
 import type { SectionProps } from "../../renderer/registry";
 import NextLink from "next/link";
 import { Icon } from "../../components/icon";
-import { cn, won } from "../../utils/cn";
+import { cn } from "../../utils/cn";
+import { won } from "../../utils/format";
 import { textLink } from "../../utils/styles";
 import { Bar, BlankButton, Lines } from "../kit";
 

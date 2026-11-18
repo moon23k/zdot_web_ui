@@ -2,16 +2,7 @@
 
 import { useState } from "react";
 import type { Schemas } from "../../types";
-import { won } from "../../utils/cn";
-
-const due = (value: string) =>
-  new Intl.DateTimeFormat("ko-KR", {
-    timeZone: "Asia/Seoul",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(new Date(value));
+import { won, kstDueTime } from "../../utils/format";
 
 export function DepositInfo({ deposit }: { deposit: Schemas["DepositOut"] }) {
   const [copied, setCopied] = useState(false);
@@ -29,7 +20,7 @@ export function DepositInfo({ deposit }: { deposit: Schemas["DepositOut"] }) {
       data-slot="deposit-info"
       className="ez:grid ez:gap-2 ez:rounded-md ez:border ez:border-solid ez:border-primary-border ez:p-4 ez:text-[13px]"
     >
-      <strong className="ez:text-sm">{due(deposit.due_at)}까지 입금해 주세요</strong>
+      <strong className="ez:text-sm">{kstDueTime(deposit.due_at)}까지 입금해 주세요</strong>
       <dl className="ez:m-0 ez:grid ez:grid-cols-[auto_1fr] ez:gap-x-4 ez:gap-y-1.5 ez:tabular-nums">
         <dt className="ez:text-muted">은행</dt>
         <dd className="ez:m-0">{deposit.bank_name}</dd>

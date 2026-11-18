@@ -8,6 +8,7 @@ import { Icon } from "../../components/icon";
 import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
+import { kstToday } from "../../utils/format";
 
 export type StorePopupItem = {
   id: string;
@@ -20,11 +21,6 @@ export type StorePopupItem = {
 
 const HIDE_TODAY = "ez-popup-today:";
 const CLOSED = "ez-popup-closed:";
-
-function today(): string {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
-}
 
 function read(storage: () => Storage, key: string): string | null {
   try {
@@ -48,7 +44,7 @@ const session = () => window.sessionStorage;
 const idle = () => () => {};
 
 function hidden(key: string): boolean {
-  return read(local, HIDE_TODAY + key) === today() || Boolean(read(session, CLOSED + key));
+  return read(local, HIDE_TODAY + key) === kstToday() || Boolean(read(session, CLOSED + key));
 }
 
 const plain = "ez:m-0 ez:border-0 ez:bg-transparent ez:p-0 ez:font-body ez:cursor-pointer";
@@ -120,7 +116,7 @@ export function StorePopup({ popups, store }: { popups: StorePopupItem[]; store?
     setDismissed(true);
   };
   const hideToday = () => {
-    write(local, HIDE_TODAY + scope(), today());
+    write(local, HIDE_TODAY + scope(), kstToday());
     setDismissed(true);
   };
   const step = (by: number) => setAt((at + by + items.length) % items.length);

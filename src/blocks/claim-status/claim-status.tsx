@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
-import { cn, won } from "../../utils/cn";
+import { cn } from "../../utils/cn";
+import { won, kstMonthDay } from "../../utils/format";
 import { lineList } from "../parts/line-item";
 
 export type ClaimKindName = "cancel" | "return" | "exchange";
@@ -52,9 +53,6 @@ const CLOSED: ClaimStatusName[] = ["completed", "rejected", "withdrawn"];
 
 export const WITHDRAWABLE: ClaimStatusName[] = ["requested", "collecting"];
 
-const day = (value: string) =>
-  new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", month: "2-digit", day: "2-digit" }).format(new Date(value));
-
 export function ClaimStatus({ claims, action }: { claims: ClaimView[]; action?: (claim: ClaimView) => ReactNode }) {
   if (!claims.length) return null;
   return (
@@ -69,7 +67,7 @@ export function ClaimStatus({ claims, action }: { claims: ClaimView[]; action?: 
               <span className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
                 <strong className={cn("ez:font-medium", closed ? "ez:text-fg" : "ez:text-primary")}>{STATUS[c.kind][c.status]}</strong>
                 <span className="ez:text-[13px] ez:tabular-nums ez:text-muted">
-                  {KIND[c.kind]} · {day(c.created_at)}
+                  {KIND[c.kind]} · {kstMonthDay(c.created_at)}
                 </span>
               </span>
               <span className="ez:text-muted">{c.reason}</span>

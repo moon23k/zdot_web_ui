@@ -8,10 +8,7 @@ const one: StorePopupItem = { id: "p1", title: "겨울 햇차 입고", body: "11
 const two: StorePopupItem = { id: "p2", title: "12월 정기 휴무", body: null, image_url: null, href: "https://example.com", external: true };
 const three: StorePopupItem = { id: "p3", title: "연말 선물 포장", body: null, image_url: null, href: null, external: false };
 
-const day = () => {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
-};
+const day = () => new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Seoul" }).format(new Date());
 
 afterEach(() => {
   localStorage.clear();
@@ -44,6 +41,17 @@ describe("StorePopup", () => {
     render(<StorePopup popups={[one]} store="a.test" />);
     await new Promise((r) => setTimeout(r, 0));
     expect(screen.queryByRole("dialog")).toBeNull();
+  });
+
+  it("counts today in KST, not the device time zone", async () => {
+    vi.useFakeTimers({ toFake: ["Date"], now: new Date("2026-01-01T15:30:00Z") });
+    try {
+      render(<StorePopup popups={[one]} store="a.test" />);
+      await userEvent.click(await screen.findByRole("button", { name: "오늘 하루 열지 않기" }));
+      expect(localStorage.getItem("ez-popup-today:a.test")).toBe("2026-01-02");
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("shows again on another day", async () => {

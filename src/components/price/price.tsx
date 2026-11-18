@@ -1,4 +1,5 @@
-import { cn, won } from "../../utils/cn";
+import { cn } from "../../utils/cn";
+import { won } from "../../utils/format";
 
 export function Price({ value, list, rate = true, className }: { value: number; list?: number; rate?: boolean; className?: string }) {
   const discounted = list !== undefined && list > value;

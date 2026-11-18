@@ -1,6 +1,7 @@
 import { Photo } from "../../components/photo";
 import type { CartLineData } from "../../types";
-import { cn, won } from "../../utils/cn";
+import { cn } from "../../utils/cn";
+import { won } from "../../utils/format";
 import { focusRing } from "../../utils/styles";
 import { LineItem, lineList } from "../parts/line-item";
 

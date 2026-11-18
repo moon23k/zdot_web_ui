@@ -5,7 +5,8 @@ import { EmptyState } from "../../components/empty-state";
 import { Icon } from "../../components/icon";
 import { Photo } from "../../components/photo";
 import type { OrderStatus, Schemas } from "../../types";
-import { cn, won } from "../../utils/cn";
+import { cn } from "../../utils/cn";
+import { won, kstDotDate } from "../../utils/format";
 import { figure, focusRing, pointTag } from "../../utils/styles";
 import { STATUS_LABEL, STEPS } from "../order-detail/order-detail";
 import { emptyAction, ReceiptIcon } from "../parts/empty-icons";
@@ -33,14 +34,6 @@ const COUNTS: { label: string; statuses: OrderStatus[]; active: boolean }[] = [
 ];
 
 const tracked = (o: OrderRow) => TRACKED.has(o.fulfillment ?? "ship");
-
-const dotDate = (value: string) => {
-  const parts = new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(
-    new Date(value),
-  );
-  const part = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
-  return `${part("year")}.${part("month")}.${part("day")}`;
-};
 
 function progress(o: OrderRow) {
   if (!tracked(o)) return null;
@@ -118,7 +111,7 @@ export function OrderList({
               <article className="ez:grid ez:gap-6 ez:rounded-md ez:border ez:border-solid ez:border-site-line ez:p-5 ez:md:px-8 ez:md:py-7">
                 <header className="ez:flex ez:items-center ez:justify-between ez:gap-4">
                   <span className="ez:flex ez:min-w-0 ez:flex-wrap ez:items-baseline ez:gap-x-4 ez:gap-y-1">
-                    <span className="ez:text-site-item ez:font-medium ez:tabular-nums">{dotDate(o.created_at)}</span>
+                    <span className="ez:text-site-item ez:font-medium ez:tabular-nums">{kstDotDate(o.created_at)}</span>
                     <span className="ez:text-site-small ez:tabular-nums ez:text-muted">주문번호 {o.number}</span>
                     {!bar && (
                       <span className={canceled || o.status === "completed" ? "ez:text-site-caption ez:text-muted" : pointTag}>{labels[o.status]}</span>

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../../components/button";
-import { won } from "../../utils/cn";
+import { won } from "../../utils/format";
 import { Notice } from "../parts/notice";
 import { Status } from "../parts/status";
 

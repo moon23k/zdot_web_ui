@@ -17,6 +17,11 @@ import { SummaryRows } from "../parts/summary-rows";
 
 const LABEL = { return: "반품", exchange: "교환", cancel: "취소" } as const;
 
+const portion = (item: OrderItemView, quantity: number) =>
+  item.returned_quantity + quantity >= item.quantity
+    ? item.paid_amount - item.refunded_amount
+    : Math.floor((item.paid_amount * quantity) / item.quantity);
+
 export function ClaimForm({
   kind,
   items,
@@ -40,8 +45,8 @@ export function ClaimForm({
   const open = items.map((item) => ({ item, left: item.quantity - item.returned_quantity })).filter((x) => x.left > 0);
   const locked = (item: OrderItemView) => kind !== "cancel" && item.non_returnable && fault !== "seller";
   const chosen = open.filter(({ item }) => picked[item.id] && !locked(item));
-  const amount = chosen.reduce((sum, { item }) => sum + unit(item) * picked[item.id], 0);
-  const fee = kind === "return" && fault === "customer" ? Math.min(returnFee, amount) : 0;
+  const amount = chosen.reduce((sum, { item }) => sum + portion(item, picked[item.id]), 0);
+  const fee = kind === "return" && fault === "customer" ? returnFee : 0;
   const row = "ez:py-2.5";
   return (
     <form data-slot="claim-form" action={submit} className={form}>
@@ -112,7 +117,6 @@ export function ClaimForm({
               { label: "상품 금액", value: amount },
               ...(fee > 0 ? [{ label: "반품 배송비 (단순 변심)", value: fee, minus: true }] : []),
             ]}
-            total={{ label: "환불 예정 금액", value: amount - fee }}
           />
         </div>
       )}

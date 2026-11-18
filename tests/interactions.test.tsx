@@ -219,6 +219,19 @@ describe("ClaimForm", () => {
     await userEvent.click(screen.getByRole("radio", { name: /상품 문제/ }));
     expect(screen.getByRole("checkbox", { name: /린넨 셔츠/ })).toBeEnabled();
   });
+
+  it("shows the item amount the API refunds and the return fee without a refund total", async () => {
+    const vase = { ...item, id: "v", product_name: "꽃병", quantity: 3, returned_quantity: 1, paid_amount: 10000, refunded_amount: 3333, non_returnable: false };
+    render(<ClaimForm kind="return" items={[vase]} returnFee={3000} action={async () => ({})} />);
+    await userEvent.click(screen.getByRole("radio", { name: "단순 변심" }));
+    await userEvent.click(screen.getByRole("checkbox", { name: /꽃병/ }));
+    const summary = screen.getByText("상품 금액").closest("dl") as HTMLElement;
+    expect(within(summary).getByText("6,667원")).toBeInTheDocument();
+    expect(within(summary).getByText("− 3,000원")).toBeInTheDocument();
+    expect(screen.queryByText("환불 예정 금액")).toBeNull();
+    await userEvent.click(screen.getByRole("radio", { name: /상품 문제/ }));
+    expect(screen.queryByText(/반품 배송비/)).toBeNull();
+  });
 });
 
 describe("Calendar", () => {

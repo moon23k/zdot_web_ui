@@ -10,7 +10,7 @@ export const shop: TemplateDesign[] = [
     header: "gallery",
     home: [
       { kind: "hero", variant: "gallery" },
-      { kind: "product_grid", variant: "gallery", grid: { m: 2, pc: 4, ratio: 0.8, meta: "price" } },
+      { kind: "product_grid", variant: "gallery", grid: { m: 2, pc: 4, ratio: 0.8 } },
       { kind: "category_tiles", variant: "gallery" },
       { kind: "story", variant: "gallery" },
       { kind: "testimonial", variant: "gallery" },
@@ -35,7 +35,7 @@ export const shop: TemplateDesign[] = [
     home: [
       { kind: "hero", variant: "full" },
       { kind: "intro" },
-      { kind: "product_grid", variant: "showcase", grid: { m: 1, pc: 3, ratio: 0.75, meta: "status" } },
+      { kind: "product_grid", variant: "showcase", grid: { m: 1, pc: 3, ratio: 0.75 } },
       { kind: "photo_band" },
       { kind: "story" },
       { kind: "faq" },
@@ -60,7 +60,7 @@ export const shop: TemplateDesign[] = [
       { kind: "category_menu", variant: "header" },
       { kind: "hero", variant: "slide" },
       { kind: "curation" },
-      { kind: "product_grid", variant: "store", grid: { m: 2, pc: 4, ratio: 1, meta: "price" } },
+      { kind: "product_grid", variant: "store", grid: { m: 2, pc: 4, ratio: 1 } },
       { kind: "store_info" },
       { kind: "story" },
       { kind: "faq" },
@@ -81,7 +81,7 @@ export const shop: TemplateDesign[] = [
     header: "dark",
     home: [
       { kind: "intro", variant: "statement" },
-      { kind: "product_grid", variant: "line", grid: { m: 2, pc: 4, ratio: 0.75, meta: "price" } },
+      { kind: "product_grid", variant: "line", grid: { m: 2, pc: 4, ratio: 0.75 } },
       { kind: "story", variant: "band" },
       { kind: "photo_band" },
       { kind: "store_info", variant: "visit" },

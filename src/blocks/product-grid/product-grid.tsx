@@ -41,7 +41,7 @@ export function ProductGrid({
       )}
     >
       {products.map((p, i) => (
-        <ProductCard key={p.id} product={p} preload={i < eager} ratio={grid?.ratio} meta={grid?.meta} tone={i} />
+        <ProductCard key={p.id} product={p} preload={i < eager} tone={i} />
       ))}
     </div>
   );

@@ -13,7 +13,7 @@ export type Look = {
 
 export type HeaderVariant = "center" | "transparent" | "dark" | "left" | "pill" | "cta" | "band" | "gallery";
 
-export type GridSpec = { m: 1 | 2 | 3; pc: 3 | 4 | 6; ratio: number; meta?: "price" | "status" };
+export type GridSpec = { m: 1 | 2 | 3; pc: 3 | 4 | 6; ratio: number };
 
 export type HomeSlot = { kind: string; variant?: string; grid?: GridSpec };
 

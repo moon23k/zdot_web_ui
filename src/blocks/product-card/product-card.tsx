@@ -14,8 +14,6 @@ export function ProductCard({
 }: {
   product: ProductSummary;
   preload?: boolean;
-  ratio?: number;
-  meta?: "price" | "status";
   tone?: number;
   rank?: number;
 }) {

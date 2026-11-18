@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { order, pendingOrder } from "../../__stories__/fixtures/commerce";
-import { Button, OrderActionBar, OrderDetail } from "../../index";
+import { Button, OrderDetail } from "../../index";
 
 const meta: Meta<typeof OrderDetail> = {
   title: "Blocks/OrderDetail",
@@ -15,10 +15,11 @@ function DefaultExample() {
       order={order}
       imageSrc={{}}
       actions={
-        <OrderActionBar primary={<Button>구매 확정</Button>}>
+        <>
+          <Button>구매 확정</Button>
           <Button variant="secondary">반품 신청</Button>
           <Button variant="secondary">교환 신청</Button>
-        </OrderActionBar>
+        </>
       }
     />
   );

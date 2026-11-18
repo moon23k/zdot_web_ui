@@ -291,10 +291,12 @@ function CasePhotos({ data }: DetailBlockProps) {
 }
 
 function AmenitiesBlock({ data, variant }: DetailBlockProps) {
+  if (!data.amenities?.length) return null;
   return <Amenities data={{ items: data.amenities }} context={none} variant={variant} />;
 }
 
 function RulesBlock({ data }: DetailBlockProps) {
+  if (!data.rules?.check_in && !data.rules?.rules?.length) return null;
   return <HouseRules data={data.rules ?? {}} context={none} />;
 }
 
@@ -307,6 +309,7 @@ function PayBlock({ data }: DetailBlockProps) {
 }
 
 function ReviewsBlock({ data }: DetailBlockProps) {
+  if (!data.reviews?.items?.length) return null;
   return <Reviews data={data.reviews ?? {}} context={none} />;
 }
 

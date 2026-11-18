@@ -2,8 +2,7 @@ import { Icon } from "../../components/icon";
 import type { SectionProps } from "../../renderer/registry";
 import { Bar, Split } from "../kit";
 
-export function FaqSection({ context, blank }: SectionProps<"faq">) {
-  if (!context.faqs.length && !blank) return null;
+export function FaqSection({ context }: SectionProps<"faq">) {
   if (!context.faqs.length) {
     return (
       <Split slot="faq" id="faq" title="자주 묻는 질문" blank>

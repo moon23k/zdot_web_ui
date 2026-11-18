@@ -10,10 +10,9 @@ import type { Room } from "./data";
 
 type SearchData = SectionProps<"search_bar">["data"] & Partial<Pick<SectionProps<"booking_strip">["data"], "check_in" | "check_out" | "guests" | "price">>;
 
-export function SearchBar({ data, blank }: SectionProps<"search_bar">) {
+export function SearchBar({ data }: SectionProps<"search_bar">) {
   const d: SearchData = data;
   const filled = Boolean(d.check_in || d.price);
-  if (!filled && !blank) return null;
   const cells: [string, string | null | undefined][] = [
     ["체크인", d.check_in],
     ["체크아웃", d.check_out],
@@ -75,14 +74,12 @@ function GalleryStrip({ data }: { data: SectionProps<"booking_strip">["data"] })
   );
 }
 
-export function BookingStrip({ data, blank }: SectionProps<"booking_strip">) {
-  if (!data.price && !blank) return null;
+export function BookingStrip({ data }: SectionProps<"booking_strip">) {
   return <GalleryStrip data={data} />;
 }
 
-export function Amenities({ data, variant, blank }: SectionProps<"amenities">) {
+export function Amenities({ data, variant }: SectionProps<"amenities">) {
   const items = data.items ?? [];
-  if (!items.length && !blank) return null;
   if (variant === "gallery") {
     return (
       <Split slot="amenities" id="amenities" title={data.title ?? "편의 시설"} blank={!items.length}>
@@ -113,9 +110,8 @@ export function Amenities({ data, variant, blank }: SectionProps<"amenities">) {
   );
 }
 
-export function HouseRules({ data, variant, blank }: SectionProps<"house_rules">) {
+export function HouseRules({ data, variant }: SectionProps<"house_rules">) {
   const rules = data.rules ?? [];
-  if (!data.check_in && !rules.length && !blank) return null;
   if (variant === "gallery") {
     const empty = !data.check_in && !rules.length;
     return (
@@ -249,9 +245,8 @@ function RoomCard({ room, i }: { room: Room | null; i: number }) {
   );
 }
 
-export function RoomList({ data, variant, blank }: SectionProps<"room_list">) {
+export function RoomList({ data, variant }: SectionProps<"room_list">) {
   const rooms = data.rooms ?? [];
-  if (!rooms.length && !blank) return null;
   if (variant === "gallery") return <GalleryRooms title={data.title} rooms={rooms} />;
   return (
     <section data-slot="room-list" id="rooms" data-blank={rooms.length ? undefined : ""} className="ez:grid ez:gap-8 ez:text-fg">
@@ -297,11 +292,10 @@ function BoxRow({ room, name }: { room?: Room; name: string | null }) {
   );
 }
 
-export function RoomBox({ data, blank }: SectionProps<"room_box">) {
+export function RoomBox({ data }: SectionProps<"room_box">) {
   const d: BoxData = data;
   const rooms = d.rooms ?? [];
   const names = rooms.length ? rooms.map((r) => r.name) : (d.names ?? []);
-  if (!names.length && !blank) return null;
   const empty = !names.length;
   return (
     <section data-slot="room-box" id="rooms" data-blank={empty ? "" : undefined} className="ez:mx-[calc(50%-50vw)] ez:bg-surface-alt ez:text-fg">

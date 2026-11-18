@@ -1,10 +1,9 @@
 import type { SectionProps } from "../../renderer/registry";
 import { Bar, Lines } from "../kit";
 
-export function BrandStory({ data, variant, blank }: SectionProps<"story">) {
+export function BrandStory({ data, variant }: SectionProps<"story">) {
   const body = data.body ?? [];
   const strengths = data.strengths ?? [];
-  if (!data.title && !body.length && !blank) return null;
   const band = variant === "gallery" || variant === "band";
   if (!data.title && !body.length && band) {
     return (

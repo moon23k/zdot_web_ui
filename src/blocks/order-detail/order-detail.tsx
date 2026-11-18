@@ -289,13 +289,3 @@ export function OrderDetail({
     </article>
   );
 }
-
-export function OrderActionBar({ primary, children }: { primary?: ReactNode; children?: ReactNode }) {
-  const fill = "ez:[&_[data-slot=button]]:w-full ez:lg:[&_[data-slot=button]]:w-auto";
-  return (
-    <div data-slot="order-action-bar" className="ez:grid ez:gap-2 ez:lg:flex ez:lg:flex-row-reverse ez:lg:justify-end">
-      {primary && <div className={cn("ez:grid ez:lg:flex", fill)}>{primary}</div>}
-      {children && <div className={cn("ez:grid ez:grid-cols-2 ez:gap-2 ez:lg:flex", fill)}>{children}</div>}
-    </div>
-  );
-}

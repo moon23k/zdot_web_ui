@@ -40,11 +40,10 @@ function GalleryTiles({ items }: { items: (Tile & { count?: number | null })[] }
   );
 }
 
-export function CategoryTiles({ data, context, blank }: SectionProps<"category_tiles">) {
+export function CategoryTiles({ data, context }: SectionProps<"category_tiles">) {
   const items: (Tile & { count?: number | null })[] = data.items?.length
     ? data.items
     : context.categories.map((c) => ({ title: c.name, href: `/products?category=${c.id}`, count: c.product_count }));
-  if (!items.length && !blank) return null;
   return <GalleryTiles items={items} />;
 }
 
@@ -70,9 +69,8 @@ function Bundle({ items }: { items: (Tile | null)[] }) {
   );
 }
 
-export function Curation({ data, blank }: SectionProps<"curation">) {
+export function Curation({ data }: SectionProps<"curation">) {
   const items = data.items ?? [];
-  if (!items.length && !blank) return null;
   const title = data.title ?? "기획 묶음";
   return (
     <section data-slot="curation" data-blank={items.length ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-7">
@@ -123,8 +121,7 @@ function StoreTitle({ children }: { children: string }) {
   return <h2 className="ez:m-0 ez:font-display ez:text-site-section">{children}</h2>;
 }
 
-export function StoreInfo({ data, variant, blank }: SectionProps<"store_info">) {
-  if (!data.address && !blank) return null;
+export function StoreInfo({ data, variant }: SectionProps<"store_info">) {
   const empty = !data.address;
   if (variant === "visit") {
     return (

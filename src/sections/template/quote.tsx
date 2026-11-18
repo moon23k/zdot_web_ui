@@ -8,9 +8,8 @@ import { countSup, figure, focusRing, textLink } from "../../utils/styles";
 import type { Case, TemplateSectionData } from "./data";
 import { Bar, BlankButton, BlankPrice, Chips, Pic, pcCols } from "../kit";
 
-export function PriceTiers({ data, blank }: SectionProps<"price_tiers">) {
+export function PriceTiers({ data }: SectionProps<"price_tiers">) {
   const items = data.items ?? [];
-  if (!items.length && !blank) return null;
   return (
     <section data-slot="price-tiers" data-variant="gallery" id="services" data-blank={items.length ? undefined : ""} className="ez:mx-[calc(50%-50vw)] ez:bg-surface-alt ez:text-fg">
       <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-8 ez:px-page ez:py-16 ez:lg:grid-cols-[4fr_8fr] ez:lg:gap-6 ez:lg:py-30">
@@ -45,9 +44,8 @@ function Head({ title, count, children }: { title: string; count?: number; child
   );
 }
 
-export function PackageCards({ data, blank }: SectionProps<"package_cards">) {
+export function PackageCards({ data }: SectionProps<"package_cards">) {
   const items: Pack[] = data.items ?? [];
-  if (!items.length && !blank) return null;
   const shown: (Pack | null)[] = items.length ? items : [null, null, null];
   return (
     <section data-slot="package-cards" id="services" data-blank={items.length ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg">
@@ -90,9 +88,8 @@ export function PackageCards({ data, blank }: SectionProps<"package_cards">) {
   );
 }
 
-export function CaseGrid({ data, variant, blank }: SectionProps<"case_grid">) {
+export function CaseGrid({ data, variant }: SectionProps<"case_grid">) {
   const cases = data.cases ?? [];
-  if (!cases.length && !blank) return null;
   if (variant === "gallery") {
     const tall = ["ez:lg:h-130", "ez:lg:h-105", "ez:lg:h-80"];
     return (
@@ -180,9 +177,8 @@ function tagsOf(c: Case): string[] {
 
 const tag = "ez:inline-flex ez:h-7.5 ez:items-center ez:rounded-full ez:border ez:border-solid ez:border-site-line ez:px-3 ez:text-site-small ez:whitespace-nowrap";
 
-export function CaseCards({ data, blank }: SectionProps<"case_cards">) {
+export function CaseCards({ data }: SectionProps<"case_cards">) {
   const cases = data.cases ?? [];
-  if (!cases.length && !blank) return null;
   const shown: (Case | null)[] = cases.length ? cases.slice(0, 4) : [null, null];
   return (
     <section data-slot="case-cards" id="work" data-blank={cases.length ? undefined : ""} className="ez:grid ez:gap-8 ez:text-fg">
@@ -244,9 +240,8 @@ export function CaseCards({ data, blank }: SectionProps<"case_cards">) {
   );
 }
 
-export function BeforeAfter({ data, blank }: SectionProps<"before_after">) {
+export function BeforeAfter({ data }: SectionProps<"before_after">) {
   const empty = !data.before && !data.after;
-  if (empty && !blank) return null;
   return (
     <section data-slot="before-after" data-blank={empty ? "" : undefined} className="ez:grid ez:gap-8 ez:text-fg">
       <h2 className="ez:m-0 ez:text-site-section">시공 전 · 후</h2>

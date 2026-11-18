@@ -142,9 +142,8 @@ function AllLink() {
   );
 }
 
-export function ProductList({ data, context, grid, variant, blank }: SectionProps<"product_grid">) {
+export function ProductList({ data, context, grid, variant }: SectionProps<"product_grid">) {
   const products = context.products;
-  if (!products.length && !blank) return null;
   const fallback = variant === "store" ? "전체 상품" : "신상품";
   if (!products.length) return <BlankGrid title={sectionTitle(data.title, fallback)} grid={grid} />;
   const shown = products.slice(0, fullRows(Math.min(products.length, SHOWN), grid?.m ?? 2, grid?.pc ?? 4));

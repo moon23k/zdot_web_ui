@@ -10,8 +10,7 @@ import { Bar, BlankButton, Lines } from "../kit";
 
 const BUTTON: Record<string, string> = { shop: "상품 보기", stay: "객실 보기", class: "클래스 보기", quote: "작업 보기" };
 
-export function Hero({ data, context, variant, blank }: SectionProps<"hero">) {
-  if (!data.title && !blank) return null;
+export function Hero({ data, context, variant }: SectionProps<"hero">) {
   const empty = !data.title;
   const href = data.href ?? "/products";
   const button = data.button ?? BUTTON[context.main ?? "shop"] ?? BUTTON.shop;

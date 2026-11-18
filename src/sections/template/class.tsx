@@ -142,9 +142,8 @@ function Cohorts({ title, sessions }: { title: string; sessions: Session[] }) {
   );
 }
 
-export function ClassSchedule({ data, variant, blank }: SectionProps<"class_schedule">) {
+export function ClassSchedule({ data, variant }: SectionProps<"class_schedule">) {
   const sessions = data.sessions ?? [];
-  if (!sessions.length && !blank) return null;
   if (variant === "gallery") {
     return (
       <section data-slot="class-schedule" data-variant="gallery" id="schedule" data-blank={sessions.length ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-8">
@@ -202,9 +201,8 @@ function ClassBox({ c, i }: { c: ClassCard | null; i: number }) {
   );
 }
 
-export function ClassList({ data, variant, blank }: SectionProps<"class_list">) {
+export function ClassList({ data, variant }: SectionProps<"class_list">) {
   const classes = data.classes ?? [];
-  if (!classes.length && !blank) return null;
   if (variant === "gallery") {
     return (
       <section data-slot="class-list" data-variant="gallery" id="classes" data-blank={classes.length ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-9">
@@ -277,9 +275,8 @@ function GateBox({ g, i }: { g: Gate | null; i: number }) {
   );
 }
 
-export function Gates({ data, blank }: SectionProps<"gates">) {
+export function Gates({ data }: SectionProps<"gates">) {
   const items: Gate[] = data.items ?? [];
-  if (!items.length && !blank) return null;
   return (
     <section data-slot="gates" id="courses" data-blank={items.length ? undefined : ""} className="ez:mx-[calc(50%-50vw)] ez:bg-surface-alt ez:text-fg">
       <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-8 ez:px-page ez:py-16 ez:lg:gap-10 ez:lg:py-24">

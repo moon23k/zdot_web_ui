@@ -9,8 +9,7 @@ import { countSup, figure, textLink } from "../../utils/styles";
 import type { Review } from "./data";
 import { Bar, BlankButton, BlankStars, Block, Lines, Pairs, Pic, Split } from "../kit";
 
-export function Intro({ data, lead, variant, blank }: SectionProps<"intro">) {
-  if (!data.title && !blank) return null;
+export function Intro({ data, lead, variant }: SectionProps<"intro">) {
   if (variant === "gallery") {
     const images = data.images ?? [];
     return (
@@ -71,9 +70,8 @@ export function Intro({ data, lead, variant, blank }: SectionProps<"intro">) {
   );
 }
 
-export function PhotoBand({ data, blank }: SectionProps<"photo_band">) {
+export function PhotoBand({ data }: SectionProps<"photo_band">) {
   const images = data.images?.length ? data.images.slice(0, 4) : data.image ? [data.image] : [];
-  if (!images.length && !blank) return null;
   const shown: (string | null)[] = images.length ? images : [null, null, null, null];
   return (
     <section data-slot="photo-band" data-blank={images.length ? undefined : ""} className={cn("ez:mx-[calc(50%-50vw)] ez:grid", shown.length > 1 ? "ez:grid-cols-2 ez:lg:grid-cols-4" : "ez:grid-cols-1")}>
@@ -139,12 +137,10 @@ function GalleryReviews({
   );
 }
 
-export function Testimonial({ data, context, variant, blank }: SectionProps<"testimonial">) {
+export function Testimonial({ data, context, variant }: SectionProps<"testimonial">) {
   if (variant === "gallery") {
-    if (!data.items?.length && !blank) return null;
     return <GalleryReviews items={data.items ?? []} count={data.count} products={context.products} />;
   }
-  if (!data.quote && !blank) return null;
   if (!data.quote) {
     return (
       <div data-slot="testimonial" data-blank="" className="ez:grid ez:gap-3 ez:rounded-md ez:bg-surface-alt ez:p-6">
@@ -164,15 +160,13 @@ export function Testimonial({ data, context, variant, blank }: SectionProps<"tes
 }
 
 
-export function Reviews({ data, context, blank }: SectionProps<"reviews">) {
+export function Reviews({ data, context }: SectionProps<"reviews">) {
   const items = data.items ?? [];
-  if (!items.length && !blank) return null;
   return <GalleryReviews items={items} count={data.count} products={context.products} title="후기" slot="reviews" />;
 }
 
-export function TrustLine({ data, blank }: SectionProps<"trust_line">) {
+export function TrustLine({ data }: SectionProps<"trust_line">) {
   const items = data.items ?? [];
-  if (!items.length && !blank) return null;
   return (
     <ul data-slot="trust-line" data-variant="gallery" data-blank={items.length ? undefined : ""} className="ez:m-0 ez:flex ez:list-none ez:flex-wrap ez:gap-x-10 ez:gap-y-2 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:p-0 ez:pt-6 ez:text-site-small ez:text-muted">
       {(items.length ? items : ["", ""]).map((t, i) => (
@@ -185,9 +179,8 @@ export function TrustLine({ data, blank }: SectionProps<"trust_line">) {
   );
 }
 
-export function ProcessSteps({ data, blank }: SectionProps<"process_steps">) {
+export function ProcessSteps({ data }: SectionProps<"process_steps">) {
   const steps = data.steps ?? [];
-  if (!steps.length && !blank) return null;
   return (
     <section data-slot="process-steps" data-variant="gallery" id="process" data-blank={steps.length ? undefined : ""} className="ez:grid ez:gap-10 ez:text-fg ez:lg:gap-14">
       <h2 className="ez:m-0 ez:text-site-section">{data.title ?? "진행 과정"}</h2>
@@ -207,9 +200,8 @@ export function ProcessSteps({ data, blank }: SectionProps<"process_steps">) {
   );
 }
 
-export function Numbers({ data, blank }: SectionProps<"numbers">) {
+export function Numbers({ data }: SectionProps<"numbers">) {
   const items = data.items ?? [];
-  if (!items.length && !blank) return null;
   const shown = items.length ? items : ["평점", "후기"].map((label) => ({ label, value: "" }));
   return (
     <dl data-slot="numbers" data-blank={items.length ? undefined : ""} className="ez:m-0 ez:grid ez:grid-cols-2 ez:gap-y-6 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-7 ez:text-fg ez:md:grid-cols-4">
@@ -223,9 +215,8 @@ export function Numbers({ data, blank }: SectionProps<"numbers">) {
   );
 }
 
-export function Gallery({ data, variant, blank }: SectionProps<"gallery">) {
+export function Gallery({ data, variant }: SectionProps<"gallery">) {
   const images = data.images ?? [];
-  if (!images.length && !blank) return null;
   if (variant === "gallery") {
     const shown: (string | null)[] = images.length ? images.slice(0, 3) : [null, null, null];
     const tall = ["ez:lg:h-130", "ez:lg:h-100", "ez:lg:h-75"];
@@ -249,8 +240,7 @@ export function Gallery({ data, variant, blank }: SectionProps<"gallery">) {
   );
 }
 
-export function Location({ data, blank }: SectionProps<"location">) {
-  if (!data.address && !blank) return null;
+export function Location({ data }: SectionProps<"location">) {
   return (
     <Split slot="location" id="location" title="오시는 길" blank={!data.address}>
       <div className="ez:grid ez:justify-items-start ez:gap-5">
@@ -268,10 +258,9 @@ export function Location({ data, blank }: SectionProps<"location">) {
 
 const full = (value: ReactNode) => typeof value === "string" && value.startsWith("100%");
 
-export function PayPlan({ data, blank }: SectionProps<"pay_plan">) {
+export function PayPlan({ data }: SectionProps<"pay_plan">) {
   const rows = data.rows ?? [];
   const groups = data.groups ?? [];
-  if (!rows.length && !groups.length && !blank) return null;
   const empty = !rows.length && !groups.length;
   return (
     <Split slot="pay-plan" id="refund" title={data.title ?? "취소 · 환불 규정"} blank={empty}>

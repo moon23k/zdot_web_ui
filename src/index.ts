@@ -29,7 +29,6 @@ export { DepositInfo } from "./blocks/parts/deposit-info";
 export { OrderList, type OrderRow } from "./blocks/order-list";
 export {
   OrderDetail,
-  OrderActionBar,
   ORDER_ACTIONS,
   orderActions,
   STATUS_LABEL,

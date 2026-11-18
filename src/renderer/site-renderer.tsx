@@ -32,7 +32,7 @@ export function SiteRenderer({ page, context, template }: { page: { sections: Se
       {placed.map((section, i) => {
         if (!isKind(section.kind)) return null;
         const Component = sections[section.kind] as ComponentType<SectionProps>;
-        return <Component key={`${section.kind}-${i}`} data={section.data ?? {}} context={ctx} variant={section.variant} grid={section.grid} lead={lead} blank />;
+        return <Component key={`${section.kind}-${i}`} data={section.data ?? {}} context={ctx} variant={section.variant} grid={section.grid} lead={lead} />;
       })}
     </div>
   );

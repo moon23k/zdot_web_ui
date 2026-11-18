@@ -27,7 +27,7 @@ export function CategoryChips({ categories, current }: { categories: Category[];
   );
 }
 
-export function CategoryMenu({ context, blank }: SectionProps<"category_menu">) {
+export function CategoryMenu({ context }: SectionProps<"category_menu">) {
   if (context.categories.length) {
     return (
       <div className="ez:lg:hidden">
@@ -35,7 +35,6 @@ export function CategoryMenu({ context, blank }: SectionProps<"category_menu">) 
       </div>
     );
   }
-  if (!blank) return null;
   return (
     <div data-slot="category-menu" data-variant="header" data-blank="" aria-hidden="true" className="ez:flex ez:justify-center ez:gap-11 ez:text-site-lead ez:lg:hidden">
       {[0, 1, 2, 3].map((i) => (

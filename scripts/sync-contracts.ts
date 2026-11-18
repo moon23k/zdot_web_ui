@@ -10,6 +10,7 @@ const ROOTS = [
   "AddressOut",
   "ReviewOut",
   "ClaimOut",
+  "ClaimPreviewOut",
   "CustomerProvider",
   "PublicReviewOut",
   "ProductReviewsOut",

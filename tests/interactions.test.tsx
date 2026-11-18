@@ -1,7 +1,7 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { expectNoA11yViolations } from "./a11y";
 import { AccountShell, AddressForm, BuyBox, Button, Calendar, CartView, Checkbox, ClaimForm, Dialog, Field, OrderSummary, PhotoAttach, Quantity, resolveTemplate, ReviewForm, reviewWord, Select, SiteRenderer, type ProductDetail } from "../src";
 
@@ -220,17 +220,42 @@ describe("ClaimForm", () => {
     expect(screen.getByRole("checkbox", { name: /린넨 셔츠/ })).toBeEnabled();
   });
 
-  it("shows the item amount the API refunds and the return fee without a refund total", async () => {
+  it("shows the server refund preview with the refund total and returned points apart", async () => {
     const vase = { ...item, id: "v", product_name: "꽃병", quantity: 3, returned_quantity: 1, paid_amount: 10000, refunded_amount: 3333, non_returnable: false };
-    render(<ClaimForm kind="return" items={[vase]} returnFee={3000} action={async () => ({})} />);
+    const preview = vi.fn(async ({ fault }: { fault: string }) =>
+      fault === "customer"
+        ? { item_amount: 6667, delivery_fee: 0, return_fee: 3000, coupon_clawback: 1000, shipping_charge: 0, cash: 2667, points: 500, point_clawback: 0 }
+        : { item_amount: 6667, delivery_fee: 0, return_fee: 0, coupon_clawback: 0, shipping_charge: 0, cash: 6667, points: 0, point_clawback: 0 },
+    );
+    render(<ClaimForm kind="return" items={[vase]} preview={preview} action={async () => ({})} />);
     await userEvent.click(screen.getByRole("radio", { name: "단순 변심" }));
     await userEvent.click(screen.getByRole("checkbox", { name: /꽃병/ }));
-    const summary = screen.getByText("상품 금액").closest("dl") as HTMLElement;
+    const total = await screen.findByText("환불 예정 금액");
+    expect(preview).toHaveBeenLastCalledWith({ kind: "return", fault: "customer", items: [{ order_item_id: "v", quantity: 2 }] });
+    const summary = total.closest("dl") as HTMLElement;
     expect(within(summary).getByText("6,667원")).toBeInTheDocument();
     expect(within(summary).getByText("− 3,000원")).toBeInTheDocument();
-    expect(screen.queryByText("환불 예정 금액")).toBeNull();
+    expect(within(summary).getByText("− 1,000원")).toBeInTheDocument();
+    expect(within(summary).getByText("2,667원")).toBeInTheDocument();
+    expect(within(summary).queryByText("최초 배송비")).toBeNull();
+    expect(screen.getByText("적립금 복원").closest("dl")).not.toBe(summary);
     await userEvent.click(screen.getByRole("radio", { name: /상품 문제/ }));
+    await screen.findByText("환불 예정 금액");
+    expect(preview).toHaveBeenLastCalledWith({ kind: "return", fault: "seller", items: [{ order_item_id: "v", quantity: 2 }] });
     expect(screen.queryByText(/반품 배송비/)).toBeNull();
+    expect(screen.queryByText("적립금 복원")).toBeNull();
+  });
+
+  it("hides the amounts but keeps the request open when the preview fails", async () => {
+    const one = { ...item, id: "o", product_name: "접시", quantity: 1, returned_quantity: 0, paid_amount: 5000, non_returnable: false };
+    const preview = vi.fn(async () => null);
+    render(<ClaimForm kind="return" items={[one]} preview={preview} action={async () => ({})} />);
+    await userEvent.click(screen.getByRole("radio", { name: "단순 변심" }));
+    await userEvent.click(screen.getByRole("checkbox", { name: /접시/ }));
+    await userEvent.type(screen.getByRole("textbox"), "마음이 바뀌었어요");
+    await waitFor(() => expect(preview).toHaveBeenCalledTimes(1));
+    expect(screen.queryByText("환불 예정 금액")).toBeNull();
+    expect(screen.getByRole("button", { name: "반품 신청" })).toBeEnabled();
   });
 });
 

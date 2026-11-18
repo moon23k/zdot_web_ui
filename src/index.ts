@@ -57,7 +57,7 @@ export { AddressBook, type AddressRow } from "./blocks/address-book";
 export { PolicyDoc } from "./blocks/policy-doc";
 export { AccountShell } from "./blocks/account-shell";
 export { OAuthButtons } from "./blocks/oauth-buttons";
-export { ClaimForm } from "./blocks/claim-form";
+export { ClaimForm, type ClaimPreview, type ClaimPreviewInput } from "./blocks/claim-form";
 export {
   InquiryGreeting,
   InquiryList,

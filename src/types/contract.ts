@@ -74,6 +74,16 @@ export interface Schemas {
     created_at: string;
     preview?: Schemas["RefundPreview"] | null;
   };
+  ClaimPreviewOut: {
+    item_amount: number;
+    delivery_fee: number;
+    return_fee: number;
+    coupon_clawback: number;
+    shipping_charge: number;
+    cash: number;
+    points: number;
+    point_clawback: number;
+  };
   ClaimReason: "change_of_mind" | "defective" | "wrong_item" | "damaged" | "late" | "other";
   ClaimRequester: "customer" | "partner";
   ClaimStatus: "requested" | "collecting" | "collected" | "held" | "completed" | "rejected" | "withdrawn";
@@ -160,6 +170,12 @@ export interface Schemas {
     label: string;
     value: string;
   };
+  NoShowOut: {
+    rate: number;
+    fee: number;
+    refund: number;
+    point_refund: number;
+  };
   NoticeRow: {
     title: string;
     body: string;
@@ -172,6 +188,13 @@ export interface Schemas {
     group: string;
     rows: Schemas["NoticeRowOut"][];
     terms: Schemas["NoticeRowOut"][];
+  };
+  OrderClaimOut: {
+    id: string;
+    kind: Schemas["ClaimKind"];
+    status: Schemas["ClaimStatus"];
+    created_at: string;
+    resolved_at: string | null;
   };
   OrderItemOut: {
     id: string;
@@ -225,6 +248,7 @@ export interface Schemas {
     cancel_reason: Schemas["app__commerce__order__models__CancelReason"] | null;
     cancel_detail?: string | null;
     seller_refund?: Schemas["SellerRefundOut"] | null;
+    no_show?: Schemas["NoShowOut"] | null;
     sold_out_candidates: string[];
     ship_due_at?: string | null;
     ready_at?: string | null;
@@ -238,6 +262,11 @@ export interface Schemas {
     cancel_terms: Schemas["CancelTermsOut"][];
     cancel_quote?: Schemas["CancelQuoteOut"] | null;
     cancel_fee: number;
+    request_note?: string | null;
+    orderer_phone?: string | null;
+    prepared_at?: string | null;
+    reshipments: Schemas["ShipmentOut"][];
+    claims: Schemas["OrderClaimOut"][];
   };
   OrderStatus: "pending_payment" | "paid" | "preparing" | "shipped" | "delivered" | "completed" | "canceled";
   OrderSummary: {
@@ -251,6 +280,7 @@ export interface Schemas {
     paid_at: string | null;
     first_item?: string | null;
     item_count: number;
+    quantity: number;
     image_url?: string | null;
     ship_due_at?: string | null;
   };

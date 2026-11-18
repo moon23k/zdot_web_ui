@@ -1,11 +1,11 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { Button } from "../../components/button";
 import { Field, TextArea } from "../../components/field";
 import { Photo } from "../../components/photo";
 import { Quantity } from "../../components/quantity";
-import type { FormAction, FormState } from "../../types";
+import type { FormAction, FormState, Schemas } from "../../types";
 import { cn, won } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
 import type { OrderItemView } from "../order-detail/order-detail";
@@ -13,40 +13,63 @@ import { Choice, fieldset, legend } from "../parts/choice";
 import { form } from "../parts/form";
 import { Notice } from "../parts/notice";
 import { Status } from "../parts/status";
-import { SummaryRows } from "../parts/summary-rows";
+import { SummaryRows, type SummaryRow } from "../parts/summary-rows";
 
 const LABEL = { return: "반품", exchange: "교환", cancel: "취소" } as const;
 
-const portion = (item: OrderItemView, quantity: number) =>
-  item.returned_quantity + quantity >= item.quantity
-    ? item.paid_amount - item.refunded_amount
-    : Math.floor((item.paid_amount * quantity) / item.quantity);
+export type ClaimPreview = Schemas["ClaimPreviewOut"];
+
+export type ClaimPreviewInput = {
+  kind: keyof typeof LABEL;
+  fault: string;
+  items: { order_item_id: string; quantity: number }[];
+};
+
+const shown = (rows: SummaryRow[]) => rows.filter((row) => row.value !== 0);
 
 export function ClaimForm({
   kind,
   items,
   action,
+  preview,
   imageSrc,
-  returnFee = 0,
 }: {
   kind: keyof typeof LABEL;
   items: OrderItemView[];
   action: FormAction;
+  preview?: (input: ClaimPreviewInput) => Promise<ClaimPreview | null>;
   imageSrc?: Record<string, string | null>;
-  returnFee?: number;
 }) {
   const [state, submit, pending] = useActionState<FormState, FormData>(action, {});
   const [fault, setFault] = useState<string | null>(null);
   const [picked, setPicked] = useState<Record<string, number>>({});
   const [reason, setReason] = useState("");
-  if (state.ok) return <Notice>{state.message ?? "요청을 접수했어요."}</Notice>;
-  const label = LABEL[kind];
-  const unit = (item: OrderItemView) => Math.round(item.paid_amount / item.quantity);
+  const [quote, setQuote] = useState<{ key: string; value: ClaimPreview | null } | null>(null);
   const open = items.map((item) => ({ item, left: item.quantity - item.returned_quantity })).filter((x) => x.left > 0);
   const locked = (item: OrderItemView) => kind !== "cancel" && item.non_returnable && fault !== "seller";
   const chosen = open.filter(({ item }) => picked[item.id] && !locked(item));
-  const amount = chosen.reduce((sum, { item }) => sum + portion(item, picked[item.id]), 0);
-  const fee = kind === "return" && fault === "customer" ? returnFee : 0;
+  const key =
+    kind !== "exchange" && fault && chosen.length
+      ? JSON.stringify({ kind, fault, items: chosen.map(({ item }) => ({ order_item_id: item.id, quantity: picked[item.id] })) })
+      : "";
+  useEffect(() => {
+    if (!preview || !key) return;
+    let live = true;
+    const timer = setTimeout(() => {
+      const done = (value: ClaimPreview | null) => {
+        if (live) setQuote({ key, value });
+      };
+      preview(JSON.parse(key) as ClaimPreviewInput).then(done, () => done(null));
+    }, 300);
+    return () => {
+      live = false;
+      clearTimeout(timer);
+    };
+  }, [key, preview]);
+  if (state.ok) return <Notice>{state.message ?? "요청을 접수했어요."}</Notice>;
+  const label = LABEL[kind];
+  const unit = (item: OrderItemView) => Math.round(item.paid_amount / item.quantity);
+  const refund = key && quote?.key === key ? quote.value : null;
   const row = "ez:py-2.5";
   return (
     <form data-slot="claim-form" action={submit} className={form}>
@@ -110,14 +133,26 @@ export function ClaimForm({
       <Field label="자세한 사유">
         <TextArea name="reason" required minLength={2} maxLength={500} value={reason} onChange={(e) => setReason(e.target.value)} />
       </Field>
-      {kind !== "exchange" && chosen.length > 0 && (
-        <div className="ez:rounded-md ez:bg-surface-alt ez:p-4">
+      {refund && (
+        <div className="ez:grid ez:gap-3 ez:rounded-md ez:bg-surface-alt ez:p-4">
           <SummaryRows
-            rows={[
-              { label: "상품 금액", value: amount },
-              ...(fee > 0 ? [{ label: "반품 배송비 (단순 변심)", value: fee, minus: true }] : []),
-            ]}
+            rows={shown([
+              { label: "상품 금액", value: refund.item_amount },
+              { label: "배송비", value: refund.delivery_fee },
+              { label: "반품 배송비 (단순 변심)", value: refund.return_fee, minus: true },
+              { label: "쿠폰 할인 차감", value: refund.coupon_clawback, minus: true },
+              { label: "최초 배송비", value: refund.shipping_charge, minus: true },
+            ])}
+            total={{ label: "환불 예정 금액", value: refund.cash }}
           />
+          {(refund.points > 0 || refund.point_clawback > 0) && (
+            <SummaryRows
+              rows={shown([
+                { label: "적립금 복원", value: refund.points },
+                { label: "반품 적립 회수", value: refund.point_clawback, minus: true },
+              ])}
+            />
+          )}
         </div>
       )}
       {state.error && <Notice tone="error">{state.error}</Notice>}

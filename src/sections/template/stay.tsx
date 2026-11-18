@@ -6,7 +6,7 @@ import { Icon } from "../../components/icon";
 import { cn } from "../../utils/cn";
 import { chip, countSup, figure, focusRing, pointTag, sectionTitle, textLink } from "../../utils/styles";
 import { Bar, BlankButton, Block, Pairs, Pic, Rows, Split, Title } from "../kit";
-import type { Room } from "./data";
+import { roomLeft, SOLD_OUT_TODAY, type Room } from "./data";
 
 type SearchData = SectionProps<"search_bar">["data"] & Partial<Pick<SectionProps<"booking_strip">["data"], "check_in" | "check_out" | "guests" | "price">>;
 
@@ -157,7 +157,7 @@ export function HouseRules({ data, variant }: SectionProps<"house_rules">) {
 }
 
 function RoomRow({ room, i }: { room: Room | null; i: number }) {
-  const out = room?.left === 0;
+  const { out, text } = roomLeft(room);
   const body = (
     <>
       <span className={cn(figure, "ez:text-site-section ez:max-lg:hidden")}>{room ? String(i + 1).padStart(2, "0") : null}</span>
@@ -167,10 +167,10 @@ function RoomRow({ room, i }: { room: Room | null; i: number }) {
       </span>
       <span className="ez:flex ez:flex-col ez:gap-5 ez:lg:pl-6">
         <span className="ez:flex ez:flex-col ez:gap-2">
-          {room && room.left != null && room.left > 0 && room.left <= 3 && (
+          {text && (
             <span className={pointTag}>
               <span aria-hidden="true" className="ez:size-1.25 ez:rounded-full ez:bg-primary" />
-              {room.left}객실 남음
+              {text}
             </span>
           )}
           <span className="ez:text-site-page-sm ez:font-light ez:tracking-[-0.035em] ez:lg:text-site-name">{room ? room.name : <Bar />}</span>
@@ -185,7 +185,7 @@ function RoomRow({ room, i }: { room: Room | null; i: number }) {
       </span>
       <span className="ez:flex ez:items-end ez:justify-between ez:gap-4 ez:lg:flex-col ez:lg:text-right">
         <span className="ez:flex ez:flex-col ez:lg:items-end">
-          <span className={cn("ez:text-site-heading ez:font-medium ez:tabular-nums", out && "ez:text-muted")}>{room ? (out ? "오늘 마감" : (room.amount ?? room.price)) : <Bar size="short" />}</span>
+          <span className={cn("ez:text-site-heading ez:font-medium ez:tabular-nums", out && "ez:text-muted")}>{room ? (out ? SOLD_OUT_TODAY : (room.amount ?? room.price)) : <Bar size="short" />}</span>
           {room?.unit && !out && <span className="ez:text-site-small ez:text-muted">{room.unit}</span>}
         </span>
         <span className={cn(textLink, "ez:text-site-small")}>객실 보기</span>
@@ -218,8 +218,7 @@ function GalleryRooms({ title, rooms }: { title?: string | null; rooms: Room[] }
 }
 
 function RoomCard({ room, i }: { room: Room | null; i: number }) {
-  const out = room?.left === 0;
-  const few = room?.left != null && room.left > 0 && room.left <= 3;
+  const { out, text } = roomLeft(room);
   const body = (
     <>
       <span className="ez:relative ez:block">
@@ -230,8 +229,8 @@ function RoomCard({ room, i }: { room: Room | null; i: number }) {
         <span className="ez:text-site-heading">{room ? room.name : <Bar />}</span>
         <span className="ez:text-site-small ez:text-muted">{room ? room.specs.join(" · ") : <Bar size="long" />}</span>
         <span className="ez:mt-auto ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-3">
-          <span className={pointTag}>{few ? `${room.left}객실 남음` : null}</span>
-          <span className={cn("ez:text-site-item ez:tabular-nums", out && "ez:text-muted")}>{room ? (out ? "오늘 마감" : room.price) : <Bar size="short" />}</span>
+          <span className={pointTag}>{text}</span>
+          <span className={cn("ez:text-site-item ez:tabular-nums", out && "ez:text-muted")}>{room ? (out ? SOLD_OUT_TODAY : room.price) : <Bar size="short" />}</span>
         </span>
       </span>
     </>
@@ -266,8 +265,7 @@ export function RoomList({ data, variant }: SectionProps<"room_list">) {
 type BoxData = SectionProps<"room_box">["data"] & { rooms?: Room[]; price?: string | null };
 
 function BoxRow({ room, name }: { room?: Room; name: string | null }) {
-  const out = room?.left === 0;
-  const few = room?.left != null && room.left > 0 && room.left <= 3;
+  const { out, text } = roomLeft(room);
   const body = (
     <>
       <span className="ez:flex ez:min-w-0 ez:flex-col ez:gap-1">
@@ -277,8 +275,8 @@ function BoxRow({ room, name }: { room?: Room; name: string | null }) {
       </span>
       {room && (
         <span className="ez:flex ez:shrink-0 ez:flex-col ez:items-end ez:gap-1 ez:text-right">
-          <span className={cn("ez:text-site-item ez:tabular-nums", out && "ez:text-muted")}>{out ? "오늘 마감" : room.price}</span>
-          {few && <span className={pointTag}>{room.left}객실 남음</span>}
+          <span className={cn("ez:text-site-item ez:tabular-nums", out && "ez:text-muted")}>{out ? SOLD_OUT_TODAY : room.price}</span>
+          {text && <span className={pointTag}>{text}</span>}
         </span>
       )}
     </>

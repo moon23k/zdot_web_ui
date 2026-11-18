@@ -20,6 +20,14 @@ export type ClassCard = { id: string; name: string; image?: string | null; chips
 
 export type Room = { id: string; name: string; image?: string | null; specs: string[]; price: string; amount?: string; unit?: string; left?: number | null; href?: string; sample?: boolean };
 
+export const SOLD_OUT_TODAY = "오늘 마감";
+
+export function roomLeft(room: Room | null | undefined): { out: boolean; few: boolean; text: string | null } {
+  const left = room?.left;
+  const few = left != null && left > 0 && left <= 3;
+  return { out: left === 0, few, text: few ? `${left}객실 남음` : null };
+}
+
 export type Case = { id: string; title: string; image?: string | null; meta?: string; scope?: string; href?: string };
 
 export type Review = { rating: number; body: string; name: string; date?: string; product?: string | null };

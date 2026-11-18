@@ -209,6 +209,18 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+.ez-order__confirm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.ez-order__confirm > p {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.ez-order__claim {
+  width: 100%;
+}
 @media (prefers-reduced-motion: reduce) {
   .ez-root * {
     transition: none !important;

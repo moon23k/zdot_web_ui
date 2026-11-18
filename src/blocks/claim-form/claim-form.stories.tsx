@@ -12,6 +12,7 @@ export default meta;
 const preview = async () => ({
   item_amount: 38000,
   delivery_fee: 0,
+  withheld_back: 0,
   return_fee: 3000,
   coupon_clawback: 0,
   shipping_charge: 3000,

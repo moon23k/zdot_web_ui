@@ -138,7 +138,7 @@ export function ClaimForm({
           <SummaryRows
             rows={shown([
               { label: "상품 금액", value: refund.item_amount },
-              { label: "배송비", value: refund.delivery_fee },
+              { label: "배송비", value: refund.delivery_fee + refund.withheld_back },
               { label: "반품 배송비 (단순 변심)", value: refund.return_fee, minus: true },
               { label: "쿠폰 할인 차감", value: refund.coupon_clawback, minus: true },
               { label: "최초 배송비", value: refund.shipping_charge, minus: true },

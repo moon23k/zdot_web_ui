@@ -224,8 +224,8 @@ describe("ClaimForm", () => {
     const vase = { ...item, id: "v", product_name: "꽃병", quantity: 3, returned_quantity: 1, paid_amount: 10000, refunded_amount: 3333, non_returnable: false };
     const preview = vi.fn(async ({ fault }: { fault: string }) =>
       fault === "customer"
-        ? { item_amount: 6667, delivery_fee: 0, return_fee: 3000, coupon_clawback: 1000, shipping_charge: 0, cash: 2667, points: 500, point_clawback: 0 }
-        : { item_amount: 6667, delivery_fee: 0, return_fee: 0, coupon_clawback: 0, shipping_charge: 0, cash: 6667, points: 0, point_clawback: 0 },
+        ? { item_amount: 6667, delivery_fee: 0, withheld_back: 0, return_fee: 3000, coupon_clawback: 1000, shipping_charge: 0, cash: 2667, points: 500, point_clawback: 0 }
+        : { item_amount: 6667, delivery_fee: 0, withheld_back: 0, return_fee: 0, coupon_clawback: 0, shipping_charge: 0, cash: 6667, points: 0, point_clawback: 0 },
     );
     render(<ClaimForm kind="return" items={[vase]} preview={preview} action={async () => ({})} />);
     await userEvent.click(screen.getByRole("radio", { name: "단순 변심" }));

@@ -77,6 +77,7 @@ export interface Schemas {
   ClaimPreviewOut: {
     item_amount: number;
     delivery_fee: number;
+    withheld_back: number;
     return_fee: number;
     coupon_clawback: number;
     shipping_charge: number;

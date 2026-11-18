@@ -34,6 +34,7 @@
     "dev:css": "tailwindcss -i src/styles/index.css -o dist/styles.css --watch=always",
     "test": "vitest run",
     "sync:contracts": "tsx scripts/sync-contracts.ts",
+    "check:contracts": "tsx scripts/sync-contracts.ts --check",
     "check:consumer": "scripts/check-consumer.sh",
     "lint": "eslint",
     "release": "npm run build && changeset publish",

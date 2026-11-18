@@ -1,61 +1,15 @@
 import { readFileSync, writeFileSync } from "node:fs";
+import { CONTRACT_COPY, CONTRACT_SOURCE, contractCopy } from "./contract-copy";
 
-const SOURCE = process.env.ZDOT_CONTRACTS ?? new URL("../../EZPG/contracts/types/generated/api.d.ts", import.meta.url).pathname;
-const ROOTS = [
-  "OrderOut",
-  "OrderSummary",
-  "CartOut",
-  "CustomerProduct",
-  "CustomerProductSummary",
-  "AddressOut",
-  "ReviewOut",
-  "ClaimOut",
-  "ClaimPreviewOut",
-  "CustomerProvider",
-  "PublicReviewOut",
-  "ProductReviewsOut",
-];
+const { body, count } = contractCopy(readFileSync(CONTRACT_SOURCE, "utf8"));
 
-const text = readFileSync(SOURCE, "utf8");
-const start = text.indexOf("    schemas: {\n");
-const lines = text.slice(start).split("\n").slice(1);
-const blocks = new Map<string, string>();
-for (let i = 0; i < lines.length; i++) {
-  const head = /^ {8}(\w+): (.*)$/.exec(lines[i]);
-  if (!head) {
-    if (/^ {4}\};?$/.test(lines[i])) break;
-    continue;
+if (process.argv.includes("--check")) {
+  if (readFileSync(CONTRACT_COPY, "utf8") !== body) {
+    console.error("src/types/contract.ts 가 계약(api.d.ts)과 다릅니다. EZPG 에서 npm run ui:sync 로 다시 만드세요.");
+    process.exit(1);
   }
-  const body = [lines[i]];
-  if (head[2] === "{") while (!/^ {8}\};$/.test(lines[i])) body.push(lines[++i]);
-  blocks.set(head[1], body.join("\n"));
+  console.log(`contract.ts 일치 (${count} schemas)`);
+} else {
+  writeFileSync(CONTRACT_COPY, body);
+  console.log(`${count} schemas`);
 }
-
-const picked = new Set<string>();
-const visit = (name: string) => {
-  if (picked.has(name)) return;
-  const block = blocks.get(name);
-  if (!block) throw new Error(`schema ${name} not found in ${SOURCE}`);
-  picked.add(name);
-  for (const [, ref] of block.matchAll(/components\["schemas"\]\["(\w+)"\]/g)) visit(ref);
-};
-ROOTS.forEach(visit);
-
-const body = [...picked]
-  .sort()
-  .map((name) =>
-    blocks
-      .get(name)!
-      .replace(/^\s*\/\*\*.*\*\/\n/gm, "")
-      .replace(/^\s*\/\*\*[\s\S]*?\*\/\n/gm, "")
-      .replace(/components\["schemas"\]\["(\w+)"\]/g, 'Schemas["$1"]')
-      .replace(/^ {12}/gm, "    ")
-      .replace(/^ {8}/gm, "  "),
-  )
-  .join("\n");
-
-writeFileSync(
-  new URL("../src/types/contract.ts", import.meta.url),
-  `export interface Schemas {\n${body}\n}\n`,
-);
-console.log(`${picked.size} schemas`);

@@ -14,7 +14,7 @@ export type OverlayProps = {
   closeButton?: boolean;
 };
 
-const surface = "ez:box-border ez:bg-surface ez:text-fg ez:font-body ez:break-keep ez:shadow-xl";
+export const overlaySurface = "ez:box-border ez:bg-surface ez:text-fg ez:font-body ez:break-keep ez:shadow-xl";
 
 export function OverlayFrame({
   open,
@@ -33,7 +33,7 @@ export function OverlayFrame({
         <DialogPrimitive.Content
           data-slot={slot}
           {...(description ? {} : { "aria-describedby": undefined })}
-          className={cn(surface, "ez:fixed ez:z-50 ez:grid ez:gap-4 ez:focus:outline-none", className)}
+          className={cn(overlaySurface, "ez:fixed ez:z-50 ez:grid ez:gap-4 ez:focus:outline-none", className)}
         >
           <div className="ez:flex ez:items-start ez:justify-between ez:gap-3">
             <div className="ez:grid ez:gap-1">

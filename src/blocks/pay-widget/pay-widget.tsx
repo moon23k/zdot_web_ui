@@ -5,6 +5,7 @@ import { Button } from "../../components/button";
 import { won } from "../../utils/format";
 import { Notice } from "../parts/notice";
 import { Status } from "../parts/status";
+import { loadScript } from "../../utils/script";
 
 type Widgets = {
   setAmount: (amount: { currency: "KRW"; value: number }) => Promise<void>;
@@ -20,14 +21,7 @@ type TossWindow = Window & {
 const SDK = "https://js.tosspayments.com/v2/standard";
 
 function loadSdk(): Promise<void> {
-  return new Promise((resolve, reject) => {
-    if ((window as TossWindow).TossPayments) return resolve();
-    const tag = document.createElement("script");
-    tag.src = SDK;
-    tag.onload = () => resolve();
-    tag.onerror = () => reject(new Error("sdk"));
-    document.head.appendChild(tag);
-  });
+  return loadScript(SDK, () => Boolean((window as TossWindow).TossPayments));
 }
 
 export type PayRequest = {

@@ -32,3 +32,16 @@ export function sectionTitle(title: string | null | undefined, fallback: string)
 export function footerMark(name: string): string {
   return /[ㄱ-ㆎ가-힣]/.test(name) ? "ez:font-body ez:font-light ez:text-site-figure-lg ez:tracking-[-0.03em]" : `${figure} ez:text-site-display-md`;
 }
+
+const PC_COLS: Record<number, string> = {
+  1: "ez:md:grid-cols-1",
+  2: "ez:md:grid-cols-2",
+  3: "ez:md:grid-cols-3",
+  4: "ez:md:grid-cols-4",
+  5: "ez:md:grid-cols-5",
+  6: "ez:md:grid-cols-6",
+};
+
+export function pcCols(pc: number, count: number): string {
+  return PC_COLS[Math.max(1, Math.min(pc, count))];
+}

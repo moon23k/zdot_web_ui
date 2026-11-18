@@ -1,5 +1,5 @@
 import { ButtonLink } from "../../components/button";
-import { StarRow } from "../../sections/template/common";
+import { StarRow } from "../../components/star-row";
 import { kstDate } from "../../utils/format";
 import { countSup, figure } from "../../utils/styles";
 import { lineList } from "../parts/line-item";

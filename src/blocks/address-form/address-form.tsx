@@ -5,6 +5,7 @@ import { Button } from "../../components/button";
 import { Field, Input } from "../../components/field";
 import { cn } from "../../utils/cn";
 import { fieldset, legend } from "../parts/choice";
+import { loadScript } from "../../utils/script";
 
 type Picked = { zonecode: string; roadAddress: string };
 
@@ -15,15 +16,8 @@ type PostcodeWindow = Window & {
 const SCRIPT = "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
 const MOCK: Picked = { zonecode: "06236", roadAddress: "서울 강남구 테헤란로 152" };
 
-function loadScript(): Promise<void> {
-  return new Promise((resolve, reject) => {
-    if ((window as PostcodeWindow).daum?.Postcode) return resolve();
-    const tag = document.createElement("script");
-    tag.src = SCRIPT;
-    tag.onload = () => resolve();
-    tag.onerror = () => reject(new Error("postcode"));
-    document.head.appendChild(tag);
-  });
+function loadPostcode(): Promise<void> {
+  return loadScript(SCRIPT, () => Boolean((window as PostcodeWindow).daum?.Postcode));
 }
 
 export type AddressValue = {
@@ -57,7 +51,7 @@ export function AddressForm({
   const search = async () => {
     if (mock) return apply(MOCK);
     try {
-      await loadScript();
+      await loadPostcode();
       const daum = (window as PostcodeWindow).daum;
       if (daum) new daum.Postcode({ oncomplete: apply }).open();
     } catch {

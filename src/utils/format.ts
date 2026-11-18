@@ -18,6 +18,10 @@ export function won(value: number): string {
   return `${value.toLocaleString("ko-KR")}원`;
 }
 
+export function discountRate(list: number, sale: number): number {
+  return list > sale ? Math.floor(((list - sale) / list) * 100) : 0;
+}
+
 export function kstDate(value: string | null | undefined): string {
   if (!value) return "";
   return DATE.format(new Date(value));

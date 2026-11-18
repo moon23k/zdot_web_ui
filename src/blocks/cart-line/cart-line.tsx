@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { Photo } from "../../components/photo";
 import type { CartLineData as Line } from "../../types";
 import { cn } from "../../utils/cn";
-import { won } from "../../utils/format";
+import { discountRate, won } from "../../utils/format";
 import { focusRing } from "../../utils/styles";
 import { Status } from "../parts/status";
 
@@ -28,7 +28,7 @@ export function CartLine({
 }) {
   const available = line.sellable && line.enough_stock;
   const listTotal = line.list_price * line.quantity;
-  const discount = listTotal > line.line_total ? Math.floor(((listTotal - line.line_total) / listTotal) * 100) : 0;
+  const discount = discountRate(listTotal, line.line_total);
   return (
     <li
       data-slot="cart-line"

@@ -6,7 +6,8 @@ import type { SectionProps } from "../../renderer/registry";
 import { cn } from "../../utils/cn";
 import { countSup, figure, focusRing, textLink } from "../../utils/styles";
 import type { Case, TemplateSectionData } from "./data";
-import { Bar, BlankButton, BlankPrice, Chips, Pic, pcCols } from "../kit";
+import { Bar, BlankButton, BlankPrice, Chips, Pic } from "../kit";
+import { pcCols } from "../../utils/styles";
 
 export function PriceTiers({ data }: SectionProps<"price_tiers">) {
   const items = data.items ?? [];

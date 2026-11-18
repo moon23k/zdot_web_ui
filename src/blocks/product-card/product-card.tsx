@@ -3,7 +3,7 @@ import { Badge } from "../../components/badge";
 import { Photo } from "../../components/photo";
 import type { ProductSummary } from "../../types";
 import { cn } from "../../utils/cn";
-import { won } from "../../utils/format";
+import { discountRate, won } from "../../utils/format";
 import { focusRing, pointTag } from "../../utils/styles";
 
 export function ProductCard({
@@ -19,7 +19,7 @@ export function ProductCard({
   tone?: number;
   rank?: number;
 }) {
-  const sale = product.list_price > product.sale_price ? Math.floor(((product.list_price - product.sale_price) / product.list_price) * 100) : 0;
+  const sale = discountRate(product.list_price, product.sale_price);
   const tag = product.sold_out ? "품절" : sale > 0 ? `${sale}%` : null;
   return (
     <NextLink

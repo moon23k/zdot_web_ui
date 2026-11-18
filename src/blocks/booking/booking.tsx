@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
 import { pointTag } from "../../utils/styles";
+import { STAR_PATH } from "../../components/star-row";
 
 export function BookingFrame({ action, main, card }: { action: string; main: ReactNode; card: ReactNode }) {
   return (
@@ -57,7 +58,7 @@ export function BookingHead({ tag, title, rating, chips, facts }: { tag?: string
           {rating && rating.count > 0 && (
             <a href="#reviews" className="ez:flex ez:items-center ez:gap-2 ez:pb-2 ez:text-site-small ez:text-fg ez:no-underline">
               <svg viewBox="0 0 24 24" aria-hidden="true" className="ez:size-3.25 ez:text-primary">
-                <path fill="currentColor" d="M12 3.8l2.5 5.2 5.7.8-4.1 4 1 5.6-5.1-2.7-5.1 2.7 1-5.6-4.1-4 5.7-.8z" />
+                <path fill="currentColor" d={STAR_PATH} />
               </svg>
               <span className="ez:font-medium ez:tabular-nums">{rating.average.toFixed(1)}</span>
               <span className="ez:text-muted">

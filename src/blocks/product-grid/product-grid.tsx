@@ -2,7 +2,7 @@ import { EmptyState } from "../../components/empty-state";
 import type { ProductSummary } from "../../types";
 import { ProductCard } from "../product-card";
 import type { GridSpec } from "../../templates/types";
-import { pcCols } from "../../sections/kit";
+import { pcCols } from "../../utils/styles";
 import { cn } from "../../utils/cn";
 import { ButtonLink } from "../../components/button";
 import { emptyAction, ProductsIcon } from "../parts/empty-icons";

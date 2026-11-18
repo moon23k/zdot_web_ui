@@ -8,9 +8,9 @@ import { Photo } from "../../components/photo";
 import { Quantity } from "../../components/quantity";
 import { Sheet } from "../../components/sheet";
 import type { FormAction, FormState, ProductDetail } from "../../types";
-import { StarRow } from "../../sections/template/common";
+import { StarRow } from "../../components/star-row";
 import { cn } from "../../utils/cn";
-import { won } from "../../utils/format";
+import { discountRate, won } from "../../utils/format";
 import { chip, pointTag } from "../../utils/styles";
 import { Notice } from "../parts/notice";
 import { Status } from "../parts/status";
@@ -57,7 +57,7 @@ export function BuyBox({
   const from = new Set(prices).size > 1 ? Math.min(...prices) : null;
   const options = product.variants.length > 1;
   const base = Math.min(...(prices.length ? prices : [unit]));
-  const sale = from === null && product.list_price > unit ? Math.floor(((product.list_price - unit) / product.list_price) * 100) : 0;
+  const sale = from === null ? discountRate(product.list_price, unit) : 0;
   return (
     <form data-slot="buy-box" action={add} className="ez:grid ez:gap-7 ez:text-fg">
       <div className="ez:grid ez:gap-3">

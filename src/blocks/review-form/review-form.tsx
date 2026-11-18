@@ -4,7 +4,7 @@ import { useActionState, useState } from "react";
 import { Button } from "../../components/button";
 import { Field, TextArea } from "../../components/field";
 import { Photo } from "../../components/photo";
-import { STAR_PATH } from "../../sections/template/common";
+import { STAR_PATH } from "../../components/star-row";
 import type { FormAction, FormState } from "../../types";
 import { cn } from "../../utils/cn";
 import { fieldset, legend } from "../parts/choice";

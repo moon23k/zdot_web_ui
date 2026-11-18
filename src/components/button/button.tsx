@@ -5,6 +5,8 @@ import type { ButtonSize, ButtonVariant } from "../../theme/contract";
 import { cn } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
 
+const quiet = "ez:bg-transparent ez:border-site-edge ez:text-fg ez:font-medium ez:hover:border-muted";
+
 export const buttonVariants = cva(
   [
     "ez:inline-flex ez:items-center ez:justify-center ez:gap-2.5 ez:box-border ez:m-0 ez:whitespace-nowrap",
@@ -17,9 +19,9 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         primary: "ez:bg-point-soft ez:text-primary ez:font-medium ez:hover:border-primary",
-        secondary: "ez:bg-transparent ez:border-site-edge ez:text-fg ez:font-medium ez:hover:border-muted",
+        secondary: quiet,
         ghost: "ez:bg-transparent ez:text-fg ez:font-medium ez:hover:bg-surface-alt",
-        outline: "ez:bg-transparent ez:border-site-edge ez:text-fg ez:font-medium ez:hover:border-muted",
+        outline: quiet,
         danger: "ez:bg-danger ez:text-on-danger ez:hover:bg-danger/90",
       } satisfies Record<ButtonVariant, string>,
       size: {

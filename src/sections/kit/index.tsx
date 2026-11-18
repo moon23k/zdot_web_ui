@@ -2,7 +2,7 @@ import NextLink from "next/link";
 import { Children, type ReactNode } from "react";
 import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
-import { focusRing } from "../../utils/styles";
+import { focusRing, pcCols } from "../../utils/styles";
 
 export { Bar, BlankButton, BlankPrice, BlankStars, Lines } from "./blank";
 
@@ -156,19 +156,6 @@ export function Card({ href, children, className }: { href?: string; children: R
       {children}
     </NextLink>
   );
-}
-
-const PC_COLS: Record<number, string> = {
-  1: "ez:md:grid-cols-1",
-  2: "ez:md:grid-cols-2",
-  3: "ez:md:grid-cols-3",
-  4: "ez:md:grid-cols-4",
-  5: "ez:md:grid-cols-5",
-  6: "ez:md:grid-cols-6",
-};
-
-export function pcCols(pc: number, count: number): string {
-  return PC_COLS[Math.max(1, Math.min(pc, count))];
 }
 
 export function Cols({ m = 1, pc = 3, children }: { m?: 1 | 2 | 3; pc?: 3 | 4 | 6; children: ReactNode }) {

@@ -4,12 +4,13 @@ import { Badge } from "../../components/badge";
 import { ButtonLink } from "../../components/button";
 import { countSup, chip, chipOn, figure, focusRing, sectionTitle, textLink } from "../../utils/styles";
 import { cn } from "../../utils/cn";
-import { won } from "../../utils/format";
+import { discountRate, won } from "../../utils/format";
 import { ProductGrid } from "../../blocks/product-grid";
 import type { SectionProps } from "../../renderer/registry";
 import type { GridSpec } from "../../templates/types";
 import type { ProductSummary } from "../../types";
-import { Bar, BlankPrice, Card, Cols, pcCols, Pic, Title } from "../kit";
+import { Bar, BlankPrice, Card, Cols, Pic, Title } from "../kit";
+import { pcCols } from "../../utils/styles";
 
 const SHOWN = 8;
 
@@ -26,7 +27,7 @@ function fullRows(count: number, m: number, pc: number): number {
 }
 
 function discount(p: ProductSummary): number {
-  return p.list_price > p.sale_price ? Math.floor(((p.list_price - p.sale_price) / p.list_price) * 100) : 0;
+  return discountRate(p.list_price, p.sale_price);
 }
 
 function cols(grid: GridSpec | undefined, count: number): string {

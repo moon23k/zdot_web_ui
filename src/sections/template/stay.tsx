@@ -23,7 +23,7 @@ export function SearchBar({ data }: SectionProps<"search_bar">) {
     <section
       data-slot="search-bar"
       data-blank={filled ? undefined : ""}
-      className="ez:relative ez:z-1 ez:grid ez:gap-4 ez:rounded-md ez:border ez:border-solid ez:border-site-line ez:bg-surface ez:p-5 ez:text-fg ez:md:grid-cols-2 ez:lg:flex ez:lg:h-22 ez:lg:items-center ez:lg:rounded-full ez:lg:py-0 ez:lg:pr-3 ez:lg:pl-10 ez:lg:[[data-slot=hero][data-variant=full]+&]:-mt-[calc(var(--ezd-section-gap)+144px)] ez:lg:[[data-slot=hero][data-variant=full]+&]:border-transparent"
+      className="ez:relative ez:z-1 ez:grid ez:gap-4 ez:rounded-md ez:border ez:border-solid ez:border-site-line ez:bg-surface ez:p-5 ez:text-fg ez:md:grid-cols-2 ez:lg:flex ez:lg:h-22 ez:lg:items-center ez:lg:rounded-full ez:lg:py-0 ez:lg:pr-3 ez:lg:pl-10 ez:lg:[[data-slot=hero][data-variant=full]+&]:-mt-[calc(var(--ezd-section-gap)+var(--ezd-hero-search-lift))] ez:lg:[[data-slot=hero][data-variant=full]+&]:border-transparent"
     >
       {cells.map(([label, value], i) => (
         <div key={label} className={cn("ez:flex ez:min-w-0 ez:flex-1 ez:flex-col", i > 0 && "ez:lg:border-0 ez:lg:border-l ez:lg:border-solid ez:lg:border-site-line ez:lg:pl-8")}>

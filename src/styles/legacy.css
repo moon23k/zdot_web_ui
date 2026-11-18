@@ -371,6 +371,9 @@
 .ez-card-select {
   width: 96px;
 }
+.ez-root {
+  --ezd-hero-search-lift: 144px;
+}
 .ez-root:has([data-slot="hero"][data-variant="full"]):has([data-slot="site-header"][data-variant="overlay"]) {
   position: relative;
 }
@@ -398,6 +401,6 @@
 }
 @media (min-width: 1024px) {
   [data-slot="hero"][data-variant="full"]:has(+ [data-slot="search-bar"]) > div:last-child {
-    bottom: 184px;
+    bottom: calc(var(--ezd-hero-search-lift) + 40px);
   }
 }

@@ -1,9 +1,7 @@
-import { ButtonLink } from "../../components/button";
 import { StarRow } from "../../components/star-row";
 import { kstDate } from "../../utils/format";
 import { countSup, figure } from "../../utils/styles";
 import { lineList } from "../parts/line-item";
-import { PencilIcon } from "../parts/empty-icons";
 
 export type ReviewItem = {
   id: string;
@@ -40,14 +38,12 @@ export function ReviewList({
   average,
   items,
   notice,
-  writeHref,
   title = "리뷰",
 }: {
   count?: number;
   average?: number | null;
   items: ReviewItem[];
   notice?: { title?: string; body?: string }[];
-  writeHref?: string;
   title?: string;
 }) {
   const total = Math.max(count, items.length);
@@ -67,12 +63,6 @@ export function ReviewList({
             </div>
           )}
           {items.length > 0 && items.length === total && <Spread items={items} />}
-          {writeHref && (
-            <ButtonLink href={writeHref} variant="outline" size="sm" className="ez:bg-surface">
-              <PencilIcon />
-              리뷰 쓰기
-            </ButtonLink>
-          )}
         </div>
         <div className="ez:grid ez:content-start">
           {!items.length && <p className="ez:m-0 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:py-7 ez:text-muted">아직 {title}가 없어요</p>}

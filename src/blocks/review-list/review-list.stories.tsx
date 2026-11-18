@@ -19,7 +19,7 @@ function DefaultExample() {
 }
 
 function EmptyExample() {
-  return <ReviewList count={0} average={null} items={[]} writeHref="/me/reviews" />;
+  return <ReviewList count={0} average={null} items={[]} />;
 }
 
 export const Default: StoryObj = { render: () => <DefaultExample /> };

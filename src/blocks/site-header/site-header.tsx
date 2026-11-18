@@ -61,7 +61,6 @@ export function SiteHeader({
   signedIn?: boolean;
   variant?: HeaderVariant;
   main?: string;
-  actions?: string[];
   cta?: { label: string; href: string } | null;
   categories?: NavCategory[];
 }) {

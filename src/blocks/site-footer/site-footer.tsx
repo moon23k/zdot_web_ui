@@ -32,8 +32,6 @@ export function SiteFooter({
   closing?: string | null;
   hours?: string | null;
   policyHref?: (key: string) => string;
-  lookupHref?: string;
-  variant?: "full" | "line";
   main?: string;
 }) {
   const guide = GUIDE[main] ?? GUIDE.shop;

@@ -19,7 +19,6 @@ function siteVars(): Record<string, string> {
   return {
     "--ezd-wrap": `${SYSTEM_SITE.gallery}px`,
     "--ezd-wrap-home": `${SYSTEM_SITE.gallery}px`,
-    "--ezd-wrap-narrow": `${SYSTEM_SITE["gallery-narrow"]}px`,
     "--ezd-pad-home": `${SYSTEM_SITE["gallery-pad"]}px`,
     "--ezd-section-gap": `${SYSTEM_SITE["gallery-section"]}px`,
     "--ezd-control": `${SYSTEM_SITE["gallery-control"]}px`,
@@ -69,8 +68,6 @@ export function designVars(design: Design | null | undefined, site?: boolean): R
     "--ezd-tracking": "0em",
     "--ezd-duration": `${d.motion?.duration_ms ?? SYSTEM_DURATION}ms`,
     "--ezd-photo-ratio": ratio,
-    "--ezd-overlay": String(d.imagery?.overlay_opacity ?? 0.35),
-    "--ezd-wrap-narrow": `${SYSTEM_SITE["content-narrow"]}px`,
     "--ezd-control": "48px",
     "--ezd-control-sm": "40px",
     ...(site ? siteVars() : {}),

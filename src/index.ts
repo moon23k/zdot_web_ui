@@ -82,7 +82,7 @@ export {
   type SectionData,
   type SectionKind,
 } from "./renderer/registry";
-export { templates, templateLetters, resolveTemplate } from "./templates";
+export { templates, templateHome, resolveTemplate } from "./templates";
 export type * from "./templates/types";
 export { DetailLayout, detailBlocks, type DetailBlockProps } from "./details";
 export type * from "./details/data";

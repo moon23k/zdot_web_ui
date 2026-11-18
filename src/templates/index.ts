@@ -8,11 +8,10 @@ export type * from "./types";
 
 export const templates: Record<TemplateMain, TemplateDesign[]> = { shop, class: klass, stay, quote };
 
-export function templateLetters(): Record<TemplateMain, TemplateLetter[]> {
-  return Object.fromEntries(Object.entries(templates).map(([main, list]) => [main, list.map((t) => t.letter)])) as Record<
-    TemplateMain,
-    TemplateLetter[]
-  >;
+export function templateHome(): Record<TemplateMain, Partial<Record<TemplateLetter, string[]>>> {
+  return Object.fromEntries(
+    Object.entries(templates).map(([main, list]) => [main, Object.fromEntries(list.map((t) => [t.letter, t.home.map((slot) => slot.kind)]))]),
+  ) as Record<TemplateMain, Partial<Record<TemplateLetter, string[]>>>;
 }
 
 export function resolveTemplate(main: string | null | undefined, letter: string | null | undefined): TemplateDesign {

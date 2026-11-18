@@ -1,8 +1,7 @@
 import { writeFileSync } from "node:fs";
-import * as registry from "../src/renderer/registry";
-import { templateLetters } from "../src/templates";
+import { sections } from "../src/renderer/registry";
+import { templateHome } from "../src/templates";
 
-const sections = (registry as { sections?: Record<string, unknown> }).sections ?? {};
-const manifest = { kinds: Object.keys(sections).sort(), templates: templateLetters() };
+const manifest = { kinds: Object.keys(sections).sort(), home: templateHome() };
 
 writeFileSync(new URL("../manifest.json", import.meta.url), JSON.stringify(manifest, null, 2) + "\n");

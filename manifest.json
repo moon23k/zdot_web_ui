@@ -36,28 +36,126 @@
     "testimonial",
     "trust_line"
   ],
-  "templates": {
-    "shop": [
-      "a",
-      "b",
-      "c",
-      "d"
-    ],
-    "class": [
-      "a",
-      "b",
-      "c"
-    ],
-    "stay": [
-      "a",
-      "b",
-      "c"
-    ],
-    "quote": [
-      "a",
-      "d",
-      "b",
-      "c"
-    ]
+  "home": {
+    "shop": {
+      "a": [
+        "hero",
+        "product_grid",
+        "category_tiles",
+        "story",
+        "testimonial"
+      ],
+      "b": [
+        "hero",
+        "intro",
+        "product_grid",
+        "photo_band",
+        "story",
+        "faq"
+      ],
+      "c": [
+        "category_menu",
+        "hero",
+        "curation",
+        "product_grid",
+        "store_info",
+        "story",
+        "faq"
+      ],
+      "d": [
+        "intro",
+        "product_grid",
+        "story",
+        "photo_band",
+        "store_info",
+        "faq"
+      ]
+    },
+    "class": {
+      "a": [
+        "hero",
+        "class_schedule",
+        "class_list",
+        "story"
+      ],
+      "b": [
+        "hero",
+        "trust_line",
+        "class_list",
+        "numbers",
+        "process_steps",
+        "reviews",
+        "faq"
+      ],
+      "c": [
+        "hero",
+        "class_schedule",
+        "gates",
+        "story",
+        "faq"
+      ]
+    },
+    "stay": {
+      "a": [
+        "hero",
+        "booking_strip",
+        "room_list",
+        "story",
+        "gallery",
+        "amenities",
+        "house_rules",
+        "pay_plan",
+        "location",
+        "reviews"
+      ],
+      "b": [
+        "hero",
+        "search_bar",
+        "room_list",
+        "reviews",
+        "location"
+      ],
+      "c": [
+        "hero",
+        "intro",
+        "room_box",
+        "amenities",
+        "gallery",
+        "location"
+      ]
+    },
+    "quote": {
+      "a": [
+        "intro",
+        "trust_line",
+        "case_grid",
+        "price_tiers",
+        "process_steps",
+        "reviews",
+        "faq"
+      ],
+      "d": [
+        "hero",
+        "trust_line",
+        "before_after",
+        "case_grid",
+        "process_steps",
+        "reviews"
+      ],
+      "b": [
+        "intro",
+        "trust_line",
+        "package_cards",
+        "process_steps",
+        "reviews",
+        "faq"
+      ],
+      "c": [
+        "hero",
+        "trust_line",
+        "case_cards",
+        "reviews"
+      ]
+    }
   }
 }

@@ -25,11 +25,16 @@ export const ORDER_ACTIONS: Record<string, OrderAction[]> = {
   pending_payment: ["pay", "cancel"],
   paid: ["cancel"],
   preparing: ["request_cancel"],
-  shipped: ["return", "exchange", "complete"],
+  shipped: [],
   delivered: ["return", "exchange", "complete"],
-  completed: ["review"],
+  completed: ["return", "exchange", "review"],
   canceled: [],
 } satisfies Record<OrderStatus, OrderAction[]>;
+
+export function orderActions(order: { status: string; delivered_at?: string | null }): OrderAction[] {
+  const listed = ORDER_ACTIONS[order.status] ?? [];
+  return order.delivered_at ? listed : listed.filter((a) => a !== "return" && a !== "exchange");
+}
 
 export type OrderItemView = Pick<
   Schemas["OrderItemOut"],

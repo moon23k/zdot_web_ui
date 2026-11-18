@@ -31,6 +31,7 @@ export {
   OrderDetail,
   OrderActionBar,
   ORDER_ACTIONS,
+  orderActions,
   STATUS_LABEL,
   type OrderAction,
   type OrderView,

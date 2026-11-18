@@ -14,7 +14,6 @@ export type SiteContext = {
   categories: Category[];
   faqs: Faq[];
   shipping: Shipping | null;
-  flags?: Record<string, boolean>;
   main?: string;
 };
 

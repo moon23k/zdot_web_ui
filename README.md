@@ -52,8 +52,6 @@ import { SiteRenderer } from "@zdot/web-ui";
 
 ## 개발
 
-화면 확인은 로컬 갤러리 `../zdot_web_ui_gallery`(`npm run dev`, http://localhost:3200)에서 한다. 갤러리는 이 패키지를 소스에서 바로 읽는다.
-
 
 | 명령 | 하는 일 |
 |---|---|

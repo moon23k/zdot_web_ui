@@ -1,22 +1,22 @@
-# @ezpg/web-ui
+# @zdot/web-ui
 
-EZPG 스토어프론트용 Next.js UI 킷. EZPG가 생성한 상점 사이트(손님 웹)를 그리는 컴포넌트, 커머스 블록, 섹션 렌더러를 담는다.
+ZDOT 스토어프론트용 Next.js UI 킷. ZDOT가 생성한 상점 사이트(손님 웹)를 그리는 컴포넌트, 커머스 블록, 섹션 렌더러를 담는다.
 
 ## 층 구분
 
 | 층 | 위치 | 성격 |
 |---|---|---|
-| theme | `src/theme` | 범용. EZPG Design JSON을 CSS 변수로 바꾼다 |
+| theme | `src/theme` | 범용. ZDOT Design JSON을 CSS 변수로 바꾼다 |
 | components | `src/components` | 범용. Button, Field, Dialog, Sheet 등 |
-| blocks | `src/blocks` | EZPG 종속. 계약 타입, 서버 액션 props, 토스 결제, 한국 법정 표기 |
-| sections · renderer | `src/sections`, `src/renderer` | EZPG 종속. 사이트 JSON의 섹션 kind를 그린다 |
+| blocks | `src/blocks` | ZDOT 종속. 계약 타입, 서버 액션 props, 토스 결제, 한국 법정 표기 |
+| sections · renderer | `src/sections`, `src/renderer` | ZDOT 종속. 사이트 JSON의 섹션 kind를 그린다 |
 
 ## 설치와 연결
 
 ```tsx
 // app/layout.tsx
-import "@ezpg/web-ui/styles.css";
-import { ThemeRoot } from "@ezpg/web-ui";
+import "@zdot/web-ui/styles.css";
+import { ThemeRoot } from "@zdot/web-ui";
 
 <ThemeRoot design={site.frame.design}>{children}</ThemeRoot>;
 ```
@@ -41,7 +41,7 @@ import { ThemeRoot } from "@ezpg/web-ui";
 ## 사이트 렌더링
 
 ```tsx
-import { SiteRenderer } from "@ezpg/web-ui";
+import { SiteRenderer } from "@zdot/web-ui";
 
 <SiteRenderer page={site.pages.home} context={{ products, categories, faqs, shipping, flags }} />;
 ```
@@ -52,16 +52,16 @@ import { SiteRenderer } from "@ezpg/web-ui";
 
 ## 개발
 
-화면 확인은 로컬 갤러리 `../EZPG_WEB_UI_GALLERY`(`npm run dev`, http://localhost:3200)에서 한다. 갤러리는 이 패키지를 소스에서 바로 읽는다.
+화면 확인은 로컬 갤러리 `../zdot_web_ui_gallery`(`npm run dev`, http://localhost:3200)에서 한다. 갤러리는 이 패키지를 소스에서 바로 읽는다.
 
 
 | 명령 | 하는 일 |
 |---|---|
 | `npm run build` | JS(tsdown, 파일 단위) + CSS(Tailwind) 빌드, `dist` 검사 |
 | `npm test` | 단위 테스트 · 조작 테스트(axe 접근성 검사 포함, 명도 대비 제외) |
-| `npm run sync:contracts` | EZPG 계약에서 블록이 쓰는 스키마를 `src/types/contract.ts`로 복사 |
+| `npm run sync:contracts` | ZDOT 계약에서 블록이 쓰는 스키마를 `src/types/contract.ts`로 복사 |
 | `npm run manifest` | registry에서 `manifest.json` 생성 |
-| `npm run check:consumer` | 패키지 빌드 후 ZDOT_WEB · ZDOT_ADMIN 타입체크 · `next build` (EZPG API가 `API_URL`, 기본 8001에 떠 있어야 함) |
+| `npm run check:consumer` | 패키지 빌드 후 ZDOT_WEB · ZDOT_ADMIN 타입체크 · `next build` (ZDOT API가 `API_URL`, 기본 8001에 떠 있어야 함) |
 
 - 클래스 이름을 조립하지 않는다(`` `ez:bg-${x}` `` 금지). Tailwind가 찾지 못한다.
 - `src/styles/legacy.css`는 ZDOT_WEB 앱 코드가 직접 쓰는 옛 `.ez-*` 클래스다. 새 코드는 쓰지 않고, 앱이 컴포넌트로 옮기면 지운다.

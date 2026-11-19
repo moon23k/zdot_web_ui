@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { templates } from "../src/index";
 
-const FRAME = "../EZPG/contracts/rules/frame.json";
+const FRAME = "../zdot/contracts/rules/frame.json";
 
 describe.skipIf(!existsSync(FRAME))("template slots", () => {
   const list = Object.entries(templates).flatMap(([main, items]) => items.map((t) => [t.id, main, t] as const));

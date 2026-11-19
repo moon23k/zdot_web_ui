@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { CONTRACT_COPY, CONTRACT_SOURCE, contractCopy } from "../scripts/contract-copy";
 
 describe.skipIf(!existsSync(CONTRACT_SOURCE))("contract copy", () => {
-  it("src/types/contract.ts 는 계약(api.d.ts)에서 만든 결과와 같다 — 다르면 EZPG 에서 npm run ui:sync", () => {
+  it("src/types/contract.ts 는 계약(api.d.ts)에서 만든 결과와 같다 — 다르면 ZDOT 에서 npm run ui:sync", () => {
     expect(readFileSync(CONTRACT_COPY, "utf8")).toBe(contractCopy(readFileSync(CONTRACT_SOURCE, "utf8")).body);
   });
 

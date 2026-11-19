@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 
-export const CONTRACT_SOURCE = process.env.ZDOT_CONTRACTS ?? resolve(HERE, "../../EZPG/contracts/types/generated/api.d.ts");
+export const CONTRACT_SOURCE = process.env.ZDOT_CONTRACTS ?? resolve(HERE, "../../zdot/contracts/types/generated/api.d.ts");
 
 export const CONTRACT_COPY = resolve(HERE, "../src/types/contract.ts");
 

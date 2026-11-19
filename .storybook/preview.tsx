@@ -31,7 +31,7 @@ const preview: Preview = {
         title: "테마",
         icon: "paintbrush",
         items: [
-          { value: "zdot", title: "EZPG 기본" },
+          { value: "zdot", title: "ZDOT 기본" },
           { value: "bold-square", title: "bold-square" },
           { value: "hand-pill", title: "hand-pill" },
           { value: "serif-rounded", title: "serif-rounded" },

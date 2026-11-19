@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { Button } from "../../components/button";
 import { Field, TextArea } from "../../components/field";
 import { Photo } from "../../components/photo";
@@ -29,9 +29,16 @@ export function ReviewForm({
   const [state, submit, pending] = useActionState<FormState, FormData>(action, {});
   const [rating, setRating] = useState(0);
   const [body, setBody] = useState("");
+  const box = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    const typed = box.current?.querySelector("textarea")?.value;
+    const picked = box.current?.querySelector<HTMLInputElement>('input[name="rating"]:checked')?.value;
+    if (typed) setBody(typed);
+    if (picked) setRating(Number(picked));
+  }, []);
   if (state.ok) return <Notice>{productName} {word}를 남겼어요.</Notice>;
   return (
-    <form data-slot="review-form" action={submit} className={form}>
+    <form ref={box} data-slot="review-form" action={submit} className={form}>
       <input type="hidden" name="order_item_id" value={orderItemId} />
       <div className="ez:flex ez:items-center ez:gap-3">
         {imageSrc !== undefined && <Photo src={imageSrc} alt="" sizes="40px" className="ez:w-10 ez:shrink-0 ez:aspect-[4/5]" />}
@@ -52,7 +59,7 @@ export function ReviewForm({
                 n <= rating ? "ez:text-primary" : "ez:text-site-field",
               )}
             >
-              <input type="radio" name="rating" value={n} required checked={rating === n} onChange={() => setRating(n)} className="ez:sr-only" />
+              <input type="radio" name="rating" value={n} required onChange={() => setRating(n)} className="ez:sr-only" />
               <span className="ez:sr-only">{n}점</span>
               <svg viewBox="0 0 24 24" aria-hidden="true" className="ez:size-8">
                 <path fill="currentColor" d={STAR_PATH} />
@@ -62,7 +69,7 @@ export function ReviewForm({
         </div>
       </fieldset>
       <Field label={word} hint={`5자 이상 · ${body.length.toLocaleString("ko-KR")} / 2,000`}>
-        <TextArea name="body" required minLength={5} maxLength={2000} value={body} onChange={(e) => setBody(e.target.value)} />
+        <TextArea name="body" required minLength={5} maxLength={2000} onChange={(e) => setBody(e.target.value)} />
       </Field>
       {state.error && <Notice tone="error">{state.error}</Notice>}
       <Button type="submit" block disabled={pending || !rating || body.trim().length < 5}>

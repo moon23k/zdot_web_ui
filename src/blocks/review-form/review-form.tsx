@@ -59,7 +59,7 @@ export function ReviewForm({
                 n <= rating ? "ez:text-primary" : "ez:text-site-field",
               )}
             >
-              <input type="radio" name="rating" value={n} required onChange={() => setRating(n)} className="ez:sr-only" />
+              <input type="radio" name="rating" value={n} required checked={rating === n} onChange={() => setRating(n)} className="ez:sr-only" />
               <span className="ez:sr-only">{n}점</span>
               <svg viewBox="0 0 24 24" aria-hidden="true" className="ez:size-8">
                 <path fill="currentColor" d={STAR_PATH} />
@@ -69,7 +69,7 @@ export function ReviewForm({
         </div>
       </fieldset>
       <Field label={word} hint={`5자 이상 · ${body.length.toLocaleString("ko-KR")} / 2,000`}>
-        <TextArea name="body" required minLength={5} maxLength={2000} onChange={(e) => setBody(e.target.value)} />
+        <TextArea name="body" required minLength={5} maxLength={2000} value={body} onChange={(e) => setBody(e.target.value)} />
       </Field>
       {state.error && <Notice tone="error">{state.error}</Notice>}
       <Button type="submit" block disabled={pending || !rating || body.trim().length < 5}>

@@ -103,6 +103,25 @@ describe("blank scope", () => {
     expect(el.querySelector("h1")).toBeNull();
   });
 
+  it("fills a category tile with its cover and keeps the tile without one", () => {
+    const categories = [
+      { id: "c1", name: "과일청", product_count: 3, cover_url: "https://img.test/c1.png" },
+      { id: "c2", name: "잼", product_count: 2, cover_url: null },
+    ];
+    const { container } = render(
+      <SiteRenderer page={{ sections: [{ kind: "category_tiles", data: {} }], arranged: true }} context={{ ...context, categories }} template={resolveTemplate("shop", "a")} />,
+    );
+    const el = container.querySelector('[data-slot="category-tiles"]') as HTMLElement;
+    expect(el).not.toHaveAttribute("data-blank");
+    const photos = [...el.querySelectorAll('[data-slot="photo"]')];
+    expect(photos).toHaveLength(2);
+    expect(photos[0]).not.toHaveAttribute("data-empty");
+    expect(photos[0]!.querySelector("img")?.getAttribute("src")).toContain(encodeURIComponent("https://img.test/c1.png"));
+    expect(photos[1]).toHaveAttribute("data-empty");
+    expect(photos[1]!.querySelector("img")).toBeNull();
+    expect(el.querySelector('a[href="/products?category=c1"]')).toHaveTextContent("과일청");
+  });
+
   it("leaves a partner arranged page alone", () => {
     expect(page("stay", "a", true).root.children).toHaveLength(0);
   });

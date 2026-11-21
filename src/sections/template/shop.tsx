@@ -43,7 +43,7 @@ function GalleryTiles({ items }: { items: (Tile & { count?: number | null })[] }
 export function CategoryTiles({ data, context }: SectionProps<"category_tiles">) {
   const items: (Tile & { count?: number | null })[] = data.items?.length
     ? data.items
-    : context.categories.map((c) => ({ title: c.name, href: `/products?category=${c.id}`, count: c.product_count }));
+    : context.categories.map((c) => ({ title: c.name, image: c.cover_url, href: `/products?category=${c.id}`, count: c.product_count }));
   return <GalleryTiles items={items} />;
 }
 

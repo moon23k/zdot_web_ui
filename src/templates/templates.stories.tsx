@@ -66,10 +66,22 @@ function shopNodes(): { nodes: Record<string, React.ReactNode>; data: DetailData
 
 type Banner = string | { title: string; sub: string };
 
-function Page({ main, letter, banner, design }: { main: TemplateMain; letter: string; banner?: Banner; design?: Design }) {
+const coverContext: SiteContext = {
+  ...context,
+  categories: [
+    { id: "c1", name: "과일청", product_count: 6, cover_url: "/sample/p1.jpg" },
+    { id: "c2", name: "잼", product_count: 4, cover_url: "/sample/p2.jpg" },
+    { id: "c3", name: "선물 세트", product_count: 2, cover_url: null },
+  ],
+};
+
+function Page({ main, letter, banner, design, covers }: { main: TemplateMain; letter: string; banner?: Banner; design?: Design; covers?: boolean }) {
   const t = resolveTemplate(main, letter);
   const hero = typeof banner === "string" ? { title: banner } : banner;
-  const sections = homeSections[main].map((s) => (hero && s.kind === "hero" ? { ...s, data: { ...s.data, ...hero } } : s));
+  const sections = homeSections[main]
+    .map((s) => (hero && s.kind === "hero" ? { ...s, data: { ...s.data, ...hero } } : s))
+    .map((s) => (covers && s.kind === "category_tiles" ? { ...s, data: {} } : s));
+  const site = covers ? coverContext : context;
   const shop = main === "shop" ? shopNodes() : null;
   const data = shop?.data ?? detailData[main];
   return (
@@ -77,7 +89,7 @@ function Page({ main, letter, banner, design }: { main: TemplateMain; letter: st
       <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
         <SiteHeader name="스토어 이름" variant={t.header} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
         <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:gap-section ez:px-page ez:py-8">
-          <SiteRenderer page={{ sections }} context={context} template={t} />
+          <SiteRenderer page={{ sections }} context={site} template={t} />
           <hr className="ez:my-4 ez:border-0 ez:border-t ez:border-solid ez:border-primary-border" />
           <DetailLayout slots={t.detail} data={data} nodes={shop?.nodes} />
         </main>
@@ -109,6 +121,7 @@ const story = (main: TemplateMain, letter: string, name: string, banner?: Banner
 });
 
 export const S1 = story("shop", "a", "쇼핑몰 · S1 테두리 칸 편집형");
+export const S1Covers: StoryObj = { name: "쇼핑몰 · S1 분류 대표 사진", render: () => <Page main="shop" letter="a" covers /> };
 export const S2 = story("shop", "b", "쇼핑몰 · S2 소수 상품 쇼케이스형");
 export const S3 = story("shop", "c", "쇼핑몰 · S3 기획 묶음 · 매장형");
 export const S3Palette = story("shop", "c", "쇼핑몰 · S3 브랜드 키트", { title: "겨울 선물 모음", sub: "자몽청과 유자청을 한 상자에 담았어요" }, paletteDesign);

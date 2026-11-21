@@ -12,7 +12,6 @@ export const stay: TemplateDesign[] = [
       { kind: "hero", variant: "stay" },
       { kind: "booking_strip", variant: "gallery" },
       { kind: "room_list", variant: "gallery" },
-      { kind: "story", variant: "gallery" },
       { kind: "gallery", variant: "gallery" },
       { kind: "amenities", variant: "gallery" },
       { kind: "house_rules", variant: "gallery" },
@@ -59,7 +58,6 @@ export const stay: TemplateDesign[] = [
     header: "band",
     home: [
       { kind: "hero", variant: "text" },
-      { kind: "intro" },
       { kind: "room_box" },
       { kind: "amenities", variant: "grid" },
       { kind: "gallery" },

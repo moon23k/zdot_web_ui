@@ -4,7 +4,7 @@ import type { SectionProps } from "../../renderer/registry";
 import NextLink from "next/link";
 import { Icon } from "../../components/icon";
 import { cn } from "../../utils/cn";
-import { chip, countSup, figure, focusRing, pointTag, sectionTitle, textLink } from "../../utils/styles";
+import { chip, countSup, figure, focusRing, pointTag, textLink } from "../../utils/styles";
 import { Bar, BlankButton, Block, Pairs, Pic, Rows, Split, Title } from "../kit";
 import { roomLeft, SOLD_OUT_TODAY, type Room } from "./data";
 
@@ -82,7 +82,7 @@ export function Amenities({ data, variant }: SectionProps<"amenities">) {
   const items = data.items ?? [];
   if (variant === "gallery") {
     return (
-      <Split slot="amenities" id="amenities" title={data.title ?? "편의 시설"} blank={!items.length}>
+      <Split slot="amenities" id="amenities" title="편의 시설" blank={!items.length}>
         <ul className="ez:m-0 ez:grid ez:list-none ez:gap-x-6 ez:p-0 ez:md:grid-cols-3">
           {(items.length ? items : [null, null, null]).map((it, i) => (
             <li key={it?.name ?? i} className="ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:py-4.5">
@@ -97,7 +97,7 @@ export function Amenities({ data, variant }: SectionProps<"amenities">) {
   const empty = !items.length;
   return (
     <section data-slot="amenities" id="amenities" data-blank={empty ? "" : undefined} className="ez:grid ez:gap-6 ez:text-fg ez:lg:grid-cols-[4fr_8fr]">
-      <h2 className="ez:m-0 ez:text-site-section">{data.title ?? "편의시설"}</h2>
+      <h2 className="ez:m-0 ez:text-site-section">편의시설</h2>
       <ul className="ez:m-0 ez:grid ez:min-w-0 ez:list-none ez:grid-cols-2 ez:gap-x-6 ez:p-0 ez:md:grid-cols-4">
         {(empty ? [null, null, null, null] : items).map((it, i) => (
           <li key={it?.name ?? i} className="ez:flex ez:flex-col ez:gap-1.5 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:py-5">
@@ -201,11 +201,11 @@ function RoomRow({ room, i }: { room: Room | null; i: number }) {
   );
 }
 
-function GalleryRooms({ title, rooms }: { title?: string | null; rooms: Room[] }) {
+function GalleryRooms({ rooms }: { rooms: Room[] }) {
   return (
     <section data-slot="room-list" data-variant="gallery" id="rooms" data-blank={rooms.length ? undefined : ""} className="ez:grid ez:gap-8 ez:text-fg ez:lg:gap-12">
       <h2 className="ez:m-0 ez:text-site-section">
-        {sectionTitle(title, "객실")}
+        객실
         {rooms.length > 0 && <span className={countSup}>{rooms.length}</span>}
       </h2>
       <div className="ez:grid">
@@ -246,11 +246,11 @@ function RoomCard({ room, i }: { room: Room | null; i: number }) {
 
 export function RoomList({ data, variant }: SectionProps<"room_list">) {
   const rooms = data.rooms ?? [];
-  if (variant === "gallery") return <GalleryRooms title={data.title} rooms={rooms} />;
+  if (variant === "gallery") return <GalleryRooms rooms={rooms} />;
   return (
     <section data-slot="room-list" id="rooms" data-blank={rooms.length ? undefined : ""} className="ez:grid ez:gap-8 ez:text-fg">
       <h2 className="ez:m-0 ez:text-site-section">
-        {sectionTitle(data.title, "객실")}
+        객실
         {rooms.length > 0 && <span className={countSup}>{rooms.length}</span>}
       </h2>
       <div className="ez:grid ez:grid-cols-1 ez:gap-x-gutter ez:gap-y-14 ez:sm:grid-cols-2 ez:lg:grid-cols-3">
@@ -301,7 +301,7 @@ export function RoomBox({ data }: SectionProps<"room_box">) {
         <Pic src={d.image ?? rooms[0]?.image} ratio={1.2} tone={0} />
         <div className="ez:flex ez:min-w-0 ez:flex-col ez:lg:pl-14">
           <h2 className="ez:m-0 ez:mb-4 ez:text-site-section">
-            {sectionTitle(d.title, "객실")}
+            객실
             {!empty && <span className={countSup}>{names.length}</span>}
           </h2>
           {(empty ? [null, null, null] : names).map((name, i) => (

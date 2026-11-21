@@ -1,6 +1,6 @@
 export type TemplateMain = "shop" | "class" | "stay" | "quote";
 
-export type TemplateLetter = "a" | "b" | "c" | "d";
+export type TemplateLetter = "a" | "b" | "c";
 
 export type SurfaceTone = "white" | "paper" | "cream" | "warm" | "mist" | "gallery";
 

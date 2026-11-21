@@ -8,7 +8,6 @@ const designs: [TemplateMain, string][] = [
   ["shop", "a"],
   ["shop", "b"],
   ["shop", "c"],
-  ["shop", "d"],
   ["class", "a"],
   ["class", "b"],
   ["class", "c"],
@@ -18,7 +17,6 @@ const designs: [TemplateMain, string][] = [
   ["quote", "a"],
   ["quote", "b"],
   ["quote", "c"],
-  ["quote", "d"],
 ];
 
 function page(main: TemplateMain, letter: string, arranged = false) {
@@ -63,15 +61,46 @@ describe.each(designs)("blank %s %s", (main, letter) => {
 });
 
 describe("blank scope", () => {
-  it("keeps a photo-only full hero blank", () => {
-    const { container } = render(
-      <SiteRenderer page={{ sections: [{ kind: "hero", data: { image: "https://img.test/a.jpg" } }], arranged: true }} context={context} template={resolveTemplate("shop", "b")} />,
-    );
-    const hero = container.querySelector('[data-slot="hero"][data-variant="full"]');
-    expect(hero).toHaveAttribute("data-blank");
-    expect(hero?.querySelector("h1")).toBeNull();
-    expect(hero?.querySelector("a")).toBeNull();
-    expect(hero?.querySelector('[data-slot="blank-bar"]')).not.toBeNull();
+  const hero = (main: TemplateMain, letter: string, data: Record<string, unknown>) =>
+    render(<SiteRenderer page={{ sections: [{ kind: "hero", data }], arranged: true }} context={context} template={resolveTemplate(main, letter)} />).container.querySelector(
+      '[data-slot="hero"]',
+    ) as HTMLElement;
+
+  it("draws a photo-only full hero as a photo, not as a blank", () => {
+    const el = hero("shop", "b", { image: "https://img.test/a.jpg" });
+    expect(el).toHaveAttribute("data-variant", "full");
+    expect(el).not.toHaveAttribute("data-blank");
+    expect(el.querySelector("h1")).toBeNull();
+    expect(el.querySelector("a")).toBeNull();
+    expect(el.querySelector('[data-slot="blank-bar"]')).toBeNull();
+    expect(el.querySelector('[class*="linear-gradient"]')).toBeNull();
+  });
+
+  it("marks a hero blank only when it has neither a title nor a photo", () => {
+    expect(hero("class", "a", {})).toHaveAttribute("data-blank");
+    expect(hero("class", "a", { image: "https://img.test/a.jpg" })).not.toHaveAttribute("data-blank");
+    expect(hero("class", "b", { title: "겨울 정규반 모집" })).not.toHaveAttribute("data-blank");
+  });
+
+  it("keeps the product chip and fixed links without a title", () => {
+    const products = [{ id: "p1", name: "자몽청", sale_price: 18000, cover_url: "https://img.test/p.jpg" }];
+    expect(hero("shop", "a", { image: "https://img.test/a.jpg", products }).querySelector('a[href="/products/p1"]')).not.toBeNull();
+    expect(hero("quote", "c", { image: "https://img.test/a.jpg", products }).querySelector('a[href="/products/p1"]')).not.toBeNull();
+    expect([...hero("class", "a", { image: "https://img.test/a.jpg" }).querySelectorAll("a")].map((a) => a.textContent)).toEqual(["일정 보기", "클래스 전체"]);
+  });
+
+  it("uses a fixed button label for a partner banner", () => {
+    const el = hero("class", "b", { title: "겨울 정규반 모집", image: "https://img.test/a.jpg" });
+    expect(el.querySelector("h1")).toHaveTextContent("겨울 정규반 모집");
+    expect(el.querySelector("a")).toHaveTextContent("클래스 보기");
+  });
+
+  it("puts the stay facts first when there is no title", () => {
+    const facts = [{ label: "체크인 · 체크아웃", value: "15:00 · 11:00" }];
+    const el = hero("stay", "c", { facts });
+    expect(el).not.toHaveAttribute("data-blank");
+    expect(el).toHaveTextContent("15:00 · 11:00");
+    expect(el.querySelector("h1")).toBeNull();
   });
 
   it("leaves a partner arranged page alone", () => {

@@ -29,24 +29,27 @@ const sessions = [
 
 export const homeSections: Record<TemplateMain, Section[]> = {
   shop: [
-    s("hero", { title: "계절을 담은 과일청", sub: "매주 들어오는 과일로 소량만 만듭니다.", button: "둘러보기", href: "/products" }),
-    s("intro", { title: "작은 공방의 세 가지 그릇", body: "한 사람이 빚고 굽고 포장합니다.", button: "상품 보기", href: "/products" }),
+    s("hero", {
+      image: "/sample/hero.jpg",
+      products: [
+        { id: "p1", name: "자몽청 500ml", sale_price: 18000, cover_url: "/sample/p1.jpg" },
+        { id: "p2", name: "유자청 500ml", sale_price: 18000, cover_url: "/sample/p2.jpg" },
+      ],
+    }),
     s("category_menu", {}),
-    s("product_grid", { title: "베스트", lines: {} }),
-    s("photo_band", { title: "한 병에 담은 계절" }),
+    s("product_grid", {}),
+    s("photo_band", {}),
     s("category_tiles", { items: [{ title: "과일청", href: "#" }, { title: "잼", href: "#" }, { title: "선물 세트", href: "#" }] }),
-    s("curation", { title: "기획", items: [{ title: "가벼운 선물", href: "#" }, { title: "겨울 식탁", href: "#" }, { title: "혼자의 아침", href: "#" }, { title: "손님 초대", href: "#" }] }),
+    s("curation", { items: [{ title: "가벼운 선물", href: "#" }, { title: "겨울 식탁", href: "#" }, { title: "혼자의 아침", href: "#" }, { title: "손님 초대", href: "#" }] }),
     s("store_info", { title: "서촌 쇼룸", address: "서울 종로구 자하문로 12", hours: "화–일 12:00–19:00", phone: "02-000-0000" }),
-    s("story", { title: "우리 이야기", body: ["쌓아 두고 파는 일이 싫어서, 한 달에 팔 만큼만 만듭니다.", "남은 재료는 다음 달 소품으로 다시 만들어요."] }),
     s("testimonial", { quote: "선물했더니 어디서 샀냐는 말을 세 번 들었어요.", name: "김*희 · 자몽청" }),
     s("faq", {}),
   ],
   class: [
-    s("hero", { title: "도자 공방 물레 수업", sub: "흙을 처음 만져도 괜찮아요.", button: "수업 보기", href: "#" }),
+    s("hero", { image: "/sample/hero.jpg", facts: [{ label: "후기 243", value: "4.9" }] }),
     s("trust_line", { items: ["평점 4.9", "후기 243", "수강생 3,200명"] }),
-    s("class_schedule", { title: "이번 달 수업", sessions }),
+    s("class_schedule", { sessions }),
     s("class_list", {
-      title: "클래스",
       classes: [
         { id: "k1", name: "물레 입문", chips: ["3시간", "입문"], price: "85,000원 · 1인", next: "다음 수업 11월 9일", href: "#" },
         { id: "k2", name: "핸드빌딩 원데이", chips: ["2시간", "입문"], price: "65,000원 · 1인", next: "다음 수업 11월 10일", href: "#" },
@@ -56,16 +59,19 @@ export const homeSections: Record<TemplateMain, Section[]> = {
     s("numbers", { items: [{ value: "2018", label: "개업" }, { value: "3,200", label: "수강생" }, { value: "4.9", label: "평점" }] }),
     s("process_steps", { steps: ["예약", "수업", "굽기", "수령"] }),
     s("gates", { items: [{ title: "원데이", href: "#" }, { title: "정규반", href: "#" }, { title: "단체 문의", href: "#" }] }),
-    s("story", { title: "공방 소개", body: ["주 1회 정규반과 주말 원데이를 엽니다."] }),
     s("reviews", reviews),
     s("faq", {}),
   ],
   stay: [
-    s("hero", { title: "바다 앞 독채", sub: "하루 한 팀만 받습니다.", button: "예약하기", href: "#" }),
+    s("hero", {
+      image: "/sample/hero.jpg",
+      facts: [
+        { label: "위치", value: "제주 서귀포시 안덕면" },
+        { label: "체크인 · 체크아웃", value: "15:00 · 11:00" },
+      ],
+    }),
     s("booking_strip", { price: "1박 206,000원부터", href: "#" }),
     s("search_bar", {}),
-    s("intro", { title: "정원이 있는 한옥", body: "사랑채 · 안채 · 별채 세 채를 빌려 드립니다." }),
-    s("story", { title: "숙소 소개", body: ["창을 열면 바로 바다가 보이는 이층 독채입니다."] }),
     s("gallery", { images: ["", "", ""] }),
     s("room_list", {
       rooms: [
@@ -74,7 +80,7 @@ export const homeSections: Record<TemplateMain, Section[]> = {
         { id: "r3", name: "패밀리 룸", specs: ["4~6인", "45㎡", "퀸 2"], price: "1박 240,000원부터", href: "#" },
       ],
     }),
-    s("room_box", { title: "객실", body: "마당을 가운데 둔 세 채", names: ["사랑채", "안채", "별채"], href: "#" }),
+    s("room_box", { names: ["사랑채", "안채", "별채"], href: "#" }),
     s("amenities", {
       items: [
         { name: "와이파이", group: "기본" },
@@ -91,12 +97,10 @@ export const homeSections: Record<TemplateMain, Section[]> = {
     s("reviews", reviews),
   ],
   quote: [
-    s("hero", { title: "우리 집 맞춤 시공", sub: "실측부터 마감까지 한 팀이 맡습니다.", button: "견적 보기", href: "/quote" }),
-    s("intro", { title: "사진으로 말하는 스튜디오", body: "제품 · 공간 · 브랜드 촬영", button: "견적 받기", href: "/quote" }),
+    s("hero", { image: "/sample/hero.jpg", products: [{ id: "q1", name: "작가 1명 본식", sale_price: 490000, cover_url: "/sample/q1.jpg" }] }),
+    s("intro", { images: ["/sample/case-1.jpg", "/sample/case-2.jpg"] }),
     s("trust_line", { items: ["평점 4.9", "후기 86", "작업 320건"] }),
-    s("before_after", {}),
     s("case_grid", {
-      title: "작업 사례",
       categories: ["전체", "주거", "상업", "부분"],
       cases: [
         { id: "c1", title: "성수 카페", meta: "상업 · 40평", href: "#" },
@@ -106,7 +110,6 @@ export const homeSections: Record<TemplateMain, Section[]> = {
       ],
     }),
     s("case_cards", {
-      title: "프로젝트",
       categories: ["전체", "광고", "인터뷰", "행사"],
       cases: [
         { id: "p1", title: "브랜드 필름", meta: "광고 · 2025 · 의뢰처", scope: "기획 · 촬영 · 편집 · 6주", href: "#" },

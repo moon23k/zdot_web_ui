@@ -23,17 +23,26 @@ function place(sections: Section[], template: TemplateDesign, arranged = false):
   return template.home.map((slot) => ({ ...(byKind.get(slot.kind) ?? { kind: slot.kind, data: {} }), variant: slot.variant, grid: slot.grid }));
 }
 
+function titled(placed: Placed[]): boolean {
+  return placed.some((s) => {
+    const title = s.kind === "hero" ? (s.data as { title?: unknown } | undefined)?.title : null;
+    return typeof title === "string" && title.trim() !== "";
+  });
+}
+
 export function SiteRenderer({ page, context, template }: { page: { sections: Section[]; arranged?: boolean }; context: SiteContext; template: TemplateDesign }) {
   const placed = place(page.sections, template, page.arranged);
   const ctx = { ...context, main: template.main };
-  const lead = !placed.some((s) => s.kind === "hero");
   return (
-    <div data-slot="site-renderer" data-template={template.id} className="ez:grid ez:gap-section ez:text-site-body">
-      {placed.map((section, i) => {
-        if (!isKind(section.kind)) return null;
-        const Component = sections[section.kind] as ComponentType<SectionProps>;
-        return <Component key={`${section.kind}-${i}`} data={section.data ?? {}} context={ctx} variant={section.variant} grid={section.grid} lead={lead} />;
-      })}
-    </div>
+    <>
+      {context.storeName && !titled(placed) && <h1 className="ez:sr-only">{context.storeName}</h1>}
+      <div data-slot="site-renderer" data-template={template.id} className="ez:grid ez:gap-section ez:text-site-body">
+        {placed.map((section, i) => {
+          if (!isKind(section.kind)) return null;
+          const Component = sections[section.kind] as ComponentType<SectionProps>;
+          return <Component key={`${section.kind}-${i}`} data={section.data ?? {}} context={ctx} variant={section.variant} grid={section.grid} />;
+        })}
+      </div>
+    </>
   );
 }

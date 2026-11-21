@@ -2,7 +2,7 @@ import NextLink from "next/link";
 import type { ReactNode } from "react";
 import { Badge } from "../../components/badge";
 import { ButtonLink } from "../../components/button";
-import { countSup, chip, chipOn, figure, focusRing, sectionTitle, textLink } from "../../utils/styles";
+import { countSup, chip, chipOn, figure, focusRing, textLink } from "../../utils/styles";
 import { cn } from "../../utils/cn";
 import { discountRate, won } from "../../utils/format";
 import { ProductGrid } from "../../blocks/product-grid";
@@ -143,10 +143,10 @@ function AllLink() {
   );
 }
 
-export function ProductList({ data, context, grid, variant }: SectionProps<"product_grid">) {
+export function ProductList({ context, grid, variant }: SectionProps<"product_grid">) {
   const products = context.products;
   const fallback = variant === "store" ? "전체 상품" : "신상품";
-  if (!products.length) return <BlankGrid title={sectionTitle(data.title, fallback)} grid={grid} />;
+  if (!products.length) return <BlankGrid title={fallback} grid={grid} />;
   const shown = products.slice(0, fullRows(Math.min(products.length, SHOWN), grid?.m ?? 2, grid?.pc ?? 4));
   const more = products.length > shown.length || products.length >= SHOWN;
   const count = products.length < SHOWN ? products.length : undefined;
@@ -155,7 +155,7 @@ export function ProductList({ data, context, grid, variant }: SectionProps<"prod
     return (
       <section data-slot="product-grid" data-variant="gallery" className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-9">
         <div className="ez:flex ez:items-end ez:justify-between ez:gap-3">
-          <h2 className="ez:m-0 ez:text-site-section">{sectionTitle(data.title, "신상품")}</h2>
+          <h2 className="ez:m-0 ez:text-site-section">신상품</h2>
           <AllLink />
         </div>
         <ProductGrid products={products.slice(0, SHOWN)} eager={4} grid={grid} />
@@ -165,7 +165,7 @@ export function ProductList({ data, context, grid, variant }: SectionProps<"prod
   if (variant === "showcase") {
     return (
       <section data-slot="product-grid" data-variant="showcase" className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-9">
-        <Head title={sectionTitle(data.title, "신상품")} count={count} aside={more ? <AllLink /> : undefined} />
+        <Head title="신상품" count={count} aside={more ? <AllLink /> : undefined} />
         <div className={cols(grid, shown.length)}>
           {shown.map((p, i) => (
             <ShowcaseCard key={p.id} product={p} ratio={ratio} index={i} />
@@ -178,7 +178,7 @@ export function ProductList({ data, context, grid, variant }: SectionProps<"prod
     return (
       <section data-slot="product-grid" data-variant="store" className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-7">
         <Head
-          title={sectionTitle(data.title, "전체 상품")}
+          title="전체 상품"
           count={count}
           aside={
             <nav aria-label="정렬" className="ez:flex ez:gap-2 ez:overflow-x-auto">
@@ -207,7 +207,7 @@ export function ProductList({ data, context, grid, variant }: SectionProps<"prod
   }
   return (
     <section data-slot="product-grid" data-variant="line" className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-9">
-      <Head title={sectionTitle(data.title, "신상품")} count={count} aside={<AllLink />} />
+      <Head title="신상품" count={count} aside={<AllLink />} />
       <ProductGrid products={shown} eager={2} grid={grid} fit />
     </section>
   );

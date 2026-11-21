@@ -26,24 +26,6 @@ export const quote: TemplateDesign[] = [
     ],
   },
   {
-    id: "Q2",
-    main: "quote",
-    letter: "d",
-    name: "시공 견적 계산형",
-    look: { tone: "white", radius: "pill", font: "sans" },
-    header: "cta",
-    cta: "견적 요청",
-    home: [
-      { kind: "hero", variant: "frame" },
-      { kind: "trust_line" },
-      { kind: "before_after" },
-      { kind: "case_grid" },
-      { kind: "process_steps" },
-      { kind: "reviews" },
-    ],
-    detail: [{ kind: "quote_form", variant: "calculator" }],
-  },
-  {
     id: "Q3",
     main: "quote",
     letter: "b",
@@ -52,7 +34,6 @@ export const quote: TemplateDesign[] = [
     header: "cta",
     cta: "견적 요청",
     home: [
-      { kind: "intro", variant: "statement" },
       { kind: "trust_line" },
       { kind: "package_cards" },
       { kind: "process_steps" },

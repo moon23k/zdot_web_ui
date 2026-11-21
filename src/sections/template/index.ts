@@ -1,6 +1,6 @@
 import { ClassList, ClassSchedule, Gates } from "./class";
 import { Gallery, Intro, Location, Numbers, PayPlan, PhotoBand, ProcessSteps, Reviews, Testimonial, TrustLine } from "./common";
-import { BeforeAfter, CaseCards, CaseGrid, PackageCards, PriceTiers } from "./quote";
+import { CaseCards, CaseGrid, PackageCards, PriceTiers } from "./quote";
 import { CategoryTiles, Curation, StoreInfo } from "./shop";
 import { Amenities, BookingStrip, HouseRules, RoomBox, RoomList, SearchBar } from "./stay";
 
@@ -31,7 +31,6 @@ export const templateSections = {
   package_cards: PackageCards,
   case_grid: CaseGrid,
   case_cards: CaseCards,
-  before_after: BeforeAfter,
 };
 
 export { SessionList, SessionRow, SessionStatus } from "./class";

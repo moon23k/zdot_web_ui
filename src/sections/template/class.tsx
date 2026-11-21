@@ -4,7 +4,7 @@ import { ButtonLink } from "../../components/button";
 import { Icon } from "../../components/icon";
 import type { SectionProps } from "../../renderer/registry";
 import { cn } from "../../utils/cn";
-import { countSup, figure, focusRing, sectionTitle } from "../../utils/styles";
+import { countSup, figure, focusRing } from "../../utils/styles";
 import { Bar, BlankButton, BlankPrice, Pic, statusText } from "../kit";
 import type { ClassCard, Session, Tile } from "./data";
 
@@ -147,7 +147,7 @@ export function ClassSchedule({ data, variant }: SectionProps<"class_schedule">)
   if (variant === "gallery") {
     return (
       <section data-slot="class-schedule" data-variant="gallery" id="schedule" data-blank={sessions.length ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-8">
-        <h2 className="ez:m-0 ez:text-site-section">{data.title ?? "수업 일정"}</h2>
+        <h2 className="ez:m-0 ez:text-site-section">수업 일정</h2>
         <ul className="ez:m-0 ez:list-none ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:p-0">
           {(sessions.length ? sessions : [null, null, null]).map((s, i) => (
             <GalleryRow key={s?.id ?? i} s={s} i={i} />
@@ -156,7 +156,7 @@ export function ClassSchedule({ data, variant }: SectionProps<"class_schedule">)
       </section>
     );
   }
-  return <Cohorts title={data.title ?? "모집 중인 반"} sessions={sessions} />;
+  return <Cohorts title="모집 중인 반" sessions={sessions} />;
 }
 
 function ClassBox({ c, i }: { c: ClassCard | null; i: number }) {
@@ -207,7 +207,7 @@ export function ClassList({ data, variant }: SectionProps<"class_list">) {
     return (
       <section data-slot="class-list" data-variant="gallery" id="classes" data-blank={classes.length ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-9">
         <h2 className="ez:m-0 ez:text-site-section">
-          {sectionTitle(data.title, "클래스")}
+          클래스
           {classes.length > 0 && <span className={countSup}>{classes.length}</span>}
         </h2>
         <div className="ez:grid ez:gap-x-gutter ez:gap-y-10 ez:md:grid-cols-3 ez:lg:gap-y-14">
@@ -240,7 +240,7 @@ export function ClassList({ data, variant }: SectionProps<"class_list">) {
   }
   return (
     <section data-slot="class-list" data-variant="cards" id="classes" data-blank={classes.length ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-8">
-      <Heading count={classes.length}>{sectionTitle(data.title, "클래스")}</Heading>
+      <Heading count={classes.length}>클래스</Heading>
       <div className="ez:grid ez:gap-gutter ez:md:grid-cols-2 ez:lg:grid-cols-3">
         {(classes.length ? classes : [null, null, null]).map((c, i) => (
           <ClassBox key={c?.id ?? i} c={c} i={i} />

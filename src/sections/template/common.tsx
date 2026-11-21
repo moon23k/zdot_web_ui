@@ -1,74 +1,34 @@
-import NextLink from "next/link";
 import type { ReactNode } from "react";
 import { ButtonLink } from "../../components/button";
 import type { SectionProps } from "../../renderer/registry";
 import { Icon } from "../../components/icon";
 import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
-import { countSup, figure, textLink } from "../../utils/styles";
+import { countSup, figure } from "../../utils/styles";
 import { StarRow } from "../../components/star-row";
 import type { Review } from "./data";
-import { Bar, BlankButton, BlankStars, Block, Lines, Pairs, Pic, Split } from "../kit";
+import { Bar, BlankButton, BlankStars, Lines, Pairs, Pic, Split } from "../kit";
 
-export function Intro({ data, lead, variant }: SectionProps<"intro">) {
-  if (variant === "gallery") {
-    const images = data.images ?? [];
-    return (
-      <section data-slot="intro" data-variant="gallery" data-blank={data.title ? undefined : ""} className="ez:grid ez:gap-12 ez:pt-4 ez:text-fg ez:lg:gap-16 ez:lg:pt-14">
-        <div className="ez:grid ez:gap-8 ez:lg:grid-cols-[8fr_4fr] ez:lg:items-end ez:lg:gap-6">
-          {data.title ? (
-            <h1 className="ez:m-0 ez:text-site-page ez:font-light ez:tracking-[-0.04em] ez:text-balance ez:lg:text-site-hero">{data.title}</h1>
-          ) : (
-            <span className="ez:text-site-page ez:lg:text-site-hero">
-              <Bar size="long" />
-            </span>
-          )}
-          <div className="ez:flex ez:flex-col ez:items-start ez:gap-7 ez:lg:pb-3.5">
-            {data.title ? (
-              <ButtonLink href="/quote">
-                견적 요청
-                <Icon name="right" size="sm" />
-              </ButtonLink>
-            ) : (
-              <BlankButton>견적 요청</BlankButton>
-            )}
-          </div>
-        </div>
-        {images.length > 0 && (
-          <div className="ez:grid ez:gap-gutter ez:md:grid-cols-[8fr_4fr] ez:md:items-end">
-            <Pic src={images[0]} tone={0} className="ez:aspect-[4/3] ez:lg:aspect-auto ez:lg:h-140 ez:[&>[data-slot=photo]]:h-full ez:[&>[data-slot=photo]]:aspect-auto" />
-            {images[1] && <Pic src={images[1]} tone={1} className="ez:aspect-[4/3] ez:lg:aspect-auto ez:lg:h-75 ez:[&>[data-slot=photo]]:h-full ez:[&>[data-slot=photo]]:aspect-auto" />}
-          </div>
-        )}
-      </section>
-    );
-  }
-  const statement = variant === "statement";
-  const Heading = lead ? "h1" : "h2";
+export function Intro({ data }: SectionProps<"intro">) {
+  const images = data.images ?? [];
+  const blank = !images.length;
   return (
-    <Block
-      slot="intro"
-      blank={!data.title}
-      className={cn(statement ? "ez:pt-6 ez:lg:pt-14" : "ez:lg:grid-cols-[3fr_9fr] ez:lg:gap-6", lead && !statement && "ez:pt-6")}
-    >
-      {!statement && <span aria-hidden="true" className="ez:max-lg:hidden" />}
-      <div className={cn("ez:grid ez:justify-items-start", statement ? "ez:gap-6" : "ez:gap-10")}>
-        {data.title ? (
-          <Heading className={cn("ez:m-0 ez:max-w-4xl ez:text-left ez:font-light ez:tracking-[-0.035em] ez:text-balance", statement ? "ez:text-site-page ez:lg:text-site-display" : "ez:text-site-page-sm ez:lg:text-site-page")}>
-            {data.title}
-          </Heading>
+    <section data-slot="intro" data-variant="gallery" data-blank={blank ? "" : undefined} className="ez:grid ez:gap-8 ez:pt-4 ez:text-fg ez:lg:gap-10 ez:lg:pt-14">
+      <div className="ez:flex ez:items-start">
+        {blank ? (
+          <BlankButton>견적 요청</BlankButton>
         ) : (
-          <span className="ez:w-full ez:max-w-xl ez:text-site-page-sm ez:lg:text-site-page">
-            <Bar size="long" />
-          </span>
-        )}
-        {data.title && data.button && (
-          <NextLink href={data.href ?? "/products"} className={textLink}>
-            {data.button}
-          </NextLink>
+          <ButtonLink href="/quote">
+            견적 요청
+            <Icon name="right" size="sm" />
+          </ButtonLink>
         )}
       </div>
-    </Block>
+      <div className="ez:grid ez:gap-gutter ez:md:grid-cols-[8fr_4fr] ez:md:items-end">
+        <Pic src={images[0]} tone={0} className="ez:aspect-[4/3] ez:lg:aspect-auto ez:lg:h-140 ez:[&>[data-slot=photo]]:h-full ez:[&>[data-slot=photo]]:aspect-auto" />
+        {(blank || images[1]) && <Pic src={images[1]} tone={1} className="ez:aspect-[4/3] ez:lg:aspect-auto ez:lg:h-75 ez:[&>[data-slot=photo]]:h-full ez:[&>[data-slot=photo]]:aspect-auto" />}
+      </div>
+    </section>
   );
 }
 
@@ -171,7 +131,7 @@ export function ProcessSteps({ data }: SectionProps<"process_steps">) {
   const steps = data.steps ?? [];
   return (
     <section data-slot="process-steps" data-variant="gallery" id="process" data-blank={steps.length ? undefined : ""} className="ez:grid ez:gap-10 ez:text-fg ez:lg:gap-14">
-      <h2 className="ez:m-0 ez:text-site-section">{data.title ?? "진행 과정"}</h2>
+      <h2 className="ez:m-0 ez:text-site-section">진행 과정</h2>
       <ol className="ez:m-0 ez:grid ez:list-none ez:gap-8 ez:p-0 ez:md:auto-cols-fr ez:md:grid-flow-col ez:md:gap-6">
         {(steps.length ? steps : ["", "", "", ""]).map((s, i) => (
           <li key={`${s}-${i}`} className="ez:grid ez:gap-5">
@@ -251,7 +211,7 @@ export function PayPlan({ data }: SectionProps<"pay_plan">) {
   const groups = data.groups ?? [];
   const empty = !rows.length && !groups.length;
   return (
-    <Split slot="pay-plan" id="refund" title={data.title ?? "취소 · 환불 규정"} blank={empty}>
+    <Split slot="pay-plan" id="refund" title="취소 · 환불 규정" blank={empty}>
       <div className="ez:grid ez:gap-8">
         {empty && <Pairs rows={["예약금", "잔금", "취소 규정"].map((label) => ({ label, value: <Bar size="short" /> }))} />}
         {rows.length > 0 && <Pairs rows={rows} accent={full} />}

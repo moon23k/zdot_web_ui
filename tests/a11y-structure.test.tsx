@@ -1,17 +1,25 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-import { DetailLayout, ProductGallery, resolveTemplate, SiteRenderer } from "../src";
+import { DetailLayout, ProductGallery, resolveTemplate, SiteRenderer, templates } from "../src";
 
-const context = { products: [], categories: [], faqs: [], shipping: null };
+const context = { products: [], categories: [], faqs: [], shipping: null, storeName: "온기상점" };
+const designs = Object.values(templates)
+  .flat()
+  .map((t) => [t.main, t.letter] as const);
 
 describe("page structure", () => {
-  it.each([
-    ["shop", "d"],
-    ["quote", "b"],
-  ] as const)("gives the %s %s home a page heading", (main, letter) => {
-    render(<SiteRenderer page={{ sections: [{ kind: "intro", data: { title: "작은 공방의 계절 차" } }] }} context={context} template={resolveTemplate(main, letter)} />);
-    expect(screen.getByRole("heading", { level: 1, name: "작은 공방의 계절 차" })).toBeTruthy();
+  it.each(designs)("names the %s %s home after the store when no section carries a title", (main, letter) => {
+    const photo = { kind: "hero", data: { image: "https://img.test/a.jpg" } };
+    render(<SiteRenderer page={{ sections: [photo, { kind: "intro", data: { images: ["https://img.test/b.jpg"] } }] }} context={context} template={resolveTemplate(main, letter)} />);
+    const headings = screen.getAllByRole("heading", { level: 1 });
+    expect(headings.map((h) => h.textContent)).toEqual(["온기상점"]);
+    expect(headings[0]).toHaveClass("ez:sr-only");
+  });
+
+  it("lets a partner banner title be the only page heading", () => {
+    render(<SiteRenderer page={{ sections: [{ kind: "hero", data: { title: "겨울 정규반 모집", image: "https://img.test/a.jpg" } }] }} context={context} template={resolveTemplate("class", "b")} />);
+    expect(screen.getAllByRole("heading", { level: 1 }).map((h) => h.textContent)).toEqual(["겨울 정규반 모집"]);
   });
 
   it("links info tabs to their panel and moves with arrow keys", async () => {

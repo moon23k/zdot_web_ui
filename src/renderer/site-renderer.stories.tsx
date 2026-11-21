@@ -23,6 +23,7 @@ const context: SiteContext = {
     { id: "f2", question: "선물 포장이 되나요?", answer: "주문서 요청 사항에 적어 주시면 무료로 포장해 드려요." },
   ],
   shipping: { base_fee: 3500, free_threshold: 50000, return_fee: 3500, exchange_fee: 7000, return_days: 7 },
+  storeName: "온기상점",
 };
 
 const sections = site.pages.home.sections as Section[];
@@ -40,7 +41,7 @@ export const Default: StoryObj = { render: () => <Home page={sections} /> };
 export const LongestCopy: StoryObj = {
   render: () => (
     <Home
-      page={sections.map((s) => (s.kind === "hero" ? { ...s, data: { ...s.data, title: longest.heroTitle, sub: longest.heroSubtitle } } : s))}
+      page={sections.map((s) => (s.kind === "hero" ? { ...s, data: { ...s.data, title: longest.heroTitle } } : s))}
       faqs={[{ id: "f1", question: longest.faqQuestion, answer: longest.faqAnswer }]}
     />
   ),

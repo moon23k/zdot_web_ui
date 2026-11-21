@@ -29,7 +29,6 @@ export function SiteFooter({
   business: Business | null;
   hosting: string;
   policies: { key: string; title: string }[];
-  closing?: string | null;
   hours?: string | null;
   policyHref?: (key: string) => string;
   main?: string;

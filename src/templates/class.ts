@@ -12,7 +12,6 @@ export const klass: TemplateDesign[] = [
       { kind: "hero", variant: "class" },
       { kind: "class_schedule", variant: "gallery" },
       { kind: "class_list", variant: "gallery" },
-      { kind: "story", variant: "gallery" },
     ],
     detail: [
       { kind: "class_summary", variant: "banner" },
@@ -62,7 +61,6 @@ export const klass: TemplateDesign[] = [
       { kind: "hero", variant: "split" },
       { kind: "class_schedule", variant: "upcoming" },
       { kind: "gates" },
-      { kind: "story" },
       { kind: "faq" },
     ],
     detail: [

@@ -1,7 +1,6 @@
 {
   "kinds": [
     "amenities",
-    "before_after",
     "booking_strip",
     "case_cards",
     "case_grid",
@@ -29,7 +28,6 @@
     "room_list",
     "search_bar",
     "store_info",
-    "story",
     "testimonial",
     "trust_line"
   ],
@@ -39,15 +37,12 @@
         "hero",
         "product_grid",
         "category_tiles",
-        "story",
         "testimonial"
       ],
       "b": [
         "hero",
-        "intro",
         "product_grid",
         "photo_band",
-        "story",
         "faq"
       ],
       "c": [
@@ -56,15 +51,6 @@
         "curation",
         "product_grid",
         "store_info",
-        "story",
-        "faq"
-      ],
-      "d": [
-        "intro",
-        "product_grid",
-        "story",
-        "photo_band",
-        "store_info",
         "faq"
       ]
     },
@@ -72,8 +58,7 @@
       "a": [
         "hero",
         "class_schedule",
-        "class_list",
-        "story"
+        "class_list"
       ],
       "b": [
         "hero",
@@ -88,7 +73,6 @@
         "hero",
         "class_schedule",
         "gates",
-        "story",
         "faq"
       ]
     },
@@ -97,7 +81,6 @@
         "hero",
         "booking_strip",
         "room_list",
-        "story",
         "gallery",
         "amenities",
         "house_rules",
@@ -114,7 +97,6 @@
       ],
       "c": [
         "hero",
-        "intro",
         "room_box",
         "amenities",
         "gallery",
@@ -131,16 +113,7 @@
         "reviews",
         "faq"
       ],
-      "d": [
-        "hero",
-        "trust_line",
-        "before_after",
-        "case_grid",
-        "process_steps",
-        "reviews"
-      ],
       "b": [
-        "intro",
         "trust_line",
         "package_cards",
         "process_steps",

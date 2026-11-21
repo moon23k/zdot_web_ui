@@ -282,18 +282,18 @@ describe("Calendar", () => {
 describe("SiteRenderer", () => {
   const context = { products: [], categories: [], faqs: [{ id: "f1", question: "주차되나요?", answer: "네" }], shipping: null };
   const sections = [
-    { kind: "process_steps", data: { title: "진행 순서", steps: ["문의", "작업"] } },
-    { kind: "price_tiers", data: { title: "가격", items: [{ label: "기본", value: "10만원" }] } },
+    { kind: "process_steps", data: { steps: ["문의", "작업"] } },
+    { kind: "price_tiers", data: { items: [{ label: "기본", value: "10만원" }] } },
   ];
   const headings = () => screen.getAllByRole("heading").map((h) => h.textContent);
 
   it("follows the template order unless the partner arranged the page", () => {
     const template = resolveTemplate("quote", "a");
     const { unmount } = render(<SiteRenderer page={{ sections }} context={context} template={template} />);
-    expect(headings()).toEqual(["작업", "가격", "진행 순서", "후기", "자주 묻는 질문"]);
+    expect(headings()).toEqual(["작업", "서비스", "진행 과정", "후기", "자주 묻는 질문"]);
     unmount();
     render(<SiteRenderer page={{ sections, arranged: true }} context={context} template={template} />);
-    expect(headings()).toEqual(["진행 순서", "가격"]);
+    expect(headings()).toEqual(["진행 과정", "서비스"]);
   });
 
   it("draws nothing for removed section kinds left in a saved page", () => {

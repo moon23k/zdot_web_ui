@@ -30,6 +30,7 @@ const context: SiteContext = {
     { id: "f2", question: "교환 · 반품은 어떻게 하나요?", answer: "받은 날부터 7일 안에 신청해 주세요." },
   ],
   shipping: null,
+  storeName: "스토어 이름",
 };
 
 function shopNodes(): { nodes: Record<string, React.ReactNode>; data: DetailData } {
@@ -62,8 +63,9 @@ function shopNodes(): { nodes: Record<string, React.ReactNode>; data: DetailData
   };
 }
 
-function Page({ main, letter }: { main: TemplateMain; letter: string }) {
+function Page({ main, letter, banner }: { main: TemplateMain; letter: string; banner?: string }) {
   const t = resolveTemplate(main, letter);
+  const sections = homeSections[main].map((s) => (banner && s.kind === "hero" ? { ...s, data: { ...s.data, title: banner } } : s));
   const shop = main === "shop" ? shopNodes() : null;
   const data = shop?.data ?? detailData[main];
   return (
@@ -71,7 +73,7 @@ function Page({ main, letter }: { main: TemplateMain; letter: string }) {
       <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
         <SiteHeader name="스토어 이름" variant={t.header} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
         <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:gap-section ez:px-page ez:py-8">
-          <SiteRenderer page={{ sections: homeSections[main] }} context={context} template={t} />
+          <SiteRenderer page={{ sections }} context={context} template={t} />
           <hr className="ez:my-4 ez:border-0 ez:border-t ez:border-solid ez:border-primary-border" />
           <DetailLayout slots={t.detail} data={data} nodes={shop?.nodes} />
         </main>
@@ -88,7 +90,7 @@ function BlankPage({ main, letter }: { main: TemplateMain; letter: string }) {
       <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
         <SiteHeader name="스토어 이름" variant={t.header} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
         <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:gap-section ez:px-page ez:py-8">
-          <SiteRenderer page={{ sections: [] }} context={{ products: [], categories: [], faqs: [], shipping: null }} template={t} />
+          <SiteRenderer page={{ sections: [] }} context={{ products: [], categories: [], faqs: [], shipping: null, storeName: "스토어 이름" }} template={t} />
         </main>
       </div>
     </ThemeRoot>
@@ -97,14 +99,13 @@ function BlankPage({ main, letter }: { main: TemplateMain; letter: string }) {
 
 const blank = (main: TemplateMain, letter: string, name: string): StoryObj => ({ name, render: () => <BlankPage main={main} letter={letter} /> });
 
-const story = (main: TemplateMain, letter: string, name: string): StoryObj => ({ name, render: () => <Page main={main} letter={letter} /> });
+const story = (main: TemplateMain, letter: string, name: string, banner?: string): StoryObj => ({ name, render: () => <Page main={main} letter={letter} banner={banner} /> });
 
 export const S1 = story("shop", "a", "쇼핑몰 · S1 테두리 칸 편집형");
 export const S2 = story("shop", "b", "쇼핑몰 · S2 소수 상품 쇼케이스형");
 export const S3 = story("shop", "c", "쇼핑몰 · S3 기획 묶음 · 매장형");
-export const S4 = story("shop", "d", "쇼핑몰 · S4 브랜드 이야기형");
 export const C1 = story("class", "a", "클래스 · C1 일정 먼저형");
-export const C2 = story("class", "b", "클래스 · C2 클래스 카드형");
+export const C2 = story("class", "b", "클래스 · C2 클래스 카드형", "겨울 정규반 모집");
 export const C3 = story("class", "c", "클래스 · C3 정규반 · 과정형");
 export const T1 = story("stay", "a", "숙박 · T1 독채 한 페이지형");
 export const T2 = story("stay", "b", "숙박 · T2 객실 검색 · 카드형");
@@ -140,14 +141,12 @@ export const RoomTerms: StoryObj = {
   ),
 };
 export const Q1 = story("quote", "a", "견적 · Q1 사례 갤러리형");
-export const Q2 = story("quote", "d", "견적 · Q2 시공 견적 계산형");
 export const Q3 = story("quote", "b", "견적 · Q3 패키지 확정가형");
 export const Q4 = story("quote", "c", "견적 · Q4 프로젝트 문의형");
 
 export const S1Blank = blank("shop", "a", "공란 · S1");
 export const S2Blank = blank("shop", "b", "공란 · S2");
 export const S3Blank = blank("shop", "c", "공란 · S3");
-export const S4Blank = blank("shop", "d", "공란 · S4");
 export const C1Blank = blank("class", "a", "공란 · C1");
 export const C2Blank = blank("class", "b", "공란 · C2");
 export const C3Blank = blank("class", "c", "공란 · C3");
@@ -155,6 +154,5 @@ export const T1Blank = blank("stay", "a", "공란 · T1");
 export const T2Blank = blank("stay", "b", "공란 · T2");
 export const T3Blank = blank("stay", "c", "공란 · T3");
 export const Q1Blank = blank("quote", "a", "공란 · Q1");
-export const Q2Blank = blank("quote", "d", "공란 · Q2");
 export const Q3Blank = blank("quote", "b", "공란 · Q3");
 export const Q4Blank = blank("quote", "c", "공란 · Q4");

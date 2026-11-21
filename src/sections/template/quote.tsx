@@ -14,7 +14,7 @@ export function PriceTiers({ data }: SectionProps<"price_tiers">) {
   return (
     <section data-slot="price-tiers" data-variant="gallery" id="services" data-blank={items.length ? undefined : ""} className="ez:mx-[calc(50%-50vw)] ez:bg-surface-alt ez:text-fg">
       <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-8 ez:px-page ez:py-16 ez:lg:grid-cols-[4fr_8fr] ez:lg:gap-6 ez:lg:py-30">
-        <h2 className="ez:m-0 ez:text-site-section">{data.title ?? "서비스"}</h2>
+        <h2 className="ez:m-0 ez:text-site-section">서비스</h2>
         <ol className="ez:m-0 ez:list-none ez:p-0">
           {(items.length ? items : [null, null, null]).map((it, i) => (
             <li key={i} className="ez:grid ez:grid-cols-[40px_1fr_auto] ez:items-baseline ez:gap-6 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:py-7 ez:lg:grid-cols-[56px_1fr_200px]">
@@ -50,7 +50,7 @@ export function PackageCards({ data }: SectionProps<"package_cards">) {
   const shown: (Pack | null)[] = items.length ? items : [null, null, null];
   return (
     <section data-slot="package-cards" id="services" data-blank={items.length ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg">
-      <Head title={data.title ?? "상품 · 가격"}>{items.length > 0 && data.tabs?.length ? <Chips items={data.tabs} /> : null}</Head>
+      <Head title="상품 · 가격">{items.length > 0 && data.tabs?.length ? <Chips items={data.tabs} /> : null}</Head>
       <div className={cn("ez:grid ez:gap-gutter ez:md:items-stretch", pcCols(3, shown.length))}>
         {shown.map((p, i) => (
           <article key={p ? p.name : i} className="ez:flex ez:flex-col ez:overflow-hidden ez:rounded-lg ez:border ez:border-solid ez:border-site-line">
@@ -97,7 +97,7 @@ export function CaseGrid({ data, variant }: SectionProps<"case_grid">) {
       <section data-slot="case-grid" data-variant="gallery" id="work" data-blank={cases.length ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-9">
         <div className="ez:flex ez:items-end ez:justify-between ez:gap-3">
           <h2 className="ez:m-0 ez:text-site-section">
-            {data.title ?? "작업"}
+            작업
             {cases.length > 0 && <span className={countSup}>{cases.length}</span>}
           </h2>
           {cases.length > 3 && (
@@ -135,7 +135,7 @@ export function CaseGrid({ data, variant }: SectionProps<"case_grid">) {
   return (
     <section data-slot="case-grid" id="work" data-blank={cases.length ? undefined : ""} className="ez:mx-[calc(50%-50vw)] ez:bg-surface-alt ez:text-fg">
       <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-8 ez:px-page ez:py-16 ez:lg:py-24">
-        <Head title={data.title ?? "작업 사례"} count={cases.length}>
+        <Head title="작업 사례" count={cases.length}>
           {cases.length > 3 && (
             <NextLink href="/cases" className={cn(textLink, "ez:text-site-small")}>
               전체 보기
@@ -183,7 +183,7 @@ export function CaseCards({ data }: SectionProps<"case_cards">) {
   const shown: (Case | null)[] = cases.length ? cases.slice(0, 4) : [null, null];
   return (
     <section data-slot="case-cards" id="work" data-blank={cases.length ? undefined : ""} className="ez:grid ez:gap-8 ez:text-fg">
-      <Head title={data.title ?? "프로젝트"} count={cases.length}>
+      <Head title="프로젝트" count={cases.length}>
         {cases.length > 0 && data.categories?.length ? <Chips items={data.categories} /> : null}
       </Head>
       <div className="ez:grid ez:gap-x-gutter ez:gap-y-10 ez:md:grid-cols-2 ez:lg:gap-y-14">
@@ -237,36 +237,6 @@ export function CaseCards({ data }: SectionProps<"case_cards">) {
           </ButtonLink>
         </div>
       )}
-    </section>
-  );
-}
-
-export function BeforeAfter({ data }: SectionProps<"before_after">) {
-  const empty = !data.before && !data.after;
-  return (
-    <section data-slot="before-after" data-blank={empty ? "" : undefined} className="ez:grid ez:gap-8 ez:text-fg">
-      <h2 className="ez:m-0 ez:text-site-section">시공 전 · 후</h2>
-      <div className="ez:relative ez:grid ez:grid-cols-2 ez:overflow-hidden ez:rounded-lg">
-        {(
-          [
-            ["전", data.before],
-            ["후", data.after],
-          ] as const
-        ).map(([label, src], i) => (
-          <figure key={label} className="ez:relative ez:m-0">
-            <Pic src={src} tone={i} className={cn("ez:aspect-[4/5] ez:md:aspect-auto ez:md:h-130", cover, "ez:[&>[data-slot=photo]]:rounded-none")} />
-            <figcaption
-              className={cn(
-                "ez:absolute ez:top-5 ez:inline-flex ez:h-8 ez:items-center ez:rounded-full ez:bg-surface ez:px-3.5 ez:text-site-small",
-                i ? "ez:right-5 ez:font-medium ez:text-primary" : "ez:left-5",
-              )}
-            >
-              {label}
-            </figcaption>
-          </figure>
-        ))}
-        <span aria-hidden="true" className="ez:absolute ez:inset-y-0 ez:left-1/2 ez:w-0.5 ez:-translate-x-1/2 ez:bg-surface" />
-      </div>
     </section>
   );
 }

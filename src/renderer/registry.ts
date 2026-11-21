@@ -1,5 +1,4 @@
 import type { ComponentType } from "react";
-import { BrandStory } from "../sections/brand-story";
 import { CategoryMenu } from "../sections/category-menu";
 import { FaqSection } from "../sections/faq";
 import { Hero } from "../sections/hero";
@@ -15,32 +14,29 @@ export type SiteContext = {
   faqs: Faq[];
   shipping: Shipping | null;
   main?: string;
+  storeName?: string;
 };
 
 export type SectionData = {
   hero: {
     title?: string | null;
-    sub?: string | null;
-    button?: string | null;
     href?: string | null;
     image?: string | null;
     images?: string[];
     products?: { id: string; name: string; sale_price?: number; cover_url?: string | null; href?: string }[];
     facts?: { label: string; value: string }[];
   };
-  story: { title?: string | null; body?: string[]; strengths?: { title: string; body: string }[] };
-  product_grid: { title?: string | null; lines?: Record<string, string> };
+  product_grid: Record<string, never>;
   faq: Record<string, never>;
   category_menu: Record<string, never>;
 } & TemplateSectionData;
 
 export type SectionKind = keyof SectionData;
 
-export type SectionProps<K extends SectionKind = SectionKind> = { data: SectionData[K]; context: SiteContext; variant?: string; grid?: GridSpec; lead?: boolean };
+export type SectionProps<K extends SectionKind = SectionKind> = { data: SectionData[K]; context: SiteContext; variant?: string; grid?: GridSpec };
 
 export const sections: { [K in SectionKind]: ComponentType<SectionProps<K>> } = {
   hero: Hero,
-  story: BrandStory,
   product_grid: ProductList,
   faq: FaqSection,
   category_menu: CategoryMenu,

@@ -71,11 +71,10 @@ function Bundle({ items }: { items: (Tile | null)[] }) {
 
 export function Curation({ data }: SectionProps<"curation">) {
   const items = data.items ?? [];
-  const title = data.title ?? "기획 묶음";
   return (
     <section data-slot="curation" data-blank={items.length ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg ez:lg:gap-7">
       <div className="ez:flex ez:items-end ez:justify-between ez:gap-3">
-        <h2 className="ez:m-0 ez:font-display ez:text-site-section">{title}</h2>
+        <h2 className="ez:m-0 ez:font-display ez:text-site-section">기획 묶음</h2>
         {items.length > 0 && (
           <NextLink href="/products" className={cn(textLink, "ez:shrink-0 ez:text-site-small")}>
             전체 보기
@@ -121,19 +120,8 @@ function StoreTitle({ children }: { children: string }) {
   return <h2 className="ez:m-0 ez:font-display ez:text-site-section">{children}</h2>;
 }
 
-export function StoreInfo({ data, variant }: SectionProps<"store_info">) {
+export function StoreInfo({ data }: SectionProps<"store_info">) {
   const empty = !data.address;
-  if (variant === "visit") {
-    return (
-      <section data-slot="store-info" data-variant="visit" data-blank={empty ? "" : undefined} className="ez:grid ez:gap-6 ez:text-fg ez:lg:grid-cols-[4fr_8fr]">
-        <StoreTitle>{data.title ?? "매장"}</StoreTitle>
-        <div className="ez:grid ez:max-w-170 ez:justify-items-stretch ez:gap-7">
-          <Pairs rows={storeRows(data)} />
-          <Directions address={data.address} />
-        </div>
-      </section>
-    );
-  }
   const photo = data.image || empty;
   return (
     <section data-slot="store-info" data-blank={empty ? "" : undefined} className="ez:mx-[calc(50%-50vw)] ez:bg-surface-alt ez:text-fg">

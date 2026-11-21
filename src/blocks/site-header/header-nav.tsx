@@ -21,7 +21,6 @@ const FIXED: Record<string, NavItem[]> = {
   class: [
     { label: "클래스", href: "/classes", match: (path) => path === "/classes" || path.startsWith("/products") },
     { label: "일정", href: "/#schedule", match: never },
-    { label: "공방", href: "/#story", match: never },
     { label: "후기", href: "/#reviews", match: never },
   ],
   quote: [

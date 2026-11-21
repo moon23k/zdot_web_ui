@@ -15,7 +15,6 @@ function DefaultExample() {
       storeName="온기상점"
       business={business}
       hosting="자사닷"
-      closing="10월 3일은 휴무입니다."
       policies={[
         { key: "terms", title: "이용약관" },
         { key: "privacy", title: "개인정보처리방침" },

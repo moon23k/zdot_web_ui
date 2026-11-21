@@ -24,7 +24,19 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
   const pick = products.find((p) => p.cover_url) ?? products[0];
   const facts = data.facts ?? [];
   const mark = (name: string, empty = blank) => ({ "data-slot": "hero", "data-variant": name, "data-blank": empty ? "" : undefined });
-  const heading = (size: string) => <h1 className={cn("ez:m-0 ez:font-light ez:tracking-[-0.04em] ez:text-balance", size)}>{title}</h1>;
+  const sub = title ? data.sub?.trim() || null : null;
+  const heading = (size: string, inverse?: boolean) => {
+    const h1 = <h1 className={cn("ez:m-0 ez:font-light ez:tracking-[-0.04em] ez:text-balance", size)}>{title}</h1>;
+    if (!sub) return h1;
+    return (
+      <div className="ez:grid ez:gap-5">
+        {h1}
+        <p data-slot="hero-sub" className={cn("ez:m-0 ez:max-w-xl", !inverse && "ez:text-muted")}>
+          {sub}
+        </p>
+      </div>
+    );
+  };
   const go = (className?: string, outline?: boolean) => (
     <ButtonLink href={href} variant={outline ? "outline" : undefined} className={className}>
       {button}
@@ -142,7 +154,7 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
           <>
             <span aria-hidden="true" className="ez:absolute ez:inset-0 ez:bg-[linear-gradient(rgb(20_20_18/0.34),rgb(20_20_18/0)_26%,rgb(20_20_18/0)_52%,rgb(20_20_18/0.46))]" />
             <div className="ez:absolute ez:inset-x-0 ez:bottom-10 ez:mx-auto ez:flex ez:max-w-wrap ez:flex-wrap ez:items-end ez:justify-between ez:gap-6 ez:px-page ez:lg:bottom-16">
-              {heading("ez:text-site-page ez:lg:text-site-display")}
+              {heading("ez:text-site-page ez:lg:text-site-display", true)}
               {go("ez:border-[rgb(255_255_255/0.7)] ez:bg-transparent ez:text-[#ffffff] ez:hover:border-[#ffffff]", true)}
             </div>
           </>

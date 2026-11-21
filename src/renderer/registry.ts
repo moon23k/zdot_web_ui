@@ -20,6 +20,7 @@ export type SiteContext = {
 export type SectionData = {
   hero: {
     title?: string | null;
+    sub?: string | null;
     href?: string | null;
     image?: string | null;
     images?: string[];

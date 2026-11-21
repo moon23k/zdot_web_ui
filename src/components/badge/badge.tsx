@@ -8,7 +8,7 @@ const badgeVariants = cva(
   {
     variants: {
       tone: {
-        neutral: "ez:bg-surface-alt ez:text-fg",
+        neutral: "ez:bg-mark ez:text-mark-ink",
         primary: "ez:bg-point-soft ez:text-primary",
         danger: "ez:bg-danger-tint ez:text-danger",
       } satisfies Partial<Record<Tone, string>>,

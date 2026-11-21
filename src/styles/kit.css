@@ -1,0 +1,12 @@
+.ez-root [data-slot="site-footer"] {
+  --ezd-text: var(--ezd-foot-ink);
+  --ezd-muted: var(--ezd-foot-muted);
+  --ezd-primary: var(--ezd-foot-hover);
+  --ez-color-site-faint: var(--ezd-foot-faint);
+  --ez-color-site-edge: var(--ezd-foot-edge);
+  --ez-color-site-line: var(--ezd-foot-rule);
+  background: var(--ezd-foot);
+}
+.ez-root [data-slot="site-footer"] > * {
+  --ez-color-site-line: var(--ezd-foot-line);
+}

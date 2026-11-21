@@ -25,7 +25,10 @@ export type Design = {
       | "surface"
       | "surface_alt"
       | "text"
-      | "text_muted",
+      | "text_muted"
+      | "secondary"
+      | "accent"
+      | "on_accent",
       string
     >
   >;

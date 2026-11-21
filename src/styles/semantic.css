@@ -9,6 +9,8 @@
   --color-fg: var(--ezd-text);
   --color-muted: var(--ezd-muted);
   --color-point-soft: var(--ezd-point-soft);
+  --color-mark: var(--ezd-mark);
+  --color-mark-ink: var(--ezd-mark-ink);
 
   --radius-sm: var(--ezd-radius-sm);
   --radius-md: var(--ezd-radius-md);

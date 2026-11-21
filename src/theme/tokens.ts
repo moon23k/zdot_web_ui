@@ -1,8 +1,9 @@
 import type { TemplateDesign } from "../templates/types";
 import type { Design } from "../types";
+import { kitVars } from "./kit";
 import { SYSTEM_COLOR, SYSTEM_DURATION, SYSTEM_FIGURE_FONT, SYSTEM_FONT, SYSTEM_RADIUS, SYSTEM_SITE, SYSTEM_TONE } from "./system";
 
-const FALLBACK: Required<NonNullable<Design["color"]>> = SYSTEM_COLOR;
+const FALLBACK: typeof SYSTEM_COLOR = SYSTEM_COLOR;
 
 function family(name: string | undefined): string {
   return name ? `"${name}", ${SYSTEM_FONT}` : SYSTEM_FONT;
@@ -70,6 +71,7 @@ export function designVars(design: Design | null | undefined, site?: boolean): R
     "--ezd-photo-ratio": ratio,
     "--ezd-control": "48px",
     "--ezd-control-sm": "40px",
+    ...kitVars(color),
     ...(site ? siteVars() : {}),
   };
 }

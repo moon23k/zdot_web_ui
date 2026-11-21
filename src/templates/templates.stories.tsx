@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { business, productDetail } from "../__stories__/fixtures/commerce";
 import products from "../__stories__/fixtures/products.json";
-import { detailData, homeSections } from "../__stories__/fixtures/templates";
+import { detailData, homeSections, paletteDesign } from "../__stories__/fixtures/templates";
 import { BuyBox } from "../blocks/buy-box";
 import { ProductGrid } from "../blocks/product-grid";
 import { SiteFooter } from "../blocks/site-footer";
@@ -12,6 +12,7 @@ import type { SiteContext } from "../renderer/registry";
 import { SiteRenderer } from "../renderer/site-renderer";
 import { Rows } from "../sections/kit";
 import { ThemeRoot } from "../theme/theme-root";
+import type { Design } from "../types";
 import { resolveTemplate } from "./index";
 import type { TemplateMain } from "./types";
 
@@ -63,13 +64,16 @@ function shopNodes(): { nodes: Record<string, React.ReactNode>; data: DetailData
   };
 }
 
-function Page({ main, letter, banner }: { main: TemplateMain; letter: string; banner?: string }) {
+type Banner = string | { title: string; sub: string };
+
+function Page({ main, letter, banner, design }: { main: TemplateMain; letter: string; banner?: Banner; design?: Design }) {
   const t = resolveTemplate(main, letter);
-  const sections = homeSections[main].map((s) => (banner && s.kind === "hero" ? { ...s, data: { ...s.data, title: banner } } : s));
+  const hero = typeof banner === "string" ? { title: banner } : banner;
+  const sections = homeSections[main].map((s) => (hero && s.kind === "hero" ? { ...s, data: { ...s.data, ...hero } } : s));
   const shop = main === "shop" ? shopNodes() : null;
   const data = shop?.data ?? detailData[main];
   return (
-    <ThemeRoot template={t}>
+    <ThemeRoot design={design} template={t}>
       <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
         <SiteHeader name="스토어 이름" variant={t.header} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
         <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:gap-section ez:px-page ez:py-8">
@@ -99,11 +103,15 @@ function BlankPage({ main, letter }: { main: TemplateMain; letter: string }) {
 
 const blank = (main: TemplateMain, letter: string, name: string): StoryObj => ({ name, render: () => <BlankPage main={main} letter={letter} /> });
 
-const story = (main: TemplateMain, letter: string, name: string, banner?: string): StoryObj => ({ name, render: () => <Page main={main} letter={letter} banner={banner} /> });
+const story = (main: TemplateMain, letter: string, name: string, banner?: Banner, design?: Design): StoryObj => ({
+  name,
+  render: () => <Page main={main} letter={letter} banner={banner} design={design} />,
+});
 
 export const S1 = story("shop", "a", "쇼핑몰 · S1 테두리 칸 편집형");
 export const S2 = story("shop", "b", "쇼핑몰 · S2 소수 상품 쇼케이스형");
 export const S3 = story("shop", "c", "쇼핑몰 · S3 기획 묶음 · 매장형");
+export const S3Palette = story("shop", "c", "쇼핑몰 · S3 브랜드 키트", { title: "겨울 선물 모음", sub: "자몽청과 유자청을 한 상자에 담았어요" }, paletteDesign);
 export const C1 = story("class", "a", "클래스 · C1 일정 먼저형");
 export const C2 = story("class", "b", "클래스 · C2 클래스 카드형", "겨울 정규반 모집");
 export const C3 = story("class", "c", "클래스 · C3 정규반 · 과정형");

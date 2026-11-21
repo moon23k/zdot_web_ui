@@ -1,6 +1,6 @@
 import type { DetailData } from "../../details/data";
 import type { TemplateMain } from "../../templates/types";
-import type { Section } from "../../types";
+import type { Design, Section } from "../../types";
 
 const s = (kind: string, data: Record<string, unknown>): Section => ({ kind, v: 1, data });
 
@@ -26,6 +26,24 @@ const sessions = [
   { id: "s2", date: "11월 16일 토", time: "10:30", name: "물레 입문", length: "3시간", status: "open" as const, href: "#" },
   { id: "s3", date: "11월 23일 토", time: "14:00", name: "핸드빌딩", length: "2시간", status: "full" as const, href: "#" },
 ];
+
+export const paletteDesign: Design = {
+  color: {
+    primary: "#B64C2F",
+    on_primary: "#FFFFFF",
+    primary_hover: "#963E27",
+    primary_tint: "#F7E6D8",
+    primary_border: "#EBC9B9",
+    secondary: "#FACCB6",
+    accent: "#601000",
+    on_accent: "#FFFFFF",
+    surface: "#FDF3E7",
+    surface_alt: "#FCE5D6",
+    text: "#1A0D03",
+    text_muted: "#695E53",
+  },
+  palette: { color: "09-C03", harmony: "tonal" },
+};
 
 export const homeSections: Record<TemplateMain, Section[]> = {
   shop: [

@@ -16,7 +16,7 @@ import { AmenityIcon } from "./icons";
 import { StayNavLinks } from "./nav";
 import { addOnView, roomNotes, ROOMS_HREF, roomView, STAY_TITLE } from "./shared";
 import type { AddOnView, StayFooterProps, StayHeaderProps, StayListProps } from "./types";
-import { SampleMap } from "./map";
+import { MAP_LABEL, SampleMap } from "./map";
 
 const CARD_SIZES = "(max-width: 1024px) 50vw, 320px";
 const CARD_SIZES_WIDE = "(max-width: 1024px) 50vw, 640px";
@@ -590,7 +590,7 @@ export function Location({ data }: SectionProps<"location">) {
       <Head title={STAY_TITLE.location} />
       <div className="ez:grid ez:grid-cols-1 ez:gap-3 ez:md:grid-cols-2 ez:md:gap-4 ez:lg:grid-cols-[17fr_8fr]">
         {!blank && data.href ? (
-          <a href={data.href} target="_blank" rel="noopener" aria-label={STAY_TITLE.map} className={cn(placeTile, "ez:relative ez:overflow-hidden ez:text-fg", focusRing)}>
+          <a href={data.href} target="_blank" rel="noopener" aria-label={MAP_LABEL} className={cn(placeTile, "ez:relative ez:overflow-hidden ez:text-fg", focusRing)}>
             <SampleMap />
             <span className="ez:relative">{pin}</span>
           </a>

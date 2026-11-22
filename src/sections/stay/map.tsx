@@ -4,6 +4,8 @@ const SAMPLE_MAP = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQOD
 
 export const MAP_CREDIT = "© OpenStreetMap";
 
+export const MAP_LABEL = `지도 보기 ${MAP_CREDIT}`;
+
 export function SampleMap({ className }: { className?: string }) {
   return (
     <span data-slot="stay-map" aria-hidden="true" className={cn("ez:absolute ez:inset-0 ez:block ez:bg-cover ez:bg-center", className)} style={{ backgroundImage: `url(${SAMPLE_MAP})` }}>

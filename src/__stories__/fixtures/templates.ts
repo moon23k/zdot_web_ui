@@ -178,6 +178,23 @@ export const placeMenu: MenuGroup[] = [
   { id: "c3", name: "밥·구이", items: [menuItem("m6", "제육볶음", "10,000원", "밥·구이", "/sample/p3.jpg"), menuItem("m7", "비빔밥", "9,500원", "밥·구이"), menuItem("m8", "불고기", "13,000원", "밥·구이")] },
 ];
 
+export const careMenu: MenuGroup[] = [
+  { id: "k1", name: "헤어컷", items: [menuItem("t1", "여자 커트", "25,000원", "헤어컷", "/sample/p1.jpg"), menuItem("t2", "남자 커트", "15,000원", "헤어컷")] },
+  { id: "k2", name: "펌·매직", items: [menuItem("t3", "C컬펌", "120,000원", "펌·매직"), menuItem("t4", "볼륨매직", "150,000원", "펌·매직")] },
+  { id: "k3", name: "염색·케어", items: [menuItem("t5", "뿌리염색", "50,000원", "염색·케어"), menuItem("t6", "클리닉", "40,000원", "염색·케어", "/sample/p2.jpg")] },
+];
+
+export const officeServices: MenuGroup[] = [
+  { id: null, name: null, items: [menuItem("v1", "입주 청소", "400,000원", ""), menuItem("v2", "이사 청소", "350,000원", ""), menuItem("v3", "사무실 청소", "200,000원", ""), menuItem("v4", "줄눈 시공", "150,000원", "")] },
+];
+
+export const officeCompany = [
+  { label: "상호", value: "스토어 이름" },
+  { label: "대표", value: "김대표" },
+  { label: "주소", value: "서울특별시 00구 00로 00" },
+  { label: "전화", value: "02-000-0000" },
+];
+
 export const placeStoreLinks = { naver_booking: "https://booking.naver.com", instagram: "https://instagram.com" };
 
 export const placeInfo = {
@@ -257,6 +274,29 @@ export const homeSections: Record<TemplateMain, Section[]> = {
     s("menu", { groups: placeMenu, image: "/sample/p1.jpg", images: ["/sample/p1.jpg", "/sample/p2.jpg", "/sample/p3.jpg"] }),
     s("store_info", { title: "스토어 이름", ...placeInfo, image: "/sample/p4.jpg" }),
     s("location", { ...placeInfo, image: "/sample/p4.jpg" }),
+    s("faq", {}),
+  ],
+  care: [
+    s("hero", { image: "/sample/hero.jpg", images: ["/sample/p2.jpg", "/sample/p3.jpg"], hours: placeInfo.hours, phone: placeInfo.phone, links: placeInfo.links }),
+    s("intro", { body: placeIntro, image: "/sample/p2.jpg" }),
+    s("menu", { groups: careMenu, image: "/sample/p1.jpg", images: ["/sample/p1.jpg", "/sample/p2.jpg"] }),
+    s("store_info", { title: "스토어 이름", ...placeInfo, image: "/sample/p4.jpg" }),
+    s("location", { ...placeInfo, image: "/sample/p4.jpg" }),
+    s("faq", {}),
+    s("photo_band", { image: "/sample/p3.jpg", images: ["/sample/p3.jpg"] }),
+  ],
+  portfolio: [
+    s("hero", { image: "/sample/hero.jpg", images: ["/sample/p2.jpg"], links: placeInfo.links, phone: placeInfo.phone, hours: placeInfo.hours }),
+    s("case_grid", { cases: quoteCases }),
+    s("intro", { body: placeIntro, image: "/sample/p2.jpg" }),
+    s("store_info", { title: "스토어 이름", ...placeInfo, image: "/sample/p4.jpg" }),
+  ],
+  office: [
+    s("hero", { image: "/sample/hero.jpg", images: ["/sample/p2.jpg"], hours: placeInfo.hours, phone: placeInfo.phone, links: placeInfo.links, cases: quoteCases }),
+    s("case_grid", { cases: quoteCases }),
+    s("intro", { body: placeIntro, image: "/sample/p2.jpg" }),
+    s("menu", { groups: officeServices }),
+    s("store_info", { title: "스토어 이름", ...placeInfo, company: officeCompany, image: "/sample/p4.jpg" }),
     s("faq", {}),
   ],
 };
@@ -382,4 +422,7 @@ export const detailData: Record<TemplateMain, DetailData> = {
     pay,
   },
   place: {},
+  care: {},
+  portfolio: {},
+  office: {},
 };

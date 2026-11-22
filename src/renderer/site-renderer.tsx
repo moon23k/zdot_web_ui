@@ -5,7 +5,7 @@ import { SHOP_DESIGNS } from "../sections/shop";
 import { STAY_DESIGNS } from "../sections/stay";
 import { CLASS_DESIGNS } from "../sections/class";
 import { QUOTE_DESIGNS } from "../sections/quote";
-import { PLACE_DESIGNS } from "../sections/place";
+import { landingDesign } from "../sections/landing";
 import { sections, type SectionProps, type SiteContext } from "./registry";
 
 const isKind = (kind: string): kind is keyof typeof sections => kind in sections;
@@ -28,12 +28,12 @@ function place(sections: Section[], template: TemplateDesign, arranged = false):
   return template.home.map((slot) => ({ ...(byKind.get(slot.kind) ?? { kind: slot.kind, data: {} }), variant: slot.variant, grid: slot.grid }));
 }
 
-function joined(placed: Placed[], join: readonly string[] | undefined): Placed[] {
+function joined(placed: Placed[], join: readonly string[] | undefined, into = "hero"): Placed[] {
   if (!join?.length) return placed;
   const out: Placed[] = [];
   for (const section of placed) {
     const prev = out[out.length - 1];
-    if (prev?.kind === "hero" && join.includes(section.kind)) {
+    if (prev?.kind === into && join.includes(section.kind)) {
       out[out.length - 1] = { ...prev, data: { ...prev.data, [section.kind]: section.data ?? {} } };
       continue;
     }
@@ -53,9 +53,9 @@ export function SiteRenderer({ page, context, template }: { page: { sections: Se
   const placed = place(page.sections, template, page.arranged);
   const ctx = { ...context, main: template.main };
   const quote = template.main === "quote" && template.skin ? QUOTE_DESIGNS[template.skin] : undefined;
-  const venue = template.main === "place" && template.skin ? PLACE_DESIGNS[template.skin] : undefined;
+  const venue = landingDesign(template.main, template.skin);
   const skin = template.skin ? (venue ?? quote ?? (template.main === "stay" ? STAY_DESIGNS : template.main === "class" ? CLASS_DESIGNS : SHOP_DESIGNS)[template.skin])?.sections : undefined;
-  const drawn = joined(placed, quote?.join);
+  const drawn = quote ? joined(placed, quote.join) : joined(placed, venue?.join, venue?.into);
   return (
     <>
       {context.storeName && !titled(placed) && <h1 className="ez:sr-only">{context.storeName}</h1>}

@@ -151,6 +151,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
       data-variant={over ? "full" : "plain"}
       data-blank={blank ? "" : undefined}
       data-bleed=""
+      data-flush=""
       className={cn(
         "ez:relative ez:h-130 ez:overflow-hidden ez:lg:h-210",
         bleed

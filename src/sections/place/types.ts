@@ -1,35 +1,11 @@
-import type { ComponentType } from "react";
-import type { SectionKind, SectionProps } from "../../renderer/registry";
-import type { BusinessRow } from "../quote/types";
-import type { FooterLink } from "../shop/types";
-import type { PlaceLink } from "../template/data";
+import type { LandingDesign, LandingFooterProps, LandingHeaderProps, LandingNavItem, LandingSections } from "../landing/types";
 
-export type PlaceNavItem = { label: string; href: string };
+export type PlaceNavItem = LandingNavItem;
 
-export type PlaceHeaderProps = {
-  name: string;
-  logoUrl?: string | null;
-  phone: string | null;
-  nav: PlaceNavItem[];
-  links: PlaceLink[];
-};
+export type PlaceHeaderProps = LandingHeaderProps;
 
-export type PlaceFooterProps = {
-  storeName: string;
-  phone: string | null;
-  hours: string | null;
-  address: string | null;
-  legal: string;
-  business: BusinessRow[];
-  nav: PlaceNavItem[];
-  links: PlaceLink[];
-  terms: FooterLink[];
-};
+export type PlaceFooterProps = LandingFooterProps;
 
-export type PlaceSections = { [K in SectionKind]?: ComponentType<SectionProps<K>> };
+export type PlaceSections = LandingSections;
 
-export type PlaceDesign = {
-  Header: ComponentType<PlaceHeaderProps>;
-  Footer: ComponentType<PlaceFooterProps>;
-  sections: PlaceSections;
-};
+export type PlaceDesign = LandingDesign;

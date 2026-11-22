@@ -1,6 +1,7 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { resolveTemplate, SiteRenderer } from "../src/index";
+import { landingDesign } from "../src/sections/landing";
 import type { TemplateMain } from "../src/templates/types";
 
 const context = { products: [], categories: [], faqs: [], shipping: null };
@@ -20,6 +21,14 @@ const designs: [TemplateMain, string][] = [
   ["place", "a"],
   ["place", "b"],
   ["place", "c"],
+  ["care", "a"],
+  ["care", "b"],
+  ["care", "c"],
+  ["portfolio", "a"],
+  ["portfolio", "b"],
+  ["portfolio", "c"],
+  ["office", "a"],
+  ["office", "b"],
 ];
 
 function page(main: TemplateMain, letter: string, arranged = false) {
@@ -31,7 +40,7 @@ function page(main: TemplateMain, letter: string, arranged = false) {
 describe.each(designs)("blank %s %s", (main, letter) => {
   it("keeps every template section on screen", () => {
     const { template, root } = page(main, letter);
-    const joined = main === "quote" && letter !== "b" ? 1 : 0;
+    const joined = main === "quote" && letter !== "b" ? 1 : (landingDesign(main, template!.skin)?.join?.length ?? 0);
     expect(root.children.length).toBe(template!.home.length - joined);
   });
 

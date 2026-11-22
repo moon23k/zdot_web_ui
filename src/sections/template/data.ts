@@ -79,7 +79,7 @@ export type TemplateSectionData = {
   curation: { items?: Tile[]; image?: string | null };
   best_grid: { items?: ProductSummary[] };
   shop_guide: { phone?: string | null; hours?: string | null; returns?: string | null; inquiry?: string | null };
-  store_info: { title?: string | null; address?: string | null; hours?: string | null; phone?: string | null; image?: string | null; href?: string | null; links?: PlaceLink[] };
+  store_info: { title?: string | null; address?: string | null; hours?: string | null; phone?: string | null; image?: string | null; href?: string | null; links?: PlaceLink[]; company?: { label: string; value: string }[] };
   reviews: { average?: number | null; count?: number | null; items?: Review[] };
   trust_line: { items?: string[]; figures?: QuoteFigures };
   process_steps: { steps?: string[] };
@@ -97,7 +97,7 @@ export type TemplateSectionData = {
   room_list: { rooms?: Room[] };
   price_tiers: { items?: Row[] };
   package_cards: { tabs?: string[]; items?: { name: string; price: string; image?: string | null; includes?: string[]; href?: string }[] };
-  case_grid: { categories?: string[]; cases?: Case[] };
+  case_grid: { categories?: string[]; cases?: Case[]; intro?: TemplateSectionData["intro"]; store_info?: TemplateSectionData["store_info"] };
   quote_starter: QuoteStarter;
   menu: { groups?: MenuGroup[]; image?: string | null; images?: string[] };
   intro: { body?: string | null; image?: string | null; images?: string[] };

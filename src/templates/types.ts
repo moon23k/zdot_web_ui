@@ -1,4 +1,4 @@
-export type TemplateMain = "shop" | "class" | "stay" | "quote" | "place";
+export type TemplateMain = "shop" | "class" | "stay" | "quote" | "place" | "care" | "portfolio" | "office";
 
 export type TemplateLetter = "a" | "b" | "c";
 

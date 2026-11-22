@@ -97,6 +97,9 @@
 .ez-root[data-skin] .ez-main:has([data-slot="site-renderer"] > [data-bleed]:last-child) {
   padding-bottom: 0;
 }
+.ez-root[data-skin] .ez-main:has([data-slot="site-renderer"] > [data-slot="hero"][data-flush]:first-child) {
+  padding-top: 0;
+}
 :where(.ez-root[data-frame="gallery"]) h1 {
   font-size: clamp(1.75rem, 4vw, var(--ez-text-site-page));
   line-height: 1.2;

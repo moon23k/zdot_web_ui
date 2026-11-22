@@ -17,6 +17,7 @@ import { SiteRenderer } from "../renderer/site-renderer";
 import { Rows } from "../sections/kit";
 import { ThemeRoot } from "../theme/theme-root";
 import type { Design } from "../types";
+import { isLanding } from "../sections/landing";
 import { resolveTemplate } from "./index";
 import type { TemplateMain } from "./types";
 
@@ -103,7 +104,7 @@ function Page({ main, letter, banner, design, covers }: { main: TemplateMain; le
   return (
     <ThemeRoot design={design} template={t}>
       <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
-        <SiteHeader name="스토어 이름" variant={t.header} main={t.main === "shop" ? undefined : t.main} phone="02-000-0000" cartCount={2} categories={main === "shop" ? navCategories : undefined} cta={t.cta ? { label: t.cta, href: "/quote" } : null} links={main === "place" ? placeStoreLinks : undefined} />
+        <SiteHeader name="스토어 이름" variant={t.header} main={t.main === "shop" ? undefined : t.main} phone="02-000-0000" cartCount={2} categories={main === "shop" ? navCategories : undefined} cta={t.cta ? { label: t.cta, href: "/quote" } : null} links={isLanding(main) ? placeStoreLinks : undefined} address={isLanding(main) ? placeInfo.address : undefined} />
         <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:gap-section ez:px-page ez:py-8">
           <SiteRenderer page={{ sections }} context={site} template={t} />
           <hr className="ez:my-4 ez:border-0 ez:border-t ez:border-solid ez:border-primary-border" />
@@ -117,8 +118,8 @@ function Page({ main, letter, banner, design, covers }: { main: TemplateMain; le
           policies={policies}
           main={t.main}
           skin={t.skin}
-          address={main === "place" ? placeInfo.address : undefined}
-          links={main === "place" ? placeStoreLinks : undefined}
+          address={isLanding(main) ? placeInfo.address : undefined}
+          links={isLanding(main) ? placeStoreLinks : undefined}
         />
       </div>
     </ThemeRoot>
@@ -347,6 +348,14 @@ export const P1 = story("place", "a", "가게 · P1 브랜드형");
 export const P1Banner = story("place", "a", "가게 · P1 배너 제목", { title: "스토어 이름", sub: "Lorem ipsum dolor sit amet" });
 export const P2 = story("place", "b", "가게 · P2 방문형");
 export const P3 = story("place", "c", "가게 · P3 이야기형");
+export const K1 = story("care", "a", "예약형 매장 · K1 안내형");
+export const K2 = story("care", "b", "예약형 매장 · K2 살롱형");
+export const K3 = story("care", "c", "예약형 매장 · K3 스튜디오형");
+export const W1 = story("portfolio", "a", "작업 소개 · W1 격자형");
+export const W2 = story("portfolio", "b", "작업 소개 · W2 목록형");
+export const W3 = story("portfolio", "c", "작업 소개 · W3 프로필형");
+export const O1 = story("office", "a", "사무소 · O1 사례형");
+export const O2 = story("office", "b", "사무소 · O2 선언형");
 export const Q1List: StoryObj = { name: "견적 · Q1 작업 사례 목록", render: () => <QuoteListPage letter="a" /> };
 export const Q3List: StoryObj = { name: "견적 · Q3 작업 사례 목록", render: () => <QuoteListPage letter="b" /> };
 export const Q4List: StoryObj = { name: "견적 · Q4 작업 사례 목록 · 분류", render: () => <QuoteListPage letter="c" category="아파트" /> };
@@ -366,3 +375,11 @@ export const Q4Blank = blank("quote", "c", "공란 · Q4");
 export const P1Blank = blank("place", "a", "공란 · P1");
 export const P2Blank = blank("place", "b", "공란 · P2");
 export const P3Blank = blank("place", "c", "공란 · P3");
+export const K1Blank = blank("care", "a", "공란 · K1");
+export const K2Blank = blank("care", "b", "공란 · K2");
+export const K3Blank = blank("care", "c", "공란 · K3");
+export const W1Blank = blank("portfolio", "a", "공란 · W1");
+export const W2Blank = blank("portfolio", "b", "공란 · W2");
+export const W3Blank = blank("portfolio", "c", "공란 · W3");
+export const O1Blank = blank("office", "a", "공란 · O1");
+export const O2Blank = blank("office", "b", "공란 · O2");

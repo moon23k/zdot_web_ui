@@ -14,6 +14,7 @@ import { AmenityIcon } from "./icons";
 import { StayNavLinks } from "./nav";
 import { roomNotes, ROOMS_HREF, roomView, STAY_TITLE, stayDates } from "./shared";
 import type { RoomView, StayFooterProps, StayHeaderProps, StayListProps } from "./types";
+import { SampleMap } from "./map";
 
 const bleed = "ez:mx-[calc(50%-50vw)]";
 
@@ -544,8 +545,9 @@ export function Location({ data }: SectionProps<"location">) {
       <Head eyebrow="Location" title={STAY_TITLE.location} />
       <div className={cn(body, "ez:grid ez:items-start ez:gap-x-18 ez:gap-y-8 ez:lg:grid-cols-[2fr_1fr]")}>
         {address && data.href ? (
-          <a href={data.href} target="_blank" rel="noopener" aria-label={STAY_TITLE.map} className={cn(map, "ez:no-underline", focusRing)}>
-            {pin}
+          <a href={data.href} target="_blank" rel="noopener" aria-label={STAY_TITLE.map} className={cn(map, "ez:relative ez:overflow-hidden ez:text-fg ez:no-underline", focusRing)}>
+            <SampleMap />
+            <span className="ez:relative">{pin}</span>
           </a>
         ) : (
           <div className={map}>{pin}</div>

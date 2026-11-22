@@ -17,6 +17,7 @@ import { AmenityIcon } from "./icons";
 import { StayNavLinks } from "./nav";
 import { addOnView, roomNotes, ROOMS_HREF, roomView, sameExtra, STAY_TITLE, stayDates } from "./shared";
 import type { RoomView, StayFooterProps, StayHeaderProps, StayListProps, StaySearch } from "./types";
+import { SampleMap } from "./map";
 
 const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:box-border ez:px-page";
 
@@ -641,8 +642,9 @@ export function Location({ data }: SectionProps<"location">) {
       <Head title={STAY_TITLE.location} />
       <div className="ez:grid ez:gap-5 ez:lg:h-70 ez:lg:grid-cols-[minmax(0,1fr)_23.75rem]">
         {address && data.href ? (
-          <a href={data.href} target="_blank" rel="noopener" aria-label={STAY_TITLE.map} className={cn(mapBox, "ez:no-underline ez:hover:text-fg", focusRing)}>
-            {pin}
+          <a href={data.href} target="_blank" rel="noopener" aria-label={STAY_TITLE.map} className={cn(mapBox, "ez:relative ez:overflow-hidden ez:text-fg ez:no-underline", focusRing)}>
+            <SampleMap />
+            <span className="ez:relative">{pin}</span>
           </a>
         ) : (
           <div className={mapBox}>{pin}</div>

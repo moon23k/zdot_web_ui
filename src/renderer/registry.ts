@@ -6,7 +6,8 @@ import { ProductList } from "../sections/product-list";
 import { BestGrid, ShopGuide } from "../sections/shop/defaults";
 import { AddOns } from "../sections/stay/defaults";
 import { templateSections } from "../sections/template";
-import type { Room, TemplateSectionData, Session } from "../sections/template/data";
+import type { Case, QuoteFigures, QuoteStarter, Room, TemplateSectionData, Session } from "../sections/template/data";
+import type { Row } from "../sections/kit";
 import type { GridSpec } from "../templates/types";
 import type { Category, Faq, ProductSummary, Shipping } from "../types";
 
@@ -31,6 +32,13 @@ export type SectionData = {
     rooms?: Room[];
     sessions?: Session[];
     booking?: TemplateSectionData["booking_strip"];
+    cases?: Case[];
+    figures?: QuoteFigures;
+    tiers?: Row[];
+    request?: QuoteStarter;
+    address?: string | null;
+    kinds?: string[];
+    trust_line?: TemplateSectionData["trust_line"];
   };
   product_grid: Record<string, never>;
   faq: Record<string, never>;

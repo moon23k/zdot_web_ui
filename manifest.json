@@ -4,7 +4,6 @@
     "amenities",
     "best_grid",
     "booking_strip",
-    "case_cards",
     "case_grid",
     "category_menu",
     "category_tiles",
@@ -16,7 +15,6 @@
     "gates",
     "hero",
     "house_rules",
-    "intro",
     "location",
     "numbers",
     "package_cards",
@@ -25,6 +23,7 @@
     "price_tiers",
     "process_steps",
     "product_grid",
+    "quote_starter",
     "reviews",
     "room_list",
     "shop_guide",
@@ -121,26 +120,34 @@
     },
     "quote": {
       "a": [
-        "intro",
+        "hero",
         "trust_line",
         "case_grid",
         "price_tiers",
         "process_steps",
         "reviews",
-        "faq"
+        "faq",
+        "quote_starter"
       ],
       "b": [
+        "hero",
         "trust_line",
         "package_cards",
         "process_steps",
+        "case_grid",
         "reviews",
-        "faq"
+        "faq",
+        "quote_starter"
       ],
       "c": [
         "hero",
         "trust_line",
-        "case_cards",
-        "reviews"
+        "reviews",
+        "case_grid",
+        "package_cards",
+        "process_steps",
+        "faq",
+        "quote_starter"
       ]
     }
   }

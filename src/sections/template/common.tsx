@@ -1,36 +1,12 @@
 import type { ReactNode } from "react";
 import { ButtonLink } from "../../components/button";
 import type { SectionProps } from "../../renderer/registry";
-import { Icon } from "../../components/icon";
 import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
 import { countSup, figure } from "../../utils/styles";
 import { StarRow } from "../../components/star-row";
 import type { Review } from "./data";
-import { Bar, BlankButton, BlankStars, Lines, Pairs, Pic, Split } from "../kit";
-
-export function Intro({ data }: SectionProps<"intro">) {
-  const images = data.images ?? [];
-  const blank = !images.length;
-  return (
-    <section data-slot="intro" data-variant="gallery" data-blank={blank ? "" : undefined} className="ez:grid ez:gap-8 ez:pt-4 ez:text-fg ez:lg:gap-10 ez:lg:pt-14">
-      <div className="ez:flex ez:items-start">
-        {blank ? (
-          <BlankButton>견적 요청</BlankButton>
-        ) : (
-          <ButtonLink href="/quote">
-            견적 요청
-            <Icon name="right" size="sm" />
-          </ButtonLink>
-        )}
-      </div>
-      <div className="ez:grid ez:gap-gutter ez:md:grid-cols-[8fr_4fr] ez:md:items-end">
-        <Pic src={images[0]} tone={0} className="ez:aspect-[4/3] ez:lg:aspect-auto ez:lg:h-140 ez:[&>[data-slot=photo]]:h-full ez:[&>[data-slot=photo]]:aspect-auto" />
-        {(blank || images[1]) && <Pic src={images[1]} tone={1} className="ez:aspect-[4/3] ez:lg:aspect-auto ez:lg:h-75 ez:[&>[data-slot=photo]]:h-full ez:[&>[data-slot=photo]]:aspect-auto" />}
-      </div>
-    </section>
-  );
-}
+import { Bar, BlankStars, Lines, Pairs, Pic, Split } from "../kit";
 
 export function PhotoBand({ data }: SectionProps<"photo_band">) {
   const images = data.images?.length ? data.images.slice(0, 4) : data.image ? [data.image] : [];

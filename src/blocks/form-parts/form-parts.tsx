@@ -38,6 +38,7 @@ export function ChipChoice({
   options,
   required,
   value,
+  defaultValue,
   onChange,
 }: {
   name: string;
@@ -45,6 +46,7 @@ export function ChipChoice({
   options: string[];
   required?: boolean;
   value?: string;
+  defaultValue?: string;
   onChange?: (value: string) => void;
 }) {
   return (
@@ -54,7 +56,7 @@ export function ChipChoice({
           key={o}
           className="ez:inline-flex ez:h-9.5 ez:cursor-pointer ez:items-center ez:rounded-full ez:border ez:border-solid ez:border-site-line ez:px-4 ez:text-site-note ez:has-checked:border-primary ez:has-checked:font-medium ez:has-checked:text-primary ez:has-focus-visible:outline-2 ez:has-focus-visible:outline-primary"
         >
-          <input type="radio" name={name} value={o} required={required && i === 0} checked={value === undefined ? undefined : value === o} onChange={() => onChange?.(o)} className="ez:sr-only" />
+          <input type="radio" name={name} value={o} required={required && i === 0} checked={value === undefined ? undefined : value === o} defaultChecked={value === undefined && defaultValue !== undefined ? defaultValue === o : undefined} onChange={() => onChange?.(o)} className="ez:sr-only" />
           {o}
         </label>
       ))}

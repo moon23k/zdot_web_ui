@@ -56,7 +56,13 @@ export type CancelData = { rows?: Row[]; groups?: { title: string; rows: Row[] }
 
 export const SOLD_OUT_TODAY = "오늘 마감";
 
-export type Case = { id: string; title: string; image?: string | null; meta?: string; scope?: string; href?: string };
+export type Case = { id: string; title: string; image?: string | null; meta?: string; scope?: string; href?: string; category?: string | null };
+
+export type QuoteQuestion = { id: string; label: string; options: string[] };
+
+export type QuoteStarter = { open?: boolean; href?: string; questions?: QuoteQuestion[]; rest?: string[]; phone?: string | null; hours?: string | null; rating?: { average: number; count: number } | null };
+
+export type QuoteFigures = { cases: number; average: number | null; reviews: number };
 
 export type Review = { rating: number; body: string; name: string; date?: string; product?: string | null };
 
@@ -64,13 +70,12 @@ export type TemplateSectionData = {
   photo_band: { image?: string | null; images?: string[] };
   category_tiles: { items?: Tile[] };
   testimonial: { quote?: string | null; name?: string | null; count?: number | null; average?: number | null; items?: Review[]; image?: string | null };
-  intro: { images?: string[] };
   curation: { items?: Tile[]; image?: string | null };
   best_grid: { items?: ProductSummary[] };
   shop_guide: { phone?: string | null; hours?: string | null; returns?: string | null; inquiry?: string | null };
   store_info: { title?: string | null; address?: string | null; hours?: string | null; phone?: string | null; image?: string | null };
   reviews: { average?: number | null; count?: number | null; items?: Review[] };
-  trust_line: { items?: string[] };
+  trust_line: { items?: string[]; figures?: QuoteFigures };
   process_steps: { steps?: string[] };
   numbers: { items?: { value: string; label: string }[] };
   class_schedule: { sessions?: Session[] };
@@ -87,5 +92,5 @@ export type TemplateSectionData = {
   price_tiers: { items?: Row[] };
   package_cards: { tabs?: string[]; items?: { name: string; price: string; image?: string | null; includes?: string[]; href?: string }[] };
   case_grid: { categories?: string[]; cases?: Case[] };
-  case_cards: { categories?: string[]; cases?: Case[] };
+  quote_starter: QuoteStarter;
 };

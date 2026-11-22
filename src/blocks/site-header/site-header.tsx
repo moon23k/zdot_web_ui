@@ -5,6 +5,7 @@ import { Icon, type IconName } from "../../components/icon";
 import { SHOP_DESIGNS, shopLinks, shopNav } from "../../sections/shop";
 import { STAY_DESIGNS, stayLinks, stayNav } from "../../sections/stay";
 import { CLASS_DESIGNS, classLinks, classNav } from "../../sections/class";
+import { QUOTE_DESIGNS, quoteLinks, quoteNav } from "../../sections/quote";
 import type { HeaderVariant, ShopSkin } from "../../templates/types";
 import { cn } from "../../utils/cn";
 import { wordmark } from "../../utils/styles";
@@ -58,6 +59,7 @@ export function SiteHeader({
   cta,
   categories,
   sections,
+  phone,
 }: {
   name: string;
   logoUrl?: string | null;
@@ -68,6 +70,7 @@ export function SiteHeader({
   cta?: { label: string; href: string } | null;
   categories?: NavCategory[];
   sections?: string[] | null;
+  phone?: string | null;
 }) {
   const shop = main === "shop";
   const link = LINKS[main];
@@ -100,12 +103,15 @@ export function SiteHeader({
   const split = variant === "dark" || variant === "band";
   const StaySkin = main === "stay" && variant && variant in STAY_DESIGNS ? STAY_DESIGNS[variant as ShopSkin].Header : null;
   const ClassSkin = main === "class" && variant && variant in CLASS_DESIGNS ? CLASS_DESIGNS[variant as ShopSkin].Header : null;
+  const QuoteSkin = main === "quote" && variant && variant in QUOTE_DESIGNS ? QUOTE_DESIGNS[variant as ShopSkin].Header : null;
   const full = Skin ? (
     <Skin name={name} logoUrl={logoUrl} cartCount={cartCount} signedIn={signedIn} categories={categories ?? []} nav={shopNav(categories ?? [])} links={shopLinks(signedIn)} />
   ) : StaySkin ? (
     <StaySkin name={name} logoUrl={logoUrl} signedIn={signedIn} nav={stayNav(sections)} links={stayLinks(signedIn)} />
   ) : ClassSkin ? (
     <ClassSkin name={name} logoUrl={logoUrl} signedIn={signedIn} nav={classNav(sections, categories)} links={classLinks(signedIn)} />
+  ) : QuoteSkin ? (
+    <QuoteSkin name={name} logoUrl={logoUrl} signedIn={signedIn} phone={phone ?? null} nav={quoteNav(sections)} links={quoteLinks(signedIn)} />
   ) : variant === "center" ? (
       <header data-slot="site-header" data-variant="center" className="ez:bg-surface">
         <div className={cn(row, "ez:lg:min-h-21 ez:lg:grid-cols-[minmax(max-content,1fr)_max-content_minmax(max-content,1fr)]")}>

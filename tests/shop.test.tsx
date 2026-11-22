@@ -113,9 +113,8 @@ describe("shop page edges", () => {
     expect(hero.querySelector("h1")?.closest('[data-slot="photo"]')).toBeNull();
   });
 
-  it("leaves other templates on the classic list and kit", () => {
-    const template = resolveTemplate("quote", "a");
-    expect(template.skin).toBeUndefined();
-    expect(applyTemplate(paletteDesign, template).color?.accent).toBe(paletteDesign.color?.accent);
+  it("turns the kit off on every redesigned template and keeps it without a template", () => {
+    for (const main of ["shop", "class", "stay", "quote"] as const) for (const letter of ["a", "b", "c"]) expect(applyTemplate(paletteDesign, resolveTemplate(main, letter)).color?.accent).toBeUndefined();
+    expect(applyTemplate(paletteDesign, null).color?.accent).toBe(paletteDesign.color?.accent);
   });
 });

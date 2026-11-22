@@ -1,7 +1,7 @@
 import type { DetailData } from "../../details/data";
 import type { TemplateMain } from "../../templates/types";
 import type { Design, Section } from "../../types";
-import type { AddOn, ClassCard, Room, Session } from "../../sections/template/data";
+import type { AddOn, Case, ClassCard, QuoteFigures, QuoteStarter, Room, Session } from "../../sections/template/data";
 import products from "./products.json";
 
 const s = (kind: string, data: Record<string, unknown>): Section => ({ kind, v: 1, data });
@@ -125,6 +125,42 @@ export const paletteDesign: Design = {
   palette: { color: "09-C03", harmony: "tonal" },
 };
 
+const quoteCase = (n: number, title: string, category: string, meta: string, scope: string): Case => ({ id: `cas_${n}`, title, category, meta, scope, image: `/sample/p${(n % 4) + 1}.jpg`, href: `/cases/cas_${n}` });
+
+export const quoteCases: Case[] = [
+  quoteCase(1, "아파트 32평 전체 리모델링", "아파트", "서울 성동구 · 32평", "전체 리모델링"),
+  quoteCase(2, "주방 · 다이닝 부분 시공", "부분 시공", "경기 성남시 · 24평", "주방 · 조명"),
+  quoteCase(3, "신혼집 아파트 24평", "아파트", "서울 마포구 · 24평", "전체 리모델링"),
+  quoteCase(4, "단독주택 욕실 · 현관", "주택", "경기 양평군 · 40평", "욕실 · 현관"),
+  quoteCase(5, "아파트 45평 거실 확장", "아파트", "서울 송파구 · 45평", "거실 · 주방"),
+  quoteCase(6, "주택 서재 · 작업실", "주택", "서울 종로구 · 18평", "가구 제작 · 조명"),
+  quoteCase(7, "카페 12평 인테리어", "상가", "서울 용산구 · 12평", "전체 시공"),
+  quoteCase(8, "아파트 28평 현관 · 복도", "아파트", "인천 연수구 · 28평", "현관 · 수납"),
+];
+
+export const quoteFigures: QuoteFigures = { cases: 8, average: 4.9, reviews: 128 };
+
+export const quoteTiers = [
+  { label: "부분 시공", value: "3,000,000원" },
+  { label: "20평대 전체", value: "24,000,000원" },
+  { label: "30평대 전체", value: "36,000,000원" },
+  { label: "40평대 전체", value: "48,000,000원" },
+];
+
+export const quoteStarter: QuoteStarter = {
+  open: true,
+  href: "/quote",
+  questions: [
+    { id: "space", label: "공간", options: ["아파트", "빌라 · 주택", "상가 · 사무실", "기타"] },
+    { id: "size", label: "평수", options: ["10평 이하", "10~20평", "20~30평", "30~40평", "40평 이상"] },
+    { id: "budget", label: "예산", options: ["상담 후 결정", "50만 원 이하", "50~100만 원", "100~300만 원", "300만 원 이상"] },
+  ],
+  rest: ["공사 범위", "희망 날짜", "지역", "요청 사항", "이름", "휴대폰 번호", "사진"],
+  phone: "02-000-0000",
+  hours: "평일 10:00 – 18:00",
+  rating: { average: 4.9, count: 128 },
+};
+
 export const homeSections: Record<TemplateMain, Section[]> = {
   shop: [
     s("hero", {
@@ -174,38 +210,15 @@ export const homeSections: Record<TemplateMain, Section[]> = {
     s("reviews", reviews),
   ],
   quote: [
-    s("hero", { image: "/sample/hero.jpg", products: [{ id: "q1", name: "작가 1명 본식", sale_price: 490000, cover_url: "/sample/q1.jpg" }] }),
-    s("intro", { images: ["/sample/case-1.jpg", "/sample/case-2.jpg"] }),
-    s("trust_line", { items: ["평점 4.9", "후기 86", "작업 320건"] }),
-    s("case_grid", {
-      categories: ["전체", "주거", "상업", "부분"],
-      cases: [
-        { id: "c1", title: "성수 카페", meta: "상업 · 40평", href: "#" },
-        { id: "c2", title: "마포 아파트", meta: "주거 · 32평", href: "#" },
-        { id: "c3", title: "판교 사무실", meta: "상업 · 60평", href: "#" },
-        { id: "c4", title: "연남 주택", meta: "주거 · 25평", href: "#" },
-      ],
-    }),
-    s("case_cards", {
-      categories: ["전체", "광고", "인터뷰", "행사"],
-      cases: [
-        { id: "p1", title: "브랜드 필름", meta: "광고 · 2025 · 의뢰처", scope: "기획 · 촬영 · 편집 · 6주", href: "#" },
-        { id: "p2", title: "대표 인터뷰", meta: "인터뷰 · 2025 · 의뢰처", scope: "촬영 · 편집 · 2주", href: "#" },
-        { id: "p3", title: "출시 행사", meta: "행사 · 2024 · 의뢰처", scope: "현장 촬영 · 1일", href: "#" },
-      ],
-    }),
-    s("price_tiers", { items: [{ label: "제품 컷", value: "10,000원부터" }, { label: "공간 촬영", value: "500,000원부터" }, { label: "브랜드 촬영", value: "별도 견적" }] }),
-    s("package_cards", {
-      tabs: ["사진", "영상", "패키지"],
-      items: [
-        { name: "작가 1명 본식", price: "490,000원", includes: ["원본 전체", "보정 50장"] },
-        { name: "사진 · 영상 패키지", price: "880,000원", includes: ["사진 작가 1명", "영상 하이라이트 3분"] },
-        { name: "2인 촬영", price: "740,000원", includes: ["작가 2명", "보정 80장"] },
-      ],
-    }),
-    s("process_steps", { steps: ["문의", "견적", "예약금", "작업", "잔금"] }),
-    s("reviews", reviews),
+    s("hero", { cases: quoteCases, figures: quoteFigures, tiers: quoteTiers, request: quoteStarter, address: "서울특별시 00구 00로 00", kinds: ["hero", "trust_line", "case_grid", "price_tiers", "package_cards", "process_steps", "reviews", "faq", "quote_starter"] }),
+    s("trust_line", { items: ["A/S 1년", "실측 후 견적서 발송", "예약금 · 잔금 나눠 결제"], figures: quoteFigures }),
+    s("case_grid", { cases: quoteCases }),
+    s("price_tiers", { items: quoteTiers }),
+    s("package_cards", { items: quoteTiers.slice(0, 4).map((t) => ({ name: t.label, price: t.value, image: null, href: "/products/q1" })) }),
+    s("process_steps", { steps: ["문의", "상담 · 견적", "계약", "작업", "완료"] }),
+    s("reviews", { ...reviews, items: reviews.items.map((r, i) => ({ ...r, product: i === 0 ? "p1" : null })) }),
     s("faq", {}),
+    s("quote_starter", quoteStarter),
   ],
 };
 

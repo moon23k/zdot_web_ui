@@ -28,7 +28,8 @@ function page(main: TemplateMain, letter: string, arranged = false) {
 describe.each(designs)("blank %s %s", (main, letter) => {
   it("keeps every template section on screen", () => {
     const { template, root } = page(main, letter);
-    expect(root.children.length).toBe(template!.home.length);
+    const joined = main === "quote" && letter !== "b" ? 1 : 0;
+    expect(root.children.length).toBe(template!.home.length - joined);
   });
 
   it("marks every blank section so the partner preview can jump to its input", () => {
@@ -87,7 +88,7 @@ describe("blank scope", () => {
     expect(hero("shop", "a", { image: "https://img.test/a.jpg", products }).querySelector("a")).toBeNull();
     expect([...hero("shop", "b", { image: "https://img.test/a.jpg", products: pair }).querySelectorAll('[data-slot="hero-product"]')].map((a) => a.getAttribute("href"))).toEqual(["/products/p1", "/products/p2"]);
     expect(hero("shop", "c", { image: "https://img.test/a.jpg", products }).querySelector('a[href="/products/p1"]')).not.toBeNull();
-    expect(hero("quote", "c", { image: "https://img.test/a.jpg", products }).querySelector('a[href="/products/p1"]')).not.toBeNull();
+    expect(hero("quote", "c", { image: "https://img.test/a.jpg", products }).querySelector('a[href="/cases"]')).not.toBeNull();
     expect(hero("class", "a", { image: "https://img.test/a.jpg" }).querySelector("a")).toBeNull();
   });
 

@@ -113,7 +113,7 @@ function Contacts({ phone, hours, className }: { phone?: string | null; hours?: 
 
 function PriceSheet({ rows, storeName, blank }: { rows: { label: ReactNode; value?: ReactNode }[]; storeName?: string; blank: boolean }) {
   const shown = rows.slice(0, 5);
-  const cell = "ez:px-6 ez:text-left ez:font-normal";
+  const cell = "ez:w-auto ez:px-6 ez:text-left ez:font-normal";
   return (
     <table className={cn(edge, "ez:w-full ez:border ez:border-collapse ez:self-start")}>
       <thead>
@@ -362,7 +362,7 @@ export function Process({ data }: SectionProps<"process_steps">) {
   );
 }
 
-const headCell = "ez:pb-3 ez:text-left ez:align-bottom ez:text-site-small ez:font-normal ez:text-muted";
+const headCell = "ez:w-auto ez:pb-3 ez:text-left ez:align-bottom ez:text-site-small ez:font-normal ez:text-muted";
 
 function Cell({ row, className, children }: { row: boolean; className: string; children: ReactNode }) {
   return row ? (
@@ -381,7 +381,7 @@ function LedgerRow({ c, tone }: { c: Case | null; tone: number }) {
       <td className="ez:w-48 ez:py-6 ez:pr-8 ez:align-middle ez:max-md:w-32 ez:max-md:p-0">
         <Pic src={view?.image} ratio={3 / 2} tone={tone} />
       </td>
-      <Cell row={Boolean(view)} className="ez:py-6 ez:pr-8 ez:text-left ez:align-middle ez:font-normal ez:max-md:min-w-0 ez:max-md:flex-1 ez:max-md:p-0">
+      <Cell row={Boolean(view)} className="ez:w-auto ez:py-6 ez:pr-8 ez:text-left ez:align-middle ez:font-normal ez:max-md:min-w-0 ez:max-md:flex-1 ez:max-md:p-0">
         {view ? (
           <NextLink href={view.href} className={cn("ez:text-site-item ez:font-medium ez:text-fg ez:no-underline ez:hover:underline", focusRing)}>
             {view.title}
@@ -695,7 +695,7 @@ function ListRow({ c, tone }: { c: Case; tone: number }) {
   const label = (text: string) => <span className="ez:mr-1.5 ez:text-muted ez:md:hidden">{text}</span>;
   return (
     <tr data-slot="case-item" className={cn(line, "ez:border-b ez:max-md:flex ez:max-md:flex-wrap ez:max-md:gap-x-4 ez:max-md:gap-y-1 ez:max-md:py-5")}>
-      <th scope="row" className="ez:py-5 ez:pr-8 ez:text-left ez:align-middle ez:font-normal ez:max-md:w-full ez:max-md:p-0 ez:max-md:pb-2">
+      <th scope="row" className="ez:w-auto ez:py-5 ez:pr-8 ez:text-left ez:align-middle ez:font-normal ez:max-md:w-full ez:max-md:p-0 ez:max-md:pb-2">
         <NextLink href={view.href} className={cn("ez:flex ez:items-center ez:gap-4 ez:text-fg ez:no-underline ez:md:gap-7", focusRing)}>
           <div className="ez:w-32 ez:shrink-0 ez:md:w-42">
             <Pic src={view.image} ratio={3 / 2} tone={tone} />

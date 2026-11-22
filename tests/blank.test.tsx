@@ -82,9 +82,12 @@ describe("blank scope", () => {
     expect(hero("class", "b", { title: "겨울 정규반 모집" })).not.toHaveAttribute("data-blank");
   });
 
-  it("keeps the product chip and fixed links without a title", () => {
+  it("keeps the banner products and fixed links without a title", () => {
     const products = [{ id: "p1", name: "자몽청", sale_price: 18000, cover_url: "https://img.test/p.jpg" }];
-    expect(hero("shop", "a", { image: "https://img.test/a.jpg", products }).querySelector('a[href="/products/p1"]')).not.toBeNull();
+    const pair = [...products, { id: "p2", name: "유자청", sale_price: 16000, cover_url: "https://img.test/q.jpg" }];
+    expect(hero("shop", "a", { image: "https://img.test/a.jpg", products }).querySelector("a")).toBeNull();
+    expect([...hero("shop", "b", { image: "https://img.test/a.jpg", products: pair }).querySelectorAll('[data-slot="hero-product"]')].map((a) => a.getAttribute("href"))).toEqual(["/products/p1", "/products/p2"]);
+    expect(hero("shop", "c", { image: "https://img.test/a.jpg", products }).querySelector('a[href="/products/p1"]')).not.toBeNull();
     expect(hero("quote", "c", { image: "https://img.test/a.jpg", products }).querySelector('a[href="/products/p1"]')).not.toBeNull();
     expect([...hero("class", "a", { image: "https://img.test/a.jpg" }).querySelectorAll("a")].map((a) => a.textContent)).toEqual(["일정 보기", "클래스 전체"]);
   });

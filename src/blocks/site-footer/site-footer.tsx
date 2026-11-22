@@ -3,6 +3,8 @@ import type { Business } from "../../types";
 import { ButtonLink } from "../../components/button";
 import { cn } from "../../utils/cn";
 import { footerMark } from "../../utils/styles";
+import { SHOP_DESIGNS, shopFooter } from "../../sections/shop";
+import type { ShopSkin } from "../../templates/types";
 import { PathSwitch } from "../site-header/path-switch";
 
 const link = "ez:text-fg ez:no-underline ez:hover:text-primary";
@@ -24,6 +26,7 @@ export function SiteFooter({
   hours,
   policyHref = (key) => `/policy/${key}`,
   main = "shop",
+  skin,
 }: {
   storeName: string;
   business: Business | null;
@@ -32,7 +35,9 @@ export function SiteFooter({
   hours?: string | null;
   policyHref?: (key: string) => string;
   main?: string;
+  skin?: ShopSkin;
 }) {
+  const Skin = main === "shop" && skin ? SHOP_DESIGNS[skin]?.Footer : undefined;
   const guide = GUIDE[main] ?? GUIDE.shop;
   const legal = [
     [business?.name || storeName, business?.ceo_name && `대표 ${business.ceo_name}`].filter(Boolean).join(" · "),
@@ -55,7 +60,9 @@ export function SiteFooter({
       <p className="ez:m-0 ez:mx-auto ez:max-w-wrap ez:px-page ez:py-10 ez:text-site-small ez:text-muted">{legal}</p>
     </footer>
   );
-  const full = (
+  const full = Skin ? (
+    <Skin {...shopFooter({ storeName, business, hosting, policies, hours, policyHref })} />
+  ) : (
     <footer data-slot="site-footer" data-variant="full" className="ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:text-site-lead">
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-14 ez:pb-10 ez:lg:pt-18">
         <div className="ez:grid ez:gap-10 ez:md:grid-cols-[5fr_2fr_2fr_2fr] ez:md:gap-6">

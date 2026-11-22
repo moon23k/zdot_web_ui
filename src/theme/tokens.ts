@@ -16,19 +16,21 @@ function buttonRadius(design: Design): string {
   return `${shape.radius_md ?? SYSTEM_RADIUS.md}px`;
 }
 
-function siteVars(): Record<string, string> {
+type SiteLook = Pick<TemplateDesign["look"], "section" | "pad" | "kit">;
+
+function siteVars(look?: SiteLook): Record<string, string> {
   return {
     "--ezd-wrap": `${SYSTEM_SITE.gallery}px`,
     "--ezd-wrap-home": `${SYSTEM_SITE.gallery}px`,
-    "--ezd-pad-home": `${SYSTEM_SITE["gallery-pad"]}px`,
-    "--ezd-section-gap": `${SYSTEM_SITE["gallery-section"]}px`,
+    "--ezd-pad-home": `${look?.pad ?? SYSTEM_SITE["gallery-pad"]}px`,
+    "--ezd-section-gap": `${look?.section ?? SYSTEM_SITE["gallery-section"]}px`,
     "--ezd-control": `${SYSTEM_SITE["gallery-control"]}px`,
     "--ezd-control-sm": `${SYSTEM_SITE["gallery-control-sm"]}px`,
     "--ezd-gutter": "24px",
   };
 }
 
-export function designVars(design: Design | null | undefined, site?: boolean): Record<string, string> {
+export function designVars(design: Design | null | undefined, site?: boolean | SiteLook): Record<string, string> {
   const d = design ?? {};
   const color = { ...FALLBACK, ...(d.color ?? {}) };
   const ratio = (d.imagery?.photo_ratio ?? "1:1").replace(":", " / ");
@@ -71,8 +73,8 @@ export function designVars(design: Design | null | undefined, site?: boolean): R
     "--ezd-photo-ratio": ratio,
     "--ezd-control": "48px",
     "--ezd-control-sm": "40px",
-    ...kitVars(color),
-    ...(site ? siteVars() : {}),
+    ...kitVars(color, typeof site === "object" && site.kit === "off"),
+    ...(site ? siteVars(site === true ? undefined : site) : {}),
   };
 }
 
@@ -105,6 +107,19 @@ function plainTitles(font: Design["font"]): Design["font"] {
 
 const PHOTO_CORNER: Record<string, number> = { "0": 0, "4": 4, "6": 6, "16": 16, pill: 16 };
 
+const SHAPES: Record<NonNullable<TemplateDesign["look"]["shape"]>, NonNullable<Design["shape"]>> = {
+  square: { radius_sm: 0, radius_md: 0, radius_lg: 0, button_shape: "square", line: 0 },
+  soft: { radius_sm: 4, radius_md: 6, radius_lg: 6, button_shape: "rounded", line: 0 },
+  round: { radius_sm: 14, radius_md: 20, radius_lg: 24, button_shape: "pill", line: 0 },
+};
+
+const KIT_FACES = ["secondary", "accent", "on_accent"] as const;
+
+function plainKit(color: Design["color"]): Design["color"] {
+  if (!color) return color;
+  return Object.fromEntries(Object.entries(color).filter(([key]) => !(KIT_FACES as readonly string[]).includes(key)));
+}
+
 const SERIF = new Set(["Noto Serif KR", "Nanum Myeongjo", "Gowun Batang", "Hahmlet", "Song Myung"]);
 
 function lookTitles(font: Design["font"], look: TemplateDesign["look"]): Design["font"] {
@@ -126,10 +141,11 @@ export function applyTemplate(design: Design | null | undefined, template: Templ
   const { look } = template;
   const tone = SYSTEM_TONE[look.frame === "gallery" ? "gallery" : look.tone];
   const ink = SYSTEM_TONE.gallery;
+  const color = d.palette ? d.color : { ...d.color, surface: tone.surface, surface_alt: tone["surface-alt"], text: ink.text, text_muted: ink["text-muted"] };
   return {
     ...d,
     font: lookTitles(d.font, look),
-    shape: { radius_sm: 8, radius_md: 14, radius_lg: PHOTO_CORNER[String(look.radius)] ?? 0, button_shape: "pill", line: 0 },
-    color: d.palette ? d.color : { ...d.color, surface: tone.surface, surface_alt: tone["surface-alt"], text: ink.text, text_muted: ink["text-muted"] },
+    shape: look.shape ? SHAPES[look.shape] : { radius_sm: 8, radius_md: 14, radius_lg: PHOTO_CORNER[String(look.radius)] ?? 0, button_shape: "pill", line: 0 },
+    color: look.kit === "off" ? plainKit(color) : color,
   };
 }

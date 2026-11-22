@@ -2,7 +2,8 @@ import NextLink from "next/link";
 import { Suspense } from "react";
 import { ButtonLink } from "../../components/button";
 import { Icon, type IconName } from "../../components/icon";
-import type { HeaderVariant } from "../../templates/types";
+import { SHOP_DESIGNS, shopLinks, shopNav } from "../../sections/shop";
+import type { HeaderVariant, ShopSkin } from "../../templates/types";
 import { cn } from "../../utils/cn";
 import { wordmark } from "../../utils/styles";
 import { LiveNavLinks, NavLinks, type NavCategory } from "./header-nav";
@@ -90,10 +91,12 @@ export function SiteHeader({
       )}
     </div>
   );
+  const Skin = shop && variant && variant in SHOP_DESIGNS ? SHOP_DESIGNS[variant as ShopSkin].Header : null;
   const row = "ez:mx-auto ez:grid ez:max-w-wrap ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-3 ez:px-page ez:py-2 ez:min-h-16 ez:lg:min-h-20";
   const split = variant === "dark" || variant === "band";
-  const full =
-    variant === "center" ? (
+  const full = Skin ? (
+    <Skin name={name} logoUrl={logoUrl} cartCount={cartCount} signedIn={signedIn} categories={categories ?? []} nav={shopNav(categories ?? [])} links={shopLinks(signedIn)} />
+  ) : variant === "center" ? (
       <header data-slot="site-header" data-variant="center" className="ez:bg-surface">
         <div className={cn(row, "ez:lg:min-h-21 ez:lg:grid-cols-[minmax(max-content,1fr)_max-content_minmax(max-content,1fr)]")}>
           <NextLink

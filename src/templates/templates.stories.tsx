@@ -3,6 +3,7 @@ import { business, productDetail } from "../__stories__/fixtures/commerce";
 import products from "../__stories__/fixtures/products.json";
 import { detailData, homeSections, paletteDesign } from "../__stories__/fixtures/templates";
 import { BuyBox } from "../blocks/buy-box";
+import { CatalogView } from "../blocks/catalog-view";
 import { ProductGrid } from "../blocks/product-grid";
 import { SiteFooter } from "../blocks/site-footer";
 import { SiteHeader } from "../blocks/site-header";
@@ -30,9 +31,21 @@ const context: SiteContext = {
     { id: "f1", question: "주문하면 언제 받나요?", answer: "오후 2시 전 주문은 당일 발송해요." },
     { id: "f2", question: "교환 · 반품은 어떻게 하나요?", answer: "받은 날부터 7일 안에 신청해 주세요." },
   ],
-  shipping: null,
+  shipping: { base_fee: 3000, free_threshold: 50000, return_fee: 3000, exchange_fee: 6000, return_days: 7 },
   storeName: "스토어 이름",
 };
+
+const policies = [
+  { key: "returns", title: "교환·반품 안내" },
+  { key: "terms", title: "이용약관" },
+  { key: "privacy", title: "개인정보처리방침" },
+];
+
+const navCategories = [
+  { id: "c1", name: "과일청" },
+  { id: "c2", name: "잼" },
+  { id: "c3", name: "선물 세트" },
+];
 
 function shopNodes(): { nodes: Record<string, React.ReactNode>; data: DetailData } {
   const notice = (
@@ -87,13 +100,51 @@ function Page({ main, letter, banner, design, covers }: { main: TemplateMain; le
   return (
     <ThemeRoot design={design} template={t}>
       <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
-        <SiteHeader name="스토어 이름" variant={t.header} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
+        <SiteHeader name="스토어 이름" variant={t.header} cartCount={2} categories={main === "shop" ? navCategories : undefined} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
         <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:gap-section ez:px-page ez:py-8">
           <SiteRenderer page={{ sections }} context={site} template={t} />
           <hr className="ez:my-4 ez:border-0 ez:border-t ez:border-solid ez:border-primary-border" />
           <DetailLayout slots={t.detail} data={data} nodes={shop?.nodes} />
         </main>
-        <SiteFooter storeName="스토어 이름" business={business} hosting="자사닷" policies={[{ key: "terms", title: "이용약관" }, { key: "privacy", title: "개인정보처리방침" }]} />
+        <SiteFooter storeName="스토어 이름" business={business} hours="평일 10:00 – 17:00" hosting="자사닷" policies={policies} main={t.main} skin={t.skin} />
+      </div>
+    </ThemeRoot>
+  );
+}
+
+function ListPage({ letter, promo }: { letter: string; promo?: boolean }) {
+  const t = resolveTemplate("shop", letter);
+  return (
+    <ThemeRoot template={t}>
+      <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
+        <SiteHeader name="스토어 이름" variant={t.header} main="shop" cartCount={2} categories={navCategories} />
+        <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:px-page ez:py-8">
+          <CatalogView
+            skin={t.skin}
+            title="전체 상품"
+            count={products.length}
+            crumbs={[
+              { label: "홈", href: "/" },
+              { label: "전체 상품", href: "/products" },
+            ]}
+            chips={[
+              { label: "전체", href: "/products", on: true },
+              { label: "과일청", href: "/products?category=c1", count: 4 },
+              { label: "잼", href: "/products?category=c2", count: 2 },
+              { label: "선물 세트", href: "/products?category=c3", count: 0 },
+            ]}
+            sorts={[
+              { label: "신상품순", href: "/products", on: true },
+              { label: "인기순", href: "/products?sort=popular" },
+              { label: "낮은 가격순", href: "/products?sort=price_asc" },
+              { label: "높은 가격순", href: "/products?sort=price_desc" },
+            ]}
+            products={products}
+            more="/products?cursor=n24"
+            promo={promo ? { title: "겨울 선물 모음", image: "/sample/hero.jpg", href: "/products?category=c3" } : null}
+          />
+        </main>
+        <SiteFooter storeName="스토어 이름" business={business} hosting="자사닷" policies={policies} main="shop" skin={t.skin} />
       </div>
     </ThemeRoot>
   );
@@ -120,11 +171,15 @@ const story = (main: TemplateMain, letter: string, name: string, banner?: Banner
   render: () => <Page main={main} letter={letter} banner={banner} design={design} />,
 });
 
-export const S1 = story("shop", "a", "쇼핑몰 · S1 테두리 칸 편집형");
+export const S1 = story("shop", "a", "쇼핑몰 · S1 에디토리얼형");
 export const S1Covers: StoryObj = { name: "쇼핑몰 · S1 분류 대표 사진", render: () => <Page main="shop" letter="a" covers /> };
-export const S2 = story("shop", "b", "쇼핑몰 · S2 소수 상품 쇼케이스형");
-export const S3 = story("shop", "c", "쇼핑몰 · S3 기획 묶음 · 매장형");
+export const S1Banner = story("shop", "a", "쇼핑몰 · S1 배너 제목", { title: "겨울 선물 모음", sub: "자몽청과 유자청을 한 상자에 담았어요" });
+export const S2 = story("shop", "b", "쇼핑몰 · S2 카탈로그형");
+export const S3 = story("shop", "c", "쇼핑몰 · S3 쇼룸형");
 export const S3Palette = story("shop", "c", "쇼핑몰 · S3 브랜드 키트", { title: "겨울 선물 모음", sub: "자몽청과 유자청을 한 상자에 담았어요" }, paletteDesign);
+export const S1List: StoryObj = { name: "쇼핑몰 · S1 상품 목록", render: () => <ListPage letter="a" /> };
+export const S2List: StoryObj = { name: "쇼핑몰 · S2 상품 목록", render: () => <ListPage letter="b" /> };
+export const S3List: StoryObj = { name: "쇼핑몰 · S3 상품 목록 · 홍보 칸", render: () => <ListPage letter="c" promo /> };
 export const C1 = story("class", "a", "클래스 · C1 일정 먼저형");
 export const C2 = story("class", "b", "클래스 · C2 클래스 카드형", "겨울 정규반 모집");
 export const C3 = story("class", "c", "클래스 · C3 정규반 · 과정형");

@@ -158,7 +158,7 @@ export function Card({ href, children, className }: { href?: string; children: R
   );
 }
 
-export function Cols({ m = 1, pc = 3, children }: { m?: 1 | 2 | 3; pc?: 3 | 4 | 6; children: ReactNode }) {
+export function Cols({ m = 1, pc = 3, children }: { m?: 1 | 2 | 3; pc?: 3 | 4 | 5 | 6; children: ReactNode }) {
   return (
     <div className={cn("ez:grid ez:gap-gutter", { 1: "ez:grid-cols-1", 2: "ez:grid-cols-2", 3: "ez:grid-cols-3" }[m], pcCols(pc, Children.count(children)))}>
       {children}

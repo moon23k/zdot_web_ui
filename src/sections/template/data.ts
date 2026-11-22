@@ -1,3 +1,4 @@
+import type { ProductSummary } from "../../types";
 import type { Row, Status } from "../kit";
 
 export type Tile = { title: string; image?: string | null; href?: string; price?: string | null };
@@ -35,9 +36,11 @@ export type Review = { rating: number; body: string; name: string; date?: string
 export type TemplateSectionData = {
   photo_band: { image?: string | null; images?: string[] };
   category_tiles: { items?: Tile[] };
-  testimonial: { quote?: string | null; name?: string | null; count?: number | null; items?: Review[] };
+  testimonial: { quote?: string | null; name?: string | null; count?: number | null; average?: number | null; items?: Review[]; image?: string | null };
   intro: { images?: string[] };
-  curation: { items?: Tile[] };
+  curation: { items?: Tile[]; image?: string | null };
+  best_grid: { items?: ProductSummary[] };
+  shop_guide: { phone?: string | null; hours?: string | null; returns?: string | null; inquiry?: string | null };
   store_info: { title?: string | null; address?: string | null; hours?: string | null; phone?: string | null; image?: string | null };
   reviews: { average?: number | null; count?: number | null; items?: Review[] };
   trust_line: { items?: string[] };

@@ -94,6 +94,9 @@
   padding-top: 32px;
   padding-bottom: 120px;
 }
+.ez-root[data-skin] .ez-main:has([data-slot="site-renderer"] > [data-bleed]:last-child) {
+  padding-bottom: 0;
+}
 :where(.ez-root[data-frame="gallery"]) h1 {
   font-size: clamp(1.75rem, 4vw, var(--ez-text-site-page));
   line-height: 1.2;
@@ -401,6 +404,21 @@
 .ez-root:has([data-slot="hero"][data-variant="full"]) [data-slot="site-header"][data-variant="overlay"] [data-slot="button"] {
   background: transparent;
   border-color: rgb(255 255 255 / 0.7);
+}
+.ez-root:has([data-slot="hero"][data-variant="full"]):has([data-slot="site-header"][data-variant="float"]) {
+  position: relative;
+}
+.ez-root:has([data-slot="hero"][data-variant="full"]) [data-slot="site-header"][data-variant="float"] {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 20;
+  background: transparent;
+}
+.ez-root:has([data-slot="hero"][data-variant="full"]) [data-slot="site-header"][data-variant="float"] > div {
+  border-bottom-color: transparent;
+}
+.ez-root:has([data-slot="hero"][data-variant="full"]):has([data-slot="site-header"][data-variant="float"]) .ez-main {
+  padding-top: 0;
 }
 @media (min-width: 1024px) {
   [data-slot="hero"][data-variant="full"]:has(+ [data-slot="search-bar"]) > div:last-child {

@@ -1,6 +1,7 @@
 {
   "kinds": [
     "amenities",
+    "best_grid",
     "booking_strip",
     "case_cards",
     "case_grid",
@@ -27,6 +28,7 @@
     "room_box",
     "room_list",
     "search_bar",
+    "shop_guide",
     "store_info",
     "testimonial",
     "trust_line"
@@ -36,22 +38,26 @@
       "a": [
         "hero",
         "product_grid",
+        "testimonial",
         "category_tiles",
-        "testimonial"
+        "best_grid",
+        "photo_band"
       ],
       "b": [
         "hero",
+        "category_tiles",
         "product_grid",
         "photo_band",
-        "faq"
+        "best_grid",
+        "reviews"
       ],
       "c": [
-        "category_menu",
         "hero",
-        "curation",
+        "category_tiles",
         "product_grid",
-        "store_info",
-        "faq"
+        "curation",
+        "best_grid",
+        "shop_guide"
       ]
     },
     "class": {

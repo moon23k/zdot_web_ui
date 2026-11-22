@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import type { TemplateDesign } from "../templates/types";
 import type { Section } from "../types";
+import { SHOP_DESIGNS } from "../sections/shop";
 import { sections, type SectionProps, type SiteContext } from "./registry";
 
 const isKind = (kind: string): kind is keyof typeof sections => kind in sections;
@@ -33,13 +34,14 @@ function titled(placed: Placed[]): boolean {
 export function SiteRenderer({ page, context, template }: { page: { sections: Section[]; arranged?: boolean }; context: SiteContext; template: TemplateDesign }) {
   const placed = place(page.sections, template, page.arranged);
   const ctx = { ...context, main: template.main };
+  const skin = template.skin ? SHOP_DESIGNS[template.skin]?.sections : undefined;
   return (
     <>
       {context.storeName && !titled(placed) && <h1 className="ez:sr-only">{context.storeName}</h1>}
       <div data-slot="site-renderer" data-template={template.id} className="ez:grid ez:gap-section ez:text-site-body">
         {placed.map((section, i) => {
           if (!isKind(section.kind)) return null;
-          const Component = sections[section.kind] as ComponentType<SectionProps>;
+          const Component = (skin?.[section.kind] ?? sections[section.kind]) as ComponentType<SectionProps>;
           return <Component key={`${section.kind}-${i}`} data={section.data ?? {}} context={ctx} variant={section.variant} grid={section.grid} />;
         })}
       </div>

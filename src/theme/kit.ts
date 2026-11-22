@@ -23,7 +23,8 @@ export function kitOf(color: Color): Kit | null {
   return { primary, surface, secondary, accent, on_accent };
 }
 
-function tiles(kit: Kit | null): Record<string, string> {
+function tiles(kit: Kit | null, plain?: string): Record<string, string> {
+  if (plain) return Object.fromEntries(TILE_VARS.map((name) => [name, plain]));
   const values = kit
     ? [
         kit.secondary,
@@ -68,7 +69,7 @@ function mark(kit: Kit | null, color: Required<Pick<Color, "surface_alt" | "text
     : { "--ezd-mark": color.surface_alt, "--ezd-mark-ink": color.text };
 }
 
-export function kitVars(color: Required<Pick<Color, "primary" | "surface" | "surface_alt" | "text" | "text_muted">> & Color): Record<string, string> {
-  const kit = kitOf(color);
-  return { ...tiles(kit), ...foot(kit, color), ...mark(kit, color) };
+export function kitVars(color: Required<Pick<Color, "primary" | "surface" | "surface_alt" | "text" | "text_muted">> & Color, plain?: boolean): Record<string, string> {
+  const kit = plain ? null : kitOf(color);
+  return { ...tiles(kit, plain ? color.surface_alt : undefined), ...foot(kit, color), ...mark(kit, color) };
 }

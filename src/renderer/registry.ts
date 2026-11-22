@@ -3,6 +3,7 @@ import { CategoryMenu } from "../sections/category-menu";
 import { FaqSection } from "../sections/faq";
 import { Hero } from "../sections/hero";
 import { ProductList } from "../sections/product-list";
+import { BestGrid, ShopGuide } from "../sections/shop/defaults";
 import { templateSections } from "../sections/template";
 import type { TemplateSectionData } from "../sections/template/data";
 import type { GridSpec } from "../templates/types";
@@ -24,7 +25,7 @@ export type SectionData = {
     href?: string | null;
     image?: string | null;
     images?: string[];
-    products?: { id: string; name: string; sale_price?: number; cover_url?: string | null; href?: string }[];
+    products?: { id: string; name: string; list_price?: number; sale_price?: number; cover_url?: string | null; sold_out?: boolean; href?: string }[];
     facts?: { label: string; value: string }[];
   };
   product_grid: Record<string, never>;
@@ -41,5 +42,7 @@ export const sections: { [K in SectionKind]: ComponentType<SectionProps<K>> } = 
   product_grid: ProductList,
   faq: FaqSection,
   category_menu: CategoryMenu,
+  best_grid: BestGrid,
+  shop_guide: ShopGuide,
   ...templateSections,
 };

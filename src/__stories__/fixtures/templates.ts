@@ -1,6 +1,7 @@
 import type { DetailData } from "../../details/data";
 import type { TemplateMain } from "../../templates/types";
 import type { Design, Section } from "../../types";
+import products from "./products.json";
 
 const s = (kind: string, data: Record<string, unknown>): Section => ({ kind, v: 1, data });
 
@@ -54,14 +55,21 @@ export const homeSections: Record<TemplateMain, Section[]> = {
         { id: "p2", name: "유자청 500ml", sale_price: 18000, cover_url: "/sample/p2.jpg" },
       ],
     }),
-    s("category_menu", {}),
     s("product_grid", {}),
-    s("photo_band", {}),
-    s("category_tiles", { items: [{ title: "과일청", href: "#" }, { title: "잼", href: "#" }, { title: "선물 세트", href: "#" }] }),
-    s("curation", { items: [{ title: "가벼운 선물", href: "#" }, { title: "겨울 식탁", href: "#" }, { title: "혼자의 아침", href: "#" }, { title: "손님 초대", href: "#" }] }),
-    s("store_info", { title: "서촌 쇼룸", address: "서울 종로구 자하문로 12", hours: "화–일 12:00–19:00", phone: "02-000-0000" }),
-    s("testimonial", { quote: "선물했더니 어디서 샀냐는 말을 세 번 들었어요.", name: "김*희 · 자몽청" }),
-    s("faq", {}),
+    s("testimonial", { quote: "선물했더니 어디서 샀냐는 말을 세 번 들었어요.", name: "김*희", image: "/sample/p2.jpg" }),
+    s("category_tiles", {}),
+    s("best_grid", { items: products.slice(0, 5) }),
+    s("photo_band", { image: "/sample/hero.jpg", images: ["/sample/hero.jpg"] }),
+    s("reviews", reviews),
+    s("curation", {
+      image: "/sample/p1.jpg",
+      items: [
+        { title: "자몽청 500ml", image: "/sample/p1.jpg", price: "18,000원", href: "#" },
+        { title: "유자청 500ml", image: "/sample/p2.jpg", price: "18,000원", href: "#" },
+        { title: "레몬청 500ml", price: "16,000원", href: "#" },
+      ],
+    }),
+    s("shop_guide", { phone: "02-000-0000", hours: "평일 10:00 – 17:00", returns: "/policy/returns", inquiry: "/inquiries/new" }),
   ],
   class: [
     s("hero", { image: "/sample/hero.jpg", facts: [{ label: "후기 243", value: "4.9" }] }),

@@ -7,6 +7,7 @@ export { SiteFooter } from "./blocks/site-footer";
 export { ProductCard } from "./blocks/product-card";
 export { ProductGrid } from "./blocks/product-grid";
 export { CatalogView, Crumbs, ProductShelf, type CatalogLink } from "./blocks/catalog-view";
+export type { CatalogPromo, CatalogTab } from "./sections/shop/types";
 export { ProductGallery } from "./blocks/product-gallery";
 export { AnchorTabs } from "./blocks/anchor-tabs";
 export { Fold } from "./sections/kit";

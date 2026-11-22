@@ -108,15 +108,24 @@ export function classFooter({
   };
 }
 
+const WEEKDAY = "일월화수목금토";
+
+function stamp(s: Session): { date: string; day: string | null } {
+  if (!s.ymd) return { date: s.date, day: s.day && !s.date.includes(s.day) ? s.day : null };
+  const [, m, d] = s.ymd.split("-");
+  return { date: `${Number(m)}.${d}`, day: WEEKDAY[new Date(`${s.ymd}T00:00:00Z`).getUTCDay()] };
+}
+
 export function sessionView(s: Session): SessionView {
   const full = s.status === "full";
+  const when = stamp(s);
   const few = !full && s.seats_left != null && s.seats_left > 0 && s.seats_left <= 2;
   return {
     id: s.id,
     href: s.href ?? CLASSES_HREF,
     ymd: s.ymd ?? null,
-    date: s.date,
-    day: s.day ?? null,
+    date: when.date,
+    day: when.day,
     time: s.time,
     name: s.name,
     kind: s.kind ?? null,

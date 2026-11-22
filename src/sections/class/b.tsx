@@ -39,7 +39,7 @@ const textLink = cn("ez:inline-flex ez:h-10 ez:items-center ez:px-2.5 ez:text-si
 
 const price = "ez:text-site-figure ez:font-medium ez:tabular-nums ez:text-fg";
 
-const cols4 = "ez:grid ez:grid-cols-2 ez:gap-x-4 ez:gap-y-10 ez:md:grid-cols-3 ez:md:gap-x-5 ez:lg:grid-cols-4";
+const classRow = "ez:grid ez:grid-cols-2 ez:gap-x-4 ez:gap-y-10 ez:md:gap-x-5";
 
 const cols3 = "ez:grid ez:grid-cols-2 ez:gap-x-4 ez:gap-y-10 ez:md:grid-cols-3 ez:md:gap-x-5";
 
@@ -352,7 +352,7 @@ export function Classes({ data }: SectionProps<"class_list">) {
   return (
     <section data-slot="class-list" id="classes" data-variant="catalog" data-blank={items.length ? undefined : ""} className="ez:text-fg">
       <Head title={CLASS_TITLE.classes} href={items.length ? CLASSES_HREF : undefined} />
-      <div className={cols4}>{items.length ? items.map((c, i) => <ClassItem key={c.id} item={c} tone={i} />) : [0, 1, 2, 3].map((i) => <BlankClass key={i} tone={i} />)}</div>
+      <div className={cn(classRow, fillCols(items.length || 4))}>{items.length ? items.map((c, i) => <ClassItem key={c.id} item={c} tone={i} />) : [0, 1, 2, 3].map((i) => <BlankClass key={i} tone={i} />)}</div>
     </section>
   );
 }

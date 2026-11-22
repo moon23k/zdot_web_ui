@@ -117,3 +117,21 @@ describe("class b day strip", () => {
     expect(root.querySelectorAll('[data-slot="session-row"]')).toHaveLength(1);
   });
 });
+
+describe("class dates and rows", () => {
+  it.each(letters)("shows one date format per session in %s", (letter) => {
+    const root = home(letter, homeSections.class.filter((s) => s.kind === "class_schedule" || s.kind === "hero"));
+    for (const slot of ["hero", "class-schedule"]) {
+      const text = root.querySelector(`[data-slot="${slot}"]`)?.textContent ?? "";
+      if (slot === "class-schedule") expect(text).toMatch(/\d{1,2}\.\d{2}/);
+      expect(text).not.toMatch(/\d+월 \d+일/);
+    }
+  });
+
+  it("fills the catalog class row with as many columns as classes", () => {
+    const sections = [{ kind: "class_list", data: { classes: classCards.slice(0, 3) } }];
+    const grid = home("b", sections).querySelector('[data-slot="class-list"] .ez\\:grid') as HTMLElement;
+    expect(grid.className).toContain("ez:md:grid-cols-3");
+    expect(grid.className).not.toContain("ez:lg:grid-cols-4");
+  });
+});

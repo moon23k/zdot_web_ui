@@ -248,7 +248,7 @@ export function Trust({ data }: SectionProps<"trust_line">) {
     >
       {figures.map((f, i) => (
         <div key={f.label} className={cell(i)}>
-          <span className={cn(mark, "ez:font-display ez:text-site-display-md ez:leading-none ez:tabular-nums")}>{f.value}</span>
+          <span className={cn(mark, "ez:text-site-display-md ez:leading-none ez:tabular-nums")}>{f.value}</span>
           <span className="ez:mt-3.5 ez:text-site-body ez:text-muted">{f.label}</span>
         </div>
       ))}
@@ -444,7 +444,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
       <div className={cn(edge, "ez:flex ez:flex-wrap ez:items-end ez:gap-x-6 ez:gap-y-3 ez:border-b ez:pb-7")}>
         {items.length && data.average != null ? (
           <>
-            <span className="ez:font-display ez:text-site-display-md ez:leading-none ez:text-fg ez:tabular-nums">{average(data.average)}</span>
+            <span className="ez:text-site-display-md ez:leading-none ez:text-fg ez:tabular-nums">{average(data.average)}</span>
             <StarRow rating={data.average} className="ez:pb-1.5 ez:text-muted" />
             <span className="ez:pb-1 ez:text-site-body ez:text-muted">{reviewCount(count)}</span>
           </>

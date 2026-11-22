@@ -290,10 +290,10 @@ describe("SiteRenderer", () => {
   it("follows the template order unless the partner arranged the page", () => {
     const template = resolveTemplate("quote", "a");
     const { unmount } = render(<SiteRenderer page={{ sections }} context={context} template={template} />);
-    expect(headings()).toEqual(["작업", "서비스", "진행 과정", "후기", "자주 묻는 질문"]);
+    expect(headings()).toEqual(["작업 사례", "가격 안내", "진행 과정", "리뷰", "자주 묻는 질문", "견적 요청"]);
     unmount();
     render(<SiteRenderer page={{ sections, arranged: true }} context={context} template={template} />);
-    expect(headings()).toEqual(["진행 과정", "서비스"]);
+    expect(headings()).toEqual(["진행 과정", "가격 안내"]);
   });
 
   it("draws nothing for removed section kinds left in a saved page", () => {

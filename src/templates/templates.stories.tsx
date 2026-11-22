@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { business, productDetail } from "../__stories__/fixtures/commerce";
 import products from "../__stories__/fixtures/products.json";
-import { detailData, homeSections, paletteDesign, stayAddOns, stayRooms, staySearched } from "../__stories__/fixtures/templates";
+import { classCards, classSessions, detailData, homeSections, paletteDesign, stayAddOns, stayRooms, staySearched } from "../__stories__/fixtures/templates";
 import { BuyBox } from "../blocks/buy-box";
+import { ClassCatalog } from "../blocks/class-catalog";
 import { CatalogView } from "../blocks/catalog-view";
 import { ProductGrid } from "../blocks/product-grid";
 import { SiteFooter } from "../blocks/site-footer";
@@ -101,7 +102,7 @@ function Page({ main, letter, banner, design, covers }: { main: TemplateMain; le
   return (
     <ThemeRoot design={design} template={t}>
       <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
-        <SiteHeader name="스토어 이름" variant={t.header} main={t.main === "stay" ? "stay" : undefined} cartCount={2} categories={main === "shop" ? navCategories : undefined} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
+        <SiteHeader name="스토어 이름" variant={t.header} main={t.main === "stay" || t.main === "class" ? t.main : undefined} cartCount={2} categories={main === "shop" ? navCategories : undefined} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
         <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:gap-section ez:px-page ez:py-8">
           <SiteRenderer page={{ sections }} context={site} template={t} />
           <hr className="ez:my-4 ez:border-0 ez:border-t ez:border-solid ez:border-primary-border" />
@@ -180,12 +181,49 @@ function StayListPage({ letter, searched }: { letter: string; searched?: boolean
   );
 }
 
+function ClassListPage({ letter, view = "classes" }: { letter: string; view?: "classes" | "schedule" }) {
+  const t = resolveTemplate("class", letter);
+  return (
+    <ThemeRoot template={t}>
+      <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
+        <SiteHeader name="스토어 이름" variant={t.header} main="class" categories={[{ id: "k1", name: "원데이" }, { id: "k2", name: "정규반" }]} />
+        <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:px-page ez:py-8">
+          <ClassCatalog
+            skin={t.skin}
+            view={view}
+            title={view === "schedule" ? "일정" : "전체 클래스"}
+            count={view === "schedule" ? classSessions.length : classCards.length}
+            crumbs={[
+              { label: "홈", href: "/" },
+              { label: "전체 클래스", href: "/classes" },
+            ]}
+            tabs={[
+              { label: "전체", href: "/classes", on: true, count: 3 },
+              { label: "원데이", href: "/classes?category=k1", count: 2 },
+              { label: "정규반", href: "/classes?category=k2", count: 1 },
+              { label: "단체", href: "/classes?category=k3", count: 0 },
+            ]}
+            sorts={[
+              { label: "가까운 일정순", href: "/classes", on: true },
+              { label: "낮은 가격순", href: "/classes?sort=price_asc" },
+            ]}
+            classes={classCards}
+            sessions={classSessions}
+            links={{ classes: "/classes", schedule: "/classes?view=schedule" }}
+          />
+        </main>
+        <SiteFooter storeName="스토어 이름" business={business} hours="화 – 일 11:00 – 21:00" hosting="자사닷" policies={policies} main="class" skin={t.skin} />
+      </div>
+    </ThemeRoot>
+  );
+}
+
 function BlankPage({ main, letter }: { main: TemplateMain; letter: string }) {
   const t = resolveTemplate(main, letter);
   return (
     <ThemeRoot template={t}>
       <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
-        <SiteHeader name="스토어 이름" variant={t.header} main={t.main === "stay" ? "stay" : undefined} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
+        <SiteHeader name="스토어 이름" variant={t.header} main={t.main === "stay" || t.main === "class" ? t.main : undefined} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
         <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:gap-section ez:px-page ez:py-8">
           <SiteRenderer page={{ sections: [] }} context={{ products: [], categories: [], faqs: [], shipping: null, storeName: "스토어 이름" }} template={t} />
         </main>
@@ -210,9 +248,14 @@ export const S3Palette = story("shop", "c", "쇼핑몰 · S3 브랜드 키트", 
 export const S1List: StoryObj = { name: "쇼핑몰 · S1 상품 목록", render: () => <ListPage letter="a" /> };
 export const S2List: StoryObj = { name: "쇼핑몰 · S2 상품 목록", render: () => <ListPage letter="b" /> };
 export const S3List: StoryObj = { name: "쇼핑몰 · S3 상품 목록 · 홍보 칸", render: () => <ListPage letter="c" promo /> };
-export const C1 = story("class", "a", "클래스 · C1 일정 먼저형");
-export const C2 = story("class", "b", "클래스 · C2 클래스 카드형", "겨울 정규반 모집");
-export const C3 = story("class", "c", "클래스 · C3 정규반 · 과정형");
+export const C1 = story("class", "a", "클래스 · C1 에디토리얼형");
+export const C1Banner = story("class", "a", "클래스 · C1 배너 제목", { title: "겨울 정규반 모집", sub: "주 1회 · 4주 과정" });
+export const C2 = story("class", "b", "클래스 · C2 카탈로그형", "겨울 정규반 모집");
+export const C3 = story("class", "c", "클래스 · C3 쇼룸형");
+export const C1List: StoryObj = { name: "클래스 · C1 클래스 목록", render: () => <ClassListPage letter="a" /> };
+export const C2List: StoryObj = { name: "클래스 · C2 클래스 목록", render: () => <ClassListPage letter="b" /> };
+export const C3List: StoryObj = { name: "클래스 · C3 클래스 목록", render: () => <ClassListPage letter="c" /> };
+export const C2Schedule: StoryObj = { name: "클래스 · C2 일정 전체", render: () => <ClassListPage letter="b" view="schedule" /> };
 export const T1 = story("stay", "a", "숙박 · T1 에디토리얼형");
 export const T1Banner = story("stay", "a", "숙박 · T1 배너 제목", { title: "겨울 숲속 독채", sub: "계곡 옆 본채와 별채" });
 export const T2 = story("stay", "b", "숙박 · T2 카탈로그형");

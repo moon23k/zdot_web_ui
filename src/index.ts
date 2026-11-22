@@ -10,6 +10,9 @@ export { CatalogView, Crumbs, ProductShelf, type CatalogLink } from "./blocks/ca
 export type { CatalogPromo, CatalogTab } from "./sections/shop/types";
 export { StayRooms } from "./blocks/stay-rooms";
 export { STAY_TITLE } from "./sections/stay/shared";
+export { ClassCatalog } from "./blocks/class-catalog";
+export { CLASS_TITLE } from "./sections/class/shared";
+export type { ClassListProps } from "./sections/class/types";
 export type { StayListProps, StaySearch } from "./sections/stay/types";
 export { ProductGallery } from "./blocks/product-gallery";
 export { AnchorTabs } from "./blocks/anchor-tabs";

@@ -74,7 +74,7 @@ describe("store font", () => {
   });
 
   it("sets sans titles in the store body font and serif titles light", () => {
-    const serif = resolveTemplate("class", "b");
+    const serif = resolveTemplate("class", "a");
     expect(serif?.look.font).toBe("serif");
     expect(applyTemplate(design, serif).font?.display).toBe("Noto Sans KR");
     const vars = designVars(applyTemplate({}, serif));

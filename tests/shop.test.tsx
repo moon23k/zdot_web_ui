@@ -114,7 +114,7 @@ describe("shop page edges", () => {
   });
 
   it("leaves other templates on the classic list and kit", () => {
-    const template = resolveTemplate("class", "a");
+    const template = resolveTemplate("quote", "a");
     expect(template.skin).toBeUndefined();
     expect(applyTemplate(paletteDesign, template).color?.accent).toBe(paletteDesign.color?.accent);
   });

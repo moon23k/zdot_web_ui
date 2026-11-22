@@ -1,7 +1,7 @@
 import type { DetailData } from "../../details/data";
 import type { TemplateMain } from "../../templates/types";
 import type { Design, Section } from "../../types";
-import type { AddOn, Room } from "../../sections/template/data";
+import type { AddOn, ClassCard, Room, Session } from "../../sections/template/data";
 import products from "./products.json";
 
 const s = (kind: string, data: Record<string, unknown>): Section => ({ kind, v: 1, data });
@@ -76,6 +76,37 @@ const sessions = [
   { id: "s3", date: "11월 23일 토", time: "14:00", name: "핸드빌딩", length: "2시간", status: "full" as const, href: "#" },
 ];
 
+const YMD = new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Seoul" });
+
+const dayAt = (offset: number) => YMD.format(new Date(Date.now() + offset * 86400000));
+
+const label = (ymd: string) => {
+  const [, m, d] = ymd.split("-").map(Number);
+  return `${m}월 ${d}일`;
+};
+
+const weekday = (ymd: string) => "일월화수목금토"[new Date(`${ymd}T00:00:00Z`).getUTCDay()];
+
+const slot = (offset: number, time: string, name: string, kind: string, length: string, seats: number, image: string, price: string, id: string): Session => {
+  const ymd = dayAt(offset);
+  return { id, ymd, date: label(ymd), day: weekday(ymd), time, name, kind, length, image, price, href: "#", status: seats === 0 ? "full" : seats <= 3 ? "few" : "open", seats_left: seats };
+};
+
+export const classSessions: Session[] = [
+  slot(1, "14:00", "물레 원데이 클래스", "원데이", "120분", 3, "/sample/p1.jpg", "65,000원", "s1"),
+  slot(2, "19:30", "핸드빌딩 컵 만들기", "원데이", "90분", 5, "/sample/p2.jpg", "48,000원", "s2"),
+  slot(2, "11:00", "접시 페인팅", "원데이", "90분", 0, "/sample/p3.jpg", "42,000원", "s3"),
+  slot(4, "11:00", "물레 원데이 클래스", "원데이", "120분", 1, "/sample/p1.jpg", "65,000원", "s4"),
+  slot(4, "15:00", "커플 물레 체험", "원데이", "120분", 2, "/sample/p4.jpg", "120,000원", "s5"),
+  slot(9, "19:30", "물레 정규반 4주", "정규반", "4회", 2, "/sample/p2.jpg", "240,000원", "s6"),
+];
+
+export const classCards: ClassCard[] = [
+  { id: "k1", name: "물레 원데이 클래스", image: "/sample/p1.jpg", price: "65,000원", next: "다음 수업 11월 24일 화 14:00", href: "#", kind: "원데이", length: "120분", capacity: 6, left: 3 },
+  { id: "k2", name: "핸드빌딩 컵 만들기", image: "/sample/p2.jpg", price: "48,000원", next: "다음 수업 11월 25일 수 19:30", href: "#", kind: "원데이", length: "90분", capacity: 6, left: 5 },
+  { id: "k3", name: "물레 정규반 4주", image: "/sample/p4.jpg", price: "240,000원", next: "다음 수업 12월 2일 화 19:30", href: "#", kind: "정규반", length: "4회", capacity: 6, left: 2 },
+];
+
 export const paletteDesign: Design = {
   color: {
     primary: "#B64C2F",
@@ -120,21 +151,14 @@ export const homeSections: Record<TemplateMain, Section[]> = {
     s("shop_guide", { phone: "02-000-0000", hours: "평일 10:00 – 17:00", returns: "/policy/returns", inquiry: "/inquiries/new" }),
   ],
   class: [
-    s("hero", { image: "/sample/hero.jpg", facts: [{ label: "후기 243", value: "4.9" }] }),
-    s("trust_line", { items: ["평점 4.9", "후기 243", "수강생 3,200명"] }),
-    s("class_schedule", { sessions }),
-    s("class_list", {
-      classes: [
-        { id: "k1", name: "물레 입문", chips: ["3시간", "입문"], price: "85,000원 · 1인", next: "다음 수업 11월 9일", href: "#" },
-        { id: "k2", name: "핸드빌딩 원데이", chips: ["2시간", "입문"], price: "65,000원 · 1인", next: "다음 수업 11월 10일", href: "#" },
-        { id: "k3", name: "8주 정규반", chips: ["8주", "중급"], price: "340,000원부터", next: "다음 개강 11월 6일", href: "#" },
-      ],
-    }),
-    s("numbers", { items: [{ value: "2018", label: "개업" }, { value: "3,200", label: "수강생" }, { value: "4.9", label: "평점" }] }),
-    s("process_steps", { steps: ["예약", "수업", "굽기", "수령"] }),
-    s("gates", { items: [{ title: "원데이", href: "#" }, { title: "정규반", href: "#" }, { title: "단체 문의", href: "#" }] }),
+    s("hero", { image: "/sample/hero.jpg", sessions: classSessions.filter((x) => x.status !== "full").slice(0, 2) }),
+    s("class_list", { classes: classCards }),
+    s("photo_band", { image: "/sample/p3.jpg", images: ["/sample/p3.jpg", "/sample/p2.jpg"] }),
+    s("class_schedule", { sessions: classSessions }),
+    s("testimonial", { quote: "처음인데도 차근차근 알려 주셔서 컵을 완성했어요.", name: "김*희", ...reviews, image: "/sample/p2.jpg" }),
     s("reviews", reviews),
     s("faq", {}),
+    s("location", { address: "서울 마포구 월드컵로 00길 0, 2층", phone: "02-000-0000", href: "#", hours: "화 – 일 11:00 – 21:00", cancel: "이용일 3일 전까지 100% 환불", returns: "/policy/returns" }),
   ],
   stay: [
     s("hero", { image: "/sample/hero.jpg", products: stayRooms.map((r) => ({ id: r.id, name: r.name, cover_url: r.image, href: r.href })), rooms: stayRooms, booking: { href: "/products", max: 6 } }),

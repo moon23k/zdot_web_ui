@@ -88,13 +88,13 @@ describe("blank scope", () => {
     expect([...hero("shop", "b", { image: "https://img.test/a.jpg", products: pair }).querySelectorAll('[data-slot="hero-product"]')].map((a) => a.getAttribute("href"))).toEqual(["/products/p1", "/products/p2"]);
     expect(hero("shop", "c", { image: "https://img.test/a.jpg", products }).querySelector('a[href="/products/p1"]')).not.toBeNull();
     expect(hero("quote", "c", { image: "https://img.test/a.jpg", products }).querySelector('a[href="/products/p1"]')).not.toBeNull();
-    expect([...hero("class", "a", { image: "https://img.test/a.jpg" }).querySelectorAll("a")].map((a) => a.textContent)).toEqual(["일정 보기", "클래스 전체"]);
+    expect(hero("class", "a", { image: "https://img.test/a.jpg" }).querySelector("a")).toBeNull();
   });
 
   it("uses a fixed button label for a partner banner", () => {
     const el = hero("class", "b", { title: "겨울 정규반 모집", image: "https://img.test/a.jpg" });
     expect(el.querySelector("h1")).toHaveTextContent("겨울 정규반 모집");
-    expect(el.querySelector("a")).toHaveTextContent("클래스 보기");
+    expect(el.querySelector("a")).toHaveTextContent("전체 클래스");
   });
 
   it("keeps a photo-only stay hero out of the blank state", () => {

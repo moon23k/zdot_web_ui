@@ -6,7 +6,7 @@ import { ProductList } from "../sections/product-list";
 import { BestGrid, ShopGuide } from "../sections/shop/defaults";
 import { AddOns } from "../sections/stay/defaults";
 import { templateSections } from "../sections/template";
-import type { Room, TemplateSectionData } from "../sections/template/data";
+import type { Room, TemplateSectionData, Session } from "../sections/template/data";
 import type { GridSpec } from "../templates/types";
 import type { Category, Faq, ProductSummary, Shipping } from "../types";
 
@@ -29,6 +29,7 @@ export type SectionData = {
     products?: { id: string; name: string; list_price?: number; sale_price?: number; cover_url?: string | null; sold_out?: boolean; href?: string }[];
     facts?: { label: string; value: string }[];
     rooms?: Room[];
+    sessions?: Session[];
     booking?: TemplateSectionData["booking_strip"];
   };
   product_grid: Record<string, never>;

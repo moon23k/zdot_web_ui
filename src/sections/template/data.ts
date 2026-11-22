@@ -15,9 +15,11 @@ export type Session = {
   seats_left?: number | null;
   price?: string;
   href?: string;
+  ymd?: string;
+  kind?: string | null;
 };
 
-export type ClassCard = { id: string; name: string; image?: string | null; chips?: string[]; price?: string; next?: string; href?: string };
+export type ClassCard = { id: string; name: string; image?: string | null; chips?: string[]; price?: string; next?: string; href?: string; kind?: string | null; length?: string | null; capacity?: number | null; left?: number | null };
 
 export type RoomRates = { weekday: number; weekend: number; peak?: number | null; peak_weekend?: number | null };
 
@@ -79,7 +81,7 @@ export type TemplateSectionData = {
   amenities: { items?: { name: string; group?: string }[] };
   house_rules: { check_in?: string | null; check_out?: string | null; rules?: string[]; cancel?: CancelData };
   pay_plan: CancelData;
-  location: { address?: string | null; note?: string | null; href?: string | null; phone?: string | null };
+  location: { address?: string | null; note?: string | null; href?: string | null; phone?: string | null; hours?: string | null; cancel?: string | null; returns?: string | null };
   add_ons: { items?: AddOn[]; image?: string | null };
   room_list: { rooms?: Room[] };
   price_tiers: { items?: Row[] };

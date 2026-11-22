@@ -40,3 +40,24 @@ function NoBusinessExample() {
 export const Default: StoryObj = { render: () => <DefaultExample /> };
 
 export const NoBusiness: StoryObj = { render: () => <NoBusinessExample /> };
+
+function StayExample() {
+  return (
+    <SiteFooter
+      storeName="로렘 입숨"
+      business={business}
+      hosting="자사닷"
+      hours="매일 10:00 – 20:00"
+      main="stay"
+      skin="showroom"
+      sections={["hero", "room_list", "house_rules", "location", "reviews"]}
+      policies={[
+        { key: "returns", title: "취소 · 환불 규정" },
+        { key: "terms", title: "이용약관" },
+        { key: "privacy", title: "개인정보처리방침" },
+      ]}
+    />
+  );
+}
+
+export const Stay: StoryObj = { name: "숙박 · 쇼룸", render: () => <StayExample /> };

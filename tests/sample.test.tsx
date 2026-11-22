@@ -1,20 +1,20 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { RoomList } from "../src/sections/template/stay";
+import { STAY_DESIGNS } from "../src/sections/stay";
 
 const rooms = [
-  { id: "prd_1", name: "커플룸", specs: ["기준 2명"], price: "1박 110,000원부터", href: "/products/prd_1", sample: true },
-  { id: "prd_2", name: "가족룸", specs: ["기준 4명"], price: "1박 150,000원부터", href: "/products/prd_2" },
+  { id: "prd_1", name: "커플룸", specs: [], price: "1박 110,000원부터", href: "/products/prd_1", sample: true, price_from: 110000, base_guests: 2, max_guests: 2 },
+  { id: "prd_2", name: "가족룸", specs: [], price: "1박 150,000원부터", href: "/products/prd_2", price_from: 150000, base_guests: 4, max_guests: 4 },
 ];
 
-describe("RoomList", () => {
+const context = { products: [], categories: [], faqs: [], shipping: null };
+
+describe.each(Object.entries(STAY_DESIGNS))("stay %s rooms", (_, design) => {
   it("marks sample rooms and leaves them without a booking button", () => {
-    render(<RoomList data={{ rooms }} context={{ products: [], categories: [], faqs: [], shipping: null } as never} />);
-    expect(screen.getAllByText("예시")).toHaveLength(1);
-    expect(screen.queryByRole("link", { name: /예약/ })).not.toBeInTheDocument();
-    expect(screen.getAllByRole("link").map((a) => [a.getAttribute("href"), a.hasAttribute("data-sample")])).toEqual([
-      ["/products/prd_1", true],
-      ["/products/prd_2", false],
-    ]);
+    const Rooms = design.sections.room_list!;
+    const { container } = render(<Rooms data={{ rooms }} context={context} />);
+    expect(container.querySelectorAll('[data-sample]')).toHaveLength(1);
+    expect(container.querySelector('[data-sample]')).toHaveTextContent("예시");
+    expect([...container.querySelectorAll("a")].filter((a) => a.textContent?.includes("예약"))).toHaveLength(0);
   });
 });

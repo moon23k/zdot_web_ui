@@ -1,6 +1,7 @@
 import type { DetailData } from "../../details/data";
 import type { TemplateMain } from "../../templates/types";
 import type { Design, Section } from "../../types";
+import type { AddOn, Room } from "../../sections/template/data";
 import products from "./products.json";
 
 const s = (kind: string, data: Record<string, unknown>): Section => ({ kind, v: 1, data });
@@ -21,6 +22,53 @@ const pay = [
   { label: "7일 전 취소", value: "전액 환불" },
   { label: "3일 전 취소", value: "50% 환불" },
 ];
+
+const rate = (weekday: number, weekend: number, peak: number, peak_weekend: number) => ({ weekday, weekend, peak, peak_weekend });
+
+const room = (id: string, name: string, base: number, max: number, from: number, rates: ReturnType<typeof rate>, extra: number, more: Partial<Room> = {}): Room => ({
+  id,
+  name,
+  image: `/sample/${id}.jpg`,
+  specs: [],
+  price: `1박 ${from.toLocaleString("ko-KR")}원부터`,
+  href: `/products/${id}`,
+  left: 1,
+  base_guests: base,
+  max_guests: max,
+  check_in: "15:00",
+  check_out: "11:00",
+  price_from: from,
+  min_nights: 1,
+  max_nights: 7,
+  extra_adult_fee: extra,
+  extra_child_fee: extra ? 20000 : 0,
+  rates,
+  ...more,
+});
+
+export const stayRooms: Room[] = [
+  room("p1", "본채", 4, 6, 280000, rate(280000, 340000, 380000, 440000), 30000),
+  room("p2", "별채", 2, 4, 180000, rate(180000, 220000, 250000, 290000), 30000),
+  room("p3", "다락방", 2, 2, 140000, rate(140000, 170000, 190000, 220000), 0, { left: 0 }),
+  room("p4", "정원방", 2, 3, 160000, rate(160000, 195000, 220000, 250000), 30000, { min_nights: 2 }),
+];
+
+export const stayAddOns: AddOn[] = [
+  { name: "바비큐 그릴", price: 30000, unit: "stay", pay_at: "onsite" },
+  { name: "조식", price: 15000, unit: "stay", pay_at: "online" },
+  { name: "장작", price: 20000, unit: "stay", pay_at: "onsite" },
+];
+
+export const staySearched: Room[] = stayRooms.map((r, i) => ({
+  ...r,
+  stay: [
+    { nights: 1, total: 340000, left: 1, state: "open" as const },
+    { nights: 1, total: 220000, left: 2, state: "open" as const },
+    { nights: 1, total: 170000, left: 0, state: "full" as const },
+    { nights: 1, total: 195000, left: 1, state: "nights" as const },
+  ][i],
+  book: i < 2 ? `${r.href}?check_in=2026-12-12&check_out=2026-12-13&adults=2&children=0` : null,
+}));
 
 const sessions = [
   { id: "s1", date: "11월 9일 토", time: "10:30", name: "물레 입문", length: "3시간", status: "few" as const, seats_left: 2, href: "#" },
@@ -89,37 +137,16 @@ export const homeSections: Record<TemplateMain, Section[]> = {
     s("faq", {}),
   ],
   stay: [
-    s("hero", {
-      image: "/sample/hero.jpg",
-      facts: [
-        { label: "위치", value: "제주 서귀포시 안덕면" },
-        { label: "체크인 · 체크아웃", value: "15:00 · 11:00" },
-      ],
-    }),
-    s("booking_strip", { price: "1박 206,000원부터", href: "#" }),
-    s("search_bar", {}),
-    s("gallery", { images: ["", "", ""] }),
-    s("room_list", {
-      rooms: [
-        { id: "r1", name: "오션 스위트", specs: ["2~4인", "33㎡", "퀸 1"], price: "1박 180,000원부터", left: 2, href: "#" },
-        { id: "r2", name: "가든 룸", specs: ["2인", "24㎡", "더블 1"], price: "1박 140,000원부터", left: 1, href: "#" },
-        { id: "r3", name: "패밀리 룸", specs: ["4~6인", "45㎡", "퀸 2"], price: "1박 240,000원부터", href: "#" },
-      ],
-    }),
-    s("room_box", { names: ["사랑채", "안채", "별채"], href: "#" }),
-    s("amenities", {
-      items: [
-        { name: "와이파이", group: "기본" },
-        { name: "주차", group: "기본" },
-        { name: "바비큐", group: "야외" },
-        { name: "정원", group: "야외" },
-        { name: "조리 도구", group: "주방" },
-        { name: "반려동물 동반", group: "기본" },
-      ],
-    }),
-    s("house_rules", { check_in: "15:00", check_out: "11:00", rules: ["기준 4인 · 최대 6인", "실내 흡연 금지", "파티 불가"] }),
-    s("pay_plan", { rows: pay }),
-    s("location", { address: "제주 서귀포시 안덕면 00로 12", note: "주차 2대", href: "#" }),
+    s("hero", { image: "/sample/hero.jpg", products: stayRooms.map((r) => ({ id: r.id, name: r.name, cover_url: r.image, href: r.href })), rooms: stayRooms, booking: { href: "/products", max: 6 } }),
+    s("booking_strip", { href: "/products", max: 6 }),
+    s("testimonial", { ...reviews, image: "/sample/p2.jpg" }),
+    s("room_list", { rooms: stayRooms }),
+    s("gallery", { images: ["/sample/hero.jpg", "/sample/p1.jpg", "/sample/p2.jpg", "/sample/p3.jpg", "/sample/p4.jpg"] }),
+    s("amenities", { items: ["무선 인터넷", "주차", "주방", "욕조", "바비큐", "에어컨", "난방", "세탁기", "수건", "드라이기"].map((name) => ({ name })) }),
+    s("add_ons", { items: stayAddOns, image: "/sample/p2.jpg" }),
+    s("house_rules", { check_in: "15:00", check_out: "11:00", rules: ["전 객실 금연", "반려동물 동반 불가", "22:00 이후 실외 이용 제한"], cancel: { rows: pay } }),
+    s("photo_band", { image: "/sample/p3.jpg", images: ["/sample/p3.jpg"] }),
+    s("location", { address: "강원특별자치도 00군 00면 00로 00", phone: "033-000-0000", href: "#" }),
     s("reviews", reviews),
   ],
   quote: [

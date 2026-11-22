@@ -35,7 +35,6 @@ describe.each(designs)("blank %s %s", (main, letter) => {
     const { template, root } = page(main, letter);
     const missing = template!.home
       .map((slot) => slot.kind)
-      .filter((kind) => !["search_bar"].includes(kind))
       .filter((kind) => !root.querySelector(`[data-blank][data-slot="${kind.replace(/_/g, "-")}"]`));
     expect(missing).toEqual([]);
   });
@@ -98,11 +97,9 @@ describe("blank scope", () => {
     expect(el.querySelector("a")).toHaveTextContent("클래스 보기");
   });
 
-  it("puts the stay facts first when there is no title", () => {
-    const facts = [{ label: "체크인 · 체크아웃", value: "15:00 · 11:00" }];
-    const el = hero("stay", "c", { facts });
+  it("keeps a photo-only stay hero out of the blank state", () => {
+    const el = hero("stay", "c", { image: "https://img.test/a.jpg" });
     expect(el).not.toHaveAttribute("data-blank");
-    expect(el).toHaveTextContent("15:00 · 11:00");
     expect(el.querySelector("h1")).toBeNull();
   });
 
@@ -129,12 +126,12 @@ describe("blank scope", () => {
     expect(page("stay", "a", true).root.children).toHaveLength(0);
   });
 
-  it("shows cancel terms per room", () => {
+  it("shows cancel terms per room in the stay guide", () => {
     const groups = [{ title: "바다 앞 독채", rows: [{ label: "이용일 당일", value: "0% 환불" }] }];
     const { container } = render(
-      <SiteRenderer page={{ sections: [{ kind: "pay_plan", data: { groups } }], arranged: true }} context={context} template={resolveTemplate("stay", "a")} />,
+      <SiteRenderer page={{ sections: [{ kind: "house_rules", data: { cancel: { groups } } }], arranged: true }} context={context} template={resolveTemplate("stay", "a")} />,
     );
-    const block = container.querySelector('[data-slot="pay-plan"]');
+    const block = container.querySelector('[data-slot="house-rules"]');
     expect(block).not.toHaveAttribute("data-blank");
     expect(block).toHaveTextContent("바다 앞 독채");
     expect(block).toHaveTextContent("0% 환불");

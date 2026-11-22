@@ -19,3 +19,9 @@ function GuestExample() {
 export const Default: StoryObj = { render: () => <DefaultExample /> };
 
 export const Guest: StoryObj = { render: () => <GuestExample /> };
+
+function StayExample() {
+  return <SiteHeader name="로렘 입숨" main="stay" variant="catalog" sections={["hero", "booking_strip", "room_list", "amenities", "house_rules", "location"]} />;
+}
+
+export const Stay: StoryObj = { name: "숙박 · 홈에 있는 구획만 메뉴", render: () => <StayExample /> };

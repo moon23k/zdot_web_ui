@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { business, productDetail } from "../__stories__/fixtures/commerce";
 import products from "../__stories__/fixtures/products.json";
-import { detailData, homeSections, paletteDesign } from "../__stories__/fixtures/templates";
+import { detailData, homeSections, paletteDesign, stayAddOns, stayRooms, staySearched } from "../__stories__/fixtures/templates";
 import { BuyBox } from "../blocks/buy-box";
 import { CatalogView } from "../blocks/catalog-view";
 import { ProductGrid } from "../blocks/product-grid";
 import { SiteFooter } from "../blocks/site-footer";
 import { SiteHeader } from "../blocks/site-header";
+import { StayRooms } from "../blocks/stay-rooms";
 import { DetailLayout } from "../details";
 import type { DetailData } from "../details/data";
 import type { SiteContext } from "../renderer/registry";
@@ -100,7 +101,7 @@ function Page({ main, letter, banner, design, covers }: { main: TemplateMain; le
   return (
     <ThemeRoot design={design} template={t}>
       <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
-        <SiteHeader name="스토어 이름" variant={t.header} cartCount={2} categories={main === "shop" ? navCategories : undefined} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
+        <SiteHeader name="스토어 이름" variant={t.header} main={t.main === "stay" ? "stay" : undefined} cartCount={2} categories={main === "shop" ? navCategories : undefined} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
         <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:gap-section ez:px-page ez:py-8">
           <SiteRenderer page={{ sections }} context={site} template={t} />
           <hr className="ez:my-4 ez:border-0 ez:border-t ez:border-solid ez:border-primary-border" />
@@ -150,12 +151,41 @@ function ListPage({ letter, promo }: { letter: string; promo?: boolean }) {
   );
 }
 
+function StayListPage({ letter, searched }: { letter: string; searched?: boolean }) {
+  const t = resolveTemplate("stay", letter);
+  const rooms = searched ? staySearched : stayRooms;
+  return (
+    <ThemeRoot template={t}>
+      <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
+        <SiteHeader name="스토어 이름" variant={t.header} main="stay" />
+        <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:px-page ez:py-8">
+          <StayRooms
+            skin={t.skin}
+            title="객실"
+            count={rooms.length}
+            crumbs={[
+              { label: "홈", href: "/" },
+              { label: "객실", href: "/products" },
+            ]}
+            search={{ check_in: searched ? "2026-12-12" : null, check_out: searched ? "2026-12-13" : null, adults: 2, children: 0, max: 6 }}
+            rooms={rooms}
+            peak
+            addOns={stayAddOns}
+            photo="/sample/hero.jpg"
+          />
+        </main>
+        <SiteFooter storeName="스토어 이름" business={business} hours="매일 10:00 – 20:00" hosting="자사닷" policies={policies} main="stay" skin={t.skin} />
+      </div>
+    </ThemeRoot>
+  );
+}
+
 function BlankPage({ main, letter }: { main: TemplateMain; letter: string }) {
   const t = resolveTemplate(main, letter);
   return (
     <ThemeRoot template={t}>
       <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
-        <SiteHeader name="스토어 이름" variant={t.header} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
+        <SiteHeader name="스토어 이름" variant={t.header} main={t.main === "stay" ? "stay" : undefined} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
         <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:gap-section ez:px-page ez:py-8">
           <SiteRenderer page={{ sections: [] }} context={{ products: [], categories: [], faqs: [], shipping: null, storeName: "스토어 이름" }} template={t} />
         </main>
@@ -183,9 +213,14 @@ export const S3List: StoryObj = { name: "쇼핑몰 · S3 상품 목록 · 홍보
 export const C1 = story("class", "a", "클래스 · C1 일정 먼저형");
 export const C2 = story("class", "b", "클래스 · C2 클래스 카드형", "겨울 정규반 모집");
 export const C3 = story("class", "c", "클래스 · C3 정규반 · 과정형");
-export const T1 = story("stay", "a", "숙박 · T1 독채 한 페이지형");
-export const T2 = story("stay", "b", "숙박 · T2 객실 검색 · 카드형");
-export const T3 = story("stay", "c", "숙박 · T3 B&B 소개형");
+export const T1 = story("stay", "a", "숙박 · T1 에디토리얼형");
+export const T1Banner = story("stay", "a", "숙박 · T1 배너 제목", { title: "겨울 숲속 독채", sub: "계곡 옆 본채와 별채" });
+export const T2 = story("stay", "b", "숙박 · T2 카탈로그형");
+export const T3 = story("stay", "c", "숙박 · T3 쇼룸형");
+export const T1List: StoryObj = { name: "숙박 · T1 객실 목록 · 날짜 선택", render: () => <StayListPage letter="a" searched /> };
+export const T2List: StoryObj = { name: "숙박 · T2 객실 목록 · 날짜 선택", render: () => <StayListPage letter="b" searched /> };
+export const T3List: StoryObj = { name: "숙박 · T3 객실 목록 · 날짜 선택", render: () => <StayListPage letter="c" searched /> };
+export const T3ListPlain: StoryObj = { name: "숙박 · T3 객실 목록 · 날짜 없음", render: () => <StayListPage letter="c" /> };
 export const RoomTerms: StoryObj = {
   name: "숙박 · 객실별 취소 규정",
   render: () => (
@@ -196,18 +231,20 @@ export const RoomTerms: StoryObj = {
         page={{
           sections: [
             {
-              kind: "pay_plan",
+              kind: "house_rules",
               data: {
-                groups: [
-                  {
-                    title: "바다 앞 독채",
-                    rows: [
-                      { label: "이용일 3일 전까지", value: "100% 환불" },
-                      { label: "이용일 2일 전부터 당일까지", value: "0% 환불" },
-                    ],
-                  },
-                  { title: "마당 있는 별채", rows: [{ label: "이용 시작 전까지", value: "100% 환불" }] },
-                ],
+                cancel: {
+                  groups: [
+                    {
+                      title: "바다 앞 독채",
+                      rows: [
+                        { label: "이용일 3일 전까지", value: "100% 환불" },
+                        { label: "이용일 2일 전부터 당일까지", value: "0% 환불" },
+                      ],
+                    },
+                    { title: "마당 있는 별채", rows: [{ label: "이용 시작 전까지", value: "100% 환불" }] },
+                  ],
+                },
               },
             },
           ],

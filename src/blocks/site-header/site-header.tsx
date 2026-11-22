@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { ButtonLink } from "../../components/button";
 import { Icon, type IconName } from "../../components/icon";
 import { SHOP_DESIGNS, shopLinks, shopNav } from "../../sections/shop";
+import { STAY_DESIGNS, stayLinks, stayNav } from "../../sections/stay";
 import type { HeaderVariant, ShopSkin } from "../../templates/types";
 import { cn } from "../../utils/cn";
 import { wordmark } from "../../utils/styles";
@@ -55,6 +56,7 @@ export function SiteHeader({
   main = "shop",
   cta,
   categories,
+  sections,
 }: {
   name: string;
   logoUrl?: string | null;
@@ -64,6 +66,7 @@ export function SiteHeader({
   main?: string;
   cta?: { label: string; href: string } | null;
   categories?: NavCategory[];
+  sections?: string[] | null;
 }) {
   const shop = main === "shop";
   const link = LINKS[main];
@@ -94,8 +97,11 @@ export function SiteHeader({
   const Skin = shop && variant && variant in SHOP_DESIGNS ? SHOP_DESIGNS[variant as ShopSkin].Header : null;
   const row = "ez:mx-auto ez:grid ez:max-w-wrap ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-3 ez:px-page ez:py-2 ez:min-h-16 ez:lg:min-h-20";
   const split = variant === "dark" || variant === "band";
+  const StaySkin = main === "stay" && variant && variant in STAY_DESIGNS ? STAY_DESIGNS[variant as ShopSkin].Header : null;
   const full = Skin ? (
     <Skin name={name} logoUrl={logoUrl} cartCount={cartCount} signedIn={signedIn} categories={categories ?? []} nav={shopNav(categories ?? [])} links={shopLinks(signedIn)} />
+  ) : StaySkin ? (
+    <StaySkin name={name} logoUrl={logoUrl} signedIn={signedIn} nav={stayNav(sections)} links={stayLinks(signedIn)} />
   ) : variant === "center" ? (
       <header data-slot="site-header" data-variant="center" className="ez:bg-surface">
         <div className={cn(row, "ez:lg:min-h-21 ez:lg:grid-cols-[minmax(max-content,1fr)_max-content_minmax(max-content,1fr)]")}>

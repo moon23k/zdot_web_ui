@@ -1,5 +1,6 @@
 {
   "kinds": [
+    "add_ons",
     "amenities",
     "best_grid",
     "booking_strip",
@@ -25,9 +26,7 @@
     "process_steps",
     "product_grid",
     "reviews",
-    "room_box",
     "room_list",
-    "search_bar",
     "shop_guide",
     "store_info",
     "testimonial",
@@ -86,27 +85,35 @@
       "a": [
         "hero",
         "booking_strip",
+        "testimonial",
         "room_list",
         "gallery",
         "amenities",
         "house_rules",
-        "pay_plan",
+        "photo_band",
         "location",
         "reviews"
       ],
       "b": [
         "hero",
-        "search_bar",
+        "booking_strip",
         "room_list",
+        "amenities",
+        "gallery",
+        "add_ons",
+        "house_rules",
         "reviews",
         "location"
       ],
       "c": [
         "hero",
-        "room_box",
         "amenities",
+        "room_list",
+        "add_ons",
         "gallery",
-        "location"
+        "house_rules",
+        "location",
+        "reviews"
       ]
     },
     "quote": {

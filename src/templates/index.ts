@@ -1,4 +1,5 @@
 import { klass } from "./class";
+import { place } from "./place";
 import { quote } from "./quote";
 import { shop } from "./shop";
 import { stay } from "./stay";
@@ -6,7 +7,7 @@ import type { TemplateDesign, TemplateLetter, TemplateMain } from "./types";
 
 export type * from "./types";
 
-export const templates: Record<TemplateMain, TemplateDesign[]> = { shop, class: klass, stay, quote };
+export const templates: Record<TemplateMain, TemplateDesign[]> = { shop, class: klass, stay, quote, place };
 
 export function templateHome(): Record<TemplateMain, Partial<Record<TemplateLetter, string[]>>> {
   return Object.fromEntries(

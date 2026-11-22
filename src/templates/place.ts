@@ -1,0 +1,55 @@
+import type { TemplateDesign } from "./types";
+
+export const place: TemplateDesign[] = [
+  {
+    id: "P1",
+    main: "place",
+    letter: "a",
+    name: "브랜드형",
+    look: { tone: "night", radius: 0, font: "sans", shape: "square", kit: "off", section: 160, pad: 80 },
+    header: "editorial",
+    skin: "editorial",
+    home: [
+      { kind: "hero", variant: "editorial" },
+      { kind: "intro", variant: "editorial" },
+      { kind: "photo_band", variant: "editorial" },
+      { kind: "menu", variant: "editorial" },
+      { kind: "store_info", variant: "editorial" },
+    ],
+    detail: [],
+  },
+  {
+    id: "P2",
+    main: "place",
+    letter: "b",
+    name: "방문형",
+    look: { tone: "white", radius: 0, font: "serif", shape: "square", kit: "off", section: 128, pad: 80 },
+    header: "catalog",
+    skin: "catalog",
+    home: [
+      { kind: "hero", variant: "catalog" },
+      { kind: "intro", variant: "catalog" },
+      { kind: "menu", variant: "catalog" },
+      { kind: "location", variant: "catalog" },
+    ],
+    detail: [],
+  },
+  {
+    id: "P3",
+    main: "place",
+    letter: "c",
+    name: "이야기형",
+    look: { tone: "cream", radius: 0, font: "sans", shape: "square", kit: "off", section: 128, pad: 80 },
+    header: "showroom",
+    skin: "showroom",
+    home: [
+      { kind: "hero", variant: "showroom" },
+      { kind: "intro", variant: "showroom" },
+      { kind: "menu", variant: "showroom" },
+      { kind: "store_info", variant: "showroom" },
+      { kind: "faq", variant: "showroom" },
+      { kind: "photo_band", variant: "showroom" },
+    ],
+    detail: [],
+  },
+];

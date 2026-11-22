@@ -5,6 +5,7 @@ import { Hero } from "../sections/hero";
 import { ProductList } from "../sections/product-list";
 import { BestGrid, ShopGuide } from "../sections/shop/defaults";
 import { AddOns } from "../sections/stay/defaults";
+import { Intro, Menu } from "../sections/place/defaults";
 import { templateSections } from "../sections/template";
 import type { Case, QuoteFigures, QuoteStarter, Room, TemplateSectionData, Session } from "../sections/template/data";
 import type { Row } from "../sections/kit";
@@ -57,5 +58,7 @@ export const sections: { [K in SectionKind]: ComponentType<SectionProps<K>> } = 
   best_grid: BestGrid,
   shop_guide: ShopGuide,
   add_ons: AddOns,
+  menu: Menu,
+  intro: Intro,
   ...templateSections,
 };

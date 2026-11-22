@@ -6,6 +6,7 @@ import { SHOP_DESIGNS, shopLinks, shopNav } from "../../sections/shop";
 import { STAY_DESIGNS, stayLinks, stayNav } from "../../sections/stay";
 import { CLASS_DESIGNS, classLinks, classNav } from "../../sections/class";
 import { QUOTE_DESIGNS, quoteLinks, quoteNav } from "../../sections/quote";
+import { PLACE_DESIGNS, placeLinks, placeNav, type StoreLinks } from "../../sections/place";
 import type { HeaderVariant, ShopSkin } from "../../templates/types";
 import { cn } from "../../utils/cn";
 import { wordmark } from "../../utils/styles";
@@ -60,6 +61,7 @@ export function SiteHeader({
   categories,
   sections,
   phone,
+  links,
 }: {
   name: string;
   logoUrl?: string | null;
@@ -71,6 +73,7 @@ export function SiteHeader({
   categories?: NavCategory[];
   sections?: string[] | null;
   phone?: string | null;
+  links?: StoreLinks | null;
 }) {
   const shop = main === "shop";
   const link = LINKS[main];
@@ -104,6 +107,7 @@ export function SiteHeader({
   const StaySkin = main === "stay" && variant && variant in STAY_DESIGNS ? STAY_DESIGNS[variant as ShopSkin].Header : null;
   const ClassSkin = main === "class" && variant && variant in CLASS_DESIGNS ? CLASS_DESIGNS[variant as ShopSkin].Header : null;
   const QuoteSkin = main === "quote" && variant && variant in QUOTE_DESIGNS ? QUOTE_DESIGNS[variant as ShopSkin].Header : null;
+  const PlaceSkin = main === "place" && variant && variant in PLACE_DESIGNS ? PLACE_DESIGNS[variant as ShopSkin].Header : null;
   const full = Skin ? (
     <Skin name={name} logoUrl={logoUrl} cartCount={cartCount} signedIn={signedIn} categories={categories ?? []} nav={shopNav(categories ?? [])} links={shopLinks(signedIn)} />
   ) : StaySkin ? (
@@ -112,6 +116,8 @@ export function SiteHeader({
     <ClassSkin name={name} logoUrl={logoUrl} signedIn={signedIn} nav={classNav(sections, categories)} links={classLinks(signedIn)} />
   ) : QuoteSkin ? (
     <QuoteSkin name={name} logoUrl={logoUrl} signedIn={signedIn} phone={phone ?? null} nav={quoteNav(sections)} links={quoteLinks(signedIn)} />
+  ) : PlaceSkin ? (
+    <PlaceSkin name={name} logoUrl={logoUrl} phone={phone ?? null} nav={placeNav(sections)} links={placeLinks(links)} />
   ) : variant === "center" ? (
       <header data-slot="site-header" data-variant="center" className="ez:bg-surface">
         <div className={cn(row, "ez:lg:min-h-21 ez:lg:grid-cols-[minmax(max-content,1fr)_max-content_minmax(max-content,1fr)]")}>

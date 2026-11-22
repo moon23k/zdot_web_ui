@@ -5,6 +5,7 @@ import { SHOP_DESIGNS } from "../sections/shop";
 import { STAY_DESIGNS } from "../sections/stay";
 import { CLASS_DESIGNS } from "../sections/class";
 import { QUOTE_DESIGNS } from "../sections/quote";
+import { PLACE_DESIGNS } from "../sections/place";
 import { sections, type SectionProps, type SiteContext } from "./registry";
 
 const isKind = (kind: string): kind is keyof typeof sections => kind in sections;
@@ -52,7 +53,8 @@ export function SiteRenderer({ page, context, template }: { page: { sections: Se
   const placed = place(page.sections, template, page.arranged);
   const ctx = { ...context, main: template.main };
   const quote = template.main === "quote" && template.skin ? QUOTE_DESIGNS[template.skin] : undefined;
-  const skin = template.skin ? (quote ?? (template.main === "stay" ? STAY_DESIGNS : template.main === "class" ? CLASS_DESIGNS : SHOP_DESIGNS)[template.skin])?.sections : undefined;
+  const venue = template.main === "place" && template.skin ? PLACE_DESIGNS[template.skin] : undefined;
+  const skin = template.skin ? (venue ?? quote ?? (template.main === "stay" ? STAY_DESIGNS : template.main === "class" ? CLASS_DESIGNS : SHOP_DESIGNS)[template.skin])?.sections : undefined;
   const drawn = joined(placed, quote?.join);
   return (
     <>

@@ -7,6 +7,7 @@ import { SHOP_DESIGNS, shopFooter } from "../../sections/shop";
 import { STAY_DESIGNS, stayFooter } from "../../sections/stay";
 import { CLASS_DESIGNS, classFooter } from "../../sections/class";
 import { QUOTE_DESIGNS, quoteFooter } from "../../sections/quote";
+import { PLACE_DESIGNS, placeFooter, placeLinks, type StoreLinks } from "../../sections/place";
 import type { ShopSkin } from "../../templates/types";
 import { PathSwitch } from "../site-header/path-switch";
 
@@ -31,6 +32,8 @@ export function SiteFooter({
   main = "shop",
   skin,
   sections,
+  address,
+  links,
 }: {
   storeName: string;
   business: Business | null;
@@ -41,11 +44,14 @@ export function SiteFooter({
   main?: string;
   skin?: ShopSkin;
   sections?: string[] | null;
+  address?: string | null;
+  links?: StoreLinks | null;
 }) {
   const Skin = main === "shop" && skin ? SHOP_DESIGNS[skin]?.Footer : undefined;
   const StaySkin = main === "stay" && skin ? STAY_DESIGNS[skin]?.Footer : undefined;
   const ClassSkin = main === "class" && skin ? CLASS_DESIGNS[skin]?.Footer : undefined;
   const QuoteSkin = main === "quote" && skin ? QUOTE_DESIGNS[skin]?.Footer : undefined;
+  const PlaceSkin = main === "place" && skin ? PLACE_DESIGNS[skin]?.Footer : undefined;
   const guide = GUIDE[main] ?? GUIDE.shop;
   const legal = [
     [business?.name || storeName, business?.ceo_name && `대표 ${business.ceo_name}`].filter(Boolean).join(" · "),
@@ -76,6 +82,8 @@ export function SiteFooter({
     <ClassSkin {...classFooter({ storeName, business, hosting, policies, hours, policyHref, kinds: sections })} />
   ) : QuoteSkin ? (
     <QuoteSkin {...quoteFooter({ storeName, business, hosting, policies, hours, policyHref, kinds: sections })} />
+  ) : PlaceSkin ? (
+    <PlaceSkin {...placeFooter({ storeName, business, hosting, policies, hours, address, links: placeLinks(links), policyHref, kinds: sections })} />
   ) : (
     <footer data-slot="site-footer" data-variant="full" className="ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:text-site-lead">
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-14 ez:pb-10 ez:lg:pt-18">

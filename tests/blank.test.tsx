@@ -17,6 +17,9 @@ const designs: [TemplateMain, string][] = [
   ["quote", "a"],
   ["quote", "b"],
   ["quote", "c"],
+  ["place", "a"],
+  ["place", "b"],
+  ["place", "c"],
 ];
 
 function page(main: TemplateMain, letter: string, arranged = false) {

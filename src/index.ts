@@ -16,6 +16,8 @@ export type { ClassListProps } from "./sections/class/types";
 export { QuoteCases } from "./blocks/quote-cases";
 export { QUOTE_CONSENT, QUOTE_TITLE } from "./sections/quote/shared";
 export type { QuoteListProps, QuoteRating } from "./sections/quote/types";
+export { PLACE_TITLE, placeLinks } from "./sections/place/shared";
+export type { StoreLinks } from "./sections/place/shared";
 export type { StayListProps, StaySearch } from "./sections/stay/types";
 export { ProductGallery } from "./blocks/product-gallery";
 export { AnchorTabs } from "./blocks/anchor-tabs";

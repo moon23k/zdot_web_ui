@@ -15,7 +15,9 @@
     "gates",
     "hero",
     "house_rules",
+    "intro",
     "location",
+    "menu",
     "numbers",
     "package_cards",
     "pay_plan",
@@ -148,6 +150,29 @@
         "process_steps",
         "faq",
         "quote_starter"
+      ]
+    },
+    "place": {
+      "a": [
+        "hero",
+        "intro",
+        "photo_band",
+        "menu",
+        "store_info"
+      ],
+      "b": [
+        "hero",
+        "intro",
+        "menu",
+        "location"
+      ],
+      "c": [
+        "hero",
+        "intro",
+        "menu",
+        "store_info",
+        "faq",
+        "photo_band"
       ]
     }
   }

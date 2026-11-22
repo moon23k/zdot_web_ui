@@ -16,7 +16,62 @@ function buttonRadius(design: Design): string {
   return `${shape.radius_md ?? SYSTEM_RADIUS.md}px`;
 }
 
-type SiteLook = Pick<TemplateDesign["look"], "section" | "pad" | "kit">;
+type SiteLook = Pick<TemplateDesign["look"], "section" | "pad" | "kit"> & Partial<Pick<TemplateDesign["look"], "tone">>;
+
+type Color = NonNullable<Design["color"]>;
+
+const NIGHT = "night";
+
+const NIGHT_BASE = "warm";
+
+const NIGHT_MIX = {
+  surface: 90,
+  surfaceAlt: 80,
+  muted: 72,
+  border: 22,
+  tint: 18,
+  line: 16,
+  edge: 26,
+  field: 32,
+  faint: 40,
+  off: 50,
+  hairline: 14,
+  blank: 14,
+  blankStrong: 30,
+  ink: 62,
+} as const;
+
+const mix = (color: string, share: number, base: string) => `color-mix(in srgb, ${color} ${share}%, ${base})`;
+
+function nightColor(color: Color): Color {
+  const ink = color.text ?? FALLBACK.text;
+  const paper = color.surface ?? FALLBACK.surface;
+  return {
+    ...color,
+    surface: mix(ink, NIGHT_MIX.surface, paper),
+    surface_alt: mix(ink, NIGHT_MIX.surfaceAlt, paper),
+    text: paper,
+    text_muted: mix(paper, NIGHT_MIX.muted, ink),
+    primary_border: mix(paper, NIGHT_MIX.border, ink),
+    primary_tint: mix(color.primary ?? FALLBACK.primary, NIGHT_MIX.tint, ink),
+  };
+}
+
+function groundVars(text: string): Record<string, string> {
+  const veil = (share: number) => mix(text, share, "transparent");
+  return {
+    "--ez-color-site-line": veil(NIGHT_MIX.line),
+    "--ez-color-site-edge": veil(NIGHT_MIX.edge),
+    "--ez-color-site-field": veil(NIGHT_MIX.field),
+    "--ez-color-site-faint": veil(NIGHT_MIX.faint),
+    "--ez-color-site-off": veil(NIGHT_MIX.off),
+    "--ez-color-hairline": veil(NIGHT_MIX.hairline),
+    "--ez-color-border": veil(NIGHT_MIX.line),
+    "--ez-color-tile-blank": veil(NIGHT_MIX.blank),
+    "--ez-color-tile-blank-strong": veil(NIGHT_MIX.blankStrong),
+    "--ez-color-tile-ink": veil(NIGHT_MIX.ink),
+  };
+}
 
 function siteVars(look?: SiteLook): Record<string, string> {
   return {
@@ -75,6 +130,7 @@ export function designVars(design: Design | null | undefined, site?: boolean | S
     "--ezd-control-sm": "40px",
     ...kitVars(color, typeof site === "object" && site.kit === "off"),
     ...(site ? siteVars(site === true ? undefined : site) : {}),
+    ...(typeof site === "object" && site.tone === NIGHT ? groundVars(color.text) : {}),
   };
 }
 
@@ -139,9 +195,11 @@ export function applyTemplate(design: Design | null | undefined, template: Templ
   const d = design ?? {};
   if (!template) return d;
   const { look } = template;
-  const tone = SYSTEM_TONE[look.frame === "gallery" ? "gallery" : look.tone];
+  const night = look.tone === NIGHT && look.frame !== "gallery";
+  const tone = SYSTEM_TONE[look.frame === "gallery" ? "gallery" : look.tone === NIGHT ? NIGHT_BASE : look.tone];
   const ink = SYSTEM_TONE.gallery;
-  const color = d.palette ? d.color : { ...d.color, surface: tone.surface, surface_alt: tone["surface-alt"], text: ink.text, text_muted: ink["text-muted"] };
+  const base = d.palette ? d.color : { ...d.color, surface: tone.surface, surface_alt: tone["surface-alt"], text: ink.text, text_muted: ink["text-muted"] };
+  const color = night ? nightColor(base ?? {}) : base;
   return {
     ...d,
     font: lookTitles(d.font, look),

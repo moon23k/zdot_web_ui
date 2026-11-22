@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { business, productDetail } from "../__stories__/fixtures/commerce";
 import products from "../__stories__/fixtures/products.json";
-import { classCards, classSessions, detailData, homeSections, paletteDesign, quoteCases, quoteStarter, stayAddOns, stayRooms, staySearched } from "../__stories__/fixtures/templates";
+import { classCards, classSessions, detailData, homeSections, paletteDesign, placeInfo, placeStoreLinks, quoteCases, quoteStarter, stayAddOns, stayRooms, staySearched } from "../__stories__/fixtures/templates";
 import { BuyBox } from "../blocks/buy-box";
 import { ClassCatalog } from "../blocks/class-catalog";
 import { CatalogView } from "../blocks/catalog-view";
@@ -103,13 +103,23 @@ function Page({ main, letter, banner, design, covers }: { main: TemplateMain; le
   return (
     <ThemeRoot design={design} template={t}>
       <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
-        <SiteHeader name="스토어 이름" variant={t.header} main={t.main === "shop" ? undefined : t.main} phone="02-000-0000" cartCount={2} categories={main === "shop" ? navCategories : undefined} cta={t.cta ? { label: t.cta, href: "/quote" } : null} />
+        <SiteHeader name="스토어 이름" variant={t.header} main={t.main === "shop" ? undefined : t.main} phone="02-000-0000" cartCount={2} categories={main === "shop" ? navCategories : undefined} cta={t.cta ? { label: t.cta, href: "/quote" } : null} links={main === "place" ? placeStoreLinks : undefined} />
         <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:gap-section ez:px-page ez:py-8">
           <SiteRenderer page={{ sections }} context={site} template={t} />
           <hr className="ez:my-4 ez:border-0 ez:border-t ez:border-solid ez:border-primary-border" />
           <DetailLayout slots={t.detail} data={data} nodes={shop?.nodes} />
         </main>
-        <SiteFooter storeName="스토어 이름" business={business} hours="평일 10:00 – 17:00" hosting="자사닷" policies={policies} main={t.main} skin={t.skin} />
+        <SiteFooter
+          storeName="스토어 이름"
+          business={business}
+          hours="평일 10:00 – 17:00"
+          hosting="자사닷"
+          policies={policies}
+          main={t.main}
+          skin={t.skin}
+          address={main === "place" ? placeInfo.address : undefined}
+          links={main === "place" ? placeStoreLinks : undefined}
+        />
       </div>
     </ThemeRoot>
   );
@@ -333,6 +343,10 @@ export const Q1 = story("quote", "a", "견적 · Q1 사례형");
 export const Q1Banner = story("quote", "a", "견적 · Q1 배너 제목", { title: "오래 머무는 집", sub: "실측부터 마감까지 한 팀이" });
 export const Q3 = story("quote", "b", "견적 · Q3 가격 · 절차형");
 export const Q4 = story("quote", "c", "견적 · Q4 리뷰형");
+export const P1 = story("place", "a", "가게 · P1 브랜드형");
+export const P1Banner = story("place", "a", "가게 · P1 배너 제목", { title: "스토어 이름", sub: "Lorem ipsum dolor sit amet" });
+export const P2 = story("place", "b", "가게 · P2 방문형");
+export const P3 = story("place", "c", "가게 · P3 이야기형");
 export const Q1List: StoryObj = { name: "견적 · Q1 작업 사례 목록", render: () => <QuoteListPage letter="a" /> };
 export const Q3List: StoryObj = { name: "견적 · Q3 작업 사례 목록", render: () => <QuoteListPage letter="b" /> };
 export const Q4List: StoryObj = { name: "견적 · Q4 작업 사례 목록 · 분류", render: () => <QuoteListPage letter="c" category="아파트" /> };
@@ -349,3 +363,6 @@ export const T3Blank = blank("stay", "c", "공란 · T3");
 export const Q1Blank = blank("quote", "a", "공란 · Q1");
 export const Q3Blank = blank("quote", "b", "공란 · Q3");
 export const Q4Blank = blank("quote", "c", "공란 · Q4");
+export const P1Blank = blank("place", "a", "공란 · P1");
+export const P2Blank = blank("place", "b", "공란 · P2");
+export const P3Blank = blank("place", "c", "공란 · P3");

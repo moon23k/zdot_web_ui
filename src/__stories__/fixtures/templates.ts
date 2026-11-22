@@ -1,7 +1,7 @@
 import type { DetailData } from "../../details/data";
 import type { TemplateMain } from "../../templates/types";
 import type { Design, Section } from "../../types";
-import type { AddOn, Case, ClassCard, QuoteFigures, QuoteStarter, Room, Session } from "../../sections/template/data";
+import type { AddOn, Case, ClassCard, MenuGroup, MenuItem, QuoteFigures, QuoteStarter, Room, Session } from "../../sections/template/data";
 import products from "./products.json";
 
 const s = (kind: string, data: Record<string, unknown>): Section => ({ kind, v: 1, data });
@@ -168,6 +168,29 @@ export const quoteStarter: QuoteStarter = {
   rating: { average: 4.9, count: 128 },
 };
 
+export const placeIntro = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+
+const menuItem = (id: string, name: string, price: string, category: string, image: string | null = null): MenuItem => ({ id, name, price, category, image });
+
+export const placeMenu: MenuGroup[] = [
+  { id: "c1", name: "찌개·찜", items: [menuItem("m1", "김치찌개", "9,000원", "찌개·찜", "/sample/p1.jpg"), menuItem("m2", "된장찌개", "9,000원", "찌개·찜"), menuItem("m3", "순두부찌개", "9,000원", "찌개·찜")] },
+  { id: "c2", name: "국밥·탕", items: [menuItem("m4", "돼지국밥", "9,500원", "국밥·탕", "/sample/p2.jpg"), menuItem("m5", "감자탕", "35,000원", "국밥·탕")] },
+  { id: "c3", name: "밥·구이", items: [menuItem("m6", "제육볶음", "10,000원", "밥·구이", "/sample/p3.jpg"), menuItem("m7", "비빔밥", "9,500원", "밥·구이"), menuItem("m8", "불고기", "13,000원", "밥·구이")] },
+];
+
+export const placeStoreLinks = { naver_booking: "https://booking.naver.com", instagram: "https://instagram.com" };
+
+export const placeInfo = {
+  address: "서울특별시 00구 00로 00",
+  hours: "매일 11:00 – 21:00 · 브레이크 타임 15:00 – 17:00",
+  phone: "02-000-0000",
+  href: "#",
+  links: [
+    { key: "naver_booking", label: "네이버 예약", href: "https://booking.naver.com" },
+    { key: "instagram", label: "인스타그램", href: "https://instagram.com" },
+  ],
+};
+
 export const homeSections: Record<TemplateMain, Section[]> = {
   shop: [
     s("hero", {
@@ -226,6 +249,15 @@ export const homeSections: Record<TemplateMain, Section[]> = {
     s("reviews", { ...reviews, items: reviews.items.map((r, i) => ({ ...r, product: i === 0 ? "p1" : null })) }),
     s("faq", {}),
     s("quote_starter", quoteStarter),
+  ],
+  place: [
+    s("hero", { image: "/sample/hero.jpg" }),
+    s("intro", { body: placeIntro, image: "/sample/p2.jpg" }),
+    s("photo_band", { image: "/sample/p3.jpg", images: ["/sample/p3.jpg"] }),
+    s("menu", { groups: placeMenu, image: "/sample/p1.jpg", images: ["/sample/p1.jpg", "/sample/p2.jpg", "/sample/p3.jpg"] }),
+    s("store_info", { title: "스토어 이름", ...placeInfo, image: "/sample/p4.jpg" }),
+    s("location", { ...placeInfo, image: "/sample/p4.jpg" }),
+    s("faq", {}),
   ],
 };
 
@@ -349,4 +381,5 @@ export const detailData: Record<TemplateMain, DetailData> = {
     },
     pay,
   },
+  place: {},
 };

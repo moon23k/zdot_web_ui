@@ -133,6 +133,7 @@ export interface Schemas {
     available_from?: string | null;
     available_until?: string | null;
     includes?: string[] | null;
+    category_id?: string | null;
   };
   CustomerProvider: "kakao" | "naver" | "google";
   CustomerVariant: {

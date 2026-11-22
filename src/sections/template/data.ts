@@ -64,6 +64,12 @@ export type QuoteStarter = { open?: boolean; href?: string; questions?: QuoteQue
 
 export type QuoteFigures = { cases: number; average: number | null; reviews: number };
 
+export type PlaceLink = { key: string; label: string; href: string };
+
+export type MenuItem = { id: string; name: string; price: string; image?: string | null; category?: string | null; sample?: boolean };
+
+export type MenuGroup = { id: string | null; name: string | null; items: MenuItem[] };
+
 export type Review = { rating: number; body: string; name: string; date?: string; product?: string | null };
 
 export type TemplateSectionData = {
@@ -73,7 +79,7 @@ export type TemplateSectionData = {
   curation: { items?: Tile[]; image?: string | null };
   best_grid: { items?: ProductSummary[] };
   shop_guide: { phone?: string | null; hours?: string | null; returns?: string | null; inquiry?: string | null };
-  store_info: { title?: string | null; address?: string | null; hours?: string | null; phone?: string | null; image?: string | null };
+  store_info: { title?: string | null; address?: string | null; hours?: string | null; phone?: string | null; image?: string | null; href?: string | null; links?: PlaceLink[] };
   reviews: { average?: number | null; count?: number | null; items?: Review[] };
   trust_line: { items?: string[]; figures?: QuoteFigures };
   process_steps: { steps?: string[] };
@@ -86,11 +92,13 @@ export type TemplateSectionData = {
   amenities: { items?: { name: string; group?: string }[] };
   house_rules: { check_in?: string | null; check_out?: string | null; rules?: string[]; cancel?: CancelData };
   pay_plan: CancelData;
-  location: { address?: string | null; note?: string | null; href?: string | null; phone?: string | null; hours?: string | null; cancel?: string | null; returns?: string | null };
+  location: { address?: string | null; note?: string | null; href?: string | null; phone?: string | null; hours?: string | null; cancel?: string | null; returns?: string | null; links?: PlaceLink[]; image?: string | null };
   add_ons: { items?: AddOn[]; image?: string | null };
   room_list: { rooms?: Room[] };
   price_tiers: { items?: Row[] };
   package_cards: { tabs?: string[]; items?: { name: string; price: string; image?: string | null; includes?: string[]; href?: string }[] };
   case_grid: { categories?: string[]; cases?: Case[] };
   quote_starter: QuoteStarter;
+  menu: { groups?: MenuGroup[]; image?: string | null; images?: string[] };
+  intro: { body?: string | null; image?: string | null; images?: string[] };
 };

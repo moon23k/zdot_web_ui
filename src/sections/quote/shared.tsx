@@ -30,6 +30,7 @@ export const QUOTE_TITLE = {
   guide: "안내",
   cancel: "취소 · 환불 규정",
   inquiry: "1:1 문의",
+  includes: "포함",
 } as const;
 
 export const QUOTE_CONSENT = "[필수] 견적 상담을 위해 이름 · 휴대폰 번호 · 요청 내용을 수집하고, 상담이 끝난 뒤 1년간 보관합니다.";
@@ -39,6 +40,10 @@ export const CASES_HREF = "/cases";
 export const QUOTE_HREF = "/quote";
 
 export const LOOKUP_HREF = "/quote/lookup";
+
+export function includesOf(item: { includes?: string[] } | null | undefined): string[] {
+  return (item?.includes ?? []).map((line) => line.trim()).filter(Boolean);
+}
 
 export function reviewCount(count: number): string {
   return `${QUOTE_TITLE.reviews} ${count}`;

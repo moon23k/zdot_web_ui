@@ -147,6 +147,13 @@ export const quoteTiers = [
   { label: "40평대 전체", value: "48,000,000원" },
 ];
 
+export const quoteIncludes: string[][] = [
+  ["주방 · 욕실 · 현관 중 선택", "철거 · 설비 · 마감", "기간 1~2주"],
+  ["전체 철거 · 목공 · 마감", "주방 · 욕실 교체"],
+  ["전체 철거 · 목공 · 마감", "주방 · 욕실 2곳 교체", "기간 5~6주"],
+  [],
+];
+
 export const quoteStarter: QuoteStarter = {
   open: true,
   href: "/quote",
@@ -214,7 +221,7 @@ export const homeSections: Record<TemplateMain, Section[]> = {
     s("trust_line", { items: ["A/S 1년", "실측 후 견적서 발송", "예약금 · 잔금 나눠 결제"], figures: quoteFigures }),
     s("case_grid", { cases: quoteCases }),
     s("price_tiers", { items: quoteTiers }),
-    s("package_cards", { items: quoteTiers.slice(0, 4).map((t) => ({ name: t.label, price: t.value, image: null, href: "/products/q1" })) }),
+    s("package_cards", { items: quoteTiers.slice(0, 4).map((t, i) => ({ name: t.label, price: t.value, image: null, href: "/products/q1", includes: quoteIncludes[i] })) }),
     s("process_steps", { steps: ["문의", "상담 · 견적", "계약", "작업", "완료"] }),
     s("reviews", { ...reviews, items: reviews.items.map((r, i) => ({ ...r, product: i === 0 ? "p1" : null })) }),
     s("faq", {}),

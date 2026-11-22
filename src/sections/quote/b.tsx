@@ -9,7 +9,7 @@ import { focusRing, textLink } from "../../utils/styles";
 import { Bar, BlankButton, BlankPrice, BlankStars, Lines, Pic } from "../kit";
 import type { Case, QuoteFigures, QuoteStarter } from "../template/data";
 import { QuoteNavLinks } from "./nav";
-import { average, CASES_HREF, caseView, leadCase, QUOTE_CONSENT, QUOTE_HREF, QUOTE_TITLE, reviewCount } from "./shared";
+import { average, CASES_HREF, caseView, includesOf, leadCase, QUOTE_CONSENT, QUOTE_HREF, QUOTE_TITLE, reviewCount } from "./shared";
 import { OptionCell, StarterForm, starterState } from "./starter";
 import type { QuoteFooterProps, QuoteHeaderProps, QuoteListProps } from "./types";
 
@@ -283,6 +283,20 @@ export function Trust({ data }: SectionProps<"trust_line">) {
 
 type PackageItem = NonNullable<SectionProps<"package_cards">["data"]["items"]>[number];
 
+function Includes({ lines, className }: { lines: string[]; className?: string }) {
+  if (!lines.length) return null;
+  return (
+    <ul aria-label={QUOTE_TITLE.includes} data-slot="package-includes" className={cn("ez:m-0 ez:grid ez:list-none ez:gap-2 ez:p-0", className)}>
+      {lines.map((text, i) => (
+        <li key={`${text}-${i}`} className="ez:flex ez:items-start ez:gap-2.5 ez:text-site-note ez:text-muted">
+          <Icon name="check" size="sm" className="ez:mt-0.5 ez:text-muted" />
+          <span className="ez:min-w-0">{text}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function PackageColumns({ items }: { items: (PackageItem | null)[] }) {
   const cols = items.length === 3 ? 3 : 4;
   return (
@@ -291,10 +305,13 @@ function PackageColumns({ items }: { items: (PackageItem | null)[] }) {
         <li key={p ? `${p.name}-${i}` : i} className={cn(ruled(i, cols), "ez:flex ez:flex-col ez:items-start ez:border-b ez:py-7 ez:pr-4")}>
           <span className="ez:text-site-item ez:font-medium ez:text-fg">{p ? p.name : <Bar />}</span>
           <span className="ez:mt-2.5 ez:text-site-rank ez:font-medium ez:text-fg ez:tabular-nums ez:break-words">{p ? p.price : <BlankPrice />}</span>
+          <Includes lines={includesOf(p)} className={cn(line, "ez:mt-5 ez:w-full ez:border-t ez:pt-4")} />
           {p && (
-            <NextLink href={QUOTE_HREF} aria-label={`${p.name} ${QUOTE_TITLE.request}`} className={cn(textLink, "ez:mt-5 ez:text-site-note", focusRing)}>
-              {QUOTE_TITLE.request}
-            </NextLink>
+            <div className="ez:mt-auto ez:pt-5">
+              <NextLink href={QUOTE_HREF} aria-label={`${p.name} ${QUOTE_TITLE.request}`} className={cn(textLink, "ez:text-site-note", focusRing)}>
+                {QUOTE_TITLE.request}
+              </NextLink>
+            </div>
           )}
         </li>
       ))}
@@ -312,6 +329,7 @@ function PackageRows({ items }: { items: PackageItem[] }) {
           <NextLink href={QUOTE_HREF} aria-label={`${p.name} ${QUOTE_TITLE.request}`} className={cn(textLink, "ez:text-site-note", focusRing)}>
             {QUOTE_TITLE.request}
           </NextLink>
+          <Includes lines={includesOf(p)} className="ez:basis-full ez:sm:flex ez:sm:flex-wrap ez:sm:gap-x-8" />
         </li>
       ))}
     </ul>

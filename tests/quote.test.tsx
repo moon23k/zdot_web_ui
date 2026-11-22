@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import products from "../src/__stories__/fixtures/products.json";
-import { homeSections, paletteDesign, quoteCases, quoteStarter } from "../src/__stories__/fixtures/templates";
+import { homeSections, paletteDesign, quoteCases, quoteIncludes, quoteStarter } from "../src/__stories__/fixtures/templates";
 import { business } from "../src/__stories__/fixtures/commerce";
 import { applyTemplate, QUOTE_CONSENT, QuoteCases, resolveTemplate, SiteFooter, SiteHeader, SiteRenderer } from "../src/index";
 import { caseView, quoteNav } from "../src/sections/quote/shared";
@@ -135,6 +135,26 @@ describe("quote trust line", () => {
       const hero = root.querySelector('[data-slot="hero"]') as HTMLElement;
       expect(hero).toHaveAttribute("data-blank");
       expect(hero.querySelectorAll("a, button, form, input")).toHaveLength(0);
+    }
+  });
+});
+
+describe("quote package includes", () => {
+  it("lists what each package includes in b and c, with nothing for a package without lines", () => {
+    for (const letter of ["b", "c"] as const) {
+      const block = home(letter).querySelector('[data-slot="package-cards"]') as HTMLElement;
+      const lists = [...block.querySelectorAll('[data-slot="package-includes"]')];
+      expect(lists.map((l) => [...l.querySelectorAll("li")].map((li) => li.textContent))).toEqual(quoteIncludes.filter((lines) => lines.length));
+      expect(lists.every((l) => l.getAttribute("aria-label") === "포함")).toBe(true);
+      expect(mainColored(block)).toEqual([]);
+      expect(block.querySelectorAll('a[href="/quote"]')).toHaveLength(4);
+    }
+  });
+
+  it("draws no include rows when the packages have none", () => {
+    for (const letter of ["b", "c"] as const) {
+      const root = home(letter, [{ kind: "package_cards", v: 1, data: { items: [{ name: "기본", price: "100,000원" }, { name: "표준", price: "200,000원", includes: [" "] }, { name: "확장", price: "300,000원" }] } }], true);
+      expect(root.querySelector('[data-slot="package-includes"]')).toBeNull();
     }
   });
 });

@@ -10,7 +10,7 @@ import { focusRing } from "../../utils/styles";
 import { Bar, BlankButton, BlankPrice, BlankStars, Lines, Pic } from "../kit";
 import type { Case, QuoteFigures, QuoteStarter, Review } from "../template/data";
 import { QuoteNavLinks } from "./nav";
-import { average, CASES_HREF, caseView, leadCase, QUOTE_CONSENT, QUOTE_HREF, QUOTE_TITLE, restCases, reviewCount } from "./shared";
+import { average, CASES_HREF, caseView, includesOf, leadCase, QUOTE_CONSENT, QUOTE_HREF, QUOTE_TITLE, restCases, reviewCount } from "./shared";
 import { OptionCell, StarterForm, starterState } from "./starter";
 import type { QuoteFooterProps, QuoteHeaderProps, QuoteListProps } from "./types";
 
@@ -532,6 +532,22 @@ export function Cases({ data }: SectionProps<"case_grid">) {
   );
 }
 
+function Includes({ lines }: { lines: string[] }) {
+  if (!lines.length) return null;
+  return (
+    <div className="ez:mt-6 ez:grid ez:w-full ez:gap-2">
+      <span className="ez:text-site-small ez:text-muted">{QUOTE_TITLE.includes}</span>
+      <ul aria-label={QUOTE_TITLE.includes} data-slot="package-includes" className="ez:m-0 ez:list-none ez:p-0">
+        {lines.map((text, i) => (
+          <li key={`${text}-${i}`} className={cn(rule, "ez:border-t ez:py-3 ez:text-site-note ez:text-muted ez:last:border-b")}>
+            {text}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export function Packages({ data }: SectionProps<"package_cards">) {
   const items = data.items ?? [];
   const shown = items.length ? items : [null, null, null, null];
@@ -554,7 +570,7 @@ export function Packages({ data }: SectionProps<"package_cards">) {
             key={p?.name ?? i}
             className={cn(
               rule,
-              "ez:grid ez:content-start ez:justify-items-start ez:px-7 ez:pt-7 ez:pb-6.5",
+              "ez:flex ez:flex-col ez:items-start ez:px-7 ez:pt-7 ez:pb-6.5",
               i > 0 && "ez:max-md:border-t",
               i >= cols && "ez:md:border-t",
               i % cols !== 0 && "ez:md:border-l",
@@ -562,11 +578,14 @@ export function Packages({ data }: SectionProps<"package_cards">) {
           >
             <span className="ez:text-site-item ez:font-medium ez:text-fg">{p ? p.name : <Bar />}</span>
             <span className="ez:mt-1.5 ez:text-site-section ez:font-normal ez:text-fg ez:tabular-nums">{p ? p.price : <BlankPrice className="ez:font-normal" />}</span>
+            <Includes lines={includesOf(p)} />
             {p && (
-              <NextLink href={QUOTE_HREF} aria-label={`${p.name} ${QUOTE_TITLE.request}`} className={cn(lk, "ez:mt-5", focusRing)}>
-                {QUOTE_TITLE.request}
-                <Arrow />
-              </NextLink>
+              <div className="ez:mt-auto ez:pt-5">
+                <NextLink href={QUOTE_HREF} aria-label={`${p.name} ${QUOTE_TITLE.request}`} className={cn(lk, focusRing)}>
+                  {QUOTE_TITLE.request}
+                  <Arrow />
+                </NextLink>
+              </div>
             )}
           </li>
         ))}

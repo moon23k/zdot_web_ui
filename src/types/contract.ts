@@ -101,6 +101,7 @@ export interface Schemas {
     season?: ("upcoming" | "ended") | null;
     available_from?: string | null;
     available_until?: string | null;
+    includes?: string[] | null;
     category_id: string | null;
     option_name: string | null;
     variants: Schemas["CustomerVariant"][];
@@ -131,6 +132,7 @@ export interface Schemas {
     season?: ("upcoming" | "ended") | null;
     available_from?: string | null;
     available_until?: string | null;
+    includes?: string[] | null;
   };
   CustomerProvider: "kakao" | "naver" | "google";
   CustomerVariant: {

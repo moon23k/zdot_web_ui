@@ -235,14 +235,15 @@ export function Hero({ data, context }: SectionProps<"hero">) {
 function ClassTile({ item, eager }: { item: ClassCard; eager?: boolean }) {
   const spec = [item.length && `${CLASS_TITLE.length} ${item.length}`, item.capacity != null && `${CLASS_TITLE.capacity} ${item.capacity}명`].filter(Boolean).join(" · ");
   const next = item.next ? (item.left === 0 ? `${item.next} · ${CLASS_TITLE.full}` : item.next) : null;
+  const label = [item.kind, item.sample && "예시"].filter(Boolean).join(" · ");
   return (
-    <NextLink href={item.href ?? `/products/${item.id}`} data-slot="class-card" className={cn("ez:group ez:flex ez:min-w-0 ez:flex-col ez:text-fg ez:no-underline", focusRing)}>
+    <NextLink href={item.href ?? `/products/${item.id}`} data-slot="class-card" data-sample={item.sample ? "" : undefined} className={cn("ez:group ez:flex ez:min-w-0 ez:flex-col ez:text-fg ez:no-underline", focusRing)}>
       <div className="ez:rounded-md ez:bg-surface-alt ez:p-3 ez:md:p-4.5">
         <Photo src={item.image} alt={item.name} preload={eager} sizes={CARD_SIZES} className="ez:aspect-[4/3] ez:rounded-sm ez:bg-surface" />
       </div>
       <div className="ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:items-baseline ez:gap-x-3 ez:gap-y-0.5 ez:px-1 ez:pt-3.5">
         <span className="ez:truncate ez:text-site-lead ez:font-medium ez:group-hover:underline ez:underline-offset-4">{item.name}</span>
-        {item.kind ? <span className="ez:justify-self-end ez:text-site-small ez:text-muted">{item.kind}</span> : <span />}
+        {label ? <span className="ez:justify-self-end ez:text-site-small ez:text-muted">{label}</span> : <span />}
         {spec && <span className="ez:col-span-2 ez:text-site-lead ez:text-muted ez:tabular-nums">{spec}</span>}
         {item.price ? <span className="ez:mt-1.5 ez:text-site-lead ez:tabular-nums">{item.price}</span> : <span />}
         {next && <span className="ez:mt-1.5 ez:min-w-0 ez:justify-self-end ez:truncate ez:text-site-small ez:text-muted ez:tabular-nums">{next}</span>}

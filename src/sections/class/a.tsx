@@ -55,11 +55,12 @@ function spec(c: ClassCard): string {
 
 function Card({ c, preload }: { c: ClassCard; preload?: boolean }) {
   const detail = spec(c);
+  const labels = [c.kind, c.sample && "예시"].filter(Boolean).join(" · ");
   return (
-    <NextLink href={c.href ?? CLASSES_HREF} data-slot="class-card" className={cn("ez:group ez:grid ez:min-w-0 ez:content-start ez:text-fg ez:no-underline", focusRing)}>
+    <NextLink href={c.href ?? CLASSES_HREF} data-slot="class-card" data-sample={c.sample || undefined} className={cn("ez:group ez:grid ez:min-w-0 ez:content-start ez:text-fg ez:no-underline", focusRing)}>
       <Photo src={c.image} alt={c.name} preload={preload} sizes="(max-width: 768px) 50vw, 440px" className="ez:aspect-[4/5]" />
       <span className="ez:grid ez:justify-items-center ez:pt-5 ez:text-center ez:lg:pt-6">
-        <span className="ez:mb-3 ez:block ez:h-4 ez:text-site-small ez:leading-none ez:tracking-widest ez:text-muted">{c.kind ?? ""}</span>
+        <span className="ez:mb-3 ez:block ez:h-4 ez:text-site-small ez:leading-none ez:tracking-widest ez:text-muted">{labels}</span>
         <span className="ez:line-clamp-2 ez:text-site-item ez:font-medium ez:underline-offset-4 ez:group-hover:underline">{c.name}</span>
         {detail && <span className="ez:mt-1.5 ez:text-site-body ez:text-muted">{detail}</span>}
         {c.price && <span className="ez:mt-1 ez:text-site-body ez:tabular-nums">{c.price}</span>}

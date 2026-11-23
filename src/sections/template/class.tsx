@@ -160,7 +160,8 @@ export function ClassSchedule({ data, variant }: SectionProps<"class_schedule">)
 }
 
 function ClassBox({ c, i }: { c: ClassCard | null; i: number }) {
-  const meta = c ? [c.chips?.join(" · "), c.next].filter(Boolean) : [];
+  const chips = c?.sample ? ["예시", ...(c.chips ?? [])] : c?.chips;
+  const meta = c ? [chips?.join(" · "), c.next].filter(Boolean) : [];
   const body = (
     <>
       <Pic src={c?.image} ratio={4 / 3} tone={i} className="ez:[&>[data-slot=photo]]:rounded-none" />
@@ -193,7 +194,7 @@ function ClassBox({ c, i }: { c: ClassCard | null; i: number }) {
   );
   const box = "ez:flex ez:flex-col ez:overflow-hidden ez:rounded-lg ez:border ez:border-solid ez:border-site-line ez:bg-surface ez:text-fg ez:no-underline";
   return c ? (
-    <NextLink href={c.href ?? "#"} className={cn(box, focusRing)}>
+    <NextLink href={c.href ?? "#"} data-sample={c.sample || undefined} className={cn(box, focusRing)}>
       {body}
     </NextLink>
   ) : (

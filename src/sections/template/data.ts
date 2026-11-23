@@ -19,7 +19,7 @@ export type Session = {
   kind?: string | null;
 };
 
-export type ClassCard = { id: string; name: string; image?: string | null; chips?: string[]; price?: string; next?: string; href?: string; kind?: string | null; length?: string | null; capacity?: number | null; left?: number | null };
+export type ClassCard = { id: string; name: string; image?: string | null; chips?: string[]; price?: string; next?: string; href?: string; kind?: string | null; length?: string | null; capacity?: number | null; left?: number | null; sample?: boolean };
 
 export type RoomRates = { weekday: number; weekend: number; peak?: number | null; peak_weekend?: number | null };
 

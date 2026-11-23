@@ -193,8 +193,9 @@ function StayListPage({ letter, searched }: { letter: string; searched?: boolean
   );
 }
 
-function ClassListPage({ letter, view = "classes" }: { letter: string; view?: "classes" | "schedule" }) {
+function ClassListPage({ letter, view = "classes", sample }: { letter: string; view?: "classes" | "schedule"; sample?: boolean }) {
   const t = resolveTemplate("class", letter);
+  const classes = sample ? classCards.map((c) => ({ ...c, next: undefined, left: null, sample: true })) : classCards;
   return (
     <ThemeRoot template={t}>
       <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
@@ -219,7 +220,7 @@ function ClassListPage({ letter, view = "classes" }: { letter: string; view?: "c
               { label: "가까운 일정순", href: "/classes", on: true },
               { label: "낮은 가격순", href: "/classes?sort=price_asc" },
             ]}
-            classes={classCards}
+            classes={classes}
             sessions={classSessions}
             links={{ classes: "/classes", schedule: "/classes?view=schedule" }}
           />
@@ -299,6 +300,9 @@ export const C3 = story("class", "c", "클래스 · C3 쇼룸형");
 export const C1List: StoryObj = { name: "클래스 · C1 클래스 목록", render: () => <ClassListPage letter="a" /> };
 export const C2List: StoryObj = { name: "클래스 · C2 클래스 목록", render: () => <ClassListPage letter="b" /> };
 export const C3List: StoryObj = { name: "클래스 · C3 클래스 목록", render: () => <ClassListPage letter="c" /> };
+export const C1Sample: StoryObj = { name: "클래스 · C1 예시 수업", render: () => <ClassListPage letter="a" sample /> };
+export const C2Sample: StoryObj = { name: "클래스 · C2 예시 수업", render: () => <ClassListPage letter="b" sample /> };
+export const C3Sample: StoryObj = { name: "클래스 · C3 예시 수업", render: () => <ClassListPage letter="c" sample /> };
 export const C2Schedule: StoryObj = { name: "클래스 · C2 일정 전체", render: () => <ClassListPage letter="b" view="schedule" /> };
 export const T1 = story("stay", "a", "숙박 · T1 에디토리얼형");
 export const T1Banner = story("stay", "a", "숙박 · T1 배너 제목", { title: "겨울 숲속 독채", sub: "계곡 옆 본채와 별채" });

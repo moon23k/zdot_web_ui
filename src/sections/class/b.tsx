@@ -311,12 +311,20 @@ function ClassItem({ item, tone, preload }: { item: ClassCard; tone: number; pre
     <NextLink
       href={item.href ?? `/products/${item.id}`}
       data-slot="class-card"
+      data-sample={item.sample || undefined}
       className={cn("ez:group ez:grid ez:min-w-0 ez:content-start ez:gap-3.5 ez:text-fg ez:no-underline", focusRing)}
     >
       <Photo src={item.image} alt={item.name} tone={tone} preload={preload} sizes="(max-width: 768px) 50vw, 320px" className="ez:aspect-square ez:rounded-sm" />
       <span className="ez:grid ez:min-w-0 ez:content-start ez:gap-0.5">
         {item.kind && <span className="ez:truncate ez:text-site-small ez:text-muted">{item.kind}</span>}
-        <span className="ez:truncate ez:text-site-body ez:underline-offset-4 ez:group-hover:underline">{item.name}</span>
+        {item.sample ? (
+          <span className="ez:flex ez:items-baseline ez:gap-2">
+            <span className="ez:min-w-0 ez:flex-1 ez:truncate ez:text-site-body ez:underline-offset-4 ez:group-hover:underline">{item.name}</span>
+            <span className="ez:shrink-0 ez:text-site-small ez:font-medium ez:text-muted">예시</span>
+          </span>
+        ) : (
+          <span className="ez:truncate ez:text-site-body ez:underline-offset-4 ez:group-hover:underline">{item.name}</span>
+        )}
         {detail && <span className="ez:truncate ez:text-site-small ez:text-muted">{detail}</span>}
         {item.price && <span className={cn(price, "ez:mt-1.5")}>{item.price}</span>}
         {next && (

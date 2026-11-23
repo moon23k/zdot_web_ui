@@ -49,6 +49,8 @@ export function PhotoCollage({ images, name, kind = "stay" }: { images: (string 
   );
 }
 
+const FACT_COLS = ["ez:md:grid-cols-1", "ez:md:grid-cols-2", "ez:md:grid-cols-3", "ez:md:grid-cols-4"];
+
 export function BookingHead({ tag, title, rating, chips, facts }: { tag?: string | null; title: string; rating?: { average: number; count: number; label?: string } | null; chips?: string[]; facts?: { label: string; value: string }[] }) {
   return (
     <div data-slot="booking-head" className="ez:grid ez:gap-6">
@@ -84,7 +86,7 @@ export function BookingHead({ tag, title, rating, chips, facts }: { tag?: string
         </ul>
       )}
       {facts && facts.length > 0 && (
-        <dl className="ez:m-0 ez:grid ez:grid-cols-2 ez:border-0 ez:border-y ez:border-solid ez:border-site-line ez:md:grid-cols-4">
+        <dl className={cn("ez:m-0 ez:grid ez:grid-cols-2 ez:border-0 ez:border-y ez:border-solid ez:border-site-line", FACT_COLS[Math.min(facts.length, FACT_COLS.length) - 1])}>
           {facts.map((f, i) => (
             <div key={f.label} className={cn("ez:grid ez:gap-1 ez:py-4", i > 0 && "ez:md:border-0 ez:md:border-l ez:md:border-solid ez:md:border-site-line ez:md:pl-6")}>
               <dt className="ez:text-site-caption ez:text-muted">{f.label}</dt>

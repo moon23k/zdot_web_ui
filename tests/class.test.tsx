@@ -1,7 +1,7 @@
 import { fireEvent, render, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { classCards, classSessions, homeSections } from "../src/__stories__/fixtures/templates";
-import { ClassCatalog, resolveTemplate, SiteFooter, SiteHeader, SiteRenderer } from "../src/index";
+import { BookingHead, ClassCatalog, resolveTemplate, SiteFooter, SiteHeader, SiteRenderer } from "../src/index";
 
 const letters = ["a", "b", "c"] as const;
 const policies = [
@@ -133,5 +133,27 @@ describe("class dates and rows", () => {
     const grid = home("b", sections).querySelector('[data-slot="class-list"] .ez\\:grid') as HTMLElement;
     expect(grid.className).toContain("ez:md:grid-cols-3");
     expect(grid.className).not.toContain("ez:lg:grid-cols-4");
+  });
+});
+
+describe("booking head facts", () => {
+  const all = [
+    { label: "소요", value: "2시간" },
+    { label: "정원", value: "6명" },
+    { label: "회차", value: "4회" },
+    { label: "장소", value: "공방" },
+    { label: "난이도", value: "입문" },
+  ];
+
+  it.each([1, 2, 3, 4, 5])("wide columns follow %i facts", (count) => {
+    const { container } = render(<BookingHead title="물레 원데이" facts={all.slice(0, count)} />);
+    const classes = (container.querySelector("dl")?.getAttribute("class") ?? "").split(" ");
+    expect(classes).toContain("ez:grid-cols-2");
+    expect(classes.filter((c) => c.startsWith("ez:md:grid-cols-"))).toEqual([`ez:md:grid-cols-${Math.min(count, 4)}`]);
+  });
+
+  it("keeps the four-column classes", () => {
+    const { container } = render(<BookingHead title="물레 원데이" facts={all.slice(0, 4)} />);
+    expect(container.querySelector("dl")?.getAttribute("class")).toBe("ez:m-0 ez:grid ez:grid-cols-2 ez:border-0 ez:border-y ez:border-solid ez:border-site-line ez:md:grid-cols-4");
   });
 });

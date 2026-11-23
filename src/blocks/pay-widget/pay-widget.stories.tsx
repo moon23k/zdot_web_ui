@@ -8,11 +8,12 @@ const meta: Meta<typeof PayWidget> = {
 };
 export default meta;
 
-function MockExample() {
+function MockExample({ buttonAmount }: { buttonAmount?: boolean }) {
   return (
     <div className="ez:max-w-md">
       <PayWidget
         mock
+        buttonAmount={buttonAmount}
         request={{
           clientKey: "test_ck",
           orderId: "o1",
@@ -27,3 +28,5 @@ function MockExample() {
 }
 
 export const Mock: StoryObj = { render: () => <MockExample /> };
+
+export const AmountHidden: StoryObj = { render: () => <MockExample buttonAmount={false} /> };

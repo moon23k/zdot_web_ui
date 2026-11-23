@@ -38,11 +38,13 @@ export function PayWidget({
   mock,
   agreement = true,
   caption = "구매안전 서비스 가입 스토어",
+  buttonAmount = true,
 }: {
   request: PayRequest;
   mock?: boolean;
   agreement?: boolean;
   caption?: string | null;
+  buttonAmount?: boolean;
 }) {
   const widgets = useRef<Widgets | null>(null);
   const [ready, setReady] = useState(Boolean(mock));
@@ -91,7 +93,7 @@ export function PayWidget({
       {agreement && <div id="ez-pay-agreement" />}
       {error && <Notice tone="error">{error}</Notice>}
       <Button block onClick={() => pay()} disabled={!ready}>
-        {won(request.amount)} 결제하기
+        {buttonAmount ? <>{won(request.amount)} 결제하기</> : "결제하기"}
       </Button>
       {mock && (
         <Button block variant="secondary" onClick={() => pay("vbank")}>

@@ -49,7 +49,7 @@ export {
 export { ChipChoice, DropZone, FormLayout, PhotoAttach, StepList } from "./blocks/form-parts";
 export { CheckoutItems, type CheckoutLine } from "./blocks/checkout-items";
 export { popupStyleOf, StorePopup, type PopupPosition, type PopupSize, type PopupStyle, type PopupStyleSetting, type StorePopupItem } from "./blocks/store-popup";
-export { PayWidget, type PayRequest } from "./blocks/pay-widget";
+export { PayWidget, payOf, type PayRequest, type PaySetting, type PayShape } from "./blocks/pay-widget";
 export { DepositInfo } from "./blocks/parts/deposit-info";
 export { OrderList, type OrderRow } from "./blocks/order-list";
 export {

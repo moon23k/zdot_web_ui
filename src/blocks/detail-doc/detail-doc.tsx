@@ -127,7 +127,7 @@ function Table({ layers }: { layers: DetailLayer[] }) {
         <div
           key={label.id}
           data-row=""
-          className="ez:grid ez:grid-cols-[28%_1fr] ez:items-start ez:py-3"
+          className="ez:grid ez:grid-cols-[28%_1fr] ez:items-baseline ez:py-3"
           style={{ borderTop: line, borderBottom: i === rows.length - 1 ? line : undefined }}
         >
           <Cell layer={label} />

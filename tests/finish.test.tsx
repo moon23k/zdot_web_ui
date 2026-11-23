@@ -128,3 +128,22 @@ describe("클래스 a 스튜디오", () => {
     expect(root.querySelector('[data-slot="photo-band"] [data-slot="blank-bar"]')).not.toBeNull();
   });
 });
+
+describe("숙박 갤러리 모바일 배치", () => {
+  const pics = (n: number) => Array.from({ length: n }, (_, i) => `/sample/g${i}.jpg`);
+  const gallery = (letter: "a" | "b", n: number) => home("stay", letter, [{ kind: "gallery", data: { images: pics(n) } }]).querySelector('[data-slot="gallery"]')!;
+
+  it("a: 3장이면 첫 장이 모바일에서 2열 폭", () => {
+    const shots = [...gallery("a", 3).querySelectorAll("img")].map((img) => img.closest("[class*='aspect']")!.className);
+    expect(shots[0]).toContain("ez:col-span-2");
+    expect(shots.slice(1).some((c) => c.includes("ez:col-span-2"))).toBe(false);
+  });
+
+  it("b: 홀수 장은 마지막을 2열 구간에서, 4장은 3열 구간에서 숨긴다", () => {
+    const hidden = (n: number) => [...gallery("b", n).querySelectorAll("[class*='ez:w-1/2']")].map((el) => /(md:max-lg|max-md|max-lg):hidden/.exec(el.className)?.[0] ?? "");
+    expect(hidden(2)).toEqual(["", ""]);
+    expect(hidden(3)).toEqual(["", "", "max-md:hidden"]);
+    expect(hidden(4)).toEqual(["", "", "", "md:max-lg:hidden"]);
+    expect(hidden(5)).toEqual(["", "", "", "md:max-lg:hidden", "max-lg:hidden"]);
+  });
+});

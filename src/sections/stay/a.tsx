@@ -408,7 +408,7 @@ export function Gallery({ data }: SectionProps<"gallery">) {
       ) : (
         <div className={cn(body, "ez:grid ez:gap-2", EVEN[images.length])}>
           {images.map((src, i) => (
-            <Photo key={src} src={src} alt="" tone={i} sizes="(max-width: 768px) 50vw, 440px" className="ez:aspect-[4/3]" />
+            <Photo key={src} src={src} alt="" tone={i} sizes="(max-width: 768px) 50vw, 440px" className={cn("ez:aspect-[4/3]", images.length === 3 && i === 0 && "ez:col-span-2 ez:md:col-span-1")} />
           ))}
         </div>
       )}

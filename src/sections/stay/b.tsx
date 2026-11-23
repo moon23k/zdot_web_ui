@@ -43,7 +43,11 @@ const colsFew = "ez:grid ez:gap-x-4 ez:gap-y-10 ez:md:gap-x-5";
 
 const galleryRow = "ez:-mx-2 ez:flex ez:flex-wrap ez:justify-center ez:gap-y-4 ez:md:-mx-2.5 ez:md:gap-y-5";
 
-const GALLERY_HIDE = ["", "", "", "ez:md:max-lg:hidden", "ez:max-lg:hidden"];
+const GALLERY_HIDE: Record<number, string[]> = {
+  3: ["", "", "ez:max-md:hidden"],
+  4: ["", "", "", "ez:md:max-lg:hidden"],
+  5: ["", "", "", "ez:md:max-lg:hidden", "ez:max-lg:hidden"],
+};
 
 export function Header({ name, logoUrl, nav, links }: StayHeaderProps) {
   return (
@@ -426,14 +430,13 @@ export function Amenities({ data }: SectionProps<"amenities">) {
 
 export function Gallery({ data }: SectionProps<"gallery">) {
   const images = (data.images ?? []).slice(0, 5);
-  const full = images.length >= 5;
   const cells: (string | null)[] = images.length ? images : [null, null, null, null, null];
   return (
     <section data-slot="gallery" id="gallery" data-variant="catalog" data-blank={images.length ? undefined : ""} className="ez:text-fg">
       <Head title={STAY_TITLE.gallery} />
       <div className={galleryRow}>
         {cells.map((src, i) => (
-          <div key={src ?? i} className={cn(ROW_ITEM[5], "ez:px-2 ez:md:px-2.5", (full || !images.length) && GALLERY_HIDE[i])}>
+          <div key={src ?? i} className={cn(ROW_ITEM[5], "ez:px-2 ez:md:px-2.5", GALLERY_HIDE[cells.length]?.[i])}>
             <Photo src={src} alt="" tone={i} sizes="(max-width: 768px) 50vw, 240px" className="ez:aspect-square ez:rounded-sm" />
           </div>
         ))}

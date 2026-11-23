@@ -13,6 +13,7 @@ import { Bar, BlankPrice, Pic } from "../kit";
 import { guideRows } from "./defaults";
 import { ShopNavLinks } from "./nav";
 import { BEST_HREF, categoryHref, fillCols, FRESH_HREF, PRODUCTS_HREF, productView, ROW_ITEM, SHOP_TITLE } from "./shared";
+import { SHELF_DEFAULTS, SHELF_RATIO, shelfCols, shelfOf, shelfSizes, shelfView, type Shelf } from "./shelf";
 import type { CatalogPromo, FooterLink, ShopFooterProps, ShopHeaderProps, ShopListProps } from "./types";
 
 const CARD_SIZES = "(max-width: 1024px) 50vw, 320px";
@@ -33,8 +34,8 @@ function Head({ title, href }: { title: string; href?: string }) {
   );
 }
 
-function Card({ product, eager }: { product: ProductSummary; eager?: boolean }) {
-  const v = productView(product);
+function Card({ product, eager, shelf, sizes = CARD_SIZES }: { product: ProductSummary; eager?: boolean; shelf: Shelf; sizes?: string }) {
+  const v = shelfView(productView(product), shelf);
   const label = v.soldOut ? "품절" : v.sample ? "예시" : null;
   return (
     <NextLink
@@ -45,7 +46,7 @@ function Card({ product, eager }: { product: ProductSummary; eager?: boolean }) 
       className={cn("ez:group ez:flex ez:min-w-0 ez:flex-col ez:text-fg ez:no-underline", focusRing)}
     >
       <div className="ez:rounded-md ez:bg-surface-alt ez:p-3 ez:md:p-4.5">
-        <Photo src={v.cover} alt={v.name} preload={eager} sizes={CARD_SIZES} className={cn("ez:aspect-square ez:rounded-sm ez:bg-surface", v.soldOut && "ez:opacity-45")} />
+        <Photo src={v.cover} alt={v.name} preload={eager} sizes={sizes} className={cn(SHELF_RATIO[shelf.ratio], "ez:rounded-sm ez:bg-surface", v.soldOut && "ez:opacity-45")} />
       </div>
       <div className="ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:items-baseline ez:gap-x-3 ez:gap-y-0.5 ez:px-1 ez:pt-3.5">
         <span className={cn("ez:col-span-2 ez:truncate ez:text-site-lead ez:font-medium ez:group-hover:underline ez:underline-offset-4", v.soldOut ? "ez:text-muted" : "ez:text-fg")}>{v.name}</span>
@@ -85,7 +86,7 @@ const shelfRow = "ez:-mx-1.5 ez:flex ez:flex-wrap ez:justify-center ez:gap-y-8 e
 
 const shelfItem = cn(ROW_ITEM[4], "ez:px-1.5 ez:md:px-2");
 
-function Shelf({ slot, title, href, items }: { slot: string; title: string; href: string; items: ProductSummary[] }) {
+function Row({ slot, title, href, items, shelf }: { slot: string; title: string; href: string; items: ProductSummary[]; shelf: Shelf }) {
   if (!items.length) {
     return (
       <section data-slot={slot} data-blank="" className="ez:grid ez:gap-7 ez:text-fg">
@@ -104,7 +105,7 @@ function Shelf({ slot, title, href, items }: { slot: string; title: string; href
       <div className={shelfRow}>
         {items.map((p) => (
           <div key={p.id} className={shelfItem}>
-            <Card product={p} />
+            <Card product={p} shelf={shelf} />
           </div>
         ))}
       </div>
@@ -365,11 +366,11 @@ export function Categories({ data, context }: SectionProps<"category_tiles">) {
 }
 
 export function NewArrivals({ context, grid }: SectionProps<"product_grid">) {
-  return <Shelf slot="product-grid" title={SHOP_TITLE.fresh} href={FRESH_HREF} items={context.products.slice(0, grid?.pc ?? 4)} />;
+  return <Row slot="product-grid" title={SHOP_TITLE.fresh} href={FRESH_HREF} items={context.products.slice(0, grid?.pc ?? 4)} shelf={shelfOf("showroom", context.shelf)} />;
 }
 
-export function Best({ data, grid }: SectionProps<"best_grid">) {
-  return <Shelf slot="best-grid" title={SHOP_TITLE.best} href={BEST_HREF} items={(data.items ?? []).slice(0, grid?.pc ?? 4)} />;
+export function Best({ data, context, grid }: SectionProps<"best_grid">) {
+  return <Row slot="best-grid" title={SHOP_TITLE.best} href={BEST_HREF} items={(data.items ?? []).slice(0, grid?.pc ?? 4)} shelf={shelfOf("showroom", context.shelf)} />;
 }
 
 const curationRow = "ez:grid ez:grid-cols-[auto_minmax(0,1fr)_auto] ez:items-center ez:gap-4 ez:rounded-md ez:bg-surface ez:p-3 ez:pr-5 ez:md:gap-5";
@@ -474,9 +475,9 @@ export function Guide({ data, context }: SectionProps<"shop_guide">) {
   );
 }
 
-function Promo({ promo }: { promo: CatalogPromo }) {
+function Promo({ promo, single }: { promo: CatalogPromo; single: boolean }) {
   return (
-    <NextLink href={promo.href} className={cn("ez:group ez:col-span-2 ez:block ez:self-start ez:text-fg ez:no-underline", focusRing)}>
+    <NextLink href={promo.href} className={cn("ez:group ez:block", single ? "ez:col-span-1 ez:lg:col-span-2" : "ez:col-span-2", "ez:self-start ez:text-fg ez:no-underline", focusRing)}>
       <span className="ez:relative ez:block">
         <span className="ez:relative ez:block" style={{ aspectRatio: 2.08 }}>
           <Photo src={promo.image} alt="" sizes="(max-width: 1024px) 100vw, 860px" tone={2} className="ez:absolute ez:inset-0 ez:aspect-auto ez:h-full ez:rounded-md" />
@@ -540,9 +541,10 @@ function Crumbs({ items }: { items: ShopListProps["crumbs"] }) {
   );
 }
 
-export function List({ title, count, crumbs, tabs, sorts, products, more, search, promo, emptyHref }: ShopListProps) {
-  const cards: ReactNode[] = products.map((p, i) => <Card key={p.id} product={p} eager={i < 3} />);
-  if (promo && cards.length) cards.splice(Math.min(3, cards.length), 0, <Promo key="promo" promo={promo} />);
+export function List({ title, count, crumbs, tabs, sorts, products, more, search, promo, emptyHref, shelf = SHELF_DEFAULTS.showroom }: ShopListProps) {
+  const sizes = shelfSizes(shelf, "showroom", CARD_SIZES);
+  const cards: ReactNode[] = products.map((p, i) => <Card key={p.id} product={p} eager={i < 3} shelf={shelf} sizes={sizes} />);
+  if (promo && cards.length) cards.splice(Math.min(3, cards.length), 0, <Promo key="promo" promo={promo} single={shelf.cols_mobile === 1} />);
   return (
     <div data-slot="catalog-view" className="ez:grid ez:grid-cols-1 ez:text-fg">
       <Crumbs items={crumbs} />
@@ -569,7 +571,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
       </div>
       <div className="ez:mt-8">
         {products.length ? (
-          <div className="ez:grid ez:grid-flow-row-dense ez:grid-cols-2 ez:gap-x-3 ez:gap-y-8 ez:md:gap-x-4 ez:md:gap-y-9 ez:lg:grid-cols-3">{cards}</div>
+          <div className={cn("ez:grid ez:grid-flow-row-dense ez:gap-x-3 ez:gap-y-8 ez:md:gap-x-4 ez:md:gap-y-9", shelfCols(shelf))}>{cards}</div>
         ) : (
           <ProductGrid products={[]} emptyHref={emptyHref} />
         )}

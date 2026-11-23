@@ -6,6 +6,7 @@ import { cn } from "../../utils/cn";
 import { countSup, textLink } from "../../utils/styles";
 import { SHOP_DESIGNS } from "../../sections/shop";
 import type { CatalogPromo, CatalogTab } from "../../sections/shop/types";
+import { shelfOf, type ShelfSetting } from "../../sections/shop/shelf";
 import { ProductGrid } from "../product-grid";
 import { ClassicCatalog, type CatalogLink } from "./classic";
 
@@ -22,6 +23,7 @@ export function CatalogView({
   search,
   skin,
   promo,
+  shelf,
 }: {
   title: string;
   count?: number | null;
@@ -33,6 +35,7 @@ export function CatalogView({
   search?: ReactNode;
   skin?: ShopSkin;
   promo?: CatalogPromo | null;
+  shelf?: ShelfSetting | null;
 }) {
   const List = skin ? SHOP_DESIGNS[skin]?.List : undefined;
   if (!List) return <ClassicCatalog title={title} count={count} crumbs={crumbs} chips={chips} sorts={sorts} products={products} more={more} search={search} />;
@@ -50,6 +53,7 @@ export function CatalogView({
       search={search}
       promo={promo ?? null}
       emptyHref={filtered ? "/products" : undefined}
+      shelf={shelfOf(skin, shelf)}
     />
   );
 }

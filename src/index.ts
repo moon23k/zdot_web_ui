@@ -8,6 +8,7 @@ export { ProductCard } from "./blocks/product-card";
 export { ProductGrid } from "./blocks/product-grid";
 export { CatalogView, Crumbs, ProductShelf, type CatalogLink } from "./blocks/catalog-view";
 export type { CatalogPromo, CatalogTab } from "./sections/shop/types";
+export { SHELF_DEFAULTS, shelfOf, type Shelf, type ShelfRatio, type ShelfSetting, type ShelfSort } from "./sections/shop/shelf";
 export { StayRooms } from "./blocks/stay-rooms";
 export { STAY_TITLE } from "./sections/stay/shared";
 export { ClassCatalog } from "./blocks/class-catalog";

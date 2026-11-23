@@ -32,6 +32,24 @@ export const Default: StoryObj = {
   ),
 };
 
+export const Shelf: StoryObj = {
+  render: () => (
+    <CatalogView
+      skin="catalog"
+      title="전체 상품"
+      count={products.length}
+      crumbs={[{ label: "홈", href: "/" }]}
+      chips={[{ label: "전체", href: "/products", on: true }]}
+      sorts={[
+        { label: "신상품순", href: "/products?sort=recent" },
+        { label: "인기순", href: "/products", on: true },
+      ]}
+      products={products}
+      shelf={{ cols_web: 5, cols_mobile: 1, ratio: "3:4", show_list_price: false, sort: "popular" }}
+    />
+  ),
+};
+
 export const Detail: StoryObj = {
   render: () => (
     <div className="ez:grid ez:gap-10">

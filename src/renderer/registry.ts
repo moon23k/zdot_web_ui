@@ -10,6 +10,7 @@ import { templateSections } from "../sections/template";
 import type { Case, PlaceLink, QuoteFigures, QuoteStarter, Room, TemplateSectionData, Session } from "../sections/template/data";
 import type { Row } from "../sections/kit";
 import type { GridSpec } from "../templates/types";
+import type { ShelfSetting } from "../sections/shop/shelf";
 import type { Category, Faq, ProductSummary, Shipping } from "../types";
 
 export type SiteContext = {
@@ -19,6 +20,7 @@ export type SiteContext = {
   shipping: Shipping | null;
   main?: string;
   storeName?: string;
+  shelf?: ShelfSetting | null;
 };
 
 export type SectionData = {

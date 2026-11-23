@@ -3,6 +3,7 @@ import type { CatalogLink } from "../../blocks/catalog-view/classic";
 import type { NavCategory } from "../../blocks/site-header/header-nav";
 import type { SectionKind, SectionProps } from "../../renderer/registry";
 import type { ProductSummary } from "../../types";
+import type { Shelf } from "./shelf";
 
 export type ShopNavItem = { label: string; href: string };
 
@@ -44,6 +45,7 @@ export type ShopListProps = {
   search?: ReactNode;
   promo?: CatalogPromo | null;
   emptyHref?: string;
+  shelf?: Shelf;
 };
 
 export type ShopSections = { [K in SectionKind]?: ComponentType<SectionProps<K>> };

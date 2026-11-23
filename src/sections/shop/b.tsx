@@ -13,6 +13,7 @@ import { focusRing } from "../../utils/styles";
 import { Bar, BlankPrice, BlankStars, Lines } from "../kit";
 import { ShopNavLinks } from "./nav";
 import { BEST_HREF, categoryHref, fillCols, FRESH_HREF, PRODUCTS_HREF, productView, ROW_ITEM, SHOP_TITLE } from "./shared";
+import { SHELF_DEFAULTS, SHELF_RATIO, shelfCols, shelfOf, shelfSizes, shelfView, type Shelf } from "./shelf";
 import type { FooterLink, ShopFooterProps, ShopHeaderProps, ShopListProps } from "./types";
 
 const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:box-border ez:px-page";
@@ -32,7 +33,9 @@ const navOn = "ez:font-medium ez:text-fg";
 
 const cols5 = "ez:grid ez:grid-cols-2 ez:gap-x-4 ez:gap-y-10 ez:md:grid-cols-3 ez:md:gap-x-5 ez:lg:grid-cols-5";
 
-const cols4 = "ez:grid ez:grid-cols-2 ez:gap-x-4 ez:gap-y-10 ez:md:grid-cols-3 ez:md:gap-x-5 ez:lg:grid-cols-4";
+const listGap = "ez:grid ez:gap-x-4 ez:gap-y-10 ez:md:gap-x-5";
+
+const CARD_SIZES = "(max-width: 768px) 50vw, 280px";
 
 function MenuIcon() {
   return (
@@ -162,8 +165,8 @@ function Price({ rate, price, list, soldOut }: { rate: number; price: string; li
   );
 }
 
-function Card({ product, rank, tone, preload }: { product: ProductSummary; rank?: number; tone: number; preload?: boolean }) {
-  const v = productView(product);
+function Card({ product, rank, tone, preload, shelf, sizes = CARD_SIZES }: { product: ProductSummary; rank?: number; tone: number; preload?: boolean; shelf: Shelf; sizes?: string }) {
+  const v = shelfView(productView(product), shelf);
   const tags = [v.soldOut && "품절", v.sample && "예시"].filter(Boolean) as string[];
   return (
     <NextLink
@@ -178,8 +181,8 @@ function Card({ product, rank, tone, preload }: { product: ProductSummary; rank?
         alt={v.name}
         tone={tone}
         preload={preload}
-        sizes="(max-width: 768px) 50vw, 280px"
-        className={cn("ez:aspect-square ez:rounded-sm", v.soldOut && "ez:opacity-45")}
+        sizes={sizes}
+        className={cn(SHELF_RATIO[shelf.ratio], "ez:rounded-sm", v.soldOut && "ez:opacity-45")}
       />
       <span className="ez:flex ez:gap-3.5">
         {rank != null && <span className="ez:w-6 ez:shrink-0 ez:text-site-name ez:leading-none ez:text-muted ez:tabular-nums">{rank}</span>}
@@ -231,7 +234,23 @@ const bestRow = "ez:-mx-2 ez:flex ez:flex-wrap ez:justify-center ez:gap-y-10 ez:
 
 const bestItem = cn(ROW_ITEM[5], "ez:px-2 ez:md:px-2.5");
 
-function ProductRow({ slot, title, href, products, count, ranked }: { slot: string; title: string; href: string; products: ProductSummary[]; count: number; ranked?: boolean }) {
+function ProductRow({
+  slot,
+  title,
+  href,
+  products,
+  count,
+  ranked,
+  shelf,
+}: {
+  slot: string;
+  title: string;
+  href: string;
+  products: ProductSummary[];
+  count: number;
+  ranked?: boolean;
+  shelf: Shelf;
+}) {
   if (!products.length) {
     return (
       <section data-slot={slot} data-variant="catalog" data-blank="" className="ez:text-fg">
@@ -251,14 +270,14 @@ function ProductRow({ slot, title, href, products, count, ranked }: { slot: stri
         <div className={bestRow}>
           {products.slice(0, count).map((p, i) => (
             <div key={p.id} className={bestItem}>
-              <Card product={p} tone={i} rank={i + 1} />
+              <Card product={p} tone={i} rank={i + 1} shelf={shelf} />
             </div>
           ))}
         </div>
       ) : (
         <div className={cols5}>
           {products.slice(0, count).map((p, i) => (
-            <Card key={p.id} product={p} tone={i} />
+            <Card key={p.id} product={p} tone={i} shelf={shelf} />
           ))}
         </div>
       )}
@@ -266,7 +285,8 @@ function ProductRow({ slot, title, href, products, count, ranked }: { slot: stri
   );
 }
 
-export function List({ title, count, crumbs, tabs, sorts, products, more, search, emptyHref }: ShopListProps) {
+export function List({ title, count, crumbs, tabs, sorts, products, more, search, emptyHref, shelf = SHELF_DEFAULTS.catalog }: ShopListProps) {
+  const sizes = shelfSizes(shelf, "catalog", CARD_SIZES);
   return (
     <div data-slot="catalog-view" data-variant="catalog" className="ez:grid ez:grid-cols-1 ez:text-fg">
       <nav aria-label="현재 위치" className="ez:flex ez:flex-wrap ez:items-center ez:gap-1 ez:text-site-small ez:text-muted">
@@ -321,9 +341,9 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
             ))}
           </nav>
           {products.length ? (
-            <div className={cols4}>
+            <div className={cn(listGap, shelfCols(shelf, "ez:md:grid-cols-3"))}>
               {products.map((p, i) => (
-                <Card key={p.id} product={p} tone={i} preload={i < 4} />
+                <Card key={p.id} product={p} tone={i} preload={i < 4} shelf={shelf} sizes={sizes} />
               ))}
             </div>
           ) : (
@@ -497,11 +517,11 @@ export function Categories({ data, context }: SectionProps<"category_tiles">) {
 }
 
 export function NewArrivals({ context }: SectionProps<"product_grid">) {
-  return <ProductRow slot="product-grid" title={SHOP_TITLE.fresh} href={FRESH_HREF} products={context.products} count={10} />;
+  return <ProductRow slot="product-grid" title={SHOP_TITLE.fresh} href={FRESH_HREF} products={context.products} count={10} shelf={shelfOf("catalog", context.shelf)} />;
 }
 
-export function Best({ data }: SectionProps<"best_grid">) {
-  return <ProductRow slot="best-grid" title={SHOP_TITLE.best} href={BEST_HREF} products={data.items ?? []} count={5} ranked />;
+export function Best({ data, context }: SectionProps<"best_grid">) {
+  return <ProductRow slot="best-grid" title={SHOP_TITLE.best} href={BEST_HREF} products={data.items ?? []} count={5} ranked shelf={shelfOf("catalog", context.shelf)} />;
 }
 
 export function Strip({ data, context }: SectionProps<"photo_band">) {

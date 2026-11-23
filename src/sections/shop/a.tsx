@@ -13,6 +13,7 @@ import { Bar, BlankPrice, BlankStars, Lines } from "../kit";
 import type { Tile } from "../template/data";
 import { ShopNavLinks } from "./nav";
 import { BEST_HREF, categoryHref, FRESH_HREF, PRODUCTS_HREF, productView, ROW_ITEM, SHOP_TITLE, type ProductView } from "./shared";
+import { SHELF_DEFAULTS, SHELF_RATIO, shelfCols, shelfOf, shelfSizes, shelfView, type Shelf } from "./shelf";
 import type { FooterLink, ShopFooterProps, ShopHeaderProps, ShopListProps } from "./types";
 
 const bleed = "ez:mx-[calc(50%-50vw)]";
@@ -57,8 +58,8 @@ function Price({ v }: { v: ProductView }) {
   );
 }
 
-function Card({ product, sizes, preload }: { product: ProductSummary; sizes: string; preload?: boolean }) {
-  const v = productView(product);
+function Card({ product, sizes, preload, shelf }: { product: ProductSummary; sizes: string; preload?: boolean; shelf: Shelf }) {
+  const v = shelfView(productView(product), shelf);
   const labels = [v.soldOut && "품절", v.sample && "예시"].filter(Boolean).join(" · ");
   return (
     <NextLink
@@ -68,7 +69,7 @@ function Card({ product, sizes, preload }: { product: ProductSummary; sizes: str
       data-sample={v.sample || undefined}
       className={cn("ez:group ez:grid ez:min-w-0 ez:content-start ez:text-fg ez:no-underline", focusRing)}
     >
-      <Photo src={v.cover} alt={v.name} sizes={sizes} preload={preload} className={cn("ez:aspect-[4/5]", v.soldOut && "ez:opacity-45")} />
+      <Photo src={v.cover} alt={v.name} sizes={sizes} preload={preload} className={cn(SHELF_RATIO[shelf.ratio], v.soldOut && "ez:opacity-45")} />
       <span className="ez:grid ez:justify-items-center ez:pt-5 ez:text-center ez:lg:pt-6">
         <span className="ez:mb-3 ez:block ez:h-4 ez:text-site-small ez:leading-none ez:tracking-widest ez:text-muted">{labels}</span>
         <span className="ez:line-clamp-2 ez:text-site-item ez:font-medium ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
@@ -96,7 +97,25 @@ const row = "ez:-mx-3 ez:flex ez:flex-wrap ez:justify-center ez:gap-y-12 ez:lg:g
 
 const rowItem = { 3: cn(ROW_ITEM[3], "ez:lg:w-1/3 ez:px-3"), 4: cn(ROW_ITEM[4], "ez:px-3") } as const;
 
-function Shelf({ slot, eyebrow, title, href, products, pc, sizes }: { slot: string; eyebrow: string; title: string; href: string; products: ProductSummary[]; pc: 3 | 4; sizes: string }) {
+function Row({
+  slot,
+  eyebrow,
+  title,
+  href,
+  products,
+  pc,
+  sizes,
+  shelf,
+}: {
+  slot: string;
+  eyebrow: string;
+  title: string;
+  href: string;
+  products: ProductSummary[];
+  pc: 3 | 4;
+  sizes: string;
+  shelf: Shelf;
+}) {
   const shown = products.slice(0, pc);
   return (
     <section data-slot={slot} data-blank={shown.length ? undefined : ""} className="ez:grid ez:text-fg">
@@ -105,7 +124,7 @@ function Shelf({ slot, eyebrow, title, href, products, pc, sizes }: { slot: stri
         {shown.length
           ? shown.map((p) => (
               <div key={p.id} className={rowItem[pc]}>
-                <Card product={p} sizes={sizes} />
+                <Card product={p} sizes={sizes} shelf={shelf} />
               </div>
             ))
           : Array.from({ length: pc }, (_, i) => (
@@ -203,7 +222,7 @@ export function Hero({ data }: SectionProps<"hero">) {
 
 export function NewArrivals({ context, grid }: SectionProps<"product_grid">) {
   return (
-    <Shelf
+    <Row
       slot="product-grid"
       eyebrow="New Arrivals"
       title={SHOP_TITLE.fresh}
@@ -211,13 +230,23 @@ export function NewArrivals({ context, grid }: SectionProps<"product_grid">) {
       products={context.products}
       pc={grid?.pc === 3 ? 3 : 4}
       sizes="(max-width: 1024px) 50vw, 330px"
+      shelf={shelfOf("editorial", context.shelf)}
     />
   );
 }
 
-export function Best({ data, grid }: SectionProps<"best_grid">) {
+export function Best({ data, context, grid }: SectionProps<"best_grid">) {
   return (
-    <Shelf slot="best-grid" eyebrow="Best Sellers" title={SHOP_TITLE.best} href={BEST_HREF} products={data.items ?? []} pc={grid?.pc === 4 ? 4 : 3} sizes="(max-width: 1024px) 50vw, 440px" />
+    <Row
+      slot="best-grid"
+      eyebrow="Best Sellers"
+      title={SHOP_TITLE.best}
+      href={BEST_HREF}
+      products={data.items ?? []}
+      pc={grid?.pc === 4 ? 4 : 3}
+      sizes="(max-width: 1024px) 50vw, 440px"
+      shelf={shelfOf("editorial", context.shelf)}
+    />
   );
 }
 
@@ -390,7 +419,8 @@ function Crumbs({ items }: { items: ShopListProps["crumbs"] }) {
   );
 }
 
-export function List({ title, count, crumbs, tabs, sorts, products, more, search, emptyHref }: ShopListProps) {
+export function List({ title, count, crumbs, tabs, sorts, products, more, search, emptyHref, shelf = SHELF_DEFAULTS.editorial }: ShopListProps) {
+  const sizes = shelfSizes(shelf, "editorial", "(max-width: 1024px) 50vw, 440px");
   return (
     <div data-slot="catalog-view" className="ez:grid ez:grid-cols-1 ez:text-fg">
       <div className="ez:grid ez:justify-items-center ez:pt-8 ez:text-center ez:lg:pt-18">
@@ -436,9 +466,9 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
       </div>
       <div className="ez:mt-10 ez:lg:mt-14">
         {products.length ? (
-          <div className="ez:grid ez:grid-cols-2 ez:gap-x-gutter ez:gap-y-12 ez:lg:grid-cols-3 ez:lg:gap-y-20">
+          <div className={cn("ez:grid ez:gap-x-gutter ez:gap-y-12 ez:lg:gap-y-20", shelfCols(shelf))}>
             {products.map((p, i) => (
-              <Card key={p.id} product={p} preload={i < 3} sizes="(max-width: 1024px) 50vw, 440px" />
+              <Card key={p.id} product={p} preload={i < 3} sizes={sizes} shelf={shelf} />
             ))}
           </div>
         ) : (

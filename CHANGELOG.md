@@ -1,4 +1,4 @@
-# @zdot/web-ui
+# @ezpg/web-ui
 
 ## 0.2.0
 

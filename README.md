@@ -1,4 +1,4 @@
-# @zdot/web-ui
+# @ezpg/web-ui
 
 ZDOT 스토어프론트용 Next.js UI 킷. ZDOT가 생성한 상점 사이트(손님 웹)를 그리는 컴포넌트, 커머스 블록, 섹션 렌더러를 담는다.
 
@@ -15,8 +15,8 @@ ZDOT 스토어프론트용 Next.js UI 킷. ZDOT가 생성한 상점 사이트(�
 
 ```tsx
 // app/layout.tsx
-import "@zdot/web-ui/styles.css";
-import { ThemeRoot } from "@zdot/web-ui";
+import "@ezpg/web-ui/styles.css";
+import { ThemeRoot } from "@ezpg/web-ui";
 
 <ThemeRoot design={site.frame.design}>{children}</ThemeRoot>;
 ```
@@ -41,7 +41,7 @@ import { ThemeRoot } from "@zdot/web-ui";
 ## 사이트 렌더링
 
 ```tsx
-import { SiteRenderer } from "@zdot/web-ui";
+import { SiteRenderer } from "@ezpg/web-ui";
 
 <SiteRenderer page={site.pages.home} context={{ products, categories, faqs, shipping, flags }} />;
 ```

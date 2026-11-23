@@ -21,7 +21,7 @@ export type DetailLayer = {
 };
 export type DetailBlock = {
   id: string;
-  layout: "text" | "image" | "image_top" | "text_top" | "side" | "two_images" | "card";
+  layout: "text" | "image" | "image_top" | "text_top" | "side" | "two_images" | "card" | "table" | "steps";
   background?: { color?: string | null; url?: string | null };
   space_top?: number;
   space_bottom?: number;
@@ -93,6 +93,90 @@ function Texts({ layers }: { layers: DetailLayer[] }) {
   );
 }
 
+const LINE_INK = "#1A1A1A";
+const STEP_COLUMNS = 4;
+const STEP_DOT = 2.4;
+
+function lineColor(color?: string | null): string {
+  return `${color && /^#[0-9a-fA-F]{6}$/.test(color) ? color : LINE_INK}33`;
+}
+
+const filled = (l: DetailLayer | undefined): l is DetailLayer => !!l && !l.hidden && !!l.text?.trim();
+
+function Cell({ layer }: { layer: DetailLayer | undefined }) {
+  if (!filled(layer)) return <div />;
+  return (
+    <div style={{ textAlign: layer.style?.align ?? "left" }}>
+      <p style={textStyle(layer.style)}>{layer.text}</p>
+    </div>
+  );
+}
+
+function Table({ layers }: { layers: DetailLayer[] }) {
+  const texts = layers.filter((l) => l.type === "text");
+  const rows: [DetailLayer, DetailLayer | undefined][] = [];
+  texts.forEach((label, i) => {
+    const value = texts[i + 1];
+    if (i % 2 === 0 && (filled(label) || filled(value))) rows.push([label, value]);
+  });
+  if (!rows.length) return null;
+  const line = `1px solid ${lineColor(texts[1]?.style?.color)}`;
+  return (
+    <div className="ez:px-5 ez:py-6">
+      {rows.map(([label, value], i) => (
+        <div
+          key={label.id}
+          data-row=""
+          className="ez:grid ez:grid-cols-[28%_1fr] ez:items-start ez:py-3"
+          style={{ borderTop: line, borderBottom: i === rows.length - 1 ? line : undefined }}
+        >
+          <Cell layer={label} />
+          <Cell layer={value} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Steps({ layers }: { layers: DetailLayer[] }) {
+  const steps = layers.filter((l) => l.type === "text" && filled(l));
+  if (!steps.length) return null;
+  return (
+    <ol
+      className="ez:m-0 ez:grid ez:list-none ez:gap-2 ez:px-5 ez:py-6"
+      style={{ gridTemplateColumns: `repeat(${Math.min(steps.length, STEP_COLUMNS)}, minmax(0, 1fr))` }}
+    >
+      {steps.map((l, i) => {
+        const css = textStyle(l.style);
+        const size = detailFontSize(l.style?.size);
+        return (
+          <li key={l.id} className="ez:flex ez:flex-col ez:items-center ez:gap-2">
+            <span
+              aria-hidden="true"
+              className="ez:flex ez:items-center ez:justify-center ez:rounded-full"
+              style={{
+                width: size * STEP_DOT,
+                height: size * STEP_DOT,
+                border: `1px solid ${lineColor(l.style?.color)}`,
+                fontFamily: css.fontFamily,
+                fontSize: size,
+                fontWeight: WEIGHT.bold,
+                lineHeight: 1,
+                color: l.style?.color,
+              }}
+            >
+              {i + 1}
+            </span>
+            <p className="ez:self-stretch" style={css}>
+              {l.text}
+            </p>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
 function Img({ layer }: { layer: DetailLayer }) {
   if (!layer.url) return null;
   return <img src={layer.url} alt="" loading="lazy" decoding="async" className="ez:block ez:h-auto ez:w-full" />;
@@ -140,6 +224,12 @@ function Block({ block }: { block: DetailBlock }) {
           <Texts layers={shown} />
         </>
       );
+      break;
+    case "table":
+      body = <Table layers={block.layers} />;
+      break;
+    case "steps":
+      body = <Steps layers={block.layers} />;
       break;
     case "card":
       body = (

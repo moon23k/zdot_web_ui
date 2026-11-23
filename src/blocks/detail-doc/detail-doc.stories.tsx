@@ -50,6 +50,28 @@ const doc: DetailDocValue = {
         { id: "t5", type: "text", text: "32,000원", style: { font: "display", size: 8, effect: "outline" } },
       ],
     },
+    {
+      id: "b6",
+      layout: "table",
+      layers: [
+        ["크기", "지름 12cm · 높이 24cm"],
+        ["소재", "백자토 · 무광 유약"],
+        ["구성품", "화병 1개"],
+      ].flatMap(([label, value], i) => [
+        { id: `k${i}`, type: "text" as const, text: label, style: { size: 4, color: "#626262" } },
+        { id: `v${i}`, type: "text" as const, text: value, style: { size: 5 } },
+      ]),
+    },
+    {
+      id: "b7",
+      layout: "steps",
+      layers: ["물레 성형", "초벌 800도", "유약", "재벌 1,250도"].map((text, i) => ({
+        id: `s${i}`,
+        type: "text" as const,
+        text,
+        style: { size: 4, align: "center" as const },
+      })),
+    },
   ],
 };
 

@@ -46,3 +46,19 @@ export const Text: StoryObj<typeof meta> = {
 export const Slides: StoryObj<typeof meta> = {
   args: { popups: [gift, photo, text], store: "story-slides" },
 };
+
+export const Bottom: StoryObj<typeof meta> = {
+  args: { popups: [photo], store: "story-bottom", preview: true, shape: { position: "bottom" } },
+};
+
+export const BottomLarge: StoryObj<typeof meta> = {
+  args: { popups: [gift, text], store: "story-bottom-lg", preview: true, shape: { position: "bottom", size: "lg", overlay: true } },
+};
+
+export const Bar: StoryObj<typeof meta> = {
+  args: { popups: [photo], store: "story-bar", preview: true, shape: { position: "bar", hide_today: false } },
+};
+
+export const CenterSmall: StoryObj<typeof meta> = {
+  args: { popups: [photo], store: "story-center-sm", preview: true, shape: { size: "sm", overlay: false } },
+};

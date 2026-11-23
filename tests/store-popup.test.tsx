@@ -107,3 +107,75 @@ describe("StorePopup", () => {
     expect(screen.queryByRole("dialog")).toBeNull();
   });
 });
+
+describe("StorePopup shape", () => {
+  const overlay = () => document.querySelector(".ez\\:bg-overlay");
+
+  it("keeps the centred modal with no shape", async () => {
+    render(<StorePopup popups={[one]} store="a.test" shape={null} />);
+    const dialog = await screen.findByRole("dialog");
+    expect(dialog).not.toHaveAttribute("data-position");
+    expect(overlay()).not.toBeNull();
+    expect(dialog.className).toContain("ez:max-w-112");
+  });
+
+  it("floats a bottom card without overlay and leaves the page usable", async () => {
+    const onPage = vi.fn();
+    render(
+      <>
+        <button type="button" onClick={onPage}>
+          뒤 화면
+        </button>
+        <StorePopup popups={[one]} store="a.test" shape={{ position: "bottom" }} />
+      </>,
+    );
+    const dialog = await screen.findByRole("dialog", { name: "겨울 햇차 입고" });
+    expect(dialog).toHaveAttribute("data-position", "bottom");
+    expect(dialog).not.toHaveAttribute("aria-modal");
+    expect(overlay()).toBeNull();
+    expect(dialog.contains(document.activeElement)).toBe(false);
+    await userEvent.click(screen.getByRole("button", { name: "뒤 화면" }));
+    expect(onPage).toHaveBeenCalled();
+    expect(screen.getByRole("dialog")).toBeTruthy();
+    expect(screen.getByRole("button", { name: "오늘 하루 열지 않기" })).toBeTruthy();
+    await expectNoA11yViolations(document.body);
+    await userEvent.keyboard("{Escape}");
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
+
+  it("closes the bar with its 닫기 text and steps through popups", async () => {
+    render(<StorePopup popups={[one, two]} store="a.test" shape={{ position: "bar" }} />);
+    const dialog = await screen.findByRole("dialog", { name: "겨울 햇차 입고" });
+    expect(dialog).toHaveAttribute("data-position", "bar");
+    await userEvent.click(screen.getByRole("button", { name: "다음" }));
+    expect(screen.getByRole("dialog", { name: "12월 정기 휴무" })).toBeTruthy();
+    await userEvent.click(screen.getByRole("button", { name: "닫기" }));
+    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(sessionStorage.getItem("ez-popup-closed:a.test")).toBe("1");
+  });
+
+  it("adds the overlay back as a modal when asked", async () => {
+    render(<StorePopup popups={[one]} store="a.test" shape={{ position: "bottom", overlay: true }} />);
+    await screen.findByRole("dialog");
+    expect(overlay()).not.toBeNull();
+  });
+
+  it("drops 오늘 하루 열지 않기 and sizes the centre box", async () => {
+    render(<StorePopup popups={[one]} store="a.test" shape={{ size: "sm", hide_today: false }} />);
+    const dialog = await screen.findByRole("dialog");
+    expect(screen.queryByRole("button", { name: "오늘 하루 열지 않기" })).toBeNull();
+    expect(screen.getByRole("button", { name: "닫기" })).toBeTruthy();
+    expect(dialog.className).toContain("ez:max-w-96");
+  });
+
+  it("stays open in preview whatever was stored or pressed", async () => {
+    localStorage.setItem("ez-popup-today:a.test", day());
+    render(<StorePopup popups={[one]} store="a.test" preview shape={{ position: "bottom" }} />);
+    await screen.findByRole("dialog");
+    await userEvent.click(screen.getByRole("button", { name: "닫기" }));
+    await userEvent.click(screen.getByRole("button", { name: "오늘 하루 열지 않기" }));
+    await userEvent.keyboard("{Escape}");
+    expect(screen.getByRole("dialog")).toBeTruthy();
+    expect(sessionStorage.getItem("ez-popup-closed:a.test")).toBeNull();
+  });
+});

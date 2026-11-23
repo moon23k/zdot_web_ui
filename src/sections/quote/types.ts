@@ -1,4 +1,4 @@
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 import type { CatalogLink } from "../../blocks/catalog-view/classic";
 import type { SectionKind, SectionProps } from "../../renderer/registry";
 import type { CatalogTab, FooterLink } from "../shop/types";
@@ -21,7 +21,7 @@ export type QuoteFooterProps = {
   storeName: string;
   phone: string | null;
   hours: string | null;
-  legal: string;
+  legal: ReactNode;
   business: BusinessRow[];
   nav: FooterLink[];
   guide: FooterLink[];

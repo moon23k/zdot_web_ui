@@ -496,10 +496,10 @@ export function Info({ data }: SectionProps<"house_rules">) {
   const cancelRows = (list: typeof rows) =>
     list.map((r, i) => (
       <tr key={i} className={cn(line, "ez:border-b ez:last:border-b-0")}>
-        <th scope="row" className="ez:py-2.5 ez:pr-4 ez:text-left ez:font-normal ez:text-muted">
+        <th scope="row" className="ez:w-auto ez:border-0 ez:py-2.5 ez:pr-4 ez:text-left ez:font-normal ez:text-muted">
           {r.label}
         </th>
-        <td className="ez:py-2.5 ez:text-right ez:text-fg ez:tabular-nums">{r.value}</td>
+        <td className="ez:border-0 ez:py-2.5 ez:text-right ez:text-fg ez:tabular-nums">{r.value}</td>
       </tr>
     ));
   return (
@@ -757,11 +757,11 @@ function RateTable({ rooms, peak }: { rooms: Room[]; peak: boolean }) {
           <table className="ez:w-full ez:border-collapse ez:text-site-body">
             <thead>
               <tr className="ez:bg-surface-alt">
-                <th scope="col" className="ez:h-11 ez:px-6 ez:text-left ez:text-site-note ez:font-normal ez:text-muted">
+                <th scope="col" className="ez:h-11 ez:w-auto ez:px-6 ez:text-left ez:text-site-note ez:font-normal ez:text-muted">
                   {STAY_TITLE.rooms}
                 </th>
                 {heads.map((h) => (
-                  <th key={h} scope="col" className="ez:h-11 ez:px-6 ez:text-right ez:text-site-note ez:font-normal ez:whitespace-nowrap ez:text-muted">
+                  <th key={h} scope="col" className="ez:h-11 ez:w-auto ez:px-6 ez:text-right ez:text-site-note ez:font-normal ez:whitespace-nowrap ez:text-muted">
                     {h}
                   </th>
                 ))}
@@ -770,7 +770,7 @@ function RateTable({ rooms, peak }: { rooms: Room[]; peak: boolean }) {
             <tbody className="ez:tabular-nums">
               {views.map((r) => (
                 <tr key={r.id} className={cn(line, "ez:border-t")}>
-                  <th scope="row" className="ez:h-13 ez:px-6 ez:text-left ez:font-medium ez:whitespace-nowrap ez:text-fg">
+                  <th scope="row" className="ez:h-13 ez:w-auto ez:px-6 ez:text-left ez:font-medium ez:whitespace-nowrap ez:text-fg">
                     {r.name}
                   </th>
                   <td className={cn(rateCell, "ez:text-fg")}>{r.rates?.weekday ?? "–"}</td>

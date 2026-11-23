@@ -1,4 +1,4 @@
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 import type { SectionKind, SectionProps } from "../../renderer/registry";
 import type { BusinessRow } from "../quote/types";
 import type { FooterLink } from "../shop/types";
@@ -22,7 +22,7 @@ export type LandingFooterProps = {
   phone: string | null;
   hours: string | null;
   address: string | null;
-  legal: string;
+  legal: ReactNode;
   business: BusinessRow[];
   nav: LandingNavItem[];
   links: PlaceLink[];

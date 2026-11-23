@@ -19,7 +19,7 @@ export type ClassFooterProps = {
   storeName: string;
   phone: string | null;
   hours: string | null;
-  legal: string;
+  legal: ReactNode;
   classes: FooterLink[];
   guide: FooterLink[];
   account: FooterLink[];

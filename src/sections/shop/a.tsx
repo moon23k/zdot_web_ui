@@ -12,7 +12,7 @@ import { focusRing, textLink } from "../../utils/styles";
 import { Bar, BlankPrice, BlankStars, Lines } from "../kit";
 import type { Tile } from "../template/data";
 import { ShopNavLinks } from "./nav";
-import { BEST_HREF, categoryHref, FRESH_HREF, PRODUCTS_HREF, productView, ROW_ITEM, SHOP_TITLE, type ProductView } from "./shared";
+import { BEST_HREF, categoryHref, FRESH_HREF, lastOdd, PRODUCTS_HREF, productView, ROW_ITEM, SHOP_TITLE, STRIP, type ProductView } from "./shared";
 import { SHELF_DEFAULTS, SHELF_RATIO, shelfCols, shelfOf, shelfSizes, shelfView, type Shelf } from "./shelf";
 import type { FooterLink, ShopFooterProps, ShopHeaderProps, ShopListProps } from "./types";
 
@@ -58,7 +58,11 @@ function Price({ v }: { v: ProductView }) {
   );
 }
 
-function Card({ product, sizes, preload, shelf }: { product: ProductSummary; sizes: string; preload?: boolean; shelf: Shelf }) {
+function tagged(products: ProductSummary[]): boolean {
+  return products.some((p) => p.sold_out || p.sample);
+}
+
+function Card({ product, sizes, preload, shelf, tags }: { product: ProductSummary; sizes: string; preload?: boolean; shelf: Shelf; tags: boolean }) {
   const v = shelfView(productView(product), shelf);
   const labels = [v.soldOut && "품절", v.sample && "예시"].filter(Boolean).join(" · ");
   return (
@@ -71,7 +75,7 @@ function Card({ product, sizes, preload, shelf }: { product: ProductSummary; siz
     >
       <Photo src={v.cover} alt={v.name} sizes={sizes} preload={preload} className={cn(SHELF_RATIO[shelf.ratio], v.soldOut && "ez:opacity-45")} />
       <span className="ez:grid ez:justify-items-center ez:pt-5 ez:text-center ez:lg:pt-6">
-        <span className="ez:mb-3 ez:block ez:h-4 ez:text-site-small ez:leading-none ez:tracking-widest ez:text-muted">{labels}</span>
+        {tags && <span className="ez:mb-3 ez:block ez:h-4 ez:text-site-small ez:leading-none ez:tracking-widest ez:text-muted">{labels}</span>}
         <span className="ez:line-clamp-2 ez:text-site-item ez:font-medium ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
         <Price v={v} />
       </span>
@@ -117,18 +121,20 @@ function Row({
   shelf: Shelf;
 }) {
   const shown = products.slice(0, pc);
+  const tags = tagged(shown);
+  const count = shown.length || pc;
   return (
     <section data-slot={slot} data-blank={shown.length ? undefined : ""} className="ez:grid ez:text-fg">
       <Head eyebrow={eyebrow} title={title} />
       <div className={cn("ez:mt-8 ez:lg:mt-14", row)}>
         {shown.length
-          ? shown.map((p) => (
-              <div key={p.id} className={rowItem[pc]}>
-                <Card product={p} sizes={sizes} shelf={shelf} />
+          ? shown.map((p, i) => (
+              <div key={p.id} className={cn(rowItem[pc], lastOdd(i, count, pc))}>
+                <Card product={p} sizes={sizes} shelf={shelf} tags={tags} />
               </div>
             ))
           : Array.from({ length: pc }, (_, i) => (
-              <div key={i} className={rowItem[pc]}>
+              <div key={i} className={cn(rowItem[pc], lastOdd(i, count, pc))}>
                 <BlankCard tone={i} />
               </div>
             ))}
@@ -298,6 +304,7 @@ export function Categories({ data, context }: SectionProps<"category_tiles">) {
   const items: (Tile & { count?: number | null })[] = (
     data.items?.length ? data.items : context.categories.map((c) => ({ title: c.name, image: c.cover_url, href: categoryHref(c.id), count: c.product_count }))
   ).slice(0, 3);
+  const strip = (items.length || 3) % 2 === 1 && (items.length || 3) > 1;
   const caption = (name: ReactNode, count?: number | null) => (
     <span className="ez:flex ez:items-center ez:justify-between ez:gap-3 ez:pt-4 ez:lg:pt-5">
       <span className="ez:flex ez:min-w-0 ez:items-baseline ez:gap-2.5">
@@ -310,10 +317,10 @@ export function Categories({ data, context }: SectionProps<"category_tiles">) {
   return (
     <section data-slot="category-tiles" data-blank={items.length ? undefined : ""} className="ez:grid ez:text-fg">
       <Head eyebrow="Category" title={SHOP_TITLE.categories} />
-      <div className={cn("ez:mt-8 ez:gap-y-10 ez:lg:mt-14", row)}>
+      <div className={cn("ez:mt-8 ez:gap-y-10 ez:lg:mt-14", row, strip && STRIP.row)}>
         {items.length
           ? items.map((t, i) => (
-              <div key={`${t.title}-${i}`} className={rowItem[3]}>
+              <div key={`${t.title}-${i}`} className={cn(rowItem[3], strip && STRIP.item)}>
                 <NextLink href={t.href ?? PRODUCTS_HREF} className={cn("ez:group ez:grid ez:min-w-0 ez:content-start ez:text-fg ez:no-underline", focusRing)}>
                   <Photo src={t.image} alt={t.title} tone={i} sizes="(max-width: 768px) 50vw, 440px" className="ez:aspect-[3/4]" />
                   {caption(t.title, t.count)}
@@ -321,7 +328,7 @@ export function Categories({ data, context }: SectionProps<"category_tiles">) {
               </div>
             ))
           : [0, 1, 2].map((i) => (
-              <div key={i} className={cn(rowItem[3], "ez:grid ez:min-w-0 ez:content-start")}>
+              <div key={i} className={cn(rowItem[3], STRIP.item, "ez:grid ez:min-w-0 ez:content-start")}>
                 <Photo src={null} alt="" tone={i} className="ez:aspect-[3/4]" />
                 {caption(<Bar size="short" />)}
               </div>
@@ -421,6 +428,7 @@ function Crumbs({ items }: { items: ShopListProps["crumbs"] }) {
 
 export function List({ title, count, crumbs, tabs, sorts, products, more, search, emptyHref, shelf = SHELF_DEFAULTS.editorial }: ShopListProps) {
   const sizes = shelfSizes(shelf, "editorial", "(max-width: 1024px) 50vw, 440px");
+  const tags = tagged(products);
   return (
     <div data-slot="catalog-view" className="ez:grid ez:grid-cols-1 ez:text-fg">
       <div className="ez:grid ez:justify-items-center ez:pt-8 ez:text-center ez:lg:pt-18">
@@ -468,7 +476,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
         {products.length ? (
           <div className={cn("ez:grid ez:gap-x-gutter ez:gap-y-12 ez:lg:gap-y-20", shelfCols(shelf))}>
             {products.map((p, i) => (
-              <Card key={p.id} product={p} preload={i < 3} sizes={sizes} shelf={shelf} />
+              <Card key={p.id} product={p} preload={i < 3} sizes={sizes} shelf={shelf} tags={tags} />
             ))}
           </div>
         ) : (

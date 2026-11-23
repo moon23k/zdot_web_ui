@@ -126,21 +126,21 @@ function quoteNote(room: Room): string | null {
   if (!stay) return null;
   if (stay.state === "full") return "예약 마감";
   if (stay.state === "nights") return stay.nights < (room.min_nights ?? 1) ? `${room.min_nights}박부터` : `최대 ${room.max_nights}박`;
-  if (stay.state === "guests") return `최대 ${room.max_guests}인`;
+  if (stay.state === "guests") return `최대 ${room.max_guests}명`;
   return null;
 }
 
 export function roomView(room: Room): RoomView {
   const stay = room.stay;
   const rates = room.rates;
-  const extra = (room.extra_adult_fee ?? 0) > 0 || (room.extra_child_fee ?? 0) > 0 ? `성인 ${won(room.extra_adult_fee ?? 0)} · 아동 ${won(room.extra_child_fee ?? 0)}` : null;
+  const extra = (room.extra_adult_fee ?? 0) > 0 || (room.extra_child_fee ?? 0) > 0 ? `성인\u00a0${won(room.extra_adult_fee ?? 0)} · 아동\u00a0${won(room.extra_child_fee ?? 0)}` : null;
   return {
     id: room.id,
     href: room.href ?? `/products/${room.id}`,
     name: room.name,
     image: room.image ?? null,
     sample: Boolean(room.sample),
-    guests: room.base_guests != null && room.max_guests != null ? `기준 ${room.base_guests}인 · 최대 ${room.max_guests}인` : null,
+    guests: room.base_guests != null && room.max_guests != null ? `기준 ${room.base_guests}명 · 최대 ${room.max_guests}명` : null,
     times: room.check_in && room.check_out ? `${room.check_in} · ${room.check_out}` : null,
     from: room.price_from != null ? `1박 ${won(room.price_from)}~` : room.price,
     today: room.left === 0 ? SOLD_OUT_TODAY : null,

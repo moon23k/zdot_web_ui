@@ -73,7 +73,7 @@ export type MenuGroup = { id: string | null; name: string | null; items: MenuIte
 export type Review = { rating: number; body: string; name: string; date?: string; product?: string | null };
 
 export type TemplateSectionData = {
-  photo_band: { image?: string | null; images?: string[] };
+  photo_band: { image?: string | null; images?: string[]; body?: string | null };
   category_tiles: { items?: Tile[] };
   testimonial: { quote?: string | null; name?: string | null; count?: number | null; average?: number | null; items?: Review[]; image?: string | null };
   curation: { items?: Tile[]; image?: string | null };

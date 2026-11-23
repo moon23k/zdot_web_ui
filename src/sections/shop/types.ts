@@ -23,7 +23,7 @@ export type ShopFooterProps = {
   storeName: string;
   phone: string | null;
   hours: string | null;
-  legal: string;
+  legal: ReactNode;
   shop: FooterLink[];
   guide: FooterLink[];
   account: FooterLink[];

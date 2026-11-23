@@ -1,4 +1,4 @@
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 import type { CatalogLink } from "../../blocks/catalog-view/classic";
 import type { SectionKind, SectionProps } from "../../renderer/registry";
 import type { FooterLink } from "../shop/types";
@@ -20,7 +20,7 @@ export type StayFooterProps = {
   storeName: string;
   phone: string | null;
   hours: string | null;
-  legal: string;
+  legal: ReactNode;
   stay: FooterLink[];
   guide: FooterLink[];
   account: FooterLink[];

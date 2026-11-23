@@ -429,7 +429,7 @@ export function Amenities({ data }: SectionProps<"amenities">) {
   return (
     <section data-slot="amenities" id="amenities" data-blank={items.length ? undefined : ""} className="ez:grid ez:text-fg">
       <Head eyebrow="Amenities" title={STAY_TITLE.amenities} />
-      <ul className={cn(body, line, "ez:m-0 ez:grid ez:list-none ez:border-t ez:p-0", items.length ? cols : "ez:grid-cols-2 ez:md:grid-cols-5")}>
+      <ul className={cn("ez:m-0", body, line, "ez:grid ez:list-none ez:border-t ez:p-0", items.length ? cols : "ez:grid-cols-2 ez:md:grid-cols-5")}>
         {items.length
           ? items.map((it, i) => (
               <li key={`${it.name}-${i}`} className={cn(line, "ez:flex ez:flex-col ez:items-center ez:gap-3.5 ez:border-b ez:px-2 ez:pt-10 ez:pb-9 ez:text-center ez:text-site-body")}>
@@ -501,16 +501,16 @@ export function Info({ data }: SectionProps<"house_rules">) {
                 {cancel.map((r, i) =>
                   "group" in r ? (
                     <tr key={i} className={cn(line, "ez:border-b")}>
-                      <th scope="colgroup" colSpan={2} className="ez:pt-5 ez:pb-2.5 ez:text-left ez:font-medium ez:text-fg">
+                      <th scope="colgroup" colSpan={2} className="ez:w-auto ez:border-0 ez:pt-5 ez:pb-2.5 ez:text-left ez:font-medium ez:text-fg">
                         {r.group}
                       </th>
                     </tr>
                   ) : (
                     <tr key={i} className={cn(line, "ez:border-b ez:last:border-b-0")}>
-                      <th scope="row" className="ez:py-2.5 ez:pr-4 ez:text-left ez:font-normal ez:text-muted">
+                      <th scope="row" className="ez:w-auto ez:border-0 ez:py-2.5 ez:pr-4 ez:text-left ez:font-normal ez:text-muted">
                         {r.label}
                       </th>
-                      <td className="ez:py-2.5 ez:text-right ez:text-fg ez:tabular-nums">{r.value}</td>
+                      <td className="ez:border-0 ez:py-2.5 ez:text-right ez:text-fg ez:tabular-nums">{r.value}</td>
                     </tr>
                   ),
                 )}
@@ -753,7 +753,7 @@ function Condition({ search }: { search: StayListProps["search"] }) {
 
 function Rates({ views, peak }: { views: RoomView[]; peak: boolean }) {
   const cols = [STAY_TITLE.weekday, STAY_TITLE.weekend, ...(peak ? [STAY_TITLE.peak, STAY_TITLE.peakWeekend] : [])];
-  const th = "ez:py-5 ez:pl-4 ez:text-right ez:font-normal";
+  const th = "ez:w-auto ez:py-5 ez:pl-4 ez:text-right ez:font-normal";
   return (
     <section id="rates" className="ez:mt-24 ez:grid ez:lg:mt-32">
       <Head eyebrow="Rates" title={STAY_TITLE.rates} />
@@ -779,7 +779,7 @@ function Rates({ views, peak }: { views: RoomView[]; peak: boolean }) {
               const values = r.rates ? [r.rates.weekday, r.rates.weekend, ...(peak ? [r.rates.peak, r.rates.peakWeekend] : [])] : cols.map(() => null);
               return (
                 <tr key={r.id} className={cn(line, "ez:border-b")}>
-                  <th scope="row" className="ez:py-5 ez:pr-4 ez:text-left ez:font-medium ez:text-fg">
+                  <th scope="row" className="ez:w-auto ez:py-5 ez:pr-4 ez:text-left ez:font-medium ez:text-fg">
                     {r.name}
                   </th>
                   {values.map((v, i) => (

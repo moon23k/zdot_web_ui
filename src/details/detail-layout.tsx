@@ -30,12 +30,13 @@ export function DetailLayout({
 }) {
   const render = (slot: DetailSlot) => {
     const node = nodes[slot.kind];
-    if (node !== undefined) return <div key={slot.kind}>{node}</div>;
+    if (node !== undefined) return <div key={slot.kind} data-slot="detail-node">{node}</div>;
     const Block = detailBlocks[slot.kind];
     return Block ? <Block key={slot.kind} data={data} variant={slot.variant} /> : null;
   };
-  const groups = group(slots.filter((s) => !s.full));
-  const full = slots.filter((s) => s.full);
+  const shown = slots.filter((s) => nodes[s.kind] !== null);
+  const groups = group(shown.filter((s) => !s.full));
+  const full = shown.filter((s) => s.full);
   const hasSide = groups.some((g) => g.side);
   const grid = (
     <div

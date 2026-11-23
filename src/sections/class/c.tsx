@@ -10,7 +10,7 @@ import { cn } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
 import { Bar, BlankPrice, BlankStars, Lines } from "../kit";
 import { MAP_LABEL, SampleMap } from "../stay/map";
-import { fillCols, ROW_ITEM } from "../shop/shared";
+import { fillCols, lastOdd, ROW_ITEM } from "../shop/shared";
 import type { FooterLink } from "../shop/types";
 import type { ClassCard, Session } from "../template/data";
 import { ClassNavLinks } from "./nav";
@@ -253,9 +253,9 @@ function ClassTile({ item, eager }: { item: ClassCard; eager?: boolean }) {
   );
 }
 
-function BlankClassTile() {
+function BlankClassTile({ className }: { className?: string }) {
   return (
-    <div className="ez:flex ez:min-w-0 ez:flex-col">
+    <div className={cn("ez:flex ez:min-w-0 ez:flex-col", className)}>
       <div className="ez:rounded-md ez:bg-surface-alt ez:p-3 ez:md:p-4.5">
         <Photo src={null} alt="" className="ez:aspect-[4/3] ez:rounded-sm ez:bg-surface" />
       </div>
@@ -282,7 +282,7 @@ export function Classes({ data }: SectionProps<"class_list">) {
         <Head title={CLASS_TITLE.classes} />
         <div className="ez:grid ez:grid-cols-2 ez:gap-x-3 ez:gap-y-8 ez:md:grid-cols-3 ez:md:gap-x-4">
           {[0, 1, 2].map((i) => (
-            <BlankClassTile key={i} />
+            <BlankClassTile key={i} className={lastOdd(i, 3, 3)} />
           ))}
         </div>
       </section>
@@ -292,8 +292,8 @@ export function Classes({ data }: SectionProps<"class_list">) {
     <section data-slot="class-list" id="classes" className="ez:grid ez:gap-7 ez:text-fg">
       <Head title={CLASS_TITLE.classes} href={CLASSES_HREF} />
       <div className={shelfRow}>
-        {items.map((c) => (
-          <div key={c.id} className={shelfItem}>
+        {items.map((c, i) => (
+          <div key={c.id} className={cn(shelfItem, lastOdd(i, items.length, 3))}>
             <ClassTile item={c} />
           </div>
         ))}

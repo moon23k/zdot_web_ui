@@ -8,7 +8,7 @@ import type { SectionProps } from "../../renderer/registry";
 import { cn } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
 import { Bar, BlankButton, BlankPrice, BlankStars, Lines } from "../kit";
-import { ROW_ITEM } from "../shop/shared";
+import { lastOdd, ROW_ITEM } from "../shop/shared";
 import type { FooterLink } from "../shop/types";
 import type { Room } from "../template/data";
 import { DateInput, DateText, GuestSelect, NightsText, SelectedDot, StayForm } from "./booking";
@@ -395,8 +395,8 @@ export function Rooms({ data }: SectionProps<"room_list">) {
     <section data-slot="room-list" id="rooms" className="ez:grid ez:gap-7 ez:text-fg">
       <Head title={STAY_TITLE.rooms} aside={<span className="ez:text-site-lead ez:text-muted ez:tabular-nums">{rooms.length}</span>} href={ROOMS_HREF} />
       <div className={shelfRow}>
-        {rooms.map((room) => (
-          <div key={room.id} className={rooms.length < 4 ? shelfFew[rooms.length < 3 ? 2 : 3] : shelfItem}>
+        {rooms.map((room, i) => (
+          <div key={room.id} className={cn(rooms.length < 4 ? shelfFew[rooms.length < 3 ? 2 : 3] : shelfItem, lastOdd(i, rooms.length, rooms.length < 4 ? 3 : 4))}>
             <RoomCard room={room} wide={rooms.length < 4} />
           </div>
         ))}
@@ -761,9 +761,9 @@ function AddOnTile({ items, photo }: { items: AddOnView[]; photo?: string | null
   );
 }
 
-const rateHead = "ez:h-12 ez:px-6 ez:text-left ez:text-site-small ez:font-normal ez:whitespace-nowrap ez:text-muted";
+const rateHead = "ez:h-12 ez:w-auto ez:px-6 ez:text-left ez:text-site-small ez:font-normal ez:whitespace-nowrap ez:text-muted";
 
-const rateCell = "ez:h-14 ez:bg-surface ez:px-6 ez:py-0 ez:text-left ez:text-site-lead ez:font-normal ez:whitespace-nowrap ez:text-fg ez:tabular-nums ez:first:rounded-l-sm ez:last:rounded-r-sm";
+const rateCell = "ez:h-14 ez:w-auto ez:bg-surface ez:px-6 ez:py-0 ez:text-left ez:text-site-lead ez:font-normal ez:whitespace-nowrap ez:text-fg ez:tabular-nums ez:first:rounded-l-sm ez:last:rounded-r-sm";
 
 function Rates({ rooms, peak }: { rooms: Room[]; peak: boolean }) {
   const views = rooms.map(roomView);

@@ -9,7 +9,7 @@ import type { SectionProps } from "../../renderer/registry";
 import { cn } from "../../utils/cn";
 import { focusRing, textLink } from "../../utils/styles";
 import { Bar, BlankPrice, BlankStars, Lines } from "../kit";
-import { ROW_ITEM } from "../shop/shared";
+import { lastOdd, ROW_ITEM } from "../shop/shared";
 import { MAP_LABEL, SampleMap } from "../stay/map";
 import type { FooterLink } from "../shop/types";
 import type { ClassCard, Session } from "../template/data";
@@ -54,14 +54,18 @@ function spec(c: ClassCard): string {
   return [c.length && `${CLASS_TITLE.length} ${c.length}`, c.capacity != null && `${CLASS_TITLE.capacity} ${c.capacity}명`].filter(Boolean).join(" · ");
 }
 
-function Card({ c, preload }: { c: ClassCard; preload?: boolean }) {
+function tagged(classes: ClassCard[]): boolean {
+  return classes.some((c) => c.kind || c.sample);
+}
+
+function Card({ c, preload, tags }: { c: ClassCard; preload?: boolean; tags: boolean }) {
   const detail = spec(c);
   const labels = [c.kind, c.sample && "예시"].filter(Boolean).join(" · ");
   return (
     <NextLink href={c.href ?? CLASSES_HREF} data-slot="class-card" data-sample={c.sample || undefined} className={cn("ez:group ez:grid ez:min-w-0 ez:content-start ez:text-fg ez:no-underline", focusRing)}>
       <Photo src={c.image} alt={c.name} preload={preload} sizes="(max-width: 768px) 50vw, 440px" className="ez:aspect-[4/5]" />
       <span className="ez:grid ez:justify-items-center ez:pt-5 ez:text-center ez:lg:pt-6">
-        <span className="ez:mb-3 ez:block ez:h-4 ez:text-site-small ez:leading-none ez:tracking-widest ez:text-muted">{labels}</span>
+        {tags && <span className="ez:mb-3 ez:block ez:h-4 ez:text-site-small ez:leading-none ez:tracking-widest ez:text-muted">{labels}</span>}
         <span className="ez:line-clamp-2 ez:text-site-item ez:font-medium ez:underline-offset-4 ez:group-hover:underline">{c.name}</span>
         {detail && <span className="ez:mt-1.5 ez:text-site-body ez:text-muted">{detail}</span>}
         {c.price && <span className="ez:mt-1 ez:text-site-body ez:tabular-nums">{c.price}</span>}
@@ -233,18 +237,20 @@ export function Hero({ data }: SectionProps<"hero">) {
 
 export function Classes({ data }: SectionProps<"class_list">) {
   const classes = (data.classes ?? []).slice(0, 3);
+  const count = classes.length || 3;
+  const tags = tagged(classes);
   return (
     <section data-slot="class-list" id="classes" data-blank={classes.length ? undefined : ""} className="ez:grid ez:text-fg">
       <Head eyebrow="Classes" title={CLASS_TITLE.classes} />
       <div className={cn(body, row)}>
         {classes.length
-          ? classes.map((c) => (
-              <div key={c.id} className={cell}>
-                <Card c={c} />
+          ? classes.map((c, i) => (
+              <div key={c.id} className={cn(cell, lastOdd(i, count, 3))}>
+                <Card c={c} tags={tags} />
               </div>
             ))
           : [0, 1, 2].map((i) => (
-              <div key={i} className={cell}>
+              <div key={i} className={cn(cell, lastOdd(i, count, 3))}>
                 <BlankCard tone={i} />
               </div>
             ))}
@@ -257,6 +263,7 @@ export function Classes({ data }: SectionProps<"class_list">) {
 export function Studio({ data, context }: SectionProps<"photo_band">) {
   const image = data.images?.[1] ?? data.image ?? data.images?.[0] ?? null;
   const name = context.storeName?.trim() || null;
+  const intro = data.body?.trim() || null;
   return (
     <section data-slot="photo-band" data-blank={image ? undefined : ""} data-bleed="" className={cn("ez:grid ez:bg-surface-alt ez:text-fg ez:lg:grid-cols-2", bleed)}>
       <Photo src={image} alt="" sizes="(max-width: 1024px) 100vw, 50vw" tone={1} className="ez:aspect-[4/5] ez:rounded-none ez:lg:aspect-auto ez:lg:h-225" />
@@ -269,6 +276,15 @@ export function Studio({ data, context }: SectionProps<"photo_band">) {
         ) : (
           <span className="ez:w-full ez:max-w-100 ez:text-site-name">
             <Bar size="long" strong block />
+          </span>
+        )}
+        {intro ? (
+          <p data-slot="studio-intro" className="ez:m-0 ez:max-w-130 ez:text-site-body ez:leading-relaxed ez:whitespace-pre-line">
+            {intro}
+          </p>
+        ) : (
+          <span className="ez:w-full ez:max-w-100 ez:text-site-body">
+            <Lines />
           </span>
         )}
         {image && (
@@ -464,6 +480,7 @@ function Crumbs({ items }: { items: ClassListProps["crumbs"] }) {
 export function List({ view, title, count, crumbs, tabs, sorts, classes, sessions, links, search, emptyHref }: ClassListProps) {
   const schedule = view === "schedule";
   const empty = schedule ? !sessions.length : !classes.length;
+  const tags = tagged(classes);
   return (
     <div data-slot="class-catalog" data-view={view} className="ez:grid ez:grid-cols-1 ez:text-fg">
       <div className="ez:grid ez:justify-items-center ez:pt-8 ez:text-center ez:lg:pt-18">
@@ -521,7 +538,7 @@ export function List({ view, title, count, crumbs, tabs, sorts, classes, session
         ) : (
           <div className="ez:grid ez:grid-cols-2 ez:gap-x-gutter ez:gap-y-12 ez:lg:grid-cols-3 ez:lg:gap-y-20">
             {classes.map((c, i) => (
-              <Card key={c.id} c={c} preload={i < 3} />
+              <Card key={c.id} c={c} preload={i < 3} tags={tags} />
             ))}
           </div>
         )}

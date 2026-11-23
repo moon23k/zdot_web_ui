@@ -89,13 +89,13 @@ export function Rows({ rows }: { rows: Row[] }) {
         {rows.map((r, i) => (
           <tr key={i} className="ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:last:border-b-0">
             {typeof r.label === "string" ? (
-              <th scope="row" className="ez:py-2.5 ez:pr-3 ez:text-left ez:font-normal ez:text-muted">
+              <th scope="row" className="ez:w-auto ez:border-0 ez:py-2.5 ez:pr-3 ez:text-left ez:font-normal ez:text-muted">
                 {r.label}
               </th>
             ) : (
-              <td className="ez:py-2.5 ez:pr-3">{r.label}</td>
+              <td className="ez:border-0 ez:py-2.5 ez:pr-3">{r.label}</td>
             )}
-            {r.value !== undefined && <td className="ez:py-2.5 ez:text-right ez:tabular-nums">{r.value}</td>}
+            {r.value !== undefined && <td className="ez:border-0 ez:py-2.5 ez:text-right ez:tabular-nums">{r.value}</td>}
           </tr>
         ))}
       </tbody>

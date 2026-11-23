@@ -1,3 +1,4 @@
+import { Fragment, type ReactNode } from "react";
 import type { NavCategory } from "../../blocks/site-header/header-nav";
 import type { Business, ProductSummary } from "../../types";
 import { discountRate, won } from "../../utils/format";
@@ -56,18 +57,24 @@ export function productView(p: ProductSummary): ProductView {
 
 const LEGAL = new Set(["terms", "privacy"]);
 
-export function legalLine(storeName: string, business: Business | null, hosting: string): string {
-  return [
-    [business?.name || storeName, business?.ceo_name && `대표 ${business.ceo_name}`].filter(Boolean).join(" · "),
-    business?.address,
-    business?.registration_no && `사업자등록번호 ${business.registration_no}`,
-    business?.mail_order_no && `통신판매업 신고 ${business.mail_order_no}`,
-    business?.cs_phone && `고객센터 ${business.cs_phone}`,
-    business?.cs_email && `이메일 ${business.cs_email}`,
-    `호스팅 제공 ${hosting}`,
-  ]
-    .filter(Boolean)
-    .join(" · ");
+export function legalLine(storeName: string, business: Business | null, hosting: string): ReactNode {
+  const parts: [string | null | undefined, boolean][] = [
+    [[business?.name || storeName, business?.ceo_name && `대표 ${business.ceo_name}`].filter(Boolean).join(" · "), false],
+    [business?.address, false],
+    [business?.registration_no && `사업자등록번호 ${business.registration_no}`, true],
+    [business?.mail_order_no && `통신판매업 신고 ${business.mail_order_no}`, true],
+    [business?.cs_phone && `고객센터 ${business.cs_phone}`, true],
+    [business?.cs_email && `이메일 ${business.cs_email}`, false],
+    [`호스팅 제공 ${hosting}`, false],
+  ];
+  return parts
+    .filter(([text]) => text)
+    .map(([text, keep], i) => (
+      <Fragment key={i}>
+        {i > 0 && " · "}
+        {keep ? <span className="ez:whitespace-nowrap">{text}</span> : text}
+      </Fragment>
+    ));
 }
 
 export function shopFooter({
@@ -112,6 +119,14 @@ export function shopFooter({
 }
 
 export const ROW_ITEM = { 2: "ez:w-1/2", 3: "ez:w-1/2 ez:md:w-1/3", 4: "ez:w-1/2 ez:lg:w-1/4", 5: "ez:w-1/2 ez:md:w-1/3 ez:lg:w-1/5" } as const;
+
+const TWO_UP = { 3: "ez:max-md:hidden", 4: "ez:max-lg:hidden" } as const;
+
+export function lastOdd(index: number, count: number, cols: keyof typeof TWO_UP): string | undefined {
+  return count > 2 && count % 2 === 1 && index === count - 1 ? TWO_UP[cols] : undefined;
+}
+
+export const STRIP = { row: "ez:max-md:flex-nowrap ez:max-md:justify-start ez:max-md:overflow-x-auto", item: "ez:max-md:w-2/5 ez:max-md:shrink-0" } as const;
 
 export const FILL_COLS = { 1: "ez:md:grid-cols-1", 2: "ez:md:grid-cols-2", 3: "ez:md:grid-cols-3", 4: "ez:md:grid-cols-2 ez:lg:grid-cols-4" } as const;
 

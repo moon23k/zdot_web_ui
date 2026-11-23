@@ -104,7 +104,7 @@ export const classSessions: Session[] = [
 export const classCards: ClassCard[] = [
   { id: "k1", name: "물레 원데이 클래스", image: "/sample/p1.jpg", price: "65,000원", next: "다음 수업 11월 24일 화 14:00", href: "#", kind: "원데이", length: "120분", capacity: 6, left: 3 },
   { id: "k2", name: "핸드빌딩 컵 만들기", image: "/sample/p2.jpg", price: "48,000원", next: "다음 수업 11월 25일 수 19:30", href: "#", kind: "원데이", length: "90분", capacity: 6, left: 5 },
-  { id: "k3", name: "물레 정규반 4주", image: "/sample/p4.jpg", price: "240,000원", next: "다음 수업 12월 2일 화 19:30", href: "#", kind: "정규반", length: "4회", capacity: 6, left: 2 },
+  { id: "k3", name: "물레 정규반 4주", image: "/sample/p4.jpg", price: "240,000원", next: "다음 수업 12월 2일 화 19:30", href: "#", kind: "정규반", length: "120분", capacity: 6, left: 2 },
 ];
 
 export const paletteDesign: Design = {

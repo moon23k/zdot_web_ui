@@ -4,6 +4,7 @@ import { ButtonLink } from "../../components/button";
 import { cn } from "../../utils/cn";
 import { footerMark } from "../../utils/styles";
 import { SHOP_DESIGNS, shopFooter } from "../../sections/shop";
+import { legalLine } from "../../sections/shop/shared";
 import { STAY_DESIGNS, stayFooter } from "../../sections/stay";
 import { CLASS_DESIGNS, classFooter } from "../../sections/class";
 import { QUOTE_DESIGNS, quoteFooter } from "../../sections/quote";
@@ -53,17 +54,7 @@ export function SiteFooter({
   const QuoteSkin = main === "quote" && skin ? QUOTE_DESIGNS[skin]?.Footer : undefined;
   const LandingSkin = landingDesign(main, skin)?.Footer;
   const guide = GUIDE[main] ?? GUIDE.shop;
-  const legal = [
-    [business?.name || storeName, business?.ceo_name && `대표 ${business.ceo_name}`].filter(Boolean).join(" · "),
-    business?.address,
-    business?.registration_no && `사업자등록번호 ${business.registration_no}`,
-    business?.mail_order_no && `통신판매업 신고 ${business.mail_order_no}`,
-    business?.cs_phone && `고객센터 ${business.cs_phone}`,
-    business?.cs_email && `이메일 ${business.cs_email}`,
-    `호스팅 제공 ${hosting}`,
-  ]
-    .filter(Boolean)
-    .join(" · ");
+  const legal = legalLine(storeName, business, hosting);
   const columns: { title: string; items: [string, string, boolean?][] }[] = [
     { title: guide.title, items: policies.filter((p) => !LEGAL.has(p.key)).map((p) => [p.key === "returns" ? guide.returns : p.title, policyHref(p.key)]) },
     { title: "계정", items: [["로그인", "/login"], ...guide.account] },

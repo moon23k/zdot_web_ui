@@ -12,7 +12,7 @@ import { focusRing } from "../../utils/styles";
 import { Bar, BlankPrice, Pic } from "../kit";
 import { guideRows } from "./defaults";
 import { ShopNavLinks } from "./nav";
-import { BEST_HREF, categoryHref, fillCols, FRESH_HREF, PRODUCTS_HREF, productView, ROW_ITEM, SHOP_TITLE } from "./shared";
+import { BEST_HREF, categoryHref, fillCols, FRESH_HREF, lastOdd, PRODUCTS_HREF, productView, ROW_ITEM, SHOP_TITLE } from "./shared";
 import { SHELF_DEFAULTS, SHELF_RATIO, shelfCols, shelfOf, shelfSizes, shelfView, type Shelf } from "./shelf";
 import type { CatalogPromo, FooterLink, ShopFooterProps, ShopHeaderProps, ShopListProps } from "./types";
 
@@ -103,8 +103,8 @@ function Row({ slot, title, href, items, shelf }: { slot: string; title: string;
     <section data-slot={slot} className="ez:grid ez:gap-7 ez:text-fg">
       <Head title={title} href={href} />
       <div className={shelfRow}>
-        {items.map((p) => (
-          <div key={p.id} className={shelfItem}>
+        {items.map((p, i) => (
+          <div key={p.id} className={cn(shelfItem, lastOdd(i, items.length, 4))}>
             <Card product={p} shelf={shelf} />
           </div>
         ))}
@@ -333,7 +333,7 @@ export function Categories({ data, context }: SectionProps<"category_tiles">) {
         <Head title={SHOP_TITLE.categories} />
         <div className={cn(gridThree, fillCols(3))}>
           {[0, 1, 2].map((i) => (
-            <div key={i} className="ez:grid ez:content-start">
+            <div key={i} className={cn("ez:grid ez:content-start", lastOdd(i, 3, 3))}>
               <Pic ratio={TILE_RATIO} tone={i} />
               <span className="ez:px-1 ez:pt-4 ez:text-site-item">
                 <Bar size="short" />
@@ -349,7 +349,7 @@ export function Categories({ data, context }: SectionProps<"category_tiles">) {
       <Head title={SHOP_TITLE.categories} href={PRODUCTS_HREF} />
       <div className={cn(gridThree, fillCols(items.length))}>
         {items.map((t, i) => (
-          <NextLink key={`${t.href}-${i}`} href={t.href} className={cn("ez:group ez:grid ez:min-w-0 ez:content-start ez:text-fg ez:no-underline", focusRing)}>
+          <NextLink key={`${t.href}-${i}`} href={t.href} className={cn("ez:group ez:grid ez:min-w-0 ez:content-start ez:text-fg ez:no-underline", lastOdd(i, items.length, 3), focusRing)}>
             <Pic src={t.image} alt={t.title} ratio={TILE_RATIO} tone={i} />
             <span className="ez:flex ez:items-center ez:justify-between ez:gap-3 ez:px-1 ez:pt-4">
               <span className="ez:flex ez:min-w-0 ez:items-baseline ez:gap-2">

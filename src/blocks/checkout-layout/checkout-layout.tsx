@@ -14,20 +14,63 @@ export function CheckoutLayout({ title, main, aside }: { title?: string; main: R
   );
 }
 
-export function CheckoutSection({ n, title, action, children, last }: { n: number; title: string; action?: ReactNode; children: ReactNode; last?: boolean }) {
+export function CheckoutSection({
+  n,
+  title,
+  action,
+  children,
+  last,
+  fold,
+}: {
+  n: number;
+  title: string;
+  action?: ReactNode;
+  children: ReactNode;
+  last?: boolean;
+  fold?: boolean;
+}) {
+  const heading = (
+    <h2 className="ez:m-0 ez:flex ez:items-baseline ez:gap-3.5 ez:text-site-heading">
+      <span className={cn(figure, "ez:text-site-heading ez:leading-none ez:text-primary")}>{n}</span>
+      {title}
+    </h2>
+  );
+  const body = <div className="ez:grid ez:gap-6 ez:md:grid-cols-2 ez:md:pl-7">{children}</div>;
+  const line = cn("ez:border-0 ez:border-solid ez:border-site-line", !last && "ez:border-b ez:pb-10 ez:lg:pb-16");
+  if (fold) {
+    return (
+      <section data-slot="checkout-section" data-fold="" className={line}>
+        <details className="ez:group">
+          <summary className="ez:flex ez:cursor-pointer ez:list-none ez:items-center ez:justify-between ez:gap-3 ez:[&::-webkit-details-marker]:hidden">
+            {heading}
+            <span className="ez:flex ez:items-center ez:gap-3">
+              {action}
+              <svg
+                viewBox="0 0 16 16"
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                aria-hidden="true"
+                className="ez:text-muted ez:transition-transform ez:group-open:rotate-180"
+              >
+                <path d="M4 6l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+          </summary>
+          <div className="ez:pt-6">{body}</div>
+        </details>
+      </section>
+    );
+  }
   return (
-    <section
-      data-slot="checkout-section"
-      className={cn("ez:grid ez:gap-6 ez:border-0 ez:border-solid ez:border-site-line", !last && "ez:border-b ez:pb-10 ez:lg:pb-16")}
-    >
+    <section data-slot="checkout-section" className={cn("ez:grid ez:gap-6", line)}>
       <div className="ez:flex ez:items-center ez:justify-between ez:gap-3">
-        <h2 className="ez:m-0 ez:flex ez:items-baseline ez:gap-3.5 ez:text-site-heading">
-          <span className={cn(figure, "ez:text-site-heading ez:leading-none ez:text-primary")}>{n}</span>
-          {title}
-        </h2>
+        {heading}
         {action}
       </div>
-      <div className="ez:grid ez:gap-6 ez:md:grid-cols-2 ez:md:pl-7">{children}</div>
+      {body}
     </section>
   );
 }

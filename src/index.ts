@@ -35,7 +35,17 @@ export {
   GUEST_PRIVACY_TEXT,
   type ConsentTerm,
 } from "./blocks/consent-form";
-export { CheckoutLayout, CheckoutLines, CheckoutSection } from "./blocks/checkout-layout";
+export {
+  CHECKOUT_NOTES,
+  CheckoutLayout,
+  CheckoutLines,
+  CheckoutSection,
+  checkoutOf,
+  RequestNote,
+  type CheckoutShape,
+  type CheckoutNote,
+  type CheckoutSetting,
+} from "./blocks/checkout-layout";
 export { ChipChoice, DropZone, FormLayout, PhotoAttach, StepList } from "./blocks/form-parts";
 export { CheckoutItems, type CheckoutLine } from "./blocks/checkout-items";
 export { popupStyleOf, StorePopup, type PopupPosition, type PopupSize, type PopupStyle, type PopupStyleSetting, type StorePopupItem } from "./blocks/store-popup";

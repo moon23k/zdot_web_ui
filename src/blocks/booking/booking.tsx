@@ -17,15 +17,21 @@ export function BookingFrame({ action, main, card }: { action: string; main: Rea
 }
 
 export function PhotoCollage({ images, name, kind = "stay" }: { images: (string | null)[]; name: string; kind?: "stay" | "class" }) {
-  const count = kind === "stay" ? 5 : 3;
-  const shown = Array.from({ length: count }, (_, i) => images[i] ?? null);
+  const full = kind === "stay" ? 5 : 3;
+  const filled = images.filter(Boolean) as string[];
+  const count = filled.length === 0 || filled.length >= full ? full : Math.min(filled.length, 3);
+  const shown = Array.from({ length: count }, (_, i) => filled[i] ?? null);
   return (
     <div
       data-slot="photo-collage"
+      data-count={count}
       className={cn(
-        "ez:grid ez:gap-3 ez:lg:h-140",
-        kind === "stay" ? "ez:grid-cols-2 ez:lg:grid-cols-[2fr_1fr_1fr] ez:lg:grid-rows-2" : "ez:grid-cols-2 ez:lg:grid-cols-[2fr_1fr] ez:lg:grid-rows-2",
-        kind === "class" && "ez:lg:h-120",
+        "ez:grid ez:gap-3",
+        kind === "class" ? "ez:lg:h-120" : "ez:lg:h-140",
+        count === 1 && "ez:grid-cols-1",
+        count === 2 && "ez:grid-cols-1 ez:lg:grid-cols-[2fr_1fr]",
+        count === 3 && "ez:grid-cols-2 ez:lg:grid-cols-[2fr_1fr] ez:lg:grid-rows-2",
+        count === 5 && "ez:grid-cols-2 ez:lg:grid-cols-[2fr_1fr_1fr] ez:lg:grid-rows-2",
       )}
     >
       {shown.map((src, i) => (
@@ -36,7 +42,7 @@ export function PhotoCollage({ images, name, kind = "stay" }: { images: (string 
           preload={i === 0}
           tone={i}
           sizes={i === 0 ? "(max-width: 1024px) 100vw, 640px" : "320px"}
-          className={cn("ez:aspect-[4/3] ez:lg:aspect-auto ez:lg:h-full", i === 0 && "ez:col-span-2 ez:lg:col-span-1 ez:lg:row-span-2", i > 2 && "ez:max-lg:hidden")}
+          className={cn("ez:aspect-[4/3] ez:lg:aspect-auto ez:lg:h-full", i === 0 && count > 2 && "ez:col-span-2 ez:lg:col-span-1 ez:lg:row-span-2", i > 2 && "ez:max-lg:hidden")}
         />
       ))}
     </div>

@@ -177,14 +177,8 @@
   gap: 16px;
   justify-items: start;
 }
-.ez-faq details {
-  border-bottom: 1px solid var(--ezd-primary-border);
-  padding: 12px 0;
-}
-.ez-faq summary {
-  cursor: pointer;
-  font-weight: 400;
-  min-height: 44px;
+.ez-faq > div + [data-slot="button"] {
+  margin-top: var(--ezd-gutter);
 }
 
 .ez-product {
@@ -314,12 +308,8 @@
   background: transparent;
   color: var(--ezd-muted);
 }
-:where(.ez-root[data-frame="gallery"]) .ez-line,
-:where(.ez-root[data-frame="gallery"]) .ez-faq details {
+:where(.ez-root[data-frame="gallery"]) .ez-line {
   border-bottom-color: var(--ez-color-site-line);
-}
-:where(.ez-root[data-frame="gallery"]) .ez-faq summary {
-  font-weight: 400;
 }
 :where(.ez-root[data-frame="gallery"]) table {
   width: 100%;

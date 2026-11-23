@@ -4,7 +4,7 @@ import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { classCards } from "../src/__stories__/fixtures/templates";
 import products from "../src/__stories__/fixtures/products.json";
-import { DetailLayout, resolveTemplate, SiteFooter, SiteRenderer } from "../src/index";
+import { DetailLayout, Fold, resolveTemplate, ReviewList, SiteFooter, SiteRenderer } from "../src/index";
 import { roomView } from "../src/sections/stay";
 import type { ProductSummary } from "../src/types";
 
@@ -145,5 +145,24 @@ describe("숙박 갤러리 모바일 배치", () => {
     expect(hidden(3)).toEqual(["", "", "max-md:hidden"]);
     expect(hidden(4)).toEqual(["", "", "", "md:max-lg:hidden"]);
     expect(hidden(5)).toEqual(["", "", "", "md:max-lg:hidden", "max-lg:hidden"]);
+  });
+});
+
+describe("상세 펼침 줄", () => {
+  it("후기 운영 기준도 펼침 줄과 같은 오른쪽 + 표시", () => {
+    const root = render(<ReviewList count={1} average={4.7} items={[{ id: "r1", rating: 5, body: "좋아요", author: "김**", created_at: "2026-11-01T00:00:00Z" } as never]} notice={[{ title: "기준", body: "본문" }]} />).container;
+    const fold = render(<Fold title="상품 정보 제공 고시">본문</Fold>).container;
+    for (const summary of [root.querySelector("summary")!, fold.querySelector("summary")!]) {
+      expect(summary.className).toContain("ez:list-none");
+      expect(summary.className).toContain("ez:justify-between");
+      expect(summary.querySelector('[aria-hidden="true"]')).toHaveTextContent("+");
+    }
+  });
+
+  it("문의 목록 뒤 단추는 간격을 두고, 공용 펼침 규칙이 펼침 줄을 덮지 않는다", () => {
+    const css = readFileSync(resolve("src/styles/legacy.css"), "utf8");
+    expect(css).toContain('.ez-faq > div + [data-slot="button"]');
+    expect(css).not.toMatch(/\.ez-faq (details|summary)/);
+    expect(css).toMatch(/\.ez-line \{\n {2}border-bottom-color/);
   });
 });

@@ -85,8 +85,13 @@ export function ReviewList({
             ))}
           </ul>
           {notice && notice.length > 0 && (
-            <details className="ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:pt-5 ez:text-site-small ez:text-muted">
-              <summary className="ez:cursor-pointer">{title} 운영 기준</summary>
+            <details className="ez:group ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:pt-5 ez:text-site-small ez:text-muted">
+              <summary className="ez:flex ez:cursor-pointer ez:list-none ez:items-center ez:justify-between ez:gap-3 ez:[&::-webkit-details-marker]:hidden">
+                {title} 운영 기준
+                <span aria-hidden="true" className="ez:transition-transform ez:group-open:rotate-45">
+                  +
+                </span>
+              </summary>
               <div className="ez:mt-2 ez:grid ez:gap-1">
                 {notice.map((n, i) => (
                   <p key={i} className="ez:m-0">

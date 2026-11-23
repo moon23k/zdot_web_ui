@@ -18,6 +18,11 @@ export function won(value: number): string {
   return `${value.toLocaleString("ko-KR")}원`;
 }
 
+export function registrationText(no: string): string {
+  const digits = no.replace(/\D/g, "");
+  return digits.length === 10 ? `${digits.slice(0, 3)}-${digits.slice(3, 5)}-${digits.slice(5)}` : no;
+}
+
 export function discountRate(list: number, sale: number): number {
   return list > sale ? Math.floor(((list - sale) / list) * 100) : 0;
 }

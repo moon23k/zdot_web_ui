@@ -14,6 +14,8 @@ const classDays: CalendarDate[] = Array.from({ length: 30 }, (_, i) => {
   return { date, disabled: none || i % 9 === 4, outside: none || undefined };
 });
 
+const openDays = classDays.map((d) => ({ ...d, disabled: d.outside }));
+
 const meta = {
   title: "Components/Calendar",
   component: Calendar,
@@ -32,6 +34,9 @@ export const AllVariants: StoryObj<typeof meta> = {
       </Section>
       <Section title="dots legend">
         <Calendar days={classDays} dots legend />
+      </Section>
+      <Section title="dots legend, none full">
+        <Calendar days={openDays} dots legend />
       </Section>
     </>
   ),

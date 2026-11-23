@@ -84,6 +84,9 @@ export function Calendar({
     return "none";
   };
   const pages = list.slice(page, page + months);
+  const dotted = dots && days.some((d) => !d.disabled);
+  const struck = days.filter((d) => d.disabled && !d.outside).map((d) => parts(d.date)[2]);
+  const sample = struck.find((d) => d >= 10) ?? struck[0];
   const nav = cn(
     "ez:flex ez:size-9 ez:items-center ez:justify-center ez:rounded-full ez:border ez:border-solid ez:border-site-edge ez:bg-transparent ez:font-body ez:text-site-lead ez:text-fg ez:cursor-pointer ez:disabled:text-site-off ez:disabled:cursor-default",
     focusRing,
@@ -158,18 +161,22 @@ export function Calendar({
           );
         })}
       </div>
-      {legend && (
+      {legend && (dotted || sample !== undefined) && (
         <ul data-slot="calendar-legend" className="ez:m-0 ez:flex ez:list-none ez:gap-4 ez:p-0 ez:text-site-caption ez:text-muted">
-          <li className="ez:flex ez:items-center ez:gap-1.5">
-            <span aria-hidden="true" className="ez:size-1 ez:rounded-full ez:bg-primary" />
-            예약 가능
-          </li>
-          <li className="ez:flex ez:items-center ez:gap-1.5">
-            <span aria-hidden="true" className="ez:tabular-nums ez:text-site-off ez:line-through">
-              1
-            </span>
-            마감
-          </li>
+          {dotted && (
+            <li className="ez:flex ez:items-center ez:gap-1.5">
+              <span aria-hidden="true" className="ez:size-1 ez:rounded-full ez:bg-primary" />
+              예약 가능
+            </li>
+          )}
+          {sample !== undefined && (
+            <li className="ez:flex ez:items-center ez:gap-1.5">
+              <span aria-hidden="true" className="ez:font-body ez:text-site-note ez:tabular-nums ez:text-site-off ez:line-through">
+                {sample}
+              </span>
+              마감
+            </li>
+          )}
         </ul>
       )}
       {mode === "range" ? (

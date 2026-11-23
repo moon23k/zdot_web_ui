@@ -5,8 +5,10 @@ import { describe, expect, it } from "vitest";
 import { classCards } from "../src/__stories__/fixtures/templates";
 import products from "../src/__stories__/fixtures/products.json";
 import { STAR_PATH as STAR, StarRow } from "../src/components/star-row";
-import { Calendar, DetailLayout, Fold, resolveTemplate, ReviewList, SiteFooter, SiteRenderer } from "../src/index";
+import { Calendar, type CalendarDate, DetailLayout, Fold, resolveTemplate, ReviewList, SiteFooter, SiteRenderer } from "../src/index";
+import { businessRows } from "../src/sections/quote/shared";
 import { roomView } from "../src/sections/stay";
+import { registrationText } from "../src/utils/format";
 import type { ProductSummary } from "../src/types";
 
 const policies = [
@@ -35,6 +37,25 @@ describe("바닥글 사업자 정보", () => {
       });
     }
   }
+});
+
+describe("사업자등록번호 표기", () => {
+  const digits = { ...business, registration_no: "1052058144" };
+  for (const main of ["shop", "stay", "class", "quote"] as const) {
+    it(`${main}: 숫자 10자리는 3-2-5 로 끊고 줄 사이에서 갈리지 않는다`, () => {
+      const foot = render(<SiteFooter storeName="오후의 식탁" business={digits as never} hosting="자사닷" policies={policies} main={main} skin={resolveTemplate(main, "a").skin} />).container;
+      expect(foot.textContent).toContain("105-20-58144");
+      expect(foot.textContent).not.toContain("1052058144");
+      if (main !== "quote") expect([...foot.querySelectorAll(".ez\\:whitespace-nowrap")].some((el) => el.textContent === "사업자등록번호 105-20-58144")).toBe(true);
+    });
+  }
+
+  it("10자리 숫자가 아닌 값은 그대로", () => {
+    expect(registrationText("105-20-58144")).toBe("105-20-58144");
+    expect(registrationText("1052058144")).toBe("105-20-58144");
+    expect(registrationText("10520581")).toBe("10520581");
+    expect(businessRows("오후의 식탁", digits as never, "자사닷").find((r) => r.label === "사업자등록번호")?.value).toBe("105-20-58144");
+  });
 });
 
 describe("모바일 2열 격자의 외톨이 칸", () => {
@@ -199,7 +220,7 @@ describe("별점의 소수 평점", () => {
 });
 
 describe("수업 달력의 표시", () => {
-  const days = [
+  const days: CalendarDate[] = [
     { date: "2026-11-02", disabled: true, outside: true },
     { date: "2026-11-03", disabled: true },
     { date: "2026-11-04" },
@@ -217,13 +238,27 @@ describe("수업 달력의 표시", () => {
     expect(cell(root, 4).className).not.toContain("ez:line-through");
   });
 
+  const legendOf = (list: CalendarDate[]) => render(<Calendar days={list} dots legend />).container.querySelector("[data-slot=calendar-legend]");
+
   it("범례는 예약 가능 · 마감 두 줄을 실제 표시 모양으로", () => {
-    const legend = render(<Calendar days={days} dots legend />).container.querySelector("[data-slot=calendar-legend]")!;
+    const legend = legendOf(days)!;
     const rows = [...legend.querySelectorAll("li")];
-    expect(rows.map((r) => r.textContent?.replace(/^1/, ""))).toEqual(["예약 가능", "마감"]);
+    expect(rows.map((r) => r.textContent)).toEqual(["예약 가능", "3마감"]);
     expect(rows[0].querySelector("span")?.className).toContain("ez:bg-primary");
-    expect(rows[1].querySelector("span")?.className).toContain("ez:line-through");
+    const sample = rows[1].querySelector("span")!.className;
+    for (const name of ["ez:line-through", "ez:text-site-off", "ez:text-site-note", "ez:tabular-nums"]) expect(sample).toContain(name);
     expect(legend.className).toContain("ez:text-site-caption");
+  });
+
+  it("마감 견본은 취소선 날 중 두 자리 날짜를 먼저 쓴다", () => {
+    const legend = legendOf([...days, { date: "2026-11-12", disabled: true }])!;
+    expect(legend.querySelectorAll("li")[1].textContent).toBe("12마감");
+  });
+
+  it("범례는 달력에 실제로 있는 상태만", () => {
+    expect([...legendOf(days.filter((d) => d.date !== "2026-11-03"))!.querySelectorAll("li")].map((r) => r.textContent)).toEqual(["예약 가능"]);
+    expect([...legendOf(days.filter((d) => d.date !== "2026-11-04"))!.querySelectorAll("li")].map((r) => r.textContent)).toEqual(["3마감"]);
+    expect(legendOf([days[0]])).toBeNull();
   });
 
   it("범례를 켜지 않은 달력은 그대로", () => {

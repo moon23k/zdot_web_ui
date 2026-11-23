@@ -1,7 +1,7 @@
 import { Fragment, type ReactNode } from "react";
 import type { NavCategory } from "../../blocks/site-header/header-nav";
 import type { Business, ProductSummary } from "../../types";
-import { discountRate, won } from "../../utils/format";
+import { discountRate, registrationText, won } from "../../utils/format";
 import type { FooterLink, ShopFooterProps, ShopHeaderProps, ShopNavItem } from "./types";
 
 export const SHOP_TITLE = { fresh: "신상품", best: "베스트", categories: "분류", reviews: "리뷰", all: "전체 상품", more: "전체 보기", curation: "기획 묶음" } as const;
@@ -61,7 +61,7 @@ export function legalLine(storeName: string, business: Business | null, hosting:
   const parts: [string | null | undefined, boolean][] = [
     [[business?.name || storeName, business?.ceo_name && `대표 ${business.ceo_name}`].filter(Boolean).join(" · "), false],
     [business?.address, false],
-    [business?.registration_no && `사업자등록번호 ${business.registration_no}`, true],
+    [business?.registration_no && `사업자등록번호 ${registrationText(business.registration_no)}`, true],
     [business?.mail_order_no && `통신판매업 신고 ${business.mail_order_no}`, true],
     [business?.cs_phone && `고객센터 ${business.cs_phone}`, true],
     [business?.cs_email && `이메일 ${business.cs_email}`, false],

@@ -1,4 +1,5 @@
 import type { Business } from "../../types";
+import { registrationText } from "../../utils/format";
 import { legalLine } from "../shop/shared";
 import type { FooterLink } from "../shop/types";
 import type { Case, QuoteFigures } from "../template/data";
@@ -82,7 +83,7 @@ export function businessRows(storeName: string, business: Business | null, hosti
   const rows: [string, string | null | undefined][] = [
     ["상호", business?.name || storeName],
     ["대표", business?.ceo_name],
-    ["사업자등록번호", business?.registration_no],
+    ["사업자등록번호", business?.registration_no && registrationText(business.registration_no)],
     ["통신판매업 신고", business?.mail_order_no],
     ["주소", business?.address],
     ["이메일", business?.cs_email],

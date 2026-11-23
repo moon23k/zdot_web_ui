@@ -79,11 +79,11 @@ function textStyle(style: DetailTextStyle | null | undefined): CSSProperties {
   return css;
 }
 
-function Texts({ layers }: { layers: DetailLayer[] }) {
+function Texts({ layers, under = false }: { layers: DetailLayer[]; under?: boolean }) {
   const texts = layers.filter((l) => l.type === "text" && l.text);
   if (!texts.length) return null;
   return (
-    <div className="ez:grid ez:gap-2 ez:px-5 ez:py-6">
+    <div className={under ? "ez:grid ez:gap-2 ez:px-5 ez:pt-8 ez:pb-6" : "ez:grid ez:gap-2 ez:px-5 ez:py-6"}>
       {texts.map((l) => (
         <div key={l.id} style={{ textAlign: l.style?.align ?? "left" }}>
           <p style={textStyle(l.style)}>{l.text}</p>
@@ -245,7 +245,7 @@ function Block({ block }: { block: DetailBlock }) {
       body = (
         <>
           {images.map((l) => <Img key={l.id} layer={l} />)}
-          <Texts layers={shown} />
+          <Texts layers={shown} under={images.length > 0} />
         </>
       );
   }

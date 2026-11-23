@@ -8,6 +8,12 @@ const days: CalendarDate[] = Array.from({ length: 40 }, (_, i) => {
   return { date, label: weekend ? "16만" : "12만", disabled: i === 9 || i === 10 };
 });
 
+const classDays: CalendarDate[] = Array.from({ length: 30 }, (_, i) => {
+  const date = new Date(Date.UTC(2026, 10, 1 + i)).toISOString().slice(0, 10);
+  const none = new Date(`${date}T00:00:00Z`).getUTCDay() === 1;
+  return { date, disabled: none || i % 9 === 4, outside: none || undefined };
+});
+
 const meta = {
   title: "Components/Calendar",
   component: Calendar,
@@ -23,6 +29,9 @@ export const AllVariants: StoryObj<typeof meta> = {
       </Section>
       <Section title="single">
         <Calendar days={days} />
+      </Section>
+      <Section title="dots legend">
+        <Calendar days={classDays} dots legend />
       </Section>
     </>
   ),

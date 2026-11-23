@@ -4,7 +4,8 @@ import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { classCards } from "../src/__stories__/fixtures/templates";
 import products from "../src/__stories__/fixtures/products.json";
-import { DetailLayout, Fold, resolveTemplate, ReviewList, SiteFooter, SiteRenderer } from "../src/index";
+import { STAR_PATH as STAR, StarRow } from "../src/components/star-row";
+import { Calendar, DetailLayout, Fold, resolveTemplate, ReviewList, SiteFooter, SiteRenderer } from "../src/index";
 import { roomView } from "../src/sections/stay";
 import type { ProductSummary } from "../src/types";
 
@@ -164,5 +165,70 @@ describe("상세 펼침 줄", () => {
     expect(css).toContain('.ez-faq > div + [data-slot="button"]');
     expect(css).not.toMatch(/\.ez-faq (details|summary)/);
     expect(css).toMatch(/\.ez-line \{\n {2}border-bottom-color/);
+  });
+});
+
+describe("별점의 소수 평점", () => {
+  const stars = (rating: number) => [...render(<StarRow rating={rating} />).container.querySelectorAll("span[role=img] > svg")];
+
+  it("4.7 은 다섯째 별을 70% 만 칠한다", () => {
+    const row = stars(4.7);
+    expect(row.slice(0, 4).every((s) => !s.classList.contains("ez:opacity-25") && s.querySelectorAll("path").length === 1)).toBe(true);
+    expect(row[4].getAttribute("data-fill")).toBe("0.7");
+    const [dim, full] = row[4].querySelectorAll("path");
+    expect(dim.getAttribute("class")).toBe("ez:opacity-25");
+    const clip = row[4].querySelector(`clipPath#${CSS.escape(full.getAttribute("clip-path")!.slice(5, -1))} rect`);
+    expect(clip?.getAttribute("width")).toBe("15.28");
+  });
+
+  it("정수 평점은 꽉 찬 별과 25% 별 두 가지만 그린다", () => {
+    for (const [rating, filled] of [[4, 4], [0, 0], [5, 5]] as const) {
+      const row = stars(rating);
+      expect(row.map((s) => s.outerHTML)).toEqual(
+        [1, 2, 3, 4, 5].map(
+          (n) => `<svg viewBox="0 0 24 24" aria-hidden="true" class="ez:size-3.25${n > filled ? " ez:opacity-25" : ""}"><path fill="currentColor" d="${STAR}"></path></svg>`,
+        ),
+      );
+    }
+  });
+
+  it("범위를 넘는 평점은 0 · 5 로 묶는다", () => {
+    expect(stars(-1).every((s) => s.classList.contains("ez:opacity-25"))).toBe(true);
+    expect(stars(6).every((s) => !s.classList.contains("ez:opacity-25") && !s.hasAttribute("data-fill"))).toBe(true);
+  });
+});
+
+describe("수업 달력의 표시", () => {
+  const days = [
+    { date: "2026-11-02", disabled: true, outside: true },
+    { date: "2026-11-03", disabled: true },
+    { date: "2026-11-04" },
+  ];
+  const cell = (root: HTMLElement, day: number) => root.querySelector(`button[aria-label^="11월 ${day}일 "]`)!;
+
+  it("수업 없는 날은 흐리게, 다 찬 날은 취소선, 열린 날은 점", () => {
+    const root = render(<Calendar days={days} dots legend />).container;
+    expect(cell(root, 2).className).not.toContain("ez:line-through");
+    expect(cell(root, 2).hasAttribute("data-outside")).toBe(true);
+    expect((cell(root, 2) as HTMLButtonElement).disabled).toBe(true);
+    expect(cell(root, 3).className).toContain("ez:line-through");
+    expect(cell(root, 3).className).not.toContain("ez:after:bg-primary");
+    expect(cell(root, 4).className).toContain("ez:after:bg-primary");
+    expect(cell(root, 4).className).not.toContain("ez:line-through");
+  });
+
+  it("범례는 예약 가능 · 마감 두 줄을 실제 표시 모양으로", () => {
+    const legend = render(<Calendar days={days} dots legend />).container.querySelector("[data-slot=calendar-legend]")!;
+    const rows = [...legend.querySelectorAll("li")];
+    expect(rows.map((r) => r.textContent?.replace(/^1/, ""))).toEqual(["예약 가능", "마감"]);
+    expect(rows[0].querySelector("span")?.className).toContain("ez:bg-primary");
+    expect(rows[1].querySelector("span")?.className).toContain("ez:line-through");
+    expect(legend.className).toContain("ez:text-site-caption");
+  });
+
+  it("범례를 켜지 않은 달력은 그대로", () => {
+    const root = render(<Calendar days={days} dots />).container;
+    expect(root.querySelector("[data-slot=calendar-legend]")).toBeNull();
+    expect(root.querySelector("[data-slot=calendar]")!.children).toHaveLength(2);
   });
 });

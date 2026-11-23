@@ -4,7 +4,7 @@ import { useState } from "react";
 import { cn } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
 
-export type CalendarDate = { date: string; label?: string; disabled?: boolean };
+export type CalendarDate = { date: string; label?: string; disabled?: boolean; outside?: boolean };
 export type CalendarValue = { start?: string; end?: string };
 
 const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"];
@@ -46,6 +46,7 @@ export function Calendar({
   endName = "out",
   months = 1,
   dots,
+  legend,
   className,
 }: {
   days: CalendarDate[];
@@ -57,6 +58,7 @@ export function Calendar({
   endName?: string;
   months?: 1 | 2;
   dots?: boolean;
+  legend?: boolean;
   className?: string;
 }) {
   const [own, setOwn] = useState<CalendarValue>(value ?? {});
@@ -95,7 +97,7 @@ export function Calendar({
           const size = new Date(Date.UTC(y, m, 0)).getUTCDate();
           const shownDays = Array.from({ length: size }, (_, i) => {
             const iso = `${key}-${String(i + 1).padStart(2, "0")}`;
-            return known.get(iso) ?? ({ date: iso, disabled: true, outside: true } as CalendarDate & { outside?: boolean });
+            return known.get(iso) ?? { date: iso, disabled: true, outside: true };
           });
           const blanks = weekday(shownDays[0].date);
           return (
@@ -127,7 +129,7 @@ export function Calendar({
                 {shownDays.map((day) => {
                   const look = state(day.date);
                   const blocked = Boolean(day.disabled) && !canEnd(day.date);
-                  const outside = "outside" in day && Boolean(day.outside);
+                  const outside = Boolean(day.outside);
                   return (
                     <li key={day.date} className={look === "inside" ? "ez:bg-point-soft" : undefined}>
                       <button
@@ -156,6 +158,20 @@ export function Calendar({
           );
         })}
       </div>
+      {legend && (
+        <ul data-slot="calendar-legend" className="ez:m-0 ez:flex ez:list-none ez:gap-4 ez:p-0 ez:text-site-caption ez:text-muted">
+          <li className="ez:flex ez:items-center ez:gap-1.5">
+            <span aria-hidden="true" className="ez:size-1 ez:rounded-full ez:bg-primary" />
+            예약 가능
+          </li>
+          <li className="ez:flex ez:items-center ez:gap-1.5">
+            <span aria-hidden="true" className="ez:tabular-nums ez:text-site-off ez:line-through">
+              1
+            </span>
+            마감
+          </li>
+        </ul>
+      )}
       {mode === "range" ? (
         <>
           <input type="hidden" name={startName} value={current.start ?? ""} />

@@ -9,6 +9,7 @@ import type { SectionProps } from "../../renderer/registry";
 import { cn } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
 import { Bar, BlankPrice, BlankStars, Lines } from "../kit";
+import { MAP_LABEL, SampleMap } from "../stay/map";
 import { fillCols } from "../shop/shared";
 import type { FooterLink } from "../shop/types";
 import type { ClassCard, Session } from "../template/data";
@@ -481,8 +482,9 @@ export function Location({ data }: SectionProps<"location">) {
     <section data-slot="location" id="location" data-variant="catalog" data-blank={address ? undefined : ""} className="ez:text-fg">
       <div className="ez:grid ez:overflow-hidden ez:rounded-md ez:border ez:border-solid ez:border-site-line ez:lg:h-42 ez:lg:grid-cols-[26.25rem_minmax(0,1fr)]">
         {href ? (
-          <a href={href} target="_blank" rel="noopener" aria-label={CLASS_TITLE.map} className={cn(mapBox, "ez:no-underline ez:hover:text-fg", focusRing)}>
-            {pin}
+          <a href={href} target="_blank" rel="noopener" aria-label={MAP_LABEL} className={cn(mapBox, "ez:relative ez:overflow-hidden ez:text-fg ez:no-underline", focusRing)}>
+            <SampleMap />
+            <span className="ez:relative">{pin}</span>
           </a>
         ) : (
           <div className={mapBox}>{pin}</div>

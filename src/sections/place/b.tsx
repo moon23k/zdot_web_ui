@@ -419,7 +419,7 @@ export function Menu({ data }: SectionProps<"menu">) {
       data-slot="menu"
       id={PLACE_ID.menu}
       data-blank={empty ? "" : undefined}
-      className="ez:grid ez:gap-10 ez:text-fg ez:lg:gap-16"
+      className="ez:grid ez:min-w-0 ez:gap-10 ez:text-fg ez:lg:gap-16"
     >
       <Pic src={data.image} ratio={RATIO.unit} tone={1} />
       <Pair head={<h2 className={name}>{PLACE_TITLE.menu}</h2>}>

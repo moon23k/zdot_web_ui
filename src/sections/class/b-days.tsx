@@ -44,7 +44,7 @@ function Seats({ v }: { v: SessionView }) {
 
 function Row({ session, tone }: { session: Session; tone: number }) {
   const v = sessionView(session);
-  const spec = [v.kind, v.length && `${CLASS_TITLE.length} ${v.length}`].filter(Boolean).join(" · ");
+  const spec = [v.kind, v.length && `${CLASS_TITLE.length} ${v.length}`, v.count].filter(Boolean).join(" · ");
   const dim = v.full && "ez:opacity-45";
   return (
     <li

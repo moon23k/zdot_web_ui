@@ -11,6 +11,7 @@ import { visitRows } from "../landing/parts";
 import { bookingLink, menuItems, paragraphs, telHref } from "../landing/shared";
 import type { PlaceLink } from "../template/data";
 import { CareNavLinks } from "./nav";
+import { businessLine } from "../quote/shared";
 import { CARE_ID, CARE_TITLE } from "./shared";
 import type { CareFooterProps, CareHeaderProps } from "./types";
 
@@ -78,7 +79,7 @@ export function Header({ name, logoUrl, phone, nav, links }: CareHeaderProps) {
 }
 
 export function Footer({ storeName, phone, hours, address, legal, business, nav, links, terms }: CareFooterProps) {
-  const line = business.length ? business.map((r) => `${r.label} ${r.value}`).join(" · ") : legal;
+  const line = business.length ? businessLine(business) : legal;
   const muted = cn("ez:text-muted ez:no-underline ez:hover:text-fg", focusRing);
   return (
     <footer data-slot="site-footer" data-variant="showroom" className="ez:text-site-small ez:text-muted">

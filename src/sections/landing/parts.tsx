@@ -7,6 +7,7 @@ import { focusRing, textLink } from "../../utils/styles";
 import { Bar, Lines, Pic } from "../kit";
 import type { PlaceLink, TemplateSectionData } from "../template/data";
 import { LandingNavLinks } from "./nav";
+import { businessLine } from "../quote/shared";
 import { caseHref, LANDING_LABEL, menuItems, paragraphs, telHref } from "./shared";
 import type { LandingFooterProps, LandingHeaderProps } from "./types";
 
@@ -117,7 +118,7 @@ export function StandInFooter({ storeName, phone, hours, address, business, link
           {hours && <span>{`${LANDING_LABEL.hours} ${hours}`}</span>}
         </div>
         <OutLinks links={links} />
-        {business.length > 0 && <p className="ez:m-0 ez:text-muted">{business.map((r) => `${r.label} ${r.value}`).join(" · ")}</p>}
+        {business.length > 0 && <p className="ez:m-0 ez:text-muted">{businessLine(business)}</p>}
         <nav aria-label={LANDING_LABEL.terms} className="ez:flex ez:flex-wrap ez:gap-x-6 ez:gap-y-2">
           {terms.map((t) => (
             <NextLink key={t.href} href={t.href} className={cn("ez:text-muted ez:no-underline ez:hover:text-fg", t.strong && "ez:font-medium ez:text-fg", focusRing)}>

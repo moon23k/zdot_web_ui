@@ -1,5 +1,6 @@
 import NextLink from "next/link";
 import type { ReactNode } from "react";
+import { DotLine } from "../../components/dot-line";
 import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
 import { pointTag } from "../../utils/styles";
@@ -135,7 +136,7 @@ export function CardCells({ cells, children }: { cells: { label: string; value: 
 export function CardRow({ label, children }: { label: ReactNode; children: ReactNode }) {
   return (
     <div className="ez:flex ez:items-center ez:justify-between ez:gap-4 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-5">
-      <span className="ez:text-site-lead">{label}</span>
+      <span className="ez:text-site-lead">{typeof label === "string" && label.includes(" · ") ? <DotLine items={label.split(" · ")} /> : label}</span>
       {children}
     </div>
   );

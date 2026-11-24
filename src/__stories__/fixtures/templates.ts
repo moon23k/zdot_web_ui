@@ -87,9 +87,9 @@ const label = (ymd: string) => {
 
 const weekday = (ymd: string) => "일월화수목금토"[new Date(`${ymd}T00:00:00Z`).getUTCDay()];
 
-const slot = (offset: number, time: string, name: string, kind: string, length: string, seats: number, image: string, price: string, id: string): Session => {
+const slot = (offset: number, time: string, name: string, kind: string, length: string, seats: number, image: string, price: string, id: string, count?: number): Session => {
   const ymd = dayAt(offset);
-  return { id, ymd, date: label(ymd), day: weekday(ymd), time, name, kind, length, image, price, href: "#", status: seats === 0 ? "full" : seats <= 3 ? "few" : "open", seats_left: seats };
+  return { id, ymd, date: label(ymd), day: weekday(ymd), time, name, kind, length, count, image, price, href: "#", status: seats === 0 ? "full" : seats <= 3 ? "few" : "open", seats_left: seats };
 };
 
 export const classSessions: Session[] = [
@@ -98,7 +98,7 @@ export const classSessions: Session[] = [
   slot(2, "11:00", "접시 페인팅", "원데이", "90분", 0, "/sample/p3.jpg", "42,000원", "s3"),
   slot(4, "11:00", "물레 원데이 클래스", "원데이", "120분", 1, "/sample/p1.jpg", "65,000원", "s4"),
   slot(4, "15:00", "커플 물레 체험", "원데이", "120분", 2, "/sample/p4.jpg", "120,000원", "s5"),
-  slot(9, "19:30", "물레 정규반 4주", "정규반", "4회", 2, "/sample/p2.jpg", "240,000원", "s6"),
+  slot(9, "19:30", "물레 정규반 4주", "정규반", "120분", 2, "/sample/p2.jpg", "240,000원", "s6", 4),
 ];
 
 export const classCards: ClassCard[] = [

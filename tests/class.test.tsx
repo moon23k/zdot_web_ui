@@ -136,6 +136,26 @@ describe("class dates and rows", () => {
   });
 });
 
+describe("course rows: length is one class, sessions are counted apart", () => {
+  const course = classSessions.filter((s) => s.id === "s6");
+
+  it.each(letters)("home schedule in %s", (letter) => {
+    const row = home(letter, [{ kind: "class_schedule", data: { sessions: course } }]).querySelector('[data-slot="session-row"]')!;
+    expect(row.textContent).toContain("회차 4회");
+    expect(row.textContent).not.toContain("소요 4회");
+    if (letter !== "a") expect(row.textContent).toContain("소요 120분");
+  });
+
+  it.each(letters)("catalog schedule in %s", (letter) => {
+    const rows = [...catalog(letter, "schedule").querySelectorAll('[data-slot="session-row"]')];
+    const text = rows.map((r) => r.textContent).join("|");
+    expect(rows.length).toBeGreaterThan(0);
+    expect(text).toContain("회차 4회");
+    expect(text).not.toContain("소요 4회");
+    expect(text).not.toContain("회차 1회");
+  });
+});
+
 describe("booking head facts", () => {
   const all = [
     { label: "소요", value: "2시간" },

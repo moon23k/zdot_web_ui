@@ -32,6 +32,7 @@ export const CLASS_TITLE = {
   orders: "예약 내역",
   search: "클래스 검색",
   length: "소요",
+  count: "회차",
   capacity: "정원",
 } as const;
 
@@ -130,6 +131,7 @@ export function sessionView(s: Session): SessionView {
     name: s.name,
     kind: s.kind ?? null,
     length: s.length ?? null,
+    count: s.count && s.count > 1 ? `${CLASS_TITLE.count} ${s.count}회` : null,
     image: s.image ?? null,
     price: s.price ?? null,
     full,

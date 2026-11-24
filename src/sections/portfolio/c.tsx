@@ -9,6 +9,7 @@ import { visitRows } from "../landing/parts";
 import { caseHref, LANDING_LABEL, paragraphs, telHref } from "../landing/shared";
 import type { Case, PlaceLink } from "../template/data";
 import { PortfolioNavLinks } from "./nav";
+import { businessLine } from "../quote/shared";
 import { PORTFOLIO_ID, PORTFOLIO_TITLE } from "./shared";
 import type { PortfolioFooterProps, PortfolioHeaderProps } from "./types";
 
@@ -59,7 +60,7 @@ export function Header({ name, logoUrl, nav }: PortfolioHeaderProps) {
 }
 
 export function Footer({ storeName, phone, hours, address, legal, business, nav, links, terms }: PortfolioFooterProps) {
-  const line = business.length ? business.map((r) => `${r.label} ${r.value}`).join(" · ") : legal;
+  const line = business.length ? businessLine(business) : legal;
   const contact = Boolean(address || phone || hours);
   return (
     <footer data-slot="site-footer" data-variant="showroom" className="ez:bg-surface-alt ez:text-fg">

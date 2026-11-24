@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { classCards } from "../src/__stories__/fixtures/templates";
 import products from "../src/__stories__/fixtures/products.json";
 import { STAR_PATH as STAR, StarRow } from "../src/components/star-row";
-import { Calendar, type CalendarDate, DetailLayout, Fold, resolveTemplate, ReviewList, SiteFooter, SiteRenderer } from "../src/index";
+import { Calendar, type CalendarDate, CardRow, DetailLayout, Fold, resolveTemplate, ReviewList, SiteFooter, SiteRenderer } from "../src/index";
 import { businessRows } from "../src/sections/quote/shared";
 import { roomView } from "../src/sections/stay";
 import { registrationText } from "../src/utils/format";
@@ -24,19 +24,59 @@ function home(main: "shop" | "stay" | "class", letter: "a" | "b" | "c", sections
   return render(<SiteRenderer page={{ sections: sections.map((s) => ({ ...s, v: 1 })), arranged: true }} context={{ ...context, ...extra }} template={resolveTemplate(main, letter)} />).container;
 }
 
+const dotItems = (root: Element) => [...root.querySelectorAll('[data-slot="dot-item"]')].map((el) => el.textContent!.replace(/^ · /, ""));
+
 describe("바닥글 사업자 정보", () => {
   for (const main of ["shop", "stay", "class"] as const) {
     for (const skin of [undefined, ...(["a", "b", "c"] as const).map((l) => resolveTemplate(main, l).skin)]) {
-      it(`${main} ${skin ?? "기본"}: 번호가 줄 사이에서 갈리지 않는다`, () => {
+      it(`${main} ${skin ?? "기본"}: 항목마다 한 덩어리, 구분점은 항목 앞에 붙어 줄 머리에서 가려진다`, () => {
         const foot = render(<SiteFooter storeName="오후의 식탁" business={business as never} hosting="자사닷" policies={policies} main={main} skin={skin} />).container;
-        for (const text of ["고객센터 02-123-4567", "사업자등록번호 105-20-58144", "통신판매업 신고 2026-서울마포-0412"]) {
-          const kept = [...foot.querySelectorAll(".ez\\:whitespace-nowrap")].find((el) => el.textContent === text);
-          expect(kept, text).toBeDefined();
+        const line = foot.querySelector('[data-slot="dot-line"]')!;
+        expect(dotItems(line)).toEqual(["오후의 식탁", "대표 이수연", "서울 마포구 성미산로 17길 24", "사업자등록번호 105-20-58144", "통신판매업 신고 2026-서울마포-0412", "고객센터 02-123-4567", "이메일 hello@ohu-table.kr", "호스팅 제공 자사닷"]);
+        expect(line.className).toContain("ez:overflow-hidden");
+        expect(line.firstElementChild!.className).toContain("ez:-ml-3");
+        expect(line.firstElementChild!.className).toContain("ez:flex-wrap");
+        for (const item of line.querySelectorAll('[data-slot="dot-item"]')) {
+          const dot = item.firstElementChild!;
+          expect(dot.getAttribute("aria-hidden")).toBe("true");
+          expect(dot.className).toContain("ez:w-3");
         }
         expect(foot.textContent).toContain("서울 마포구 성미산로 17길 24 · 사업자등록번호 105-20-58144");
       });
     }
   }
+});
+
+describe("예약 상자 줄 이름의 구분점", () => {
+  it("구분점이 든 이름은 항목마다 한 덩어리로, 구분점은 항목 앞에 붙는다", () => {
+    const row = render(<CardRow label="바비큐 그릴 · 1회 30,000원 · 현장 결제">0</CardRow>).container;
+    const line = row.querySelector('[data-slot="dot-line"]')!;
+    expect(dotItems(line)).toEqual(["바비큐 그릴", "1회 30,000원", "현장 결제"]);
+    expect(line.className).toContain("ez:overflow-hidden");
+    expect(row.textContent).toBe(" · 바비큐 그릴 · 1회 30,000원 · 현장 결제0");
+  });
+
+  it("구분점이 없거나 글자가 아닌 이름은 그대로", () => {
+    expect(render(<CardRow label="인원">0</CardRow>).container.querySelector('[data-slot="dot-line"]')).toBeNull();
+    expect(render(<CardRow label={<b>객실 · 2박</b>}>0</CardRow>).container.querySelector('[data-slot="dot-line"]')).toBeNull();
+  });
+});
+
+describe("사업자 정보 줄을 항목으로 나눈 바닥글", () => {
+  it("상호와 대표는 따로, 대표가 없으면 상호만", () => {
+    const foot = render(<SiteFooter storeName="오후의 식탁" business={{ ...business, ceo_name: null } as never} hosting="자사닷" policies={policies} main="shop" />).container;
+    expect(dotItems(foot).slice(0, 2)).toEqual(["오후의 식탁", "서울 마포구 성미산로 17길 24"]);
+  });
+
+  it.each(["quote", "office", "portfolio", "care", "place"])("%s: 줄로 이어 쓰는 바닥글은 이름과 값이 한 항목", (main) => {
+    for (const letter of main === "quote" ? (["a"] as const) : (["a", "c"] as const)) {
+      const skin = resolveTemplate(main, letter).skin;
+      const foot = render(<SiteFooter storeName="오후의 식탁" business={business as never} hosting="자사닷" policies={policies} main={main} skin={skin} />).container;
+      const items = dotItems(foot);
+      expect(items, `${main} ${letter}`).toContain("사업자등록번호 105-20-58144");
+      expect(items.filter((t) => t.includes(" · ")), `${main} ${letter}`).toEqual([]);
+    }
+  });
 });
 
 describe("사업자등록번호 표기", () => {
@@ -46,7 +86,7 @@ describe("사업자등록번호 표기", () => {
       const foot = render(<SiteFooter storeName="오후의 식탁" business={digits as never} hosting="자사닷" policies={policies} main={main} skin={resolveTemplate(main, "a").skin} />).container;
       expect(foot.textContent).toContain("105-20-58144");
       expect(foot.textContent).not.toContain("1052058144");
-      if (main !== "quote") expect([...foot.querySelectorAll(".ez\\:whitespace-nowrap")].some((el) => el.textContent === "사업자등록번호 105-20-58144")).toBe(true);
+      if (main !== "quote") expect(dotItems(foot)).toContain("사업자등록번호 105-20-58144");
     });
   }
 

@@ -94,7 +94,7 @@ function BlankCard({ tone }: { tone: number }) {
 
 function SessionRow({ s }: { s: Session }) {
   const v = sessionView(s);
-  const meta = [v.kind, v.length].filter(Boolean).join(" · ");
+  const meta = [v.kind, v.length, v.count].filter(Boolean).join(" · ");
   const seats = (
     <span className={cn("ez:text-site-body", v.few && !v.full ? "ez:font-semibold ez:text-fg" : "ez:text-muted")}>{v.seats}</span>
   );

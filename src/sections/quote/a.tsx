@@ -9,7 +9,7 @@ import { focusRing, textLink } from "../../utils/styles";
 import { Bar, BlankButton, BlankPrice, BlankStars, Lines, Pic } from "../kit";
 import type { Case, QuoteFigures, QuoteStarter, TemplateSectionData } from "../template/data";
 import { QuoteNavLinks } from "./nav";
-import { average, CASES_HREF, caseView, hasFigures, leadCase, QUOTE_CONSENT, QUOTE_HREF, QUOTE_TITLE, restCases, reviewCount } from "./shared";
+import { average, businessLine, CASES_HREF, caseView, hasFigures, leadCase, QUOTE_CONSENT, QUOTE_HREF, QUOTE_TITLE, restCases, reviewCount } from "./shared";
 import { OptionCell, StarterForm, starterState } from "./starter";
 import type { CaseFact, CaseView, QuoteFooterProps, QuoteHeaderProps, QuoteListProps } from "./types";
 
@@ -578,7 +578,7 @@ export function Footer({ storeName, phone, hours, business, nav, guide, account,
             <div className="ez:grid ez:gap-1 ez:text-site-note ez:text-fg ez:md:col-span-2">
               {lines.map((l, i) => (
                 <p key={i} className="ez:m-0 ez:leading-relaxed">
-                  {l.map((r) => `${r.label} ${r.value}`).join(" · ")}
+                  {businessLine(l)}
                 </p>
               ))}
             </div>

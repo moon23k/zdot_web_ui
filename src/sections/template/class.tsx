@@ -89,6 +89,7 @@ function CohortRow({ s }: { s: Session | null }) {
   const full = s?.status === "full";
   const [md, wd] = (s?.day ?? "").split(" ");
   const seats = s ? (full ? "마감" : s.seats_left != null ? `${s.seats_left}자리` : statusText[s.status]) : null;
+  const span = s && (s.count && s.count > 1 ? `${s.count}회` : s.length);
   return (
     <li className={cn(cohortGrid, "ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-6", full && "ez:text-muted")}>
       <span className="ez:flex ez:flex-col">
@@ -98,11 +99,11 @@ function CohortRow({ s }: { s: Session | null }) {
       <span className="ez:flex ez:min-w-0 ez:flex-col ez:gap-0.5">
         <span className="ez:text-site-item">{s ? s.name : <Bar />}</span>
         {s && (
-          <span className="ez:text-site-small ez:text-muted ez:lg:hidden">{[wd ? `${wd} · ${s.time}` : s.time, s.length, seats, s.price].filter(Boolean).join(" · ")}</span>
+          <span className="ez:text-site-small ez:text-muted ez:lg:hidden">{[wd ? `${wd} · ${s.time}` : s.time, span, seats, s.price].filter(Boolean).join(" · ")}</span>
         )}
       </span>
       <span className="ez:tabular-nums ez:max-lg:hidden">{s ? (wd ? `${wd} · ${s.time}` : s.time) : <Bar size="short" />}</span>
-      <span className="ez:max-lg:hidden">{s ? s.length : <Bar size="short" />}</span>
+      <span className="ez:max-lg:hidden">{s ? span : <Bar size="short" />}</span>
       <span className={cn("ez:text-site-small ez:max-lg:hidden", s && !full && "ez:font-medium ez:text-primary")}>{seats ?? <Bar size="short" />}</span>
       <span className="ez:text-right ez:font-medium ez:tabular-nums ez:max-lg:hidden">{s ? s.price : <BlankPrice />}</span>
       <span className="ez:flex ez:justify-end">

@@ -8,6 +8,7 @@ import { focusRing } from "../../utils/styles";
 import { Bar, Lines, Pic } from "../kit";
 import type { PlaceLink } from "../template/data";
 import { PlaceNavLinks } from "./nav";
+import { businessLine } from "../quote/shared";
 import { menuItems, paragraphs, PLACE_ID, PLACE_TITLE, telHref } from "./shared";
 import type { PlaceFooterProps, PlaceHeaderProps } from "./types";
 
@@ -66,7 +67,7 @@ export function Header({ name, logoUrl, phone, nav, links }: PlaceHeaderProps) {
 }
 
 export function Footer({ storeName, phone, hours, address, legal, business, links, terms }: PlaceFooterProps) {
-  const line = business.length ? business.map((r) => `${r.label} ${r.value}`).join(" · ") : legal;
+  const line = business.length ? businessLine(business) : legal;
   const contact = Boolean(address || phone || hours);
   return (
     <footer data-slot="site-footer" data-variant="showroom" className="ez:text-site-small ez:text-muted">

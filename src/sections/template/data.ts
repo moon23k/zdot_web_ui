@@ -10,6 +10,7 @@ export type Session = {
   time: string;
   name: string;
   length?: string;
+  count?: number | null;
   image?: string | null;
   status: Status;
   seats_left?: number | null;

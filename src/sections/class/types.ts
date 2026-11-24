@@ -60,6 +60,7 @@ export type SessionView = {
   name: string;
   kind: string | null;
   length: string | null;
+  count: string | null;
   image: string | null;
   price: string | null;
   full: boolean;

@@ -9,6 +9,7 @@ import { Bar, Pic } from "../kit";
 import { bookingLink, caseHref, LANDING_LABEL, telHref } from "../landing/shared";
 import type { PlaceLink } from "../template/data";
 import { OfficeNavLinks } from "./nav";
+import { businessLine } from "../quote/shared";
 import { OFFICE_ID, OFFICE_TITLE } from "./shared";
 import type { OfficeFooterProps, OfficeHeaderProps } from "./types";
 
@@ -239,7 +240,7 @@ export function Footer({ storeName, phone, hours, address, business, nav, links,
               </NextLink>
             ))}
           </nav>
-          {business.length > 0 && <p className="ez:m-0 ez:leading-relaxed">{business.map((r) => `${r.label} ${r.value}`).join(" · ")}</p>}
+          {business.length > 0 && <p className="ez:m-0 ez:leading-relaxed">{businessLine(business)}</p>}
         </div>
       </div>
     </footer>

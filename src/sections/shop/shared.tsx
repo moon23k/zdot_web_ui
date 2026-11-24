@@ -1,4 +1,5 @@
-import { Fragment, type ReactNode } from "react";
+import type { ReactNode } from "react";
+import { DotLine } from "../../components/dot-line";
 import type { NavCategory } from "../../blocks/site-header/header-nav";
 import type { Business, ProductSummary } from "../../types";
 import { discountRate, registrationText, won } from "../../utils/format";
@@ -58,23 +59,17 @@ export function productView(p: ProductSummary): ProductView {
 const LEGAL = new Set(["terms", "privacy"]);
 
 export function legalLine(storeName: string, business: Business | null, hosting: string): ReactNode {
-  const parts: [string | null | undefined, boolean][] = [
-    [[business?.name || storeName, business?.ceo_name && `대표 ${business.ceo_name}`].filter(Boolean).join(" · "), false],
-    [business?.address, false],
-    [business?.registration_no && `사업자등록번호 ${registrationText(business.registration_no)}`, true],
-    [business?.mail_order_no && `통신판매업 신고 ${business.mail_order_no}`, true],
-    [business?.cs_phone && `고객센터 ${business.cs_phone}`, true],
-    [business?.cs_email && `이메일 ${business.cs_email}`, false],
-    [`호스팅 제공 ${hosting}`, false],
+  const parts = [
+    business?.name || storeName,
+    business?.ceo_name && `대표 ${business.ceo_name}`,
+    business?.address,
+    business?.registration_no && `사업자등록번호 ${registrationText(business.registration_no)}`,
+    business?.mail_order_no && `통신판매업 신고 ${business.mail_order_no}`,
+    business?.cs_phone && `고객센터 ${business.cs_phone}`,
+    business?.cs_email && `이메일 ${business.cs_email}`,
+    `호스팅 제공 ${hosting}`,
   ];
-  return parts
-    .filter(([text]) => text)
-    .map(([text, keep], i) => (
-      <Fragment key={i}>
-        {i > 0 && " · "}
-        {keep ? <span className="ez:whitespace-nowrap">{text}</span> : text}
-      </Fragment>
-    ));
+  return <DotLine items={parts.filter(Boolean)} />;
 }
 
 export function shopFooter({

@@ -320,7 +320,7 @@ function SessionRow({ session }: { session: Session }) {
       </span>
       <span className={cn(colLeft, "ez:grid ez:min-w-0 ez:gap-0.5")}>
         <span className={cn("ez:truncate ez:text-site-lead ez:font-medium", tone)}>{v.name}</span>
-        {(v.kind || v.length) && <span className="ez:truncate ez:text-site-small ez:text-muted">{[v.kind, v.length && `${CLASS_TITLE.length} ${v.length}`].filter(Boolean).join(" · ")}</span>}
+        {(v.kind || v.length || v.count) && <span className="ez:truncate ez:text-site-small ez:text-muted">{[v.kind, v.length && `${CLASS_TITLE.length} ${v.length}`, v.count].filter(Boolean).join(" · ")}</span>}
       </span>
       <span className={cn(colLeft, "ez:text-site-lead ez:tabular-nums", v.few ? "ez:font-semibold ez:text-fg" : "ez:text-muted")}>{v.seats}</span>
       <span className={cn(colRight, "ez:row-start-1 ez:text-site-lead ez:tabular-nums ez:lg:row-start-auto", tone)}>{v.price}</span>

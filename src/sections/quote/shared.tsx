@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+import { DotLine } from "../../components/dot-line";
 import type { Business } from "../../types";
 import { registrationText } from "../../utils/format";
 import { legalLine } from "../shop/shared";
@@ -90,6 +92,10 @@ export function businessRows(storeName: string, business: Business | null, hosti
     ["호스팅 제공", hosting],
   ];
   return rows.filter((r): r is [string, string] => Boolean(r[1])).map(([label, value]) => ({ label, value }));
+}
+
+export function businessLine(rows: BusinessRow[]): ReactNode {
+  return <DotLine items={rows.map((r) => `${r.label} ${r.value}`)} />;
 }
 
 const LEGAL = new Set(["terms", "privacy"]);

@@ -1,6 +1,7 @@
-import type { TemplateDesign } from "../templates/types";
+import type { ShopSkin, TemplateDesign } from "../templates/types";
 import type { Design } from "../types";
 import { kitVars } from "./kit";
+import { NIGHT_PALETTE, nightTheme, nightVars, type NightTheme } from "./night";
 import { SYSTEM_COLOR, SYSTEM_DURATION, SYSTEM_FIGURE_FONT, SYSTEM_FONT, SYSTEM_RADIUS, SYSTEM_SITE, SYSTEM_TONE } from "./system";
 
 const FALLBACK: typeof SYSTEM_COLOR = SYSTEM_COLOR;
@@ -16,13 +17,25 @@ function buttonRadius(design: Design): string {
   return `${shape.radius_md ?? SYSTEM_RADIUS.md}px`;
 }
 
-type SiteLook = Pick<TemplateDesign["look"], "section" | "pad" | "kit"> & Partial<Pick<TemplateDesign["look"], "tone">>;
+type SiteLook = Pick<TemplateDesign["look"], "section" | "pad" | "kit"> & Partial<Pick<TemplateDesign["look"], "tone">> & { skin?: ShopSkin; night?: NightTheme | null };
 
 type Color = NonNullable<Design["color"]>;
 
 const NIGHT = "night";
 
 const NIGHT_BASE = "warm";
+
+const GLOW_SKIN = "night";
+
+const AURORA = "aurora";
+
+const AURORA_TONE = { surface: "#f6f6fa", "surface-alt": "#ffffff" } as const;
+
+const AURORA_LINE = { line: "rgb(20 20 30 / 0.1)", hair: "rgb(20 20 30 / 0.09)" } as const;
+
+const GLASS = { face: "rgb(255 255 255 / 0.6)", edge: "rgb(255 255 255 / 0.88)" } as const;
+
+const FIELD = "#ffffff";
 
 const NIGHT_MIX = {
   surface: 90,
@@ -132,6 +145,69 @@ function nightColor(color: Color): Color {
   };
 }
 
+const GLOW_PRIMARY_MIN = 4.5;
+
+const GLOW_PRIMARY_STEP = 6;
+
+const GLOW_PRIMARY_MAX = 72;
+
+function glowPrimary(primary: string, ground: string): string {
+  const from = rgbOf(primary);
+  const base = rgbOf(ground);
+  const white = rgbOf(ON_LIGHT);
+  if (!from || !base || !white) return primary;
+  for (let share = 0; share <= GLOW_PRIMARY_MAX; share += GLOW_PRIMARY_STEP) {
+    const next = blend(white, share, from);
+    if (contrast(lum(next), lum(base)) >= GLOW_PRIMARY_MIN) return hexOf(next);
+  }
+  return hexOf(blend(white, GLOW_PRIMARY_MAX, from));
+}
+
+function glowColor(color: Color, night: NightTheme | null | undefined): Color {
+  const p = NIGHT_PALETTE[nightTheme(night)];
+  const primary = glowPrimary(color.primary ?? FALLBACK.primary, p.bg);
+  return {
+    ...color,
+    primary,
+    primary_hover: primary,
+    surface: p.bg,
+    surface_alt: p.sf,
+    text: p.ink,
+    text_muted: p.ink2,
+    primary_border: p.cur,
+    primary_tint: mix(primary, NIGHT_MIX.tint, p.bg),
+  };
+}
+
+function fxVars(color: typeof FALLBACK): Record<string, string> {
+  const from = (rest: string) => `oklch(from ${color.primary} ${rest})`;
+  return {
+    "--ezd-sky": color.surface,
+    "--ezd-deep": color.surface_alt,
+    "--ezd-raised": color.surface_alt,
+    "--ezd-select": color.primary_tint,
+    "--ezd-star": color.text,
+    "--ezd-field": FIELD,
+    "--ezd-glass": GLASS.face,
+    "--ezd-glass-edge": GLASS.edge,
+    "--ezd-glow": from("0.72 0.18 h / 0.8"),
+    "--ezd-glow-soft": from("0.7 0.15 h / 0.22"),
+    "--ezd-glow-line": from("0.93 0.07 h / 0.95"),
+    "--ezd-aurora-1": from("0.88 0.075 calc(h - 46)"),
+    "--ezd-aurora-2": from("0.88 0.085 h"),
+    "--ezd-aurora-3": from("0.9 0.07 calc(h + 56)"),
+    "--ezd-aurora-wash": from("0.93 0.045 h"),
+    "--ezd-stage": from("0.955 0.014 h"),
+    "--ezd-stage-2": from("0.925 0.03 h"),
+  };
+}
+
+function toneVars(site: SiteLook): Record<string, string> {
+  if (site.tone === NIGHT && site.skin === GLOW_SKIN) return nightVars(NIGHT_PALETTE[nightTheme(site.night)]);
+  if (site.tone === AURORA) return { "--ez-color-site-line": AURORA_LINE.line, "--ez-color-hairline": AURORA_LINE.hair };
+  return {};
+}
+
 function groundVars(text: string): Record<string, string> {
   const veil = (share: number) => mix(text, share, "transparent");
   return {
@@ -146,6 +222,16 @@ function groundVars(text: string): Record<string, string> {
     "--ez-color-tile-blank-strong": veil(NIGHT_MIX.blankStrong),
     "--ez-color-tile-ink": veil(NIGHT_MIX.ink),
   };
+}
+
+const LAYERED = "revert-layer";
+
+const LIGHT_ERROR = "#b42318";
+
+function resetVars(): Record<string, string> {
+  const keys = new Set([...Object.keys(nightVars(NIGHT_PALETTE.dracula)), ...Object.keys(groundVars(FALLBACK.text)), "--ez-color-site-line", "--ez-color-hairline"]);
+  const layered = [...keys].filter((key) => key.startsWith("--ez-color-")).map((key) => [key, LAYERED]);
+  return { ...Object.fromEntries(layered), "--ezd-error": LIGHT_ERROR };
 }
 
 function siteVars(look?: SiteLook): Record<string, string> {
@@ -208,7 +294,10 @@ export function designVars(design: Design | null | undefined, site?: boolean | S
     "--ezd-control-sm": "40px",
     ...kitVars({ ...color, text: ink }, typeof site === "object" && site.kit === "off"),
     ...(site ? siteVars(site === true ? undefined : site) : {}),
+    ...resetVars(),
     ...(typeof site === "object" && site.tone === NIGHT ? groundVars(color.text) : {}),
+    ...fxVars(color),
+    ...(typeof site === "object" ? toneVars(site) : {}),
   };
 }
 
@@ -269,15 +358,22 @@ function lookTitles(font: Design["font"], look: TemplateDesign["look"]): Design[
   };
 }
 
-export function applyTemplate(design: Design | null | undefined, template: TemplateDesign | null | undefined): Design {
+function toneOf(look: TemplateDesign["look"]): { surface: string; "surface-alt": string } {
+  if (look.frame === "gallery") return SYSTEM_TONE.gallery;
+  if (look.tone === AURORA) return AURORA_TONE;
+  return SYSTEM_TONE[look.tone === NIGHT ? NIGHT_BASE : look.tone];
+}
+
+export function applyTemplate(design: Design | null | undefined, template: TemplateDesign | null | undefined, night?: NightTheme | null): Design {
   const d = design ?? {};
   if (!template) return d;
   const { look } = template;
-  const night = look.tone === NIGHT && look.frame !== "gallery";
-  const tone = SYSTEM_TONE[look.frame === "gallery" ? "gallery" : look.tone === NIGHT ? NIGHT_BASE : look.tone];
+  const dark = look.tone === NIGHT && look.frame !== "gallery";
+  const glow = dark && template.skin === GLOW_SKIN;
+  const tone = toneOf(look);
   const ink = SYSTEM_TONE.gallery;
   const base = d.palette ? d.color : { ...d.color, surface: tone.surface, surface_alt: tone["surface-alt"], text: ink.text, text_muted: ink["text-muted"] };
-  const color = night ? nightColor(base ?? {}) : base;
+  const color = glow ? glowColor(base ?? {}, night) : dark ? nightColor(base ?? {}) : base;
   return {
     ...d,
     font: lookTitles(d.font, look),

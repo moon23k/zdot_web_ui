@@ -1,10 +1,12 @@
-import type { ShopSkin } from "../../templates/types";
+import type { CommonSkin } from "../../templates/types";
 import * as A from "./a";
 import * as B from "./b";
 import * as C from "./c";
+import * as D from "./d";
+import * as E from "./e";
 import type { StayDesign } from "./types";
 
-export const STAY_DESIGNS: Record<ShopSkin, StayDesign> = {
+export const STAY_DESIGNS: Record<CommonSkin, StayDesign> = {
   editorial: {
     Header: A.Header,
     Footer: A.Footer,
@@ -52,6 +54,18 @@ export const STAY_DESIGNS: Record<ShopSkin, StayDesign> = {
       location: C.Location,
       reviews: C.Reviews,
     },
+  },
+  aurora: {
+    Header: D.Header,
+    Footer: D.Footer,
+    List: D.List,
+    sections: { hero: D.Hero, booking_strip: D.Booking, room_list: D.Rooms, amenities: D.Amenities, reviews: D.Reviews, location: D.Location },
+  },
+  night: {
+    Header: E.Header,
+    Footer: E.Footer,
+    List: E.List,
+    sections: { hero: E.Hero, booking_strip: E.Booking, room_list: E.Rooms, amenities: E.Amenities, reviews: E.Reviews, location: E.Location },
   },
 };
 

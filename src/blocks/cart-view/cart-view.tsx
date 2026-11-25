@@ -20,7 +20,7 @@ import { SummaryRows } from "../parts/summary-rows";
 const boxClass = cn(
   "ez:size-5 ez:shrink-0 ez:box-border ez:p-0 ez:rounded-[min(var(--ezd-button-radius),6px)] ez:border ez:border-solid ez:border-site-faint ez:bg-surface ez:text-primary ez:cursor-pointer",
   "ez:data-[state=checked]:border-primary ez:data-[state=checked]:bg-point-soft",
-  "ez:disabled:cursor-not-allowed ez:disabled:border-primary-border ez:disabled:bg-surface-alt",
+  "ez:disabled:cursor-not-allowed ez:disabled:border-primary-border ez:disabled:bg-deep",
   focusRing,
 );
 
@@ -31,6 +31,7 @@ function Box(props: { checked: boolean; disabled?: boolean; onChange?: (v: boole
       disabled={props.disabled}
       onCheckedChange={(v) => props.onChange?.(v === true)}
       aria-label={props.label}
+      data-check=""
       className={boxClass}
     >
       <CheckboxPrimitive.Indicator className="ez:flex ez:items-center ez:justify-center">
@@ -183,7 +184,7 @@ export function CartView({
             </div>
           )}
         </div>
-        <div className="ez:grid ez:gap-6 ez:rounded-md ez:bg-surface-alt ez:p-8">
+        <div data-card="" className="ez:grid ez:gap-6 ez:rounded-md ez:bg-deep ez:p-8">
           <h2 className="ez:m-0 ez:text-site-item">결제 예정 금액</h2>
           <SummaryRows
             rows={[

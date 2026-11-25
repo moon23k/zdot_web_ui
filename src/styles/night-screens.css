@@ -1,0 +1,70 @@
+:root:has(.ez-root[data-night-theme]):not(:has(.ez-root:not([data-night-theme]))) {
+  color-scheme: dark;
+}
+.ez-root[data-night-theme] .ez-root:not([data-night-theme]) {
+  color-scheme: normal;
+}
+
+@scope (.ez-root[data-night-theme]) to (.ez-root:not([data-night-theme])) {
+  :scope {
+    color-scheme: dark;
+  }
+
+  :scope :is([data-slot="checkbox"] [role="checkbox"], [data-check])[data-state="checked"] {
+    background: var(--ezd-primary);
+    border-color: var(--ezd-primary);
+    color: var(--ezd-on-primary);
+  }
+  :scope .ez-check input[type="checkbox"]:checked {
+    background: var(--ezd-primary);
+    border-color: var(--ezd-primary);
+  }
+  :scope .ez-check input[type="checkbox"]:checked::before {
+    background: var(--ezd-on-primary);
+  }
+
+  :scope [data-slot="calendar"] li[data-range] {
+    background: color-mix(in oklab, var(--ezd-select) 55%, transparent);
+  }
+  :scope [data-slot="calendar"] button[aria-pressed="true"] {
+    background: var(--ezd-primary);
+    color: var(--ezd-on-primary);
+    box-shadow: none;
+  }
+  :scope [data-slot="calendar"] button[data-full] {
+    color: var(--ez-color-site-off);
+  }
+  :scope [data-slot="calendar"] button[data-full] > span:first-child {
+    text-decoration: line-through;
+  }
+
+  :scope [data-choice]:has(input:checked) {
+    background: color-mix(in oklab, var(--ezd-select) 62%, transparent);
+    border-color: var(--ezd-primary);
+    color: var(--ezd-text);
+  }
+  :scope [data-slot="request-note"] [data-slot="choice"]:has(input:checked) {
+    background: color-mix(in oklab, var(--ezd-select) 55%, transparent);
+    box-shadow:
+      -12px 0 0 color-mix(in oklab, var(--ezd-select) 55%, transparent),
+      12px 0 0 color-mix(in oklab, var(--ezd-select) 55%, transparent);
+  }
+
+  :scope :is(aside[data-slot="booking-card"], [data-slot="checkout-layout"] > aside, [data-card]) {
+    background: var(--ezd-deep);
+    border: 1px solid var(--ez-color-site-line);
+  }
+
+  :scope [data-star="on"] {
+    color: var(--ezd-star);
+  }
+
+  :scope :is([data-slot="input"], [data-slot="textarea"], [data-slot="select"] select, .ez-input):focus-visible {
+    border-color: var(--ezd-primary);
+    box-shadow: 0 0 0 3px var(--ezd-glow-soft);
+  }
+
+  :scope [data-line="default"] {
+    border-color: var(--ez-color-site-line) !important;
+  }
+}

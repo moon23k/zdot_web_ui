@@ -121,7 +121,7 @@
   font-size: 0.875rem;
 }
 .ez-error {
-  color: #b42318;
+  color: var(--ezd-error, #b42318);
   font-size: 0.875rem;
 }
 .ez-check {
@@ -305,7 +305,7 @@
   padding: 10px 12px;
   border: 1px solid var(--ezd-primary-border);
   border-radius: var(--ezd-radius-sm);
-  background: #fff;
+  background: var(--ezd-field, #fff);
   color: var(--ezd-text);
   font: inherit;
 }

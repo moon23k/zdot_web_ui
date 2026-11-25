@@ -24,6 +24,9 @@ export const SHELF_DEFAULTS: Record<ShopSkin, Shelf> = {
   editorial: { ...BASE, cols_web: 3, cols_mobile: 2, ratio: "4:5" },
   catalog: { ...BASE, cols_web: 4, cols_mobile: 2, ratio: "1:1" },
   showroom: { ...BASE, cols_web: 3, cols_mobile: 2, ratio: "1:1" },
+  aurora: { ...BASE, cols_web: 4, cols_mobile: 2, ratio: "4:5" },
+  night: { ...BASE, cols_web: 4, cols_mobile: 2, ratio: "4:5" },
+  stage: { ...BASE, cols_web: 4, cols_mobile: 2, ratio: "1:1" },
 };
 
 export function shelfOf(skin: ShopSkin | undefined, setting?: ShelfSetting | null): Shelf {

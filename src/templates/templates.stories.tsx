@@ -15,6 +15,7 @@ import type { DetailData } from "../details/data";
 import type { SiteContext } from "../renderer/registry";
 import { SiteRenderer } from "../renderer/site-renderer";
 import { Rows } from "../sections/kit";
+import type { NightTheme } from "../theme/night";
 import { ThemeRoot } from "../theme/theme-root";
 import type { Design } from "../types";
 import { isLanding } from "../sections/landing";
@@ -92,7 +93,7 @@ const coverContext: SiteContext = {
   ],
 };
 
-function Page({ main, letter, banner, design, covers }: { main: TemplateMain; letter: string; banner?: Banner; design?: Design; covers?: boolean }) {
+function Page({ main, letter, banner, design, covers, night }: { main: TemplateMain; letter: string; banner?: Banner; design?: Design; covers?: boolean; night?: NightTheme }) {
   const t = resolveTemplate(main, letter);
   const hero = typeof banner === "string" ? { title: banner } : banner;
   const sections = homeSections[main]
@@ -102,7 +103,7 @@ function Page({ main, letter, banner, design, covers }: { main: TemplateMain; le
   const shop = main === "shop" ? shopNodes() : null;
   const data = shop?.data ?? detailData[main];
   return (
-    <ThemeRoot design={design} template={t}>
+    <ThemeRoot design={design} template={t} night={night}>
       <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
         <SiteHeader name="스토어 이름" variant={t.header} main={t.main === "shop" ? undefined : t.main} phone="02-000-0000" cartCount={2} categories={main === "shop" ? navCategories : undefined} cta={t.cta ? { label: t.cta, href: "/quote" } : null} links={isLanding(main) ? placeStoreLinks : undefined} address={isLanding(main) ? placeInfo.address : undefined} />
         <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:gap-section ez:px-page ez:py-8">
@@ -387,3 +388,28 @@ export const W2Blank = blank("portfolio", "b", "공란 · W2");
 export const W3Blank = blank("portfolio", "c", "공란 · W3");
 export const O1Blank = blank("office", "a", "공란 · O1");
 export const O2Blank = blank("office", "b", "공란 · O2");
+export const S4 = story("shop", "d", "쇼핑몰 · S4 오로라 글래스");
+export const S5 = story("shop", "e", "쇼핑몰 · S5 나이트 글로우");
+export const S6 = story("shop", "f", "쇼핑몰 · S6 오브젝트 스테이지");
+export const C4 = story("class", "d", "클래스 · C4 오로라 글래스");
+export const C5 = story("class", "e", "클래스 · C5 나이트 글로우");
+export const T4 = story("stay", "d", "숙박 · T4 오로라 글래스");
+export const T5 = story("stay", "e", "숙박 · T5 나이트 글로우");
+export const Q5 = story("quote", "d", "전문 서비스 · Q5 오로라 글래스");
+export const Q6 = story("quote", "e", "전문 서비스 · Q6 나이트 글로우");
+export const P4 = story("place", "d", "가게 · P4 오로라 글래스");
+export const P5 = story("place", "e", "가게 · P5 나이트 글로우");
+export const K4 = story("care", "d", "예약형 매장 · K4 오로라 글래스");
+export const K5 = story("care", "e", "예약형 매장 · K5 나이트 글로우");
+export const W4 = story("portfolio", "d", "작업 소개 · W4 오로라 글래스");
+export const W5 = story("portfolio", "e", "작업 소개 · W5 나이트 글로우");
+export const O3 = story("office", "d", "사무소 · O3 오로라 글래스");
+export const O4 = story("office", "e", "사무소 · O4 나이트 글로우");
+export const S5Tokyo: StoryObj = { name: "쇼핑몰 · S5 나이트 글로우 · tokyo", render: () => <Page main="shop" letter="e" night="tokyo" /> };
+export const T5Tokyo: StoryObj = { name: "숙박 · T5 나이트 글로우 · tokyo", render: () => <Page main="stay" letter="e" night="tokyo" /> };
+export const S5Mocha: StoryObj = { name: "쇼핑몰 · S5 나이트 글로우 · mocha", render: () => <Page main="shop" letter="e" night="mocha" /> };
+export const T5Mocha: StoryObj = { name: "숙박 · T5 나이트 글로우 · mocha", render: () => <Page main="stay" letter="e" night="mocha" /> };
+export const S5Nord: StoryObj = { name: "쇼핑몰 · S5 나이트 글로우 · nord", render: () => <Page main="shop" letter="e" night="nord" /> };
+export const T5Nord: StoryObj = { name: "숙박 · T5 나이트 글로우 · nord", render: () => <Page main="stay" letter="e" night="nord" /> };
+export const S5Rose: StoryObj = { name: "쇼핑몰 · S5 나이트 글로우 · rose", render: () => <Page main="shop" letter="e" night="rose" /> };
+export const T5Rose: StoryObj = { name: "숙박 · T5 나이트 글로우 · rose", render: () => <Page main="stay" letter="e" night="rose" /> };

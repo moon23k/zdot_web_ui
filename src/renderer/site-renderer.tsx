@@ -6,6 +6,7 @@ import { STAY_DESIGNS } from "../sections/stay";
 import { CLASS_DESIGNS } from "../sections/class";
 import { QUOTE_DESIGNS } from "../sections/quote";
 import { landingDesign } from "../sections/landing";
+import { bySkin } from "../templates/skin";
 import { sections, type SectionProps, type SiteContext } from "./registry";
 
 const isKind = (kind: string): kind is keyof typeof sections => kind in sections;
@@ -52,9 +53,9 @@ function titled(placed: Placed[]): boolean {
 export function SiteRenderer({ page, context, template }: { page: { sections: Section[]; arranged?: boolean }; context: SiteContext; template: TemplateDesign }) {
   const placed = place(page.sections, template, page.arranged);
   const ctx = { ...context, main: template.main };
-  const quote = template.main === "quote" && template.skin ? QUOTE_DESIGNS[template.skin] : undefined;
+  const quote = template.main === "quote" ? bySkin(QUOTE_DESIGNS, template.skin) : undefined;
   const venue = landingDesign(template.main, template.skin);
-  const skin = template.skin ? (venue ?? quote ?? (template.main === "stay" ? STAY_DESIGNS : template.main === "class" ? CLASS_DESIGNS : SHOP_DESIGNS)[template.skin])?.sections : undefined;
+  const skin = (venue ?? quote ?? (template.main === "stay" ? bySkin(STAY_DESIGNS, template.skin) : template.main === "class" ? bySkin(CLASS_DESIGNS, template.skin) : bySkin(SHOP_DESIGNS, template.skin)))?.sections;
   const drawn = quote ? joined(placed, quote.join) : joined(placed, venue?.join, venue?.into);
   return (
     <>

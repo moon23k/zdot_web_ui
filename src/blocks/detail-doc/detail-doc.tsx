@@ -98,8 +98,12 @@ const LINE_INK = "#1A1A1A";
 const STEP_COLUMNS = 4;
 const STEP_DOT = 2.4;
 
+function ownLine(color?: string | null): color is string {
+  return !!color && /^#[0-9a-fA-F]{6}$/.test(color);
+}
+
 function lineColor(color?: string | null): string {
-  return `${color && /^#[0-9a-fA-F]{6}$/.test(color) ? color : LINE_INK}33`;
+  return `${ownLine(color) ? color : LINE_INK}33`;
 }
 
 const filled = (l: DetailLayer | undefined): l is DetailLayer => !!l && !l.hidden && !!l.text?.trim();
@@ -208,6 +212,7 @@ function Steps({ layers }: { layers: DetailLayer[] }) {
           <li key={l.id} className="ez:flex ez:flex-col ez:items-center ez:gap-2">
             <span
               aria-hidden="true"
+              data-line={ownLine(l.style?.color) ? undefined : "default"}
               className="ez:flex ez:items-center ez:justify-center ez:rounded-full"
               style={{
                 width: size * STEP_DOT,

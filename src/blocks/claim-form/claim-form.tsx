@@ -135,7 +135,7 @@ export function ClaimForm({
         <TextArea name="reason" required minLength={2} maxLength={500} value={reason} onChange={(e) => setReason(e.target.value)} />
       </Field>
       {refund && (
-        <div className="ez:grid ez:gap-3 ez:rounded-md ez:bg-surface-alt ez:p-4">
+        <div className="ez:grid ez:gap-3 ez:rounded-md ez:bg-deep ez:p-4">
           <SummaryRows
             rows={shown([
               { label: "상품 금액", value: refund.item_amount },

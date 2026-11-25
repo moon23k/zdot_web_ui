@@ -58,6 +58,30 @@
         "curation",
         "best_grid",
         "shop_guide"
+      ],
+      "d": [
+        "hero",
+        "best_grid",
+        "photo_band",
+        "product_grid",
+        "reviews",
+        "shop_guide"
+      ],
+      "e": [
+        "hero",
+        "best_grid",
+        "photo_band",
+        "product_grid",
+        "reviews",
+        "shop_guide"
+      ],
+      "f": [
+        "hero",
+        "best_grid",
+        "photo_band",
+        "product_grid",
+        "reviews",
+        "shop_guide"
       ]
     },
     "class": {
@@ -81,6 +105,20 @@
         "hero",
         "class_list",
         "class_schedule",
+        "reviews",
+        "location"
+      ],
+      "d": [
+        "hero",
+        "class_schedule",
+        "class_list",
+        "reviews",
+        "location"
+      ],
+      "e": [
+        "hero",
+        "class_schedule",
+        "class_list",
         "reviews",
         "location"
       ]
@@ -118,6 +156,22 @@
         "house_rules",
         "location",
         "reviews"
+      ],
+      "d": [
+        "hero",
+        "booking_strip",
+        "room_list",
+        "amenities",
+        "reviews",
+        "location"
+      ],
+      "e": [
+        "hero",
+        "booking_strip",
+        "room_list",
+        "amenities",
+        "reviews",
+        "location"
       ]
     },
     "quote": {
@@ -150,6 +204,22 @@
         "process_steps",
         "faq",
         "quote_starter"
+      ],
+      "d": [
+        "hero",
+        "case_grid",
+        "package_cards",
+        "process_steps",
+        "reviews",
+        "quote_starter"
+      ],
+      "e": [
+        "hero",
+        "case_grid",
+        "package_cards",
+        "process_steps",
+        "reviews",
+        "quote_starter"
       ]
     },
     "place": {
@@ -173,6 +243,18 @@
         "store_info",
         "faq",
         "photo_band"
+      ],
+      "d": [
+        "hero",
+        "menu",
+        "intro",
+        "store_info"
+      ],
+      "e": [
+        "hero",
+        "menu",
+        "intro",
+        "store_info"
       ]
     },
     "care": {
@@ -195,6 +277,18 @@
         "menu",
         "location",
         "faq"
+      ],
+      "d": [
+        "hero",
+        "menu",
+        "photo_band",
+        "store_info"
+      ],
+      "e": [
+        "hero",
+        "menu",
+        "photo_band",
+        "store_info"
       ]
     },
     "portfolio": {
@@ -214,6 +308,18 @@
         "intro",
         "case_grid",
         "store_info"
+      ],
+      "d": [
+        "hero",
+        "case_grid",
+        "intro",
+        "store_info"
+      ],
+      "e": [
+        "hero",
+        "case_grid",
+        "intro",
+        "store_info"
       ]
     },
     "office": {
@@ -226,6 +332,20 @@
         "hero",
         "intro",
         "menu",
+        "store_info"
+      ],
+      "d": [
+        "hero",
+        "menu",
+        "case_grid",
+        "intro",
+        "store_info"
+      ],
+      "e": [
+        "hero",
+        "menu",
+        "case_grid",
+        "intro",
         "store_info"
       ]
     }

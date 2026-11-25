@@ -2,6 +2,7 @@ export * from "./types";
 export * from "./core";
 export { applyTemplate, fontHref } from "./theme/tokens";
 export { ThemeRoot } from "./theme/theme-root";
+export { NIGHT_THEMES, nightTheme, type NightTheme } from "./theme/night";
 export { SiteHeader } from "./blocks/site-header";
 export { SiteFooter } from "./blocks/site-footer";
 export { ProductCard } from "./blocks/product-card";

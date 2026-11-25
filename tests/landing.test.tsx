@@ -135,9 +135,9 @@ describe("landing rules", () => {
     for (const main of ["shop", "class", "stay", "quote", null]) expect(isLanding(main)).toBe(false);
   });
 
-  it("gives office two designs only", () => {
+  it("gives office no showroom design", () => {
     expect(resolveTemplate("office", "c").letter).toBe("a");
-    expect(Object.keys(LANDINGS.office.designs)).toEqual(["editorial", "catalog"]);
+    expect(Object.keys(LANDINGS.office.designs)).toEqual(["editorial", "catalog", "aurora", "night"]);
   });
 
   it("names the care price list the same on every design", () => {

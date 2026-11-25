@@ -1,10 +1,12 @@
-import type { ShopSkin } from "../../templates/types";
+import type { CommonSkin } from "../../templates/types";
 import * as A from "./a";
 import * as B from "./b";
 import * as C from "./c";
+import * as D from "./d";
+import * as E from "./e";
 import type { QuoteDesign } from "./types";
 
-export const QUOTE_DESIGNS: Record<ShopSkin, QuoteDesign> = {
+export const QUOTE_DESIGNS: Record<CommonSkin, QuoteDesign> = {
   editorial: {
     Header: A.Header,
     Footer: A.Footer,
@@ -51,6 +53,18 @@ export const QUOTE_DESIGNS: Record<ShopSkin, QuoteDesign> = {
       faq: C.Faq,
       quote_starter: C.Request,
     },
+  },
+  aurora: {
+    Header: D.Header,
+    Footer: D.Footer,
+    List: D.List,
+    sections: { hero: D.Hero, case_grid: D.Cases, package_cards: D.Packages, process_steps: D.Process, reviews: D.Reviews, quote_starter: D.Request },
+  },
+  night: {
+    Header: E.Header,
+    Footer: E.Footer,
+    List: E.List,
+    sections: { hero: E.Hero, case_grid: E.Cases, package_cards: E.Packages, process_steps: E.Process, reviews: E.Reviews, quote_starter: E.Request },
   },
 };
 

@@ -130,12 +130,13 @@ export function Calendar({
                   const outside = Boolean(day.outside);
                   const full = blocked && !outside;
                   return (
-                    <li key={day.date} className={look === "inside" ? "ez:bg-point-soft" : undefined}>
+                    <li key={day.date} data-range={look === "inside" ? "" : undefined} className={look === "inside" ? "ez:bg-point-soft" : undefined}>
                       <button
                         type="button"
                         onClick={() => pick(day)}
                         disabled={blocked}
                         data-outside={outside || undefined}
+                        data-full={full ? "" : undefined}
                         aria-pressed={look === "edge"}
                         aria-label={[dayText(day.date), `${WEEKDAYS[weekday(day.date)]}요일`, day.label, availability && full ? "마감" : null].filter(Boolean).join(" ")}
                         className={cn(

@@ -7,6 +7,7 @@ import { STAY_DESIGNS, stayLinks, stayNav } from "../../sections/stay";
 import { CLASS_DESIGNS, classLinks, classNav } from "../../sections/class";
 import { QUOTE_DESIGNS, quoteLinks, quoteNav } from "../../sections/quote";
 import { LANDINGS, landingDesign, landingLinks, type StoreLinks } from "../../sections/landing";
+import { bySkin } from "../../templates/skin";
 import type { HeaderVariant, ShopSkin } from "../../templates/types";
 import { cn } from "../../utils/cn";
 import { wordmark } from "../../utils/styles";
@@ -103,12 +104,12 @@ export function SiteHeader({
       )}
     </div>
   );
-  const Skin = shop && variant && variant in SHOP_DESIGNS ? SHOP_DESIGNS[variant as ShopSkin].Header : null;
+  const Skin = (shop && bySkin(SHOP_DESIGNS, variant)?.Header) || null;
   const row = "ez:mx-auto ez:grid ez:max-w-wrap ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-3 ez:px-page ez:py-2 ez:min-h-16 ez:lg:min-h-20";
   const split = variant === "dark" || variant === "band";
-  const StaySkin = main === "stay" && variant && variant in STAY_DESIGNS ? STAY_DESIGNS[variant as ShopSkin].Header : null;
-  const ClassSkin = main === "class" && variant && variant in CLASS_DESIGNS ? CLASS_DESIGNS[variant as ShopSkin].Header : null;
-  const QuoteSkin = main === "quote" && variant && variant in QUOTE_DESIGNS ? QUOTE_DESIGNS[variant as ShopSkin].Header : null;
+  const StaySkin = (main === "stay" && bySkin(STAY_DESIGNS, variant)?.Header) || null;
+  const ClassSkin = (main === "class" && bySkin(CLASS_DESIGNS, variant)?.Header) || null;
+  const QuoteSkin = (main === "quote" && bySkin(QUOTE_DESIGNS, variant)?.Header) || null;
   const LandingSkin = landingDesign(main, variant)?.Header ?? null;
   const full = Skin ? (
     <Skin name={name} logoUrl={logoUrl} cartCount={cartCount} signedIn={signedIn} categories={categories ?? []} nav={shopNav(categories ?? [])} links={shopLinks(signedIn)} />

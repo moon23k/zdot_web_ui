@@ -54,6 +54,7 @@ export function ChipChoice({
       {options.map((o, i) => (
         <label
           key={o}
+          data-choice=""
           className="ez:box-border ez:flex ez:min-h-13 ez:min-w-0 ez:cursor-pointer ez:items-center ez:rounded-button ez:border ez:border-solid ez:border-site-line ez:px-4 ez:text-site-body ez:font-normal ez:text-fg ez:has-checked:border-primary ez:has-checked:font-medium ez:has-checked:text-primary ez:has-focus-visible:outline-2 ez:has-focus-visible:outline-primary"
         >
           <input type="radio" name={name} value={o} required={required && i === 0} checked={value === undefined ? undefined : value === o} defaultChecked={value === undefined && defaultValue !== undefined ? defaultValue === o : undefined} onChange={() => onChange?.(o)} className="ez:sr-only" />

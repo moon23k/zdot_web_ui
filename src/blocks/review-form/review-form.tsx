@@ -53,6 +53,7 @@ export function ReviewForm({
           {[1, 2, 3, 4, 5].map((n) => (
             <label
               key={n}
+              data-star={n <= rating ? "on" : undefined}
               className={cn(
                 "ez:flex ez:size-11 ez:cursor-pointer ez:items-center ez:justify-center ez:rounded-md",
                 "ez:has-focus-visible:outline-2 ez:has-focus-visible:outline-primary",

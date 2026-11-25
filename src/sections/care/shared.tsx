@@ -23,6 +23,9 @@ export const CARE_MENU_TITLE: Record<ShopSkin, string> = {
   editorial: CARE_TITLE.prices,
   catalog: CARE_TITLE.prices,
   showroom: CARE_TITLE.prices,
+  aurora: CARE_TITLE.prices,
+  night: CARE_TITLE.prices,
+  stage: CARE_TITLE.prices,
 };
 
 export function careMenuTitle(skin?: ShopSkin | null): string {

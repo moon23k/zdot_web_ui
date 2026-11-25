@@ -135,10 +135,10 @@ describe("place a night ground", () => {
   });
 
   it("leaves every other design on its light tone", () => {
-    for (const t of Object.values(templates).flat().filter((t) => t.id !== night.id)) {
+    for (const t of Object.values(templates).flat().filter((t) => t.id !== night.id && t.skin !== "night" && t.skin !== "aurora")) {
       expect(t.look.tone).not.toBe("night");
       const vars = designVars(applyTemplate(paletteDesign, t), t.look);
-      expect(vars["--ez-color-site-line"]).toBeUndefined();
+      expect(vars["--ez-color-site-line"]).toBe("revert-layer");
       expect(vars["--ezd-surface"]).toBe(paletteDesign.color!.surface);
     }
   });

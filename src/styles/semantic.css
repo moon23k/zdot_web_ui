@@ -13,6 +13,21 @@
   --color-off-ink: var(--ezd-off-ink);
   --color-mark: var(--ezd-mark);
   --color-mark-ink: var(--ezd-mark-ink);
+  --color-sky: var(--ezd-sky);
+  --color-deep: var(--ezd-deep);
+  --color-raised: var(--ezd-raised);
+  --color-select: var(--ezd-select);
+  --color-star: var(--ezd-star);
+  --color-field: var(--ezd-field);
+  --color-glass: var(--ezd-glass);
+  --color-glass-edge: var(--ezd-glass-edge);
+  --color-glow: var(--ezd-glow);
+  --color-aurora-1: var(--ezd-aurora-1);
+  --color-aurora-2: var(--ezd-aurora-2);
+  --color-aurora-3: var(--ezd-aurora-3);
+  --color-aurora-wash: var(--ezd-aurora-wash);
+  --color-stage: var(--ezd-stage);
+  --color-stage-2: var(--ezd-stage-2);
 
   --radius-sm: var(--ezd-radius-sm);
   --radius-md: var(--ezd-radius-md);

@@ -1,10 +1,12 @@
-import type { ShopSkin } from "../../templates/types";
+import type { CommonSkin } from "../../templates/types";
 import * as A from "./a";
 import * as B from "./b";
 import * as C from "./c";
+import * as D from "./d";
+import * as E from "./e";
 import type { ClassDesign } from "./types";
 
-export const CLASS_DESIGNS: Record<ShopSkin, ClassDesign> = {
+export const CLASS_DESIGNS: Record<CommonSkin, ClassDesign> = {
   editorial: {
     Header: A.Header,
     Footer: A.Footer,
@@ -22,6 +24,18 @@ export const CLASS_DESIGNS: Record<ShopSkin, ClassDesign> = {
     Footer: C.Footer,
     List: C.List,
     sections: { hero: C.Hero, class_list: C.Classes, class_schedule: C.Schedule, reviews: C.Reviews, location: C.Location },
+  },
+  aurora: {
+    Header: D.Header,
+    Footer: D.Footer,
+    List: D.List,
+    sections: { hero: D.Hero, class_schedule: D.Schedule, class_list: D.Classes, reviews: D.Reviews, location: D.Location },
+  },
+  night: {
+    Header: E.Header,
+    Footer: E.Footer,
+    List: E.List,
+    sections: { hero: E.Hero, class_schedule: E.Schedule, class_list: E.Classes, reviews: E.Reviews, location: E.Location },
   },
 };
 

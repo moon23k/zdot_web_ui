@@ -1,10 +1,12 @@
-import type { ShopSkin } from "../../templates/types";
+import type { CommonSkin } from "../../templates/types";
 import * as A from "./a";
 import * as B from "./b";
 import * as C from "./c";
+import * as D from "./d";
+import * as E from "./e";
 import type { PlaceDesign } from "./types";
 
-export const PLACE_DESIGNS: Record<ShopSkin, PlaceDesign> = {
+export const PLACE_DESIGNS: Record<CommonSkin, PlaceDesign> = {
   editorial: {
     Header: A.Header,
     Footer: A.Footer,
@@ -37,6 +39,16 @@ export const PLACE_DESIGNS: Record<ShopSkin, PlaceDesign> = {
       faq: C.Faq,
       photo_band: C.Band,
     },
+  },
+  aurora: {
+    Header: D.Header,
+    Footer: D.Footer,
+    sections: { hero: D.Hero, menu: D.Menu, intro: D.Intro, store_info: D.Store },
+  },
+  night: {
+    Header: E.Header,
+    Footer: E.Footer,
+    sections: { hero: E.Hero, menu: E.Menu, intro: E.Intro, store_info: E.Store },
   },
 };
 

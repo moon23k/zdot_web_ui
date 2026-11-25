@@ -1,19 +1,23 @@
 import type { ReactNode } from "react";
 import type { TemplateDesign } from "../templates/types";
 import type { Design } from "../types";
+import { nightTheme, type NightTheme } from "./night";
 import { applyTemplate, designVars, fontHref } from "./tokens";
 
 export function ThemeRoot({
   design: brand,
   template,
+  night,
   children,
 }: {
   design?: Design | null;
   template?: TemplateDesign | null;
+  night?: NightTheme | null;
   children: ReactNode;
 }) {
-  const design = applyTemplate(brand, template);
-  const css = `:root{${Object.entries(designVars(design, template ? template.look : false))
+  const design = applyTemplate(brand, template, night);
+  const glow = template?.skin === "night" ? nightTheme(night) : undefined;
+  const css = `:root{${Object.entries(designVars(design, template ? { ...template.look, skin: template.skin, night: glow } : false))
     .map(([name, value]) => `${name}:${value.replace(/[<>{};]/g, "")}`)
     .join(";")}}`;
   const href = fontHref(design);
@@ -21,7 +25,7 @@ export function ThemeRoot({
     <>
       {href && <FontSheet href={href} />}
       <style>{css}</style>
-      <div className="ez-root" data-template={template?.id} data-frame={template ? "gallery" : undefined} data-skin={template?.skin}>{children}</div>
+      <div className="ez-root" data-template={template?.id} data-frame={template ? "gallery" : undefined} data-skin={template?.skin} data-night-theme={glow}>{children}</div>
     </>
   );
 }

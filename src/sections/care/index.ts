@@ -1,10 +1,12 @@
-import type { ShopSkin } from "../../templates/types";
+import type { CommonSkin } from "../../templates/types";
 import * as A from "./a";
 import * as B from "./b";
 import * as C from "./c";
+import * as D from "./d";
+import * as E from "./e";
 import type { CareDesign } from "./types";
 
-export const CARE_DESIGNS: Record<ShopSkin, CareDesign> = {
+export const CARE_DESIGNS: Record<CommonSkin, CareDesign> = {
   editorial: {
     Header: A.Header,
     Footer: A.Footer,
@@ -19,6 +21,16 @@ export const CARE_DESIGNS: Record<ShopSkin, CareDesign> = {
     Header: C.Header,
     Footer: C.Footer,
     sections: { hero: C.Hero, intro: C.Intro, menu: C.Menu, location: C.Location, faq: C.Faq },
+  },
+  aurora: {
+    Header: D.Header,
+    Footer: D.Footer,
+    sections: { hero: D.Hero, menu: D.Menu, photo_band: D.Band, store_info: D.Store },
+  },
+  night: {
+    Header: E.Header,
+    Footer: E.Footer,
+    sections: { hero: E.Hero, menu: E.Menu, photo_band: E.Band, store_info: E.Store },
   },
 };
 

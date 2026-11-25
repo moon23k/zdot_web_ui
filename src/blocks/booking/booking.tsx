@@ -81,7 +81,7 @@ export function BookingHead({ tag, title, rating, facts }: { tag?: string | null
           <h1 className="ez:m-0 ez:text-site-page ez:font-light ez:tracking-[-0.04em] ez:lg:text-site-display-md">{title}</h1>
           {rating && rating.count > 0 && (
             <a href="#reviews" className="ez:flex ez:items-center ez:gap-2 ez:pb-2 ez:text-site-small ez:text-fg ez:no-underline">
-              <svg viewBox="0 0 24 24" aria-hidden="true" className="ez:size-3.25 ez:text-primary">
+              <svg viewBox="0 0 24 24" aria-hidden="true" data-star="on" className="ez:size-3.25 ez:text-primary">
                 <path fill="currentColor" d={STAR_PATH} />
               </svg>
               <span className="ez:font-normal ez:tabular-nums">{rating.average.toFixed(1)}</span>
@@ -162,6 +162,7 @@ export function TimeTiles({ items, value, onChange, name }: { items: { id: strin
       {items.map((t) => (
         <label
           key={t.id}
+          data-choice=""
           className={cn(
             "ez:grid ez:cursor-pointer ez:gap-0.5 ez:rounded-button ez:border ez:border-solid ez:border-site-line ez:px-3.5 ez:py-3 ez:text-site-small",
             "ez:has-checked:border-primary ez:has-focus-visible:outline-2 ez:has-focus-visible:outline-primary",

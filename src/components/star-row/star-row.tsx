@@ -13,7 +13,7 @@ function starFill(rating: number, n: number): number {
 export function StarRow({ rating, className }: { rating: number; className?: string }) {
   const id = `star${useId().replace(/[^\w-]/g, "")}`;
   return (
-    <span role="img" aria-label={`별점 ${rating}점`} className={cn("ez:inline-flex ez:gap-0.5 ez:text-primary", className)}>
+    <span role="img" aria-label={`별점 ${rating}점`} data-star="on" className={cn("ez:inline-flex ez:gap-0.5 ez:text-primary", className)}>
       {[1, 2, 3, 4, 5].map((n) => {
         const fill = starFill(rating, n);
         if (fill === 1 || fill === 0) {

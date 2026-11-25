@@ -98,7 +98,7 @@ export function BuyBox({
       )}
       {options && <hr className="ez:m-0 ez:h-px ez:border-0 ez:bg-site-line" />}
       {!selling && !soldOut && (
-        <p className="ez:m-0 ez:flex ez:items-center ez:gap-2 ez:rounded-md ez:bg-surface-alt ez:p-3 ez:text-site-small">
+        <p className="ez:m-0 ez:flex ez:items-center ez:gap-2 ez:rounded-md ez:bg-deep ez:p-3 ez:text-site-small">
           <Status icon="alert">지금은 주문을 받지 않는 스토어예요</Status>
         </p>
       )}
@@ -112,6 +112,7 @@ export function BuyBox({
             {product.variants.map((v) => (
               <label
                 key={v.id}
+                data-choice=""
                 className={cn(
                   chip,
                   "ez:has-checked:border-primary ez:has-checked:text-primary ez:has-checked:font-medium ez:has-focus-visible:outline-2 ez:has-focus-visible:outline-offset-2 ez:has-focus-visible:outline-primary",

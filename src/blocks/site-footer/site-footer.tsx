@@ -9,6 +9,7 @@ import { STAY_DESIGNS, stayFooter } from "../../sections/stay";
 import { CLASS_DESIGNS, classFooter } from "../../sections/class";
 import { QUOTE_DESIGNS, quoteFooter } from "../../sections/quote";
 import { LANDINGS, landingDesign, landingFooter, landingLinks, type StoreLinks } from "../../sections/landing";
+import { bySkin } from "../../templates/skin";
 import type { ShopSkin } from "../../templates/types";
 import { PathSwitch } from "../site-header/path-switch";
 
@@ -48,10 +49,10 @@ export function SiteFooter({
   address?: string | null;
   links?: StoreLinks | null;
 }) {
-  const Skin = main === "shop" && skin ? SHOP_DESIGNS[skin]?.Footer : undefined;
-  const StaySkin = main === "stay" && skin ? STAY_DESIGNS[skin]?.Footer : undefined;
-  const ClassSkin = main === "class" && skin ? CLASS_DESIGNS[skin]?.Footer : undefined;
-  const QuoteSkin = main === "quote" && skin ? QUOTE_DESIGNS[skin]?.Footer : undefined;
+  const Skin = main === "shop" ? bySkin(SHOP_DESIGNS, skin)?.Footer : undefined;
+  const StaySkin = main === "stay" ? bySkin(STAY_DESIGNS, skin)?.Footer : undefined;
+  const ClassSkin = main === "class" ? bySkin(CLASS_DESIGNS, skin)?.Footer : undefined;
+  const QuoteSkin = main === "quote" ? bySkin(QUOTE_DESIGNS, skin)?.Footer : undefined;
   const LandingSkin = landingDesign(main, skin)?.Footer;
   const guide = GUIDE[main] ?? GUIDE.shop;
   const legal = legalLine(storeName, business, hosting);

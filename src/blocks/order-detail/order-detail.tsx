@@ -301,7 +301,7 @@ export function OrderDetail({
         </section>
         {actions && <div className="ez:grid ez:gap-3 ez:max-lg:order-2">{actions}</div>}
       </div>
-      <div className="ez:rounded-md ez:bg-surface-alt ez:p-4 ez:max-lg:order-1 ez:lg:col-start-2 ez:lg:row-start-1 ez:lg:p-5">
+      <div className="ez:rounded-md ez:bg-deep ez:p-4 ez:max-lg:order-1 ez:lg:col-start-2 ez:lg:row-start-1 ez:lg:p-5">
         <SummaryRows
           rows={rows}
           total={partial ? { label: "최종 결제 금액", value: order.total - refunded } : { label: "결제 금액", value: order.total }}

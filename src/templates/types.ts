@@ -1,10 +1,12 @@
 export type TemplateMain = "shop" | "class" | "stay" | "quote" | "place" | "care" | "portfolio" | "office";
 
-export type TemplateLetter = "a" | "b" | "c";
+export type TemplateLetter = "a" | "b" | "c" | "d" | "e" | "f";
 
-export type SurfaceTone = "white" | "paper" | "cream" | "warm" | "mist" | "gallery" | "night";
+export type SurfaceTone = "white" | "paper" | "cream" | "warm" | "mist" | "gallery" | "night" | "aurora";
 
-export type ShopSkin = "editorial" | "catalog" | "showroom";
+export type ShopSkin = "editorial" | "catalog" | "showroom" | "aurora" | "night" | "stage";
+
+export type CommonSkin = Exclude<ShopSkin, "stage">;
 
 export type Look = {
   tone: SurfaceTone;

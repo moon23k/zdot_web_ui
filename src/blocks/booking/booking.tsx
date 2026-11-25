@@ -5,6 +5,8 @@ import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
 import { infoRows, pointTag } from "../../utils/styles";
 import { STAR_PATH } from "../../components/star-row";
+import type { StayBreakdown } from "../../types";
+import { won } from "../../utils/format";
 
 export function PhotoCollage({ images, name, kind = "stay" }: { images: (string | null)[]; name: string; kind?: "stay" | "class" }) {
   const full = kind === "stay" ? 5 : 3;
@@ -120,19 +122,36 @@ export function CardRow({ label, children }: { label: ReactNode; children: React
   );
 }
 
-export function CardTotal({ label, value, rows }: { label: string; value: string; rows?: { label: string; value: string; minus?: boolean }[] }) {
+export function stayCharges(stay: StayBreakdown): { rows: { label: string; value: number }[]; onsite: number } {
+  const same = stay.night_prices.length > 0 && stay.night_prices.every((p) => p === stay.night_prices[0]);
+  const guests = [stay.extra_adults > 0 && `성인 ${stay.extra_adults}명`, stay.extra_children > 0 && `아동 ${stay.extra_children}명`].filter(Boolean).join(" · ");
+  const rows = [
+    { label: same ? `객실 요금 ${won(stay.night_prices[0])} × ${stay.nights}박` : `객실 요금 ${stay.nights}박`, value: stay.room_total },
+    { label: guests ? `추가 인원 ${guests} × ${stay.nights}박` : "추가 인원", value: stay.extra_total },
+    ...stay.add_ons.map((a) => ({ label: a.name, value: a.amount })),
+  ];
+  return { rows: rows.filter((r) => r.value > 0), onsite: stay.onsite_total };
+}
+
+export function CardTotal({ label, value, rows, after }: { label: string; value: string; rows?: { label: string; value: string; minus?: boolean }[]; after?: { label: string; value: string }[] }) {
   return (
     <div className="ez:grid ez:gap-3 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-5">
-      {rows?.map((r) => (
-        <div key={r.label} className="ez:flex ez:justify-between ez:gap-3 ez:text-site-small">
-          <span className="ez:text-muted">{r.label}</span>
-          <span className={cn("ez:tabular-nums", r.minus && "ez:text-primary")}>{r.value}</span>
+      {rows?.map((r, i) => (
+        <div key={`${i}-${r.label}`} data-slot="card-total-row" className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
+          <span className="ez:text-site-small ez:text-muted">{r.label}</span>
+          <span className={cn("ez:text-site-body ez:tabular-nums", r.minus && "ez:text-primary")}>{r.value}</span>
         </div>
       ))}
       <div className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
         <span>{label}</span>
         <span className="ez:text-site-section ez:font-normal ez:tabular-nums">{value}</span>
       </div>
+      {after?.map((r, i) => (
+        <div key={`${i}-${r.label}`} data-slot="card-total-after" className="ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:text-site-small ez:text-muted">
+          <span>{r.label}</span>
+          <span className="ez:tabular-nums">{r.value}</span>
+        </div>
+      ))}
     </div>
   );
 }

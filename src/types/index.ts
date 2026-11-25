@@ -69,6 +69,8 @@ export type Shipping = {
 
 export type CartLineData = Schemas["CartLineOut"];
 
+export type StayBreakdown = Schemas["StayBreakdownOut"];
+
 export type Quote = Pick<
   Schemas["OrderOut"],
   | "items_total"

@@ -24,7 +24,7 @@ export type { StayListProps, StaySearch } from "./sections/stay/types";
 export { ProductGallery } from "./blocks/product-gallery";
 export { AnchorTabs } from "./blocks/anchor-tabs";
 export { Fold } from "./sections/kit";
-export { BookingFrame, BookingHead, BookingRows, CardCells, CardPrice, CardRow, CardTotal, PhotoCollage, RoomShelf, SectionSplit, TimeTiles, type BookingBar } from "./blocks/booking";
+export { BookingFrame, BookingHead, BookingRows, CardCells, CardPrice, CardRow, CardTotal, PhotoCollage, RoomShelf, SectionSplit, stayCharges, TimeTiles, type BookingBar } from "./blocks/booking";
 export { BuyBox } from "./blocks/buy-box";
 export { CartLine } from "./blocks/cart-line";
 export { CartView } from "./blocks/cart-view";

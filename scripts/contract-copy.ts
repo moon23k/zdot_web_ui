@@ -20,6 +20,7 @@ const ROOTS = [
   "CustomerProvider",
   "PublicReviewOut",
   "ProductReviewsOut",
+  "StayBreakdownOut",
 ];
 
 export function contractCopy(text: string): { body: string; count: number } {

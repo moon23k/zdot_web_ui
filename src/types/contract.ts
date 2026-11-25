@@ -343,6 +343,23 @@ export interface Schemas {
     shipped_at: string | null;
     delivered_at: string | null;
   };
+  StayAddOnChargeOut: {
+    name: string;
+    qty: number;
+    amount: number;
+  };
+  StayBreakdownOut: {
+    nights: number;
+    night_prices: number[];
+    room_total: number;
+    extra_adults: number;
+    extra_children: number;
+    extra_total: number;
+    add_ons: Schemas["StayAddOnChargeOut"][];
+    add_on_total: number;
+    onsite: Schemas["StayAddOnChargeOut"][];
+    onsite_total: number;
+  };
   Tier: {
     before: number;
     refund_rate: number;

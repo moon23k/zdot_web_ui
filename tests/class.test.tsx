@@ -46,6 +46,25 @@ function home(letter: (typeof letters)[number], sections = homeSections.class) {
   return render(<SiteRenderer page={{ sections, arranged: true }} context={context} template={resolveTemplate("class", letter)} />).container;
 }
 
+describe("class c schedule photo", () => {
+  it("never repeats the next-cohort photo and drops the photo when no other class has one", () => {
+    const open = { ...classSessions[0], id: "s1", status: "open" as const, image: "/sample/a.jpg" };
+    const other = { ...classSessions[0], id: "s2", status: "open" as const, image: "/sample/b.jpg" };
+    const pick = (sessions: (typeof open)[]) => {
+      const root = home("c", [{ kind: "hero" as const, v: 1, data: { image: "/sample/hero.jpg", sessions } }, { kind: "class_schedule" as const, v: 1, data: { sessions } }]);
+      const hero = [...root.querySelectorAll('[data-slot="hero"] img')].map((i) => i.getAttribute("src") ?? "");
+      const schedule = [...root.querySelectorAll('[data-slot="class-schedule"] img')].map((i) => i.getAttribute("src") ?? "");
+      return { hero, schedule };
+    };
+    const two = pick([open, { ...open, id: "s3" }, other]);
+    expect(two.hero.some((src) => src.includes("a.jpg"))).toBe(true);
+    expect(two.schedule.some((src) => src.includes("b.jpg"))).toBe(true);
+    expect(two.schedule.some((src) => src.includes("a.jpg"))).toBe(false);
+    const one = pick([open, { ...open, id: "s3" }]);
+    expect(one.schedule).toHaveLength(0);
+  });
+});
+
 describe("class c hero", () => {
   it("draws no blank line under the store name when the hero has a photo but no title", () => {
     const sections = [{ kind: "hero" as const, v: 1, data: { image: "/sample/hero.jpg" } }];

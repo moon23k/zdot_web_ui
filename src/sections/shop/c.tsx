@@ -82,7 +82,7 @@ function BlankCard() {
 
 const gridFour = "ez:grid ez:grid-cols-2 ez:gap-x-3 ez:gap-y-8 ez:md:gap-x-4 ez:md:gap-y-9 ez:lg:grid-cols-4";
 
-const shelfRow = "ez:-mx-1.5 ez:flex ez:flex-wrap ez:justify-center ez:gap-y-8 ez:md:-mx-2 ez:md:gap-y-9";
+const shelfRow = "ez:-mx-1.5 ez:flex ez:flex-wrap ez:gap-y-8 ez:md:-mx-2 ez:md:gap-y-9";
 
 const shelfItem = cn(ROW_ITEM[4], "ez:px-1.5 ez:md:px-2");
 

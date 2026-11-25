@@ -32,9 +32,12 @@ describe("상세 첫 덩어리 올리기", () => {
 describe("상세 본문 2열", () => {
   it("짧은 첫 줄은 제목 열, 나머지는 내용 열에 판매자 글자 값 그대로", () => {
     const root = render(<DetailDoc doc={{ blocks: [{ ...note, layers: [text("n1", "관리 방법", { size: 3, align: "center" }), text("n2", "중성 세제로 씻어 주세요", { size: 3 })] }] }} split />).container;
-    const head = root.querySelector('[data-slot="detail-split-head"]')!;
+    const head = root.querySelector<HTMLElement>('[data-slot="detail-split-head"]')!;
     expect(head).toHaveTextContent("관리 방법");
-    expect((head as HTMLElement).style.textAlign).toBe("center");
+    expect(head.className).toContain("ez:text-site-heading");
+    expect(head.className).toContain("ez:font-normal");
+    expect(head.style.fontSize).toBe("");
+    expect(head.nextElementSibling!.querySelector("p")!.style.fontSize).toBe("16px");
     expect(head.nextElementSibling).toHaveTextContent("중성 세제로 씻어 주세요");
     expect(root.querySelector("section")!.className).not.toContain("ez:max-w-180");
   });
@@ -47,8 +50,18 @@ describe("상세 본문 2열", () => {
     expect(root.querySelector('[data-layout="image"]')!.className).toContain("ez:max-w-180");
   });
 
-  it("split 없이는 한 열, 담긴 열의 전폭", () => {
+  it("마지막 블록은 아래 여백 없이 끝나 구획 간격과 겹치지 않는다", () => {
+    const root = render(<DetailDoc doc={{ blocks: [{ ...intro, space_bottom: 3 }, { ...note, space_bottom: 3 }] }} split />).container;
+    const [first, last] = [...root.querySelectorAll<HTMLElement>('[data-layout="text"]')];
+    expect(first.style.paddingBottom).toBe("24px");
+    expect(first.querySelector('[data-slot="detail-split"]')!.className).toContain("ez:pb-6");
+    expect(last.style.paddingBottom).toBe("");
+    expect(last.querySelector('[data-slot="detail-split"]')!.className).not.toContain("ez:pb-6");
+  });
+
+  it("split 없이는 한 열, 담긴 열의 전폭, 글 블록은 표와 같은 시작선", () => {
     const root = render(<DetailDoc doc={{ blocks: [note] }} />).container;
+    expect(root.querySelector('[data-layout="text"] > div')!.className).not.toContain("ez:px-5");
     expect(root.querySelector("section")!.className).not.toContain("ez:max-w-180");
     expect(root.querySelector('[data-slot="detail-split"]')).toBeNull();
   });
@@ -58,6 +71,7 @@ describe("상세 본문 2열", () => {
     const row = root.querySelector<HTMLElement>("[data-row]")!;
     expect(row.className).toContain("ez:grid-cols-[32%_minmax(0,1fr)]");
     expect(row.className).toContain("ez:border-site-line");
+    expect(row.className).toContain("ez:first:border-t");
     expect(row.style.borderTop).toBe("");
     const [label, value] = [...row.querySelectorAll("p")];
     expect(label.className).toContain("ez:text-site-small");

@@ -165,6 +165,7 @@ export function designVars(design: Design | null | undefined, site?: boolean | S
   const color = { ...FALLBACK, ...(d.color ?? {}) };
   const ratio = (d.imagery?.photo_ratio ?? "1:1").replace(":", " / ");
   const styles = d.font?.styles;
+  const ink = inkOf(color.text, color.surface);
   return {
     "--ezd-primary": color.primary,
     "--ezd-on-primary": onPrimary(color.primary, color.on_primary),
@@ -176,7 +177,7 @@ export function designVars(design: Design | null | undefined, site?: boolean | S
     "--ezd-primary-border": color.primary_border,
     "--ezd-surface": color.surface,
     "--ezd-surface-alt": color.surface_alt,
-    "--ezd-text": inkOf(color.text, color.surface),
+    "--ezd-text": ink,
     "--ezd-muted": color.text_muted,
     "--ezd-radius-sm": `${d.shape?.radius_sm ?? SYSTEM_RADIUS.sm}px`,
     "--ezd-radius-md": `${d.shape?.radius_md ?? SYSTEM_RADIUS.md}px`,
@@ -205,7 +206,7 @@ export function designVars(design: Design | null | undefined, site?: boolean | S
     "--ezd-photo-ratio": ratio,
     "--ezd-control": "48px",
     "--ezd-control-sm": "40px",
-    ...kitVars(color, typeof site === "object" && site.kit === "off"),
+    ...kitVars({ ...color, text: ink }, typeof site === "object" && site.kit === "off"),
     ...(site ? siteVars(site === true ? undefined : site) : {}),
     ...(typeof site === "object" && site.tone === NIGHT ? groundVars(color.text) : {}),
   };

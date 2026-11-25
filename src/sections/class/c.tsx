@@ -361,12 +361,21 @@ function BlankSessionRow() {
 }
 
 export function Schedule({ data }: SectionProps<"class_schedule">) {
-  const sessions = (data.sessions ?? []).slice(0, 5);
+  const all = data.sessions ?? [];
+  const sessions = all.slice(0, 5);
   const empty = !sessions.length;
-  const image = sessions.find((s) => s.image)?.image ?? null;
+  const lead = all.find((s) => s.status !== "full")?.image ?? null;
+  const image = all.find((s) => s.image && s.image !== lead)?.image ?? null;
+  const photo = empty || image !== null;
   return (
-    <section data-slot="class-schedule" data-variant="showroom" id="schedule" data-blank={empty ? "" : undefined} className="ez:grid ez:grid-cols-1 ez:gap-3 ez:text-fg ez:lg:grid-cols-[5fr_7fr] ez:lg:gap-4">
-      <Photo src={image} alt="" sizes="(max-width: 1024px) 100vw, 540px" tone={1} className="ez:aspect-[4/3] ez:h-full ez:rounded-lg ez:max-lg:hidden ez:lg:aspect-auto ez:lg:min-h-150" />
+    <section
+      data-slot="class-schedule"
+      data-variant="showroom"
+      id="schedule"
+      data-blank={empty ? "" : undefined}
+      className={cn("ez:grid ez:grid-cols-1 ez:gap-3 ez:text-fg ez:lg:gap-4", photo && "ez:lg:grid-cols-[5fr_7fr]")}
+    >
+      {photo && <Photo src={image} alt="" sizes="(max-width: 1024px) 100vw, 540px" tone={1} className="ez:aspect-[4/3] ez:h-full ez:rounded-lg ez:max-lg:hidden ez:lg:aspect-auto ez:lg:min-h-150" />}
       <div className="ez:flex ez:min-w-0 ez:flex-col ez:rounded-lg ez:bg-surface-alt ez:p-5 ez:md:p-9">
         <h2 className={cn(sectionTitle, "ez:px-1")}>{CLASS_TITLE.open}</h2>
         <ul className="ez:m-0 ez:mt-6 ez:grid ez:list-none ez:gap-2 ez:p-0">

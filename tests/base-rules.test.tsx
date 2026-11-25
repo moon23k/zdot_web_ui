@@ -93,6 +93,12 @@ describe("R2 · R3 type", () => {
     expect(vars["--ezd-off"]).toBe("color-mix(in srgb, #1d1d1b 6%, #ffffff)");
   });
 
+  it("gives the footer the same softened ink as the body", () => {
+    const vars = designVars(applyTemplate({}, resolveTemplate("shop", "a")), resolveTemplate("shop", "a").look);
+    expect(vars["--ezd-foot-ink"]).toBe(vars["--ezd-text"]);
+    expect(vars["--ezd-text"]).not.toBe("#1d1d1b");
+  });
+
   it("drops medium from labels and keeps it on buttons", () => {
     expect(wordmark("ONGI")).toContain("ez:font-normal");
     render(<Button>주문하기</Button>);
@@ -183,7 +189,10 @@ describe("site logo", () => {
   it("adds the store name beside a square mark", () => {
     render(<SiteLogo name="한컷 스튜디오" src="/mark.png" />);
     load(screen.getByRole("img", { name: "한컷 스튜디오" }), 64, 64);
-    expect(screen.getByText("한컷 스튜디오")).toBeInTheDocument();
+    const label = screen.getByText("한컷 스튜디오");
+    expect(label.className).toContain("ez:tracking-normal");
+    expect(label.className).toContain("ez:font-normal");
+    expect(label.className).toContain("ez:text-site-heading");
     expect(document.querySelector('[data-slot="site-logo"]')).toHaveAttribute("data-shape", "mark");
   });
 

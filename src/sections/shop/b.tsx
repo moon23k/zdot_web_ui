@@ -230,7 +230,7 @@ function Head({ title, href }: { title: string; href?: string }) {
   );
 }
 
-const bestRow = "ez:-mx-2 ez:flex ez:flex-wrap ez:justify-center ez:gap-y-10 ez:md:-mx-2.5";
+const bestRow = "ez:-mx-2 ez:flex ez:flex-wrap ez:gap-y-10 ez:md:-mx-2.5";
 
 const bestItem = cn(ROW_ITEM[5], "ez:px-2 ez:md:px-2.5");
 
@@ -558,10 +558,9 @@ export function Strip({ data, context }: SectionProps<"photo_band">) {
 
 type ReviewItem = NonNullable<SectionProps<"reviews">["data"]["items"]>[number];
 
-function ReviewCard({ item, product, tone }: { item: ReviewItem; product?: ProductSummary; tone: number }) {
+function ReviewCard({ item, product }: { item: ReviewItem; product?: ProductSummary }) {
   return (
     <article className="ez:flex ez:min-w-0 ez:gap-4 ez:rounded-md ez:border ez:border-solid ez:border-site-line ez:bg-surface ez:p-5">
-      {product && <Photo src={product.cover_url} alt={product.name} tone={tone} sizes="80px" className="ez:aspect-square ez:size-20 ez:shrink-0 ez:rounded-sm" />}
       <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-1.5">
         <StarRow rating={item.rating} className="ez:text-muted" />
         <p className="ez:m-0 ez:line-clamp-2 ez:min-h-12 ez:text-site-body ez:text-pretty ez:text-fg">{item.body}</p>
@@ -571,10 +570,9 @@ function ReviewCard({ item, product, tone }: { item: ReviewItem; product?: Produ
   );
 }
 
-function BlankReview({ tone }: { tone: number }) {
+function BlankReview() {
   return (
     <div className="ez:flex ez:min-w-0 ez:gap-4 ez:rounded-md ez:border ez:border-solid ez:border-site-line ez:bg-surface ez:p-5">
-      <Photo src={null} alt="" tone={tone} className="ez:aspect-square ez:size-20 ez:shrink-0 ez:rounded-sm" />
       <div className="ez:grid ez:min-w-0 ez:flex-1 ez:content-start ez:gap-2">
         <BlankStars />
         <Lines />
@@ -596,8 +594,8 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
         <Head title={SHOP_TITLE.reviews} />
         <div className={cn(reviewGrid, fillCols(items.length || 4))}>
           {items.length
-            ? items.map((r, i) => <ReviewCard key={`${r.name}-${r.date ?? ""}-${i}`} item={r} tone={i} product={r.product ? context.products.find((p) => p.id === r.product) : undefined} />)
-            : [0, 1, 2, 3].map((i) => <BlankReview key={i} tone={i} />)}
+            ? items.map((r, i) => <ReviewCard key={`${r.name}-${r.date ?? ""}-${i}`} item={r} product={r.product ? context.products.find((p) => p.id === r.product) : undefined} />)
+            : [0, 1, 2, 3].map((i) => <BlankReview key={i} />)}
         </div>
       </div>
     </section>

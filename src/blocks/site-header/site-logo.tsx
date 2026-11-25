@@ -3,7 +3,9 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { cn } from "../../utils/cn";
 
-function FitName({ name }: { name: string }) {
+const markName = "ez:font-body ez:text-site-heading ez:font-normal ez:normal-case ez:tracking-normal";
+
+function FitName({ name, className }: { name: string; className?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const [wrap, setWrap] = useState(false);
   useLayoutEffect(() => {
@@ -27,7 +29,7 @@ function FitName({ name }: { name: string }) {
     return () => watch.disconnect();
   }, [name]);
   return (
-    <span ref={ref} data-wrap={wrap || undefined} className={cn("ez:block ez:min-w-0 ez:max-lg:line-clamp-2 ez:lg:whitespace-nowrap", wrap && "ez:max-lg:text-site-heading")}>
+    <span ref={ref} data-wrap={wrap || undefined} className={cn("ez:block ez:min-w-0 ez:max-lg:line-clamp-2 ez:lg:whitespace-nowrap", className, wrap && "ez:max-lg:text-site-heading")}>
       {name}
     </span>
   );
@@ -71,7 +73,7 @@ function LogoImage({ name, src }: { name: string; src: string }) {
         onLoad={(e) => settle(shapeOf(e.currentTarget))}
         onError={() => settle("failed")}
       />
-      {mark && <FitName name={name} />}
+      {mark && <FitName name={name} className={markName} />}
     </span>
   );
 }

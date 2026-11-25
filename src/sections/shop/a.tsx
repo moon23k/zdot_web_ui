@@ -94,7 +94,7 @@ function BlankCard({ tone }: { tone: number }) {
   );
 }
 
-const row = "ez:-mx-3 ez:flex ez:flex-wrap ez:justify-center ez:gap-y-12 ez:lg:gap-y-16";
+const row = "ez:-mx-3 ez:flex ez:flex-wrap ez:gap-y-12 ez:lg:gap-y-16";
 
 const rowItem = { 3: cn(ROW_ITEM[3], "ez:lg:w-1/3 ez:px-3"), 4: cn(ROW_ITEM[4], "ez:px-3") } as const;
 

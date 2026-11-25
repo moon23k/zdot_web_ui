@@ -37,12 +37,13 @@ describe("brand kit variables", () => {
   it("keeps today's footer, badge and tiles without a palette", () => {
     const vars = designVars(plain);
     expect(vars["--ezd-foot"]).toBe("transparent");
-    expect(vars["--ezd-foot-ink"]).toBe("#1A0D03");
+    expect(vars["--ezd-foot-ink"]).toBe(vars["--ezd-text"]);
+    expect(vars["--ezd-text"]).toBe("#3e3227");
     expect(vars["--ezd-foot-muted"]).toBe("#695E53");
     expect(vars["--ezd-foot-hover"]).toBe("#B64C2F");
     expect(vars["--ezd-foot-line"]).toBe("var(--ez-color-site-line)");
     expect(vars["--ezd-mark"]).toBe("#FCE5D6");
-    expect(vars["--ezd-mark-ink"]).toBe("#1A0D03");
+    expect(vars["--ezd-mark-ink"]).toBe("#3e3227");
     expect([1, 2, 3, 4, 5].map((n) => vars[`--ez-color-tile-${n}`])).toEqual(Array(5).fill("revert-layer"));
     expect(Object.values(vars).join(" ")).not.toContain("#601000");
   });

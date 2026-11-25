@@ -133,7 +133,11 @@ describe("shop page edges", () => {
       { rating: 5, body: "나", name: "이", product: "p0" },
       { rating: 4, body: "다", name: "박", product: "p1" },
     ];
-    expect(view("b", 2, [{ kind: "reviews", data: { items: reviews } }]).querySelectorAll('[data-slot="reviews"] article')).toHaveLength(2);
+    const cards = view("b", 2, [{ kind: "reviews", data: { items: reviews } }]).querySelectorAll('[data-slot="reviews"] article');
+    expect(cards).toHaveLength(2);
+    expect(cards[0].querySelector('[data-slot="photo"]')).toBeNull();
+    const c = render(<SiteRenderer page={{ sections: [{ kind: "best_grid", data: { items: items.slice(0, 2) } }], arranged: true }} context={{ products: [], categories: [], faqs: [], shipping: null }} template={resolveTemplate("shop", "c")} />).container;
+    expect(c.querySelector('[data-slot="product-card"]')?.parentElement?.parentElement?.className).not.toContain("justify-center");
     const a = view("a", 4, [{ kind: "product_grid", data: {} }]);
     expect(a.querySelector('[data-slot="product-grid"] .ez\\:uppercase')).toBeNull();
   });

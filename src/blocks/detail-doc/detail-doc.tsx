@@ -1,6 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
 import { cn } from "../../utils/cn";
-import { infoRows } from "../../utils/styles";
 
 export type DetailFont = "gothic" | "serif" | "display" | "hand";
 export type DetailTextStyle = {
@@ -81,11 +80,11 @@ function textStyle(style: DetailTextStyle | null | undefined): CSSProperties {
   return css;
 }
 
-function Texts({ layers, under = false }: { layers: DetailLayer[]; under?: boolean }) {
+function Texts({ layers, under = false, flush = false }: { layers: DetailLayer[]; under?: boolean; flush?: boolean }) {
   const texts = layers.filter((l) => l.type === "text" && l.text);
   if (!texts.length) return null;
   return (
-    <div className={under ? "ez:grid ez:gap-2 ez:px-5 ez:pt-8 ez:pb-6" : "ez:grid ez:gap-2 ez:px-5 ez:py-6"}>
+    <div className={cn("ez:grid ez:gap-2", !flush && "ez:px-5", under ? "ez:pt-8 ez:pb-6" : "ez:py-6")}>
       {texts.map((l) => (
         <div key={l.id} style={{ textAlign: l.style?.align ?? "left" }}>
           <p style={textStyle(l.style)}>{l.text}</p>
@@ -128,17 +127,17 @@ function headOf(texts: DetailLayer[]): DetailLayer | null {
   return size(first) > size(next) || weight(first) > weight(next) || short ? first : null;
 }
 
-function SplitTexts({ layers }: { layers: DetailLayer[] }) {
+function SplitTexts({ layers, last = false }: { layers: DetailLayer[]; last?: boolean }) {
   const texts = layers.filter((l) => l.type === "text" && filled(l));
   if (!texts.length) return null;
   const head = headOf(texts);
   const body = head ? texts.slice(1) : texts;
   return (
-    <div data-slot="detail-split" className={`${SPLIT} ez:py-6`}>
+    <div data-slot="detail-split" className={cn(SPLIT, "ez:pt-6", !last && "ez:pb-6")}>
       {head ? (
-        <div data-slot="detail-split-head" style={{ textAlign: head.style?.align ?? "left" }}>
-          <p style={textStyle(head.style)}>{head.text}</p>
-        </div>
+        <h2 data-slot="detail-split-head" className="ez:m-0 ez:whitespace-pre-line ez:text-site-heading ez:font-normal ez:text-fg">
+          {head.text}
+        </h2>
       ) : (
         <div className="ez:max-md:hidden" />
       )}
@@ -185,7 +184,7 @@ function Table({ layers }: { layers: DetailLayer[] }) {
   return (
     <div className="ez:py-6">
       {rows.map(([label, value]) => (
-        <div key={label.id} data-row="" className={cn("ez:grid ez:grid-cols-[32%_minmax(0,1fr)] ez:items-baseline ez:py-2.5", infoRows.row)}>
+        <div key={label.id} data-row="" className="ez:grid ez:grid-cols-[32%_minmax(0,1fr)] ez:items-baseline ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-2.5 ez:first:border-t">
           <RowCell layer={label} className="ez:pr-3 ez:text-site-small ez:text-muted" />
           <RowCell layer={value} className="ez:text-site-body ez:text-fg ez:tabular-nums" />
         </div>
@@ -238,7 +237,7 @@ function Img({ layer }: { layer: DetailLayer }) {
   return <img src={layer.url} alt="" loading="lazy" decoding="async" className="ez:block ez:h-auto ez:w-full" />;
 }
 
-function Block({ block, split = false }: { block: DetailBlock; split?: boolean }) {
+function Block({ block, split = false, last = false }: { block: DetailBlock; split?: boolean; last?: boolean }) {
   const shown = block.layers.filter((l) => !l.hidden);
   const images = shown.filter((l) => l.type === "image");
   const bg: CSSProperties = {
@@ -247,12 +246,12 @@ function Block({ block, split = false }: { block: DetailBlock; split?: boolean }
     backgroundSize: "cover",
     backgroundPosition: "center",
     paddingTop: detailBlockSpace(block.space_top) || undefined,
-    paddingBottom: detailBlockSpace(block.space_bottom) || undefined,
+    paddingBottom: (split && last ? 0 : detailBlockSpace(block.space_bottom)) || undefined,
   };
   let body: ReactNode;
   switch (block.layout) {
     case "text":
-      body = split ? <SplitTexts layers={shown} /> : <Texts layers={shown} />;
+      body = split ? <SplitTexts layers={shown} last={last} /> : <Texts layers={shown} flush />;
       break;
     case "image":
       body = images.map((l) => <Img key={l.id} layer={l} />);
@@ -338,8 +337,8 @@ export function DetailDoc({ doc, split = false }: { doc: DetailDocValue | null |
       {[...fonts].map((f) => (
         <link key={f} rel="stylesheet" href={DETAIL_FONTS[f].href} precedence="default" />
       ))}
-      {blocks.map((b) => (
-        <Block key={b.id} block={b} split={split} />
+      {blocks.map((b, i) => (
+        <Block key={b.id} block={b} split={split} last={i === blocks.length - 1} />
       ))}
     </section>
   );

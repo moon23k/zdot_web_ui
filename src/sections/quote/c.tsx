@@ -265,7 +265,7 @@ export function Header({ name, logoUrl, phone, nav, links }: QuoteHeaderProps) {
 
 export function Hero({ data, context }: SectionProps<"hero">) {
   const lead = leadCase(data.cases);
-  const image = lead?.image ?? data.image ?? null;
+  const image = data.image ?? lead?.image ?? null;
   const title = data.title?.trim() || null;
   const blank = !title && !image;
   const figures = data.figures;

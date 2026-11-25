@@ -131,7 +131,7 @@ export function CardTotal({ label, value, rows }: { label: string; value: string
       ))}
       <div className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
         <span>{label}</span>
-        <span className="ez:text-site-section ez:font-medium ez:tabular-nums">{value}</span>
+        <span className="ez:text-site-section ez:font-normal ez:tabular-nums">{value}</span>
       </div>
     </div>
   );

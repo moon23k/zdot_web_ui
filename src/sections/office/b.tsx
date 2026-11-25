@@ -104,7 +104,7 @@ export function Header({ name, logoUrl, phone, address, nav, links }: OfficeHead
               <NextLink
                 href={contact.href}
                 className={cn(
-                  "ez:flex ez:h-12 ez:items-center ez:justify-between ez:border ez:border-solid ez:border-site-line ez:bg-surface-alt ez:px-4 ez:text-site-body ez:text-fg ez:no-underline ez:hover:border-site-off",
+                  "ez:flex ez:h-12 ez:items-center ez:justify-between ez:border ez:border-solid ez:border-site-edge ez:bg-transparent ez:px-4 ez:text-site-body ez:text-fg ez:no-underline ez:hover:border-site-off",
                   focusRing,
                 )}
               >
@@ -263,7 +263,7 @@ function Pairs({ rows }: { rows: Pair[] }) {
     <dl className="ez:m-0 ez:grid ez:md:grid-cols-2 ez:md:gap-x-gutter">
       {rows.map((r) => (
         <div key={r.key} className={cn(row, "ez:grid ez:grid-cols-4 ez:gap-x-gutter ez:border-b ez:py-4 ez:first:border-t ez:md:nth-2:border-t")}>
-          <dt className="ez:font-medium ez:text-fg">{r.label}</dt>
+          <dt className="ez:font-normal ez:text-fg">{r.label}</dt>
           <dd className="ez:col-span-3 ez:m-0 ez:min-w-0 ez:text-fg">{r.value}</dd>
         </div>
       ))}
@@ -276,7 +276,7 @@ function Rows({ rows }: { rows: Pair[] }) {
     <dl className={cn(row, "ez:m-0 ez:grid ez:border-t")}>
       {rows.map((r) => (
         <div key={r.key} className={cn(row, "ez:grid ez:grid-cols-4 ez:gap-x-gutter ez:border-b ez:py-4 ez:md:grid-cols-8")}>
-          <dt className="ez:font-medium ez:text-fg">{r.label}</dt>
+          <dt className="ez:font-normal ez:text-fg">{r.label}</dt>
           <dd className="ez:col-span-3 ez:m-0 ez:min-w-0 ez:text-fg ez:md:col-span-7">{r.value}</dd>
         </div>
       ))}

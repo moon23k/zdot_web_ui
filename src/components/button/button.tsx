@@ -12,13 +12,15 @@ export const buttonVariants = cva(
     "ez:inline-flex ez:items-center ez:justify-center ez:gap-2.5 ez:box-border ez:m-0 ez:whitespace-nowrap",
     "ez:rounded-button ez:border ez:border-solid ez:border-transparent",
     "ez:font-body ez:no-underline ez:cursor-pointer ez:select-none",
-    "ez:transition-colors ez:disabled:cursor-not-allowed ez:disabled:opacity-45",
+    "ez:transition-colors ez:disabled:cursor-not-allowed",
+    "ez:disabled:border-transparent ez:disabled:bg-off ez:disabled:text-off-ink",
+    "ez:aria-disabled:border-transparent ez:aria-disabled:bg-off ez:aria-disabled:text-off-ink",
     focusRing,
   ],
   {
     variants: {
       variant: {
-        primary: "ez:bg-point-soft ez:text-primary ez:font-medium ez:hover:border-primary",
+        primary: "ez:bg-primary ez:text-on-primary ez:font-medium ez:hover:bg-primary-hover",
         secondary: quiet,
         ghost: "ez:bg-transparent ez:text-fg ez:font-medium ez:hover:bg-surface-alt",
         outline: quiet,

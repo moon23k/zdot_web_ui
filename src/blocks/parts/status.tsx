@@ -37,8 +37,8 @@ export function Status({
     <span
       data-slot="status"
       className={cn(
-        "ez:inline-flex ez:items-center ez:gap-1 ez:text-[13px] ez:leading-[18px]",
-        tone === "danger" ? "ez:font-medium ez:text-danger" : "ez:text-muted",
+        "ez:inline-flex ez:items-center ez:gap-1 ez:text-site-small ez:leading-[18px]",
+        tone === "danger" ? "ez:font-normal ez:text-danger" : "ez:text-muted",
         className,
       )}
     >

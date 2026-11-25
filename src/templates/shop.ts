@@ -72,7 +72,9 @@ export const shop: TemplateDesign[] = [
       { kind: "gallery" },
       { kind: "buy", variant: "sticky", side: true },
       { kind: "price_table", side: true },
-      { kind: "info", variant: "tabs", full: true },
+      { kind: "info", variant: "accordion", side: true },
+      { kind: "body", variant: "tabs", full: true },
+      { kind: "reviews", full: true },
     ],
   },
 ];

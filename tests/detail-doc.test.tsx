@@ -52,15 +52,15 @@ describe("DetailDoc table", () => {
     ]);
   });
 
-  it("draws the rule from the value colour", () => {
+  it("draws rows with the shared info row rule instead of the value colour", () => {
     const root = draw({
       id: "b",
       layout: "table",
       layers: [text("k0", "크기"), { id: "v0", type: "text", text: "17cm", style: { color: "#FFFFFF" } }],
     });
     const row = root.querySelector<HTMLElement>("[data-row]")!;
-    expect(row.style.borderTop).toContain("1px solid");
-    expect(row.style.borderBottom).toContain("1px solid");
+    expect(row.style.borderTop).toBe("");
+    expect(row.className).toContain("ez:border-site-line");
   });
 
   it("renders nothing for a table without values", () => {

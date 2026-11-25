@@ -175,7 +175,7 @@ export function StorePopup({ popups, store, shape, preview = false }: { popups: 
         <div className="ez:mx-auto ez:box-border ez:grid ez:max-w-wrap ez:grid-cols-[auto_minmax(0,1fr)] ez:items-center ez:gap-x-4 ez:gap-y-1 ez:px-page ez:pt-3 ez:pb-1 ez:lg:flex ez:lg:py-3">
           {photo && <Photo src={item.image_url} alt="" tone={0} sizes="56px" className="ez:size-14 ez:shrink-0 ez:aspect-square ez:rounded-sm ez:lg:size-12" />}
           <div className={cn("ez:grid ez:min-w-0 ez:gap-0.5 ez:lg:flex ez:lg:flex-1 ez:lg:items-baseline ez:lg:gap-3", !photo && "ez:col-span-2")}>
-            {title("ez:truncate ez:text-site-lead ez:font-medium")}
+            {title("ez:truncate ez:text-site-lead ez:font-normal")}
             {body("ez:line-clamp-2 ez:text-site-small ez:lg:truncate")}
           </div>
           {go(cn("ez:shrink-0 ez:justify-self-start", photo && "ez:col-start-2"))}
@@ -212,7 +212,7 @@ export function StorePopup({ popups, store, shape, preview = false }: { popups: 
             />
           )}
           <div className="ez:flex ez:min-w-0 ez:flex-col ez:items-start ez:gap-1.5 ez:lg:px-6 ez:lg:pt-5 ez:lg:pb-4">
-            {title("ez:text-site-item ez:font-medium ez:text-balance")}
+            {title("ez:text-site-item ez:font-normal ez:text-balance")}
             {body("ez:whitespace-pre-line ez:text-site-body")}
             {go("ez:mt-2")}
           </div>

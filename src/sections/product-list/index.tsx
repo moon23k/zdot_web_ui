@@ -2,7 +2,7 @@ import NextLink from "next/link";
 import type { ReactNode } from "react";
 import { Badge } from "../../components/badge";
 import { ButtonLink } from "../../components/button";
-import { countSup, chip, chipOn, figure, focusRing, textLink } from "../../utils/styles";
+import { countSup, chip, chipOn, focusRing, numeralStep, textLink } from "../../utils/styles";
 import { cn } from "../../utils/cn";
 import { discountRate, won } from "../../utils/format";
 import { ProductGrid } from "../../blocks/product-grid";
@@ -64,7 +64,7 @@ function ShowcaseCard({ product, ratio, index }: { product: ProductSummary; rati
       <NextLink href={href} tabIndex={-1} aria-hidden="true" className="ez:block ez:text-fg ez:no-underline">
         <Shot product={product} ratio={ratio} index={index}>
           {!product.sample && (
-            <span aria-hidden="true" className={cn(figure, "ez:absolute ez:left-5 ez:top-3.5 ez:text-site-rank ez:text-fg")}>
+            <span aria-hidden="true" className={cn(numeralStep, "ez:absolute ez:left-5 ez:top-3.5 ez:text-site-rank ez:text-fg")}>
               {String(index + 1).padStart(2, "0")}
             </span>
           )}
@@ -75,13 +75,13 @@ function ShowcaseCard({ product, ratio, index }: { product: ProductSummary; rati
           <NextLink href={href} className="ez:line-clamp-2 ez:text-site-item ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4">
             {product.name}
           </NextLink>
-          <span className={cn("ez:shrink-0 ez:text-site-lead ez:font-medium ez:tabular-nums", product.sold_out && "ez:text-muted")}>{won(product.sale_price)}</span>
+          <span className={cn("ez:shrink-0 ez:text-site-lead ez:font-normal ez:tabular-nums", product.sold_out && "ez:text-muted")}>{won(product.sale_price)}</span>
         </div>
         <div className="ez:flex ez:min-h-6 ez:items-center ez:justify-between ez:gap-3 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-3.5 ez:text-site-small">
           {product.sold_out ? (
             <span className="ez:text-muted">품절</span>
           ) : sale > 0 ? (
-            <span className="ez:font-medium ez:text-primary ez:tabular-nums">{`${sale}%`}</span>
+            <span className="ez:font-normal ez:text-primary ez:tabular-nums">{`${sale}%`}</span>
           ) : (
             <span />
           )}
@@ -110,7 +110,7 @@ function StoreCard({ product, ratio, index }: { product: ProductSummary; ratio: 
       <span className="ez:flex ez:flex-col ez:gap-0.5">
         <span className="ez:line-clamp-2 ez:text-site-lead ez:group-hover:underline ez:underline-offset-4">{product.name}</span>
         <span className="ez:flex ez:items-baseline ez:gap-2 ez:tabular-nums ez:whitespace-nowrap">
-          {product.sold_out ? <span className="ez:text-site-small ez:text-muted">품절</span> : sale > 0 && <span className="ez:font-medium ez:text-primary">{`${sale}%`}</span>}
+          {product.sold_out ? <span className="ez:text-site-small ez:text-muted">품절</span> : sale > 0 && <span className="ez:font-normal ez:text-primary">{`${sale}%`}</span>}
           <strong className={cn("ez:text-site-lead ez:font-medium", product.sold_out && "ez:text-muted")}>{won(product.sale_price)}</strong>
         </span>
       </span>

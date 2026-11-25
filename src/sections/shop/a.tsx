@@ -12,7 +12,7 @@ import { focusRing, textLink } from "../../utils/styles";
 import { Bar, BlankPrice, BlankStars, Lines } from "../kit";
 import type { Tile } from "../template/data";
 import { ShopNavLinks } from "./nav";
-import { BEST_HREF, categoryHref, FRESH_HREF, lastOdd, PRODUCTS_HREF, productView, ROW_ITEM, SHOP_TITLE, STRIP, type ProductView } from "./shared";
+import { BEST_HREF, categoryHref, FRESH_HREF, lastOdd, PRODUCTS_HREF, productView, ROW_ITEM, SHOP_TITLE, shownCount, STRIP, type ProductView } from "./shared";
 import { SHELF_DEFAULTS, SHELF_RATIO, shelfCols, shelfOf, shelfSizes, shelfView, type Shelf } from "./shelf";
 import type { FooterLink, ShopFooterProps, ShopHeaderProps, ShopListProps } from "./types";
 
@@ -22,12 +22,9 @@ const link = cn(textLink, "ez:font-normal ez:text-site-body");
 
 const iconLink = cn("ez:relative ez:inline-flex ez:size-11 ez:items-center ez:justify-center ez:text-fg ez:no-underline", focusRing);
 
-function Head({ eyebrow, title }: { eyebrow: string; title: string }) {
+function Head({ title }: { title: string }) {
   return (
-    <div className="ez:grid ez:justify-items-center ez:gap-3.5 ez:text-center">
-      <span aria-hidden="true" className="ez:text-site-small ez:uppercase ez:tracking-widest ez:text-muted">
-        {eyebrow}
-      </span>
+    <div className="ez:grid ez:justify-items-center ez:text-center">
       <h2 className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:leading-snug ez:lg:text-site-title">{title}</h2>
     </div>
   );
@@ -46,7 +43,7 @@ function Foot({ href }: { href: string }) {
 function Price({ v }: { v: ProductView }) {
   return (
     <span className="ez:mt-1.5 ez:flex ez:flex-wrap ez:items-baseline ez:justify-center ez:gap-x-2 ez:text-site-body ez:tabular-nums">
-      {v.rate > 0 && <span className="ez:font-semibold ez:text-fg">{v.rate}%</span>}
+      {v.rate > 0 && <span className="ez:font-medium ez:text-fg">{v.rate}%</span>}
       <span>{v.price}</span>
       {v.list && (
         <s className="ez:text-site-note ez:text-muted">
@@ -76,7 +73,7 @@ function Card({ product, sizes, preload, shelf, tags }: { product: ProductSummar
       <Photo src={v.cover} alt={v.name} sizes={sizes} preload={preload} className={cn(SHELF_RATIO[shelf.ratio], v.soldOut && "ez:opacity-45")} />
       <span className="ez:grid ez:justify-items-center ez:pt-5 ez:text-center ez:lg:pt-6">
         {tags && <span className="ez:mb-3 ez:block ez:h-4 ez:text-site-small ez:leading-none ez:tracking-widest ez:text-muted">{labels}</span>}
-        <span className="ez:line-clamp-2 ez:text-site-item ez:font-medium ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
+        <span className="ez:line-clamp-2 ez:text-site-item ez:font-normal ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
         <Price v={v} />
       </span>
     </NextLink>
@@ -103,7 +100,6 @@ const rowItem = { 3: cn(ROW_ITEM[3], "ez:lg:w-1/3 ez:px-3"), 4: cn(ROW_ITEM[4], 
 
 function Row({
   slot,
-  eyebrow,
   title,
   href,
   products,
@@ -112,7 +108,6 @@ function Row({
   shelf,
 }: {
   slot: string;
-  eyebrow: string;
   title: string;
   href: string;
   products: ProductSummary[];
@@ -125,7 +120,7 @@ function Row({
   const count = shown.length || pc;
   return (
     <section data-slot={slot} data-blank={shown.length ? undefined : ""} className="ez:grid ez:text-fg">
-      <Head eyebrow={eyebrow} title={title} />
+      <Head title={title} />
       <div className={cn("ez:mt-8 ez:lg:mt-14", row)}>
         {shown.length
           ? shown.map((p, i) => (
@@ -156,7 +151,7 @@ export function Header({ name, logoUrl, cartCount, nav, links }: ShopHeaderProps
           <NextLink
             href="/"
             className={cn(
-              "ez:min-w-0 ez:font-display ez:text-site-heading ez:font-medium ez:leading-none ez:tracking-wide ez:text-fg ez:no-underline ez:lg:justify-self-center ez:lg:text-center ez:lg:text-site-logo",
+              "ez:min-w-0 ez:font-display ez:text-site-heading ez:font-normal ez:leading-none ez:tracking-wide ez:text-fg ez:no-underline ez:lg:justify-self-center ez:lg:text-center ez:lg:text-site-logo",
               focusRing,
             )}
           >
@@ -226,15 +221,15 @@ export function Hero({ data }: SectionProps<"hero">) {
   );
 }
 
-export function NewArrivals({ context, grid }: SectionProps<"product_grid">) {
+export function NewArrivals({ data, context, grid }: SectionProps<"product_grid">) {
+  const pc = grid?.pc === 3 ? 3 : 4;
   return (
     <Row
       slot="product-grid"
-      eyebrow="New Arrivals"
       title={SHOP_TITLE.fresh}
       href={FRESH_HREF}
-      products={context.products}
-      pc={grid?.pc === 3 ? 3 : 4}
+      products={context.products.slice(0, shownCount(data.count, pc))}
+      pc={pc}
       sizes="(max-width: 1024px) 50vw, 330px"
       shelf={shelfOf("editorial", context.shelf)}
     />
@@ -245,7 +240,6 @@ export function Best({ data, context, grid }: SectionProps<"best_grid">) {
   return (
     <Row
       slot="best-grid"
-      eyebrow="Best Sellers"
       title={SHOP_TITLE.best}
       href={BEST_HREF}
       products={data.items ?? []}
@@ -271,7 +265,7 @@ export function Story({ data, context }: SectionProps<"testimonial">) {
       <div className="ez:flex ez:flex-col ez:items-start ez:justify-center ez:gap-6 ez:px-page ez:py-14 ez:lg:gap-7 ez:lg:px-30 ez:lg:py-20">
         <h2 className="ez:m-0 ez:font-body ez:text-site-small ez:font-normal ez:tracking-widest ez:text-muted">{SHOP_TITLE.reviews}</h2>
         {review ? (
-          <figure className="ez:m-0 ez:grid ez:max-w-130 ez:gap-6 ez:lg:gap-7">
+          <figure className="ez:m-0 ez:grid ez:max-w-100 ez:gap-6 ez:lg:gap-7">
             {review.rating != null && <StarRow rating={review.rating} className="ez:text-fg" />}
             <blockquote className="ez:m-0 ez:line-clamp-6 ez:font-display ez:text-site-heading ez:font-normal ez:leading-snug ez:lg:text-site-name">{review.body}</blockquote>
             {(review.name || review.date) && (
@@ -316,7 +310,7 @@ export function Categories({ data, context }: SectionProps<"category_tiles">) {
   );
   return (
     <section data-slot="category-tiles" data-blank={items.length ? undefined : ""} className="ez:grid ez:text-fg">
-      <Head eyebrow="Category" title={SHOP_TITLE.categories} />
+      <Head title={SHOP_TITLE.categories} />
       <div className={cn("ez:mt-8 ez:gap-y-10 ez:lg:mt-14", row, strip && STRIP.row)}>
         {items.length
           ? items.map((t, i) => (
@@ -442,7 +436,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
                 key={t.href}
                 href={t.href}
                 aria-current={t.on ? "page" : undefined}
-                className={cn("ez:inline-flex ez:min-h-11 ez:items-center ez:gap-1.5 ez:no-underline ez:hover:text-fg", t.on ? "ez:font-semibold ez:text-fg" : "ez:text-muted", focusRing)}
+                className={cn("ez:inline-flex ez:min-h-11 ez:items-center ez:gap-1.5 ez:no-underline ez:hover:text-fg", t.on ? "ez:font-medium ez:text-fg" : "ez:text-muted", focusRing)}
               >
                 {t.label}
                 {t.count != null && <span className="ez:text-site-small ez:font-normal ez:text-muted ez:tabular-nums">{t.count}</span>}
@@ -465,7 +459,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
               key={s.href}
               href={s.href}
               aria-current={s.on ? "true" : undefined}
-              className={cn("ez:inline-flex ez:min-h-11 ez:items-center ez:no-underline ez:hover:text-fg", s.on ? "ez:font-semibold ez:text-fg" : "ez:text-muted", focusRing)}
+              className={cn("ez:inline-flex ez:min-h-11 ez:items-center ez:no-underline ez:hover:text-fg", s.on ? "ez:font-medium ez:text-fg" : "ez:text-muted", focusRing)}
             >
               {s.label}
             </NextLink>

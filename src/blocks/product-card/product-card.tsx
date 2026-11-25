@@ -45,7 +45,7 @@ export function ProductCard({
           </span>
         )}
         <span className="ez:flex ez:items-baseline ez:gap-2.5">
-          {rank != null && <span className="ez:font-figure ez:text-site-rank ez:italic ez:text-primary">{rank}</span>}
+          {rank != null && <span className="ez:font-body ez:text-site-rank ez:font-normal ez:tabular-nums ez:text-primary">{rank}</span>}
           <span className="ez:line-clamp-2 ez:text-site-lead ez:group-hover:underline ez:underline-offset-4">{product.name}</span>
         </span>
         <span className="ez:flex ez:items-baseline ez:tabular-nums ez:whitespace-nowrap">

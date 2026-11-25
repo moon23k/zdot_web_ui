@@ -13,7 +13,7 @@ export type AddressRow = Schemas["AddressOut"];
 type Action = (data: FormData) => void | Promise<void>;
 
 const small = cn(
-  "ez:inline-flex ez:h-8 ez:items-center ez:whitespace-nowrap ez:rounded-md ez:border ez:border-solid ez:border-primary-border ez:bg-transparent ez:px-3 ez:font-body ez:text-[13px] ez:text-fg ez:no-underline ez:cursor-pointer ez:hover:bg-primary-tint",
+  "ez:inline-flex ez:h-8 ez:items-center ez:whitespace-nowrap ez:rounded-md ez:border ez:border-solid ez:border-primary-border ez:bg-transparent ez:px-3 ez:font-body ez:text-site-small ez:text-fg ez:no-underline ez:cursor-pointer ez:hover:bg-primary-tint",
   focusRing,
 );
 
@@ -38,7 +38,7 @@ export function AddressBook({
   );
   if (!addresses.length) {
     return (
-      <EmptyState icon={<AddressIcon />} title="저장한 배송지가 없어요">
+      <EmptyState icon={<AddressIcon />} title="저장한 배송지가 없어요" align="start">
         {add}
       </EmptyState>
     );
@@ -52,9 +52,9 @@ export function AddressBook({
             <div className="ez:grid ez:gap-0.5">
               <span>
                 <span>{a.recipient}</span>
-                {a.is_default && <span className="ez:ml-1.5 ez:text-[13px] ez:font-medium ez:text-primary">기본 배송지</span>}
+                {a.is_default && <span className="ez:ml-1.5 ez:text-site-small ez:font-normal ez:text-primary">기본 배송지</span>}
               </span>
-              <span className="ez:text-[13px] ez:text-muted">{a.phone}</span>
+              <span className="ez:text-site-small ez:text-muted">{a.phone}</span>
               <AddressText recipient="" postalCode={a.postal_code} address={a.address} detail={a.address_detail} />
             </div>
             <div className="ez:flex ez:flex-wrap ez:items-center ez:gap-2">

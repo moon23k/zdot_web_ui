@@ -32,11 +32,11 @@ export const AllVariants: StoryObj<typeof meta> = {
       <Section title="single">
         <Calendar days={days} />
       </Section>
-      <Section title="dots legend">
-        <Calendar days={classDays} dots legend />
+      <Section title="availability">
+        <Calendar days={classDays} availability />
       </Section>
-      <Section title="dots legend, none full">
-        <Calendar days={openDays} dots legend />
+      <Section title="availability, none full">
+        <Calendar days={openDays} availability />
       </Section>
     </>
   ),

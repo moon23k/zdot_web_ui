@@ -4,7 +4,7 @@ import { ButtonLink } from "../../components/button";
 import { Icon } from "../../components/icon";
 import type { SectionProps } from "../../renderer/registry";
 import { cn } from "../../utils/cn";
-import { countSup, figure, focusRing } from "../../utils/styles";
+import { countSup, focusRing, numeral } from "../../utils/styles";
 import { Bar, BlankButton, BlankPrice, Pic, statusText } from "../kit";
 import type { ClassCard, Session, Tile } from "./data";
 
@@ -93,7 +93,7 @@ function CohortRow({ s }: { s: Session | null }) {
   return (
     <li className={cn(cohortGrid, "ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-6", full && "ez:text-muted")}>
       <span className="ez:flex ez:flex-col">
-        <span className={cn(figure, "ez:text-site-section ez:leading-tight ez:tabular-nums")}>{s ? (md || s.date) : <Bar size="short" />}</span>
+        <span className={cn(numeral, "ez:text-site-section ez:leading-tight ez:tabular-nums")}>{s ? (md || s.date) : <Bar size="short" />}</span>
         {wd && <span className="ez:text-site-small ez:text-muted">{`${wd}요일 개강`}</span>}
       </span>
       <span className="ez:flex ez:min-w-0 ez:flex-col ez:gap-0.5">
@@ -258,7 +258,7 @@ function GateBox({ g, i }: { g: Gate | null; i: number }) {
   const body = (
     <>
       <span className="ez:flex ez:items-center ez:justify-between">
-        <span className={cn(figure, "ez:text-site-page ez:leading-none ez:text-primary")}>{g ? i + 1 : <Bar size="short" />}</span>
+        <span className={cn(numeral, "ez:text-site-page ez:leading-none ez:text-primary")}>{g ? i + 1 : <Bar size="short" />}</span>
         {g && <Icon name="right" />}
       </span>
       <span className="ez:text-site-section ez:font-light">{g ? g.title : <Bar size="long" />}</span>

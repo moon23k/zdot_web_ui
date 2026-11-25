@@ -37,7 +37,7 @@ export function CheckoutItems({ lines, imageSrc }: { lines: CheckoutLine[]; imag
           <Photo src={imageSrc?.[first.variant_id]} alt="" sizes="56px" className="ez:w-14 ez:shrink-0 ez:aspect-[4/5]" />
           <span className="ez:grid ez:min-w-0 ez:gap-0.5">
             <span className="ez:line-clamp-2">{first.name}</span>
-            <span className="ez:text-[13px] ez:text-muted">
+            <span className="ez:text-site-small ez:text-muted">
               {[first.option_label, `${first.quantity}개`, lines.length > 1 && `외 ${lines.length - 1}건`].filter(Boolean).join(" · ")}
             </span>
           </span>

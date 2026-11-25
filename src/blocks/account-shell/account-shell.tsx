@@ -53,7 +53,7 @@ export function AccountShell({
             <span className="ez:flex ez:flex-wrap ez:gap-x-3.5 ez:text-site-small">
               {summary.map((s) => (
                 <span key={s.label}>
-                  {s.label} <span className="ez:font-medium ez:text-primary">{s.value}</span>
+                  {s.label} <span className="ez:font-normal ez:text-primary">{s.value}</span>
                 </span>
               ))}
             </span>

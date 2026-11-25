@@ -28,3 +28,11 @@ function FilledExample() {
 export const Default: StoryObj = { render: () => <DefaultExample /> };
 
 export const Filled: StoryObj = { render: () => <FilledExample /> };
+
+export const WithoutContact: StoryObj = {
+  render: () => (
+    <div className="ez:max-w-md">
+      <AddressForm mock contact={false} />
+    </div>
+  ),
+};

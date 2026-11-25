@@ -18,7 +18,7 @@ import { lineList } from "../parts/line-item";
 import { SummaryRows } from "../parts/summary-rows";
 
 const boxClass = cn(
-  "ez:size-5 ez:shrink-0 ez:box-border ez:p-0 ez:rounded-[6px] ez:border ez:border-solid ez:border-site-faint ez:bg-surface ez:text-primary ez:cursor-pointer",
+  "ez:size-5 ez:shrink-0 ez:box-border ez:p-0 ez:rounded-[min(var(--ezd-button-radius),6px)] ez:border ez:border-solid ez:border-site-faint ez:bg-surface ez:text-primary ez:cursor-pointer",
   "ez:data-[state=checked]:border-primary ez:data-[state=checked]:bg-point-soft",
   "ez:disabled:cursor-not-allowed ez:disabled:border-primary-border ez:disabled:bg-surface-alt",
   focusRing,
@@ -174,7 +174,7 @@ export function CartView({
                   무료 배송
                 </span>
                 <span>
-                  <span className="ez:font-medium ez:text-primary ez:tabular-nums">{won(left)}</span> 남음
+                  <span className="ez:font-normal ez:text-primary ez:tabular-nums">{won(left)}</span> 남음
                 </span>
               </div>
               <span aria-hidden="true" className="ez:relative ez:block ez:h-0.5 ez:bg-site-line">
@@ -195,12 +195,12 @@ export function CartView({
           />
           <div className="ez:grid ez:justify-items-center ez:gap-4">
             {picked.length ? (
-              <ButtonLink href={`${checkoutHref}?items=${ids.map(encodeURIComponent).join(",")}`} block className="ez:bg-surface">
+              <ButtonLink href={`${checkoutHref}?items=${ids.map(encodeURIComponent).join(",")}`} block>
                 주문하기
                 <Icon name="right" size="sm" />
               </ButtonLink>
             ) : (
-              <Button block disabled className="ez:bg-surface">
+              <Button block disabled>
                 주문하기
               </Button>
             )}

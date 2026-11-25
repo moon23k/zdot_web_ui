@@ -28,7 +28,7 @@ const cell = {
   area: "ez:min-w-0 ez:truncate ez:max-md:hidden ez:md:col-span-4",
 };
 
-const heading = "ez:m-0 ez:font-display ez:font-medium ez:text-fg";
+const heading = "ez:m-0 ez:font-display ez:font-normal ez:text-fg";
 
 const plain = cn("ez:text-fg ez:no-underline ez:hover:text-muted", focusRing);
 
@@ -53,7 +53,7 @@ export function Header({ name, logoUrl, nav }: PortfolioHeaderProps) {
     <header data-slot="site-header" className="ez:bg-surface">
       <div className={wrap}>
         <div className={cn(rule, "ez:flex ez:min-h-16 ez:items-center ez:gap-8 ez:border-b ez:py-4 ez:lg:py-6")}>
-          <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-item ez:font-medium ez:leading-normal ez:text-fg ez:no-underline", focusRing)}>
+          <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-item ez:font-normal ez:leading-normal ez:text-fg ez:no-underline", focusRing)}>
             <SiteLogo name={name} src={logoUrl} />
           </NextLink>
           {nav.length > 0 && (
@@ -229,7 +229,7 @@ export function Footer({ storeName, phone, hours, address, legal, links, terms }
       <div className={wrap}>
         <div className={cn(rule, "ez:border-t ez:pt-8 ez:pb-12")}>
           <div className="ez:grid ez:gap-x-gutter ez:gap-y-6 ez:text-site-small ez:leading-relaxed ez:md:grid-cols-2 ez:lg:grid-cols-12">
-            <p className="ez:m-0 ez:font-medium ez:lg:col-span-4">{storeName}</p>
+            <p className="ez:m-0 ez:font-normal ez:lg:col-span-4">{storeName}</p>
             {(address || phone || hours) && (
               <div className="ez:grid ez:min-w-0 ez:content-start ez:lg:col-span-3 ez:lg:col-start-6">
                 {address && <p className="ez:m-0 ez:text-muted">{address}</p>}

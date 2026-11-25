@@ -69,7 +69,7 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
             <dl className="ez:m-0 ez:mt-4 ez:flex ez:gap-10 ez:self-stretch ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-7">
               {facts.map((f) => (
                 <div key={f.label} className="ez:flex ez:flex-col">
-                  <dd className="ez:order-1 ez:m-0 ez:font-figure ez:text-site-figure-lg ez:italic">{f.value}</dd>
+                  <dd className="ez:order-1 ez:m-0 ez:font-body ez:text-site-figure-lg ez:font-light ez:tabular-nums">{f.value}</dd>
                   <dt className="ez:order-2 ez:text-site-small ez:text-muted">{f.label}</dt>
                 </div>
               ))}
@@ -115,7 +115,7 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
             <Photo src={pick.cover_url} alt="" sizes="56px" tone={1} className="ez:size-14 ez:rounded-sm" />
             <span className="ez:flex ez:flex-col ez:text-site-small">
               <span>{pick.name}</span>
-              {pick.sale_price != null && <span className="ez:font-medium ez:tabular-nums">{won(pick.sale_price)}</span>}
+              {pick.sale_price != null && <span className="ez:font-normal ez:tabular-nums">{won(pick.sale_price)}</span>}
             </span>
           </NextLink>
         )}

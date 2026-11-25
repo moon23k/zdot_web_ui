@@ -19,6 +19,7 @@ function Spread({ items }: { items: ReviewItem[] }) {
     <dl className="ez:m-0 ez:grid ez:max-w-75 ez:gap-2.5 ez:text-site-small">
       {[5, 4, 3, 2, 1].map((n) => {
         const c = items.filter((r) => r.rating === n).length;
+        if (!c) return null;
         return (
           <div key={n} className="ez:flex ez:items-center ez:gap-3">
             <dt className="ez:w-5.5 ez:text-muted">{n}점</dt>
@@ -50,7 +51,7 @@ export function ReviewList({
   const mean = !total ? null : (average ?? (items.length ? items.reduce((sum, r) => sum + r.rating, 0) / items.length : null));
   return (
     <section data-slot="review-list" id="reviews" aria-label={title} className="ez:mx-[calc(50%-50vw)] ez:bg-surface-alt ez:text-fg">
-      <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-10 ez:px-page ez:py-16 ez:lg:grid-cols-[4fr_8fr] ez:lg:gap-6 ez:lg:py-24">
+      <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-10 ez:px-page ez:py-16 ez:lg:grid-cols-[180px_minmax(0,1fr)] ez:lg:gap-6 ez:lg:py-24">
         <div className="ez:flex ez:flex-col ez:items-start ez:gap-7">
           <h2 className="ez:m-0 ez:text-site-section">
             {title}
@@ -71,14 +72,14 @@ export function ReviewList({
               <li key={r.id} className="ez:grid ez:gap-2.5 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:py-7">
                 <div className="ez:flex ez:flex-wrap ez:items-center ez:gap-x-3 ez:text-site-small">
                   <StarRow rating={r.rating} />
-                  <span className="ez:font-medium ez:tabular-nums">{r.rating.toFixed(1)}</span>
+                  <span className="ez:tabular-nums">{r.rating.toFixed(1)}</span>
                   <span className="ez:text-muted">{[r.author, kstDate(r.created_at)].filter(Boolean).join(" · ")}</span>
                   {r.option && <span className="ez:text-muted">{r.option}</span>}
                 </div>
                 <p className="ez:m-0 ez:whitespace-pre-line">{r.body}</p>
                 {r.reply && (
                   <p className="ez:m-0 ez:ml-3 ez:rounded-sm ez:bg-surface ez:px-4 ez:py-3 ez:text-site-small">
-                    <span className="ez:font-medium">판매자</span> {r.reply}
+                    <span>판매자</span> {r.reply}
                   </p>
                 )}
               </li>

@@ -50,7 +50,7 @@ export function DetailLayout({
           </aside>
         ) : (
           g.slots.map((slot) => (
-            <div key={slot.kind} className={cn(hasSide && "ez:md:col-start-1 ez:md:mb-8")}>
+            <div key={slot.kind} className={cn(hasSide && "ez:md:col-start-1")}>
               {render(slot)}
             </div>
           ))

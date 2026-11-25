@@ -6,7 +6,7 @@ import { focusRing } from "../../utils/styles";
 import { Bar } from "../kit";
 
 const chip = cn(
-  "ez:inline-flex ez:h-9.5 ez:shrink-0 ez:items-center ez:rounded-full ez:border ez:border-solid ez:border-site-line ez:px-4 ez:text-site-note ez:text-fg ez:no-underline ez:hover:border-site-edge",
+  "ez:inline-flex ez:h-9.5 ez:shrink-0 ez:items-center ez:rounded-button ez:border ez:border-solid ez:border-site-line ez:px-4 ez:text-site-note ez:text-fg ez:no-underline ez:hover:border-site-edge",
   "ez:aria-[current=page]:border-primary ez:aria-[current=page]:text-primary ez:aria-[current=page]:font-medium",
   focusRing,
 );

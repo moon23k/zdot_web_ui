@@ -2,7 +2,7 @@ import NextLink from "next/link";
 import { Children, type ReactNode } from "react";
 import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
-import { focusRing, pcCols } from "../../utils/styles";
+import { focusRing, infoRows, pcCols } from "../../utils/styles";
 
 export { Bar, BlankButton, BlankPrice, BlankStars, Lines } from "./blank";
 
@@ -84,18 +84,18 @@ export function Pic({
 export function Rows({ rows }: { rows: Row[] }) {
   if (!rows.length) return null;
   return (
-    <table className="ez:w-full ez:border-collapse ez:text-site-small">
+    <table className={infoRows.table}>
       <tbody>
         {rows.map((r, i) => (
-          <tr key={i} className="ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:last:border-b-0">
+          <tr key={i} className={infoRows.row}>
             {typeof r.label === "string" ? (
-              <th scope="row" className="ez:w-auto ez:border-0 ez:py-2.5 ez:pr-3 ez:text-left ez:font-normal ez:text-muted">
+              <th scope="row" className={infoRows.label}>
                 {r.label}
               </th>
             ) : (
-              <td className="ez:border-0 ez:py-2.5 ez:pr-3">{r.label}</td>
+              <td className="ez:border-0 ez:py-2.5 ez:pr-3 ez:align-baseline ez:text-site-small">{r.label}</td>
             )}
-            {r.value !== undefined && <td className="ez:border-0 ez:py-2.5 ez:text-right ez:tabular-nums">{r.value}</td>}
+            {r.value !== undefined && <td className={infoRows.value}>{r.value}</td>}
           </tr>
         ))}
       </tbody>
@@ -123,7 +123,7 @@ export function Chips({ items, current = 0 }: { items: string[]; current?: numbe
         <li
           key={c}
           className={cn(
-            "ez:shrink-0 ez:rounded-full ez:border ez:border-solid ez:px-4 ez:py-1.5 ez:text-site-note ez:whitespace-nowrap",
+            "ez:shrink-0 ez:rounded-button ez:border ez:border-solid ez:px-4 ez:py-1.5 ez:text-site-note ez:whitespace-nowrap",
             i === current ? "ez:border-primary ez:font-medium ez:text-primary" : "ez:border-site-line ez:text-fg",
           )}
         >

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { DotLine } from "../../components/dot-line";
 import type { NavCategory } from "../../blocks/site-header/header-nav";
 import type { Business, ProductSummary } from "../../types";
+import { cn } from "../../utils/cn";
 import { discountRate, registrationText, won } from "../../utils/format";
 import type { FooterLink, ShopFooterProps, ShopHeaderProps, ShopNavItem } from "./types";
 
@@ -119,6 +120,19 @@ const TWO_UP = { 3: "ez:max-md:hidden", 4: "ez:max-lg:hidden" } as const;
 
 export function lastOdd(index: number, count: number, cols: keyof typeof TWO_UP): string | undefined {
   return count > 2 && count % 2 === 1 && index === count - 1 ? TWO_UP[cols] : undefined;
+}
+
+export function fives<T>(items: T[]): T[] {
+  return items.length >= 5 ? items.slice(0, items.length - (items.length % 5)) : items;
+}
+
+export function shownCount(count: number | undefined, max: number): number {
+  return count == null ? max : Math.min(count, max);
+}
+
+export function alone(index: number, count: number): string | undefined {
+  if (count <= 2 || index !== count - 1) return undefined;
+  return cn(count % 2 === 1 && "ez:max-md:hidden", count % 3 === 1 && "ez:md:max-lg:hidden") || undefined;
 }
 
 export const STRIP = { row: "ez:max-md:flex-nowrap ez:max-md:justify-start ez:max-md:overflow-x-auto", item: "ez:max-md:w-2/5 ez:max-md:shrink-0" } as const;

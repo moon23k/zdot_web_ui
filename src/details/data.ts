@@ -8,6 +8,7 @@ export type CalendarDay = { day: number; price?: string; state: "open" | "closed
 
 export type DetailData = {
   title?: string;
+  body?: string;
   price?: string;
   status?: string;
   chips?: string[];

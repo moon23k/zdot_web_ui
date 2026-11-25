@@ -7,8 +7,8 @@ import { Photo } from "../../components/photo";
 import type { OrderStatus, Schemas } from "../../types";
 import { cn } from "../../utils/cn";
 import { won, kstDotDate } from "../../utils/format";
-import { figure, focusRing, pointTag } from "../../utils/styles";
-import { STATUS_LABEL, STEPS } from "../order-detail/order-detail";
+import { focusRing, numeralStep } from "../../utils/styles";
+import { STATUS_LABEL } from "../order-detail/order-detail";
 import { emptyAction, ReceiptIcon } from "../parts/empty-icons";
 import { lineList } from "../parts/line-item";
 
@@ -35,12 +35,7 @@ const COUNTS: { label: string; statuses: OrderStatus[]; active: boolean }[] = [
 
 const tracked = (o: OrderRow) => TRACKED.has(o.fulfillment ?? "ship");
 
-function progress(o: OrderRow) {
-  if (!tracked(o)) return null;
-  const steps = STEPS[o.fulfillment ?? "ship"] ?? STEPS.ship;
-  const at = steps.findIndex(([status]) => status === (o.status === "completed" ? "delivered" : o.status));
-  return at < 0 ? null : { steps, at };
-}
+const settled = (status: OrderStatus) => status === "canceled" || status === "completed";
 
 function Counts({ orders }: { orders: OrderRow[] }) {
   const rows = orders.filter(tracked);
@@ -59,8 +54,8 @@ function Counts({ orders }: { orders: OrderRow[] }) {
             <dt className="ez:text-site-small ez:text-muted">{c.label}</dt>
             <dd
               className={cn(
-                figure,
-                "ez:m-0 ez:text-site-section ez:leading-none ez:lg:text-site-page",
+                numeralStep,
+                "ez:m-0 ez:text-site-heading ez:leading-none",
                 n === 0 ? "ez:text-site-off" : c.active ? "ez:text-primary" : "ez:text-fg",
               )}
             >
@@ -90,7 +85,7 @@ export function OrderList({
 }) {
   if (!orders.length) {
     return (
-      <EmptyState icon={<ReceiptIcon />} title="주문 내역이 없어요">
+      <EmptyState icon={<ReceiptIcon />} title="주문 내역이 없어요" align="start">
         <ButtonLink href="/products" variant="outline" className={emptyAction}>
           쇼핑하기
         </ButtonLink>
@@ -105,17 +100,20 @@ export function OrderList({
           const canceled = o.status === "canceled";
           const more = (o.item_count ?? 1) - 1;
           const href = orderHref(o.number);
-          const bar = progress(o);
           return (
             <li key={o.number}>
               <article className="ez:grid ez:gap-6 ez:rounded-md ez:border ez:border-solid ez:border-site-line ez:p-5 ez:md:px-8 ez:md:py-7">
                 <header className="ez:flex ez:items-center ez:justify-between ez:gap-4">
                   <span className="ez:flex ez:min-w-0 ez:flex-wrap ez:items-baseline ez:gap-x-4 ez:gap-y-1">
-                    <span className="ez:text-site-item ez:font-medium ez:tabular-nums">{kstDotDate(o.created_at)}</span>
+                    <span className="ez:text-site-item ez:font-normal ez:tabular-nums">{kstDotDate(o.created_at)}</span>
                     <span className="ez:text-site-small ez:tabular-nums ez:text-muted">주문번호 {o.number}</span>
-                    {!bar && (
-                      <span className={canceled || o.status === "completed" ? "ez:text-site-caption ez:text-muted" : pointTag}>{labels[o.status]}</span>
-                    )}
+                    <span
+                      data-slot="order-state"
+                      className={cn("ez:inline-flex ez:items-center ez:gap-2 ez:self-center ez:text-site-small", settled(o.status) ? "ez:text-muted" : "ez:text-fg")}
+                    >
+                      <span aria-hidden="true" className={cn("ez:size-1.5 ez:shrink-0 ez:rounded-full", settled(o.status) ? "ez:bg-site-off" : "ez:bg-primary")} />
+                      {labels[o.status]}
+                    </span>
                   </span>
                   <NextLink
                     href={href}
@@ -125,24 +123,7 @@ export function OrderList({
                     <Icon name="next" size="sm" />
                   </NextLink>
                 </header>
-                {bar && (
-                  <ol aria-label="배송 단계" className={cn("ez:m-0 ez:grid ez:list-none ez:gap-1 ez:p-0", bar.steps.length === 3 ? "ez:grid-cols-3" : "ez:grid-cols-4")}>
-                    {bar.steps.map(([status, label], i) => (
-                      <li
-                        key={status}
-                        aria-current={i === bar.at ? "step" : undefined}
-                        className={clsx(
-                          "ez:grid ez:gap-2.5 ez:text-site-small",
-                          i === bar.at ? "ez:font-medium ez:text-primary" : i < bar.at ? "ez:text-fg" : "ez:text-muted",
-                        )}
-                      >
-                        <span aria-hidden="true" className={cn("ez:block ez:h-0.5", i <= bar.at ? "ez:bg-primary" : "ez:bg-site-line")} />
-                        {label}
-                      </li>
-                    ))}
-                  </ol>
-                )}
-                <div className="ez:grid ez:grid-cols-[auto_minmax(0,1fr)] ez:items-center ez:gap-x-5 ez:gap-y-3 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-6 ez:md:grid-cols-[auto_minmax(0,1fr)_auto]">
+                <div className="ez:grid ez:grid-cols-[auto_minmax(0,1fr)] ez:items-center ez:gap-x-5 ez:gap-y-3 ez:md:grid-cols-[auto_minmax(0,1fr)_auto]">
                   <NextLink href={href} tabIndex={-1} aria-hidden="true" className="ez:block">
                     <Photo src={o.image_url} alt="" sizes="88px" className={cn("ez:w-18 ez:aspect-[4/5] ez:md:w-22", canceled && "ez:opacity-45")} />
                   </NextLink>
@@ -159,12 +140,12 @@ export function OrderList({
                     {canceled ? (
                       <s className="ez:mt-1.5 ez:tabular-nums ez:text-muted">{won(o.total)}</s>
                     ) : (
-                      <span className="ez:mt-1.5 ez:font-medium ez:tabular-nums">{won(o.total)}</span>
+                      <span className="ez:mt-1.5 ez:font-normal ez:tabular-nums">{won(o.total)}</span>
                     )}
                   </span>
                   {o.status === "completed" && (
                     <span className="ez:col-span-2 ez:flex ez:justify-end ez:gap-2 ez:md:col-span-1">
-                      <ButtonLink href={reviewHref} size="sm">
+                      <ButtonLink href={reviewHref} size="sm" variant="outline">
                         {word} 쓰기
                       </ButtonLink>
                     </span>

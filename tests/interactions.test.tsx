@@ -89,8 +89,11 @@ describe("BuyBox", () => {
     await userEvent.click(screen.getByLabelText(/^M/));
     expect(screen.getByText("부터").parentElement).toHaveTextContent("42,000원 부터");
     expect(screen.queryByText(/%$/)).toBeNull();
-    expect(screen.getByText("총 상품 금액").parentElement?.querySelector("strong")).toHaveTextContent("52,000원");
+    expect(screen.queryByText("총 상품 금액")).toBeNull();
     expect(screen.getByRole("link", { name: "바로 구매" })).toHaveAttribute("href", "/checkout?item=v2&qty=1");
+    await userEvent.click(screen.getByRole("button", { name: "수량 늘리기" }));
+    expect(screen.getByText("총 상품 금액").parentElement?.querySelector("strong")).toHaveTextContent("104,000원");
+    expect(screen.getByRole("link", { name: "바로 구매" })).toHaveAttribute("href", "/checkout?item=v2&qty=2");
     await expectNoA11yViolations(container);
     await userEvent.click(screen.getByRole("button", { name: "장바구니" }));
     expect(await screen.findByRole("dialog", { name: "장바구니에 담았어요" })).toBeInTheDocument();
@@ -270,7 +273,8 @@ describe("Calendar", () => {
     const { container } = render(<Calendar days={days} mode="range" />);
     await userEvent.click(screen.getByRole("button", { name: /11월 6일/ }));
     await userEvent.click(screen.getByRole("button", { name: /11월 8일/ }));
-    expect(screen.getByText("11월 6일 ~ 11월 8일 · 2박")).toBeTruthy();
+    expect(container.querySelector("[data-slot=calendar] > p")).toBeNull();
+    expect((container.querySelector("input[name=in]") as HTMLInputElement).value).toBe("2026-11-06");
     expect((container.querySelector("input[name=out]") as HTMLInputElement).value).toBe("2026-11-08");
     await userEvent.click(screen.getByRole("button", { name: /11월 9일/ }));
     expect((container.querySelector("input[name=in]") as HTMLInputElement).value).toBe("2026-11-09");

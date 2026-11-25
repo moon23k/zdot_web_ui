@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "../../utils/cn";
-import { figure } from "../../utils/styles";
+import { numeralStep } from "../../utils/styles";
 
 export function CheckoutLayout({ title, main, aside }: { title?: string; main: ReactNode; aside: ReactNode }) {
   return (
@@ -31,7 +31,7 @@ export function CheckoutSection({
 }) {
   const heading = (
     <h2 className="ez:m-0 ez:flex ez:items-baseline ez:gap-3.5 ez:text-site-heading">
-      <span className={cn(figure, "ez:text-site-heading ez:leading-none ez:text-primary")}>{n}</span>
+      <span className={cn(numeralStep, "ez:text-site-heading ez:leading-none ez:text-primary")}>{n}</span>
       {title}
     </h2>
   );
@@ -84,7 +84,7 @@ export function CheckoutLines({ lines }: { lines: { id: string; name: string; op
             <span>{l.name}</span>
             <span className="ez:text-site-small ez:text-muted">{[l.option, `${l.quantity}개`].filter(Boolean).join(" · ")}</span>
           </span>
-          <span className="ez:font-medium ez:tabular-nums ez:whitespace-nowrap">{l.amount}</span>
+          <span className="ez:font-normal ez:tabular-nums ez:whitespace-nowrap">{l.amount}</span>
         </li>
       ))}
     </ul>

@@ -16,7 +16,7 @@ const policies = [
 ];
 
 function mainColored(root: Element): Element[] {
-  return [...root.querySelectorAll("[class]")].filter((el) => /(^|\s)ez:(?:[a-z-]+:)*(bg|text|border|fill|stroke)-primary(\/|\s|$)/.test(el.getAttribute("class") ?? ""));
+  return [...root.querySelectorAll("[class]")].filter((el) => el.getAttribute("data-slot") !== "button" && /(^|\s)ez:(?:[a-z-]+:)*(bg|text|border|fill|stroke)-primary(\/|\s|$)/.test(el.getAttribute("class") ?? ""));
 }
 
 function list(letter: (typeof letters)[number], searched = true) {
@@ -62,7 +62,11 @@ describe.each(letters)("stay %s", (letter) => {
     expect(form.querySelector('input[type="date"][aria-label="체크아웃"]')).not.toBeNull();
     expect(form.querySelector('select[name="adults"][aria-label="성인"]')).not.toBeNull();
     expect(form.querySelector('select[name="children"][aria-label="아동"]')).not.toBeNull();
-    expect(form.querySelector('button[type="submit"]')).toHaveTextContent("예약 가능 객실 보기");
+    const go = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    expect(go).toHaveTextContent("예약 가능 객실 보기");
+    expect(go).toHaveAttribute("data-slot", "button");
+    expect(go.className).toContain("ez:bg-primary");
+    expect(go.className).not.toMatch(/ez:bg-surface/);
     const picked = list(letter).querySelector('form[role="search"]') as HTMLFormElement;
     expect(picked.querySelector('input[name="check_in"]')).toHaveValue("2026-12-12");
     expect(picked.querySelector('input[name="check_out"]')).toHaveValue("2026-12-13");

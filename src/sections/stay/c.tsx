@@ -1,6 +1,7 @@
 import NextLink from "next/link";
 import type { ReactNode } from "react";
 import { SiteLogo } from "../../blocks/site-header/site-logo";
+import { Button } from "../../components/button";
 import { Icon } from "../../components/icon";
 import { Photo } from "../../components/photo";
 import { StarRow } from "../../components/star-row";
@@ -28,7 +29,7 @@ const pill = cn(
   focusRing,
 );
 
-const moreLink = cn("ez:inline-flex ez:items-center ez:gap-2 ez:text-site-lead ez:font-medium ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4", focusRing);
+const moreLink = cn("ez:inline-flex ez:items-center ez:gap-2 ez:text-site-lead ez:font-normal ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4", focusRing);
 
 const sectionTitle = "ez:m-0 ez:text-site-section ez:font-normal ez:tracking-tight ez:text-fg";
 
@@ -53,7 +54,7 @@ export function Header({ name, logoUrl, nav, links }: StayHeaderProps) {
   return (
     <header data-slot="site-header" data-variant="showroom" className="ez:bg-transparent">
       <div className="ez:mx-auto ez:grid ez:min-h-16 ez:max-w-wrap ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-6 ez:px-page ez:lg:min-h-19 ez:lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
-        <NextLink href="/" className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-heading ez:font-medium ez:tracking-tight ez:text-fg ez:no-underline", focusRing)}>
+        <NextLink href="/" className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-heading ez:font-normal ez:tracking-tight ez:text-fg ez:no-underline", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         <nav aria-label="주요 메뉴" className="ez:flex ez:min-w-0 ez:justify-center ez:gap-6.5 ez:overflow-hidden ez:whitespace-nowrap ez:max-lg:hidden">
@@ -75,7 +76,7 @@ export function Header({ name, logoUrl, nav, links }: StayHeaderProps) {
 function FooterColumn({ title, items }: { title: string; items: FooterLink[] }) {
   return (
     <nav aria-label={title} className="ez:grid ez:content-start ez:gap-4">
-      <span className="ez:text-site-small ez:font-medium ez:text-muted">{title}</span>
+      <span className="ez:text-site-small ez:font-normal ez:text-muted">{title}</span>
       <ul className="ez:m-0 ez:grid ez:list-none ez:gap-2.5 ez:p-0 ez:text-site-lead">
         {items.map((l) => (
           <li key={l.href}>
@@ -96,7 +97,7 @@ export function Footer({ storeName, phone, hours, legal, stay, guide, account, t
         <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-14 ez:pb-10 ez:md:pt-16 ez:md:pb-14">
           <div className="ez:grid ez:grid-cols-2 ez:gap-x-8 ez:gap-y-10 ez:md:grid-cols-3 ez:lg:grid-cols-[4fr_3fr_3fr_3fr_3fr]">
             <div className="ez:col-span-2 ez:grid ez:content-start ez:gap-4 ez:md:col-span-3 ez:lg:col-span-1">
-              <span className="ez:text-site-small ez:font-medium ez:text-muted">{STAY_TITLE.center}</span>
+              <span className="ez:text-site-small ez:font-normal ez:text-muted">{STAY_TITLE.center}</span>
               {(phone || hours) && (
                 <div className="ez:grid ez:gap-1.5">
                   {phone && (
@@ -183,6 +184,8 @@ const heroFields = "ez:grid ez:grid-cols-2 ez:gap-2 ez:xl:grid-cols-[minmax(0,1f
 
 const heroGuest = "ez:col-span-2 ez:xl:col-span-1";
 
+const heroGo = "ez:h-11.5 ez:min-h-0 ez:gap-2 ez:px-6";
+
 function HeroBooking({ max, href }: { max: number | null; href?: string | null }) {
   if (!max) {
     return (
@@ -206,9 +209,9 @@ function HeroBooking({ max, href }: { max: number | null; href?: string | null }
           <DateField which="check_out" />
           <GuestField className={heroGuest} />
         </div>
-        <button type="submit" className={cn(pill, "ez:w-full ez:bg-surface")}>
+        <Button type="submit" block className={heroGo}>
           {STAY_TITLE.find}
-        </button>
+        </Button>
       </StayForm>
     </div>
   );
@@ -223,11 +226,11 @@ function HeroRoom({ room }: { room: Room }) {
     <NextLink href={r.href} data-slot="hero-room" data-sample={r.sample ? "" : undefined} className={cn(heroRoomTile, "ez:group ez:items-stretch ez:text-fg ez:no-underline", focusRing)}>
       <Photo src={r.image} alt={r.name} sizes="(max-width: 1024px) 50vw, 220px" className={cn("ez:aspect-square ez:rounded-sm ez:bg-surface", out && "ez:opacity-45")} />
       <span className="ez:flex ez:min-w-0 ez:flex-col ez:pt-1.5 ez:pb-1">
-        <span className="ez:line-clamp-2 ez:text-site-item ez:font-medium ez:group-hover:underline ez:underline-offset-4">{r.name}</span>
+        <span className="ez:line-clamp-2 ez:text-site-item ez:font-normal ez:group-hover:underline ez:underline-offset-4">{r.name}</span>
         {r.guests && <span className="ez:mt-1 ez:text-site-small ez:text-muted">{r.guests}</span>}
         <span className={cn("ez:mt-3 ez:text-site-item ez:tabular-nums", out && "ez:text-muted")}>{r.from}</span>
         {roomNotes(r).length > 0 && <span className="ez:mt-0.5 ez:text-site-small ez:text-muted">{roomNotes(r).join(" · ")}</span>}
-        <span className="ez:mt-auto ez:inline-flex ez:items-center ez:gap-2 ez:pt-4 ez:text-site-lead ez:font-medium">
+        <span className="ez:mt-auto ez:inline-flex ez:items-center ez:gap-2 ez:pt-4 ez:text-site-lead ez:font-normal">
           {STAY_TITLE.view}
           <Icon name="right" size="sm" />
         </span>
@@ -289,7 +292,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
           )}
           {title && (
             <div className="ez:grid ez:gap-1.5">
-              <h1 className="ez:m-0 ez:text-site-item ez:font-medium ez:text-balance ez:text-fg">{title}</h1>
+              <h1 className="ez:m-0 ez:text-site-item ez:font-normal ez:text-balance ez:text-fg">{title}</h1>
               {sub && (
                 <p data-slot="hero-sub" className="ez:m-0 ez:text-site-lead ez:text-muted">
                   {sub}
@@ -313,7 +316,7 @@ export function Amenities({ data }: SectionProps<"amenities">) {
   return (
     <section data-slot="amenities" id="amenities" data-blank={empty ? "" : undefined} className="ez:grid ez:gap-7 ez:text-fg">
       <Head title={STAY_TITLE.amenities} />
-      <ul className="ez:m-0 ez:grid ez:list-none ez:grid-cols-2 ez:content-center ez:gap-x-6 ez:gap-y-5 ez:rounded-md ez:bg-surface-alt ez:px-6 ez:py-6 ez:sm:grid-cols-3 ez:md:grid-cols-4 ez:lg:min-h-20 ez:lg:grid-cols-8 ez:lg:px-8">
+      <ul className="ez:m-0 ez:grid ez:list-none ez:grid-cols-2 ez:content-center ez:gap-x-6 ez:gap-y-5 ez:rounded-md ez:bg-surface-alt ez:px-6 ez:py-6 ez:sm:grid-cols-3 ez:md:grid-cols-4 ez:lg:min-h-20 ez:lg:grid-cols-5 ez:lg:px-8">
         {empty
           ? [0, 1, 2, 3, 4].map((i) => (
               <li key={i} className="ez:flex ez:items-center ez:text-site-lead">
@@ -347,7 +350,7 @@ function RoomCard({ room, eager, wide }: { room: Room; eager?: boolean; wide?: b
         <Photo src={r.image} alt={r.name} preload={eager} sizes={wide ? CARD_SIZES_WIDE : CARD_SIZES} className={cn(wide ? "ez:aspect-[3/2]" : "ez:aspect-square", "ez:rounded-sm ez:bg-surface", out && "ez:opacity-45")} />
       </div>
       <div className="ez:grid ez:grid-cols-1 ez:items-baseline ez:gap-x-3 ez:gap-y-0.5 ez:px-1 ez:pt-3.5 ez:md:grid-cols-[minmax(0,1fr)_auto]">
-        <span className={cn("ez:truncate ez:text-site-lead ez:font-medium ez:group-hover:underline ez:underline-offset-4", out ? "ez:text-muted" : "ez:text-fg")}>{r.name}</span>
+        <span className={cn("ez:truncate ez:text-site-lead ez:font-normal ez:group-hover:underline ez:underline-offset-4", out ? "ez:text-muted" : "ez:text-fg")}>{r.name}</span>
         <span className="ez:text-site-small ez:text-muted ez:md:justify-self-end">{r.guests}</span>
         <span className={cn("ez:text-site-lead ez:tabular-nums", out ? "ez:text-muted" : "ez:text-fg")}>{r.from}</span>
         {label && <span className="ez:text-site-small ez:text-muted ez:md:justify-self-end">{label}</span>}
@@ -411,7 +414,7 @@ function AddOnText({ a }: { a: AddOnView }) {
   return (
     <>
       <span className="ez:grid ez:min-w-0 ez:gap-0.5">
-        <span className="ez:text-site-lead ez:font-medium ez:text-fg">{a.name}</span>
+        <span className="ez:text-site-lead ez:font-normal ez:text-fg">{a.name}</span>
         <span className="ez:text-site-small ez:text-muted">{`${a.unit} · ${a.pay}`}</span>
       </span>
       <span className="ez:text-site-lead ez:text-fg ez:tabular-nums">{a.price}</span>
@@ -545,7 +548,7 @@ export function Info({ data }: SectionProps<"house_rules">) {
         <TimeTile label={STAY_TITLE.checkIn} value={data.check_in} className="ez:lg:col-start-1 ez:lg:row-start-1" />
         <TimeTile label={STAY_TITLE.checkOut} value={data.check_out} className="ez:lg:col-start-1 ez:lg:row-start-2" />
         <div className={cn(infoTile, "ez:col-span-2 ez:lg:col-span-1 ez:lg:col-start-2 ez:lg:row-span-2 ez:lg:row-start-1")}>
-          <h3 className="ez:m-0 ez:text-site-item ez:font-medium ez:text-fg">{STAY_TITLE.rules}</h3>
+          <h3 className="ez:m-0 ez:text-site-item ez:font-normal ez:text-fg">{STAY_TITLE.rules}</h3>
           <ul className="ez:m-0 ez:mt-5 ez:grid ez:list-none ez:gap-3.5 ez:p-0 ez:text-site-lead ez:text-muted">
             {rules.length ? (
               rules.map((r, i) => <li key={`${r}-${i}`}>{r}</li>)
@@ -557,7 +560,7 @@ export function Info({ data }: SectionProps<"house_rules">) {
           </ul>
         </div>
         <div className={cn(infoTile, "ez:col-span-2 ez:lg:col-span-1 ez:lg:col-start-3 ez:lg:row-span-2 ez:lg:row-start-1")}>
-          <h3 className="ez:m-0 ez:text-site-item ez:font-medium ez:text-fg">{STAY_TITLE.cancel}</h3>
+          <h3 className="ez:m-0 ez:text-site-item ez:font-normal ez:text-fg">{STAY_TITLE.cancel}</h3>
           <div className="ez:mt-5 ez:grid ez:gap-4">
             {rows.length > 0 && <CancelRows rows={rows} />}
             {groups.map((g, i) => (
@@ -668,7 +671,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
               <StarRow rating={item.rating} className="ez:text-muted" />
               <p className="ez:m-0 ez:mt-4 ez:line-clamp-5 ez:text-site-lead ez:leading-relaxed ez:text-muted">{item.body}</p>
               <div className="ez:mt-auto ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:pt-5">
-                <span className="ez:truncate ez:text-site-lead ez:font-medium ez:text-fg">{room ?? item.name}</span>
+                <span className="ez:truncate ez:text-site-lead ez:font-normal ez:text-fg">{room ?? item.name}</span>
                 {item.date && <span className="ez:shrink-0 ez:text-site-small ez:text-muted ez:tabular-nums">{item.date}</span>}
               </div>
             </article>
@@ -713,7 +716,7 @@ function ListCard({ room, eager }: { room: Room; eager?: boolean }) {
         <div className="ez:grid ez:min-w-0 ez:gap-0.5">
           <NextLink
             href={r.href}
-            className={cn("ez:truncate ez:text-site-item ez:font-medium ez:no-underline ez:hover:underline ez:underline-offset-4", full ? "ez:text-muted" : "ez:text-fg", focusRing)}
+            className={cn("ez:truncate ez:text-site-item ez:font-normal ez:no-underline ez:hover:underline ez:underline-offset-4", full ? "ez:text-muted" : "ez:text-fg", focusRing)}
           >
             {r.name}
           </NextLink>
@@ -822,9 +825,9 @@ export function List({ title, count, crumbs, search, rooms, peak, addOns, photo 
         <DateField which="check_in" className="ez:md:px-5" />
         <DateField which="check_out" nights className="ez:md:px-5" />
         <GuestField className="ez:col-span-2 ez:md:px-5 ez:lg:col-span-1" />
-        <button type="submit" className={cn(pill, "ez:col-span-2 ez:bg-surface ez:lg:col-span-1 ez:lg:mr-2 ez:lg:ml-3")}>
+        <Button type="submit" className={cn(heroGo, "ez:col-span-2 ez:lg:col-span-1 ez:lg:mr-2 ez:lg:ml-3")}>
           {STAY_TITLE.change}
-        </button>
+        </Button>
       </StayForm>
       <div className="ez:mt-8 ez:grid ez:grid-cols-1 ez:gap-x-4 ez:gap-y-10 ez:md:grid-cols-2">
         {rooms.map((room, i) => (

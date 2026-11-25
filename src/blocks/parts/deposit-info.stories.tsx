@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { DepositInfo } from "../../index";
+import { DepositInfo, OrderNumber } from "../../index";
 
 const meta: Meta<typeof DepositInfo> = {
   title: "Blocks/DepositInfo",
@@ -22,3 +22,5 @@ export const Default: StoryObj = {
     />
   ),
 };
+
+export const OrderNo: StoryObj = { render: () => <OrderNumber number="20261125-00015" /> };

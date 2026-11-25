@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { buttonVariants } from "../../components/button";
 import { Icon } from "../../components/icon";
 import { cn } from "../../utils/cn";
-import { figure } from "../../utils/styles";
+import { numeralStep } from "../../utils/styles";
 
 export function FormLayout({ title, aside, children }: { title: string; aside?: ReactNode; children: ReactNode }) {
   return (
@@ -21,11 +21,11 @@ export function StepList({ items }: { items: { label: string; value?: string | n
     <ol className="ez:m-0 ez:list-none ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:p-0 ez:max-lg:hidden">
       {items.map((it, i) => (
         <li key={`${it.label}-${i}`} className="ez:flex ez:items-baseline ez:justify-between ez:gap-4 ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-4.5">
-          <span className="ez:flex ez:items-baseline ez:gap-3.5">
-            <span className={cn(figure, "ez:text-site-item ez:leading-none ez:text-primary")}>{i + 1}</span>
-            <span className={it.value ? "ez:font-medium" : undefined}>{it.label}</span>
+          <span className="ez:flex ez:shrink-0 ez:items-baseline ez:gap-2 ez:text-site-small ez:font-normal ez:text-muted">
+            <span className={numeralStep}>{i + 1}</span>
+            <span>{it.label}</span>
           </span>
-          {it.value && <span className="ez:truncate ez:text-site-small">{it.value}</span>}
+          {it.value && <span className="ez:truncate ez:text-site-body ez:text-fg">{it.value}</span>}
         </li>
       ))}
     </ol>
@@ -50,11 +50,11 @@ export function ChipChoice({
   onChange?: (value: string) => void;
 }) {
   return (
-    <div role="radiogroup" aria-label={label} className="ez:flex ez:flex-wrap ez:gap-2 ez:md:col-span-2">
+    <div role="radiogroup" aria-label={label} className="ez:grid ez:grid-cols-2 ez:gap-2 ez:md:col-span-2 ez:md:grid-cols-5">
       {options.map((o, i) => (
         <label
           key={o}
-          className="ez:inline-flex ez:h-9.5 ez:cursor-pointer ez:items-center ez:rounded-full ez:border ez:border-solid ez:border-site-line ez:px-4 ez:text-site-note ez:has-checked:border-primary ez:has-checked:font-medium ez:has-checked:text-primary ez:has-focus-visible:outline-2 ez:has-focus-visible:outline-primary"
+          className="ez:box-border ez:flex ez:min-h-13 ez:min-w-0 ez:cursor-pointer ez:items-center ez:rounded-button ez:border ez:border-solid ez:border-site-line ez:px-4 ez:text-site-body ez:font-normal ez:text-fg ez:has-checked:border-primary ez:has-checked:font-medium ez:has-checked:text-primary ez:has-focus-visible:outline-2 ez:has-focus-visible:outline-primary"
         >
           <input type="radio" name={name} value={o} required={required && i === 0} checked={value === undefined ? undefined : value === o} defaultChecked={value === undefined && defaultValue !== undefined ? defaultValue === o : undefined} onChange={() => onChange?.(o)} className="ez:sr-only" />
           {o}

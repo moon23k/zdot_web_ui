@@ -45,8 +45,7 @@ export function Calendar({
   startName = "in",
   endName = "out",
   months = 1,
-  dots,
-  legend,
+  availability,
   className,
 }: {
   days: CalendarDate[];
@@ -57,8 +56,7 @@ export function Calendar({
   startName?: string;
   endName?: string;
   months?: 1 | 2;
-  dots?: boolean;
-  legend?: boolean;
+  availability?: boolean;
   className?: string;
 }) {
   const [own, setOwn] = useState<CalendarValue>(value ?? {});
@@ -84,11 +82,8 @@ export function Calendar({
     return "none";
   };
   const pages = list.slice(page, page + months);
-  const dotted = dots && days.some((d) => !d.disabled);
-  const struck = days.filter((d) => d.disabled && !d.outside).map((d) => parts(d.date)[2]);
-  const sample = struck.find((d) => d >= 10) ?? struck[0];
   const nav = cn(
-    "ez:flex ez:size-9 ez:items-center ez:justify-center ez:rounded-full ez:border ez:border-solid ez:border-site-edge ez:bg-transparent ez:font-body ez:text-site-lead ez:text-fg ez:cursor-pointer ez:disabled:text-site-off ez:disabled:cursor-default",
+    "ez:flex ez:size-9 ez:items-center ez:justify-center ez:rounded-button ez:border ez:border-solid ez:border-site-edge ez:bg-transparent ez:font-body ez:text-site-lead ez:text-fg ez:cursor-pointer ez:disabled:text-site-off ez:disabled:cursor-default",
     focusRing,
   );
   return (
@@ -106,7 +101,7 @@ export function Calendar({
           return (
             <div key={key} className="ez:grid ez:gap-3">
               <div className="ez:flex ez:h-9 ez:items-center ez:justify-between">
-                <strong className="ez:font-medium">{`${y}년 ${m}월`}</strong>
+                <strong className="ez:font-normal">{`${y}년 ${m}월`}</strong>
                 <span className="ez:flex ez:gap-1.5">
                   {k === 0 && (
                     <button type="button" className={nav} onClick={() => setPage(page - 1)} disabled={page <= 0} aria-label="이전 달">
@@ -122,7 +117,7 @@ export function Calendar({
               </div>
               <ol className="ez:m-0 ez:grid ez:list-none ez:grid-cols-7 ez:gap-y-1 ez:p-0 ez:text-center">
                 {WEEKDAYS.map((w) => (
-                  <li key={w} className="ez:py-2 ez:text-site-caption ez:text-muted" aria-hidden="true">
+                  <li key={w} className="ez:py-2 ez:text-site-small ez:text-muted" aria-hidden="true">
                     {w}
                   </li>
                 ))}
@@ -133,6 +128,7 @@ export function Calendar({
                   const look = state(day.date);
                   const blocked = Boolean(day.disabled) && !canEnd(day.date);
                   const outside = Boolean(day.outside);
+                  const full = blocked && !outside;
                   return (
                     <li key={day.date} className={look === "inside" ? "ez:bg-point-soft" : undefined}>
                       <button
@@ -141,17 +137,19 @@ export function Calendar({
                         disabled={blocked}
                         data-outside={outside || undefined}
                         aria-pressed={look === "edge"}
-                        aria-label={[dayText(day.date), `${WEEKDAYS[weekday(day.date)]}요일`, day.label].filter(Boolean).join(" ")}
+                        aria-label={[dayText(day.date), `${WEEKDAYS[weekday(day.date)]}요일`, day.label, availability && full ? "마감" : null].filter(Boolean).join(" ")}
                         className={cn(
-                          "ez:relative ez:mx-auto ez:grid ez:size-11 ez:content-center ez:rounded-full ez:border-0 ez:bg-transparent ez:p-0 ez:font-body ez:text-site-note ez:tabular-nums ez:text-fg ez:cursor-pointer",
-                          look === "edge" && "ez:bg-point-soft ez:font-medium ez:text-primary ez:shadow-[inset_0_0_0_1px_var(--ezd-primary)]",
-                          dots && !blocked && look === "none" && "ez:after:absolute ez:after:bottom-1.5 ez:after:left-1/2 ez:after:size-1 ez:after:-translate-x-1/2 ez:after:rounded-full ez:after:bg-primary",
+                          "ez:relative ez:mx-auto ez:grid ez:size-11 ez:content-center ez:gap-0.5 ez:rounded-button ez:border-0 ez:bg-transparent ez:p-0 ez:font-body ez:text-site-note ez:tabular-nums ez:text-fg ez:cursor-pointer",
+                          availability && !blocked && "ez:font-medium",
+                          look === "edge" && (mode === "range" ? "ez:bg-point-soft ez:font-medium ez:text-primary" : "ez:font-medium"),
+                          look === "edge" && "ez:shadow-[inset_0_0_0_1px_var(--ezd-primary)]",
                           "ez:disabled:cursor-not-allowed ez:disabled:text-site-off",
-                          blocked && !outside && "ez:line-through",
+                          full && !availability && "ez:line-through",
                           focusRing,
                         )}
                       >
                         <span>{parts(day.date)[2]}</span>
+                        {availability && full && <span className="ez:text-site-small ez:leading-none">마감</span>}
                       </button>
                     </li>
                   );
@@ -161,35 +159,10 @@ export function Calendar({
           );
         })}
       </div>
-      {legend && (dotted || sample !== undefined) && (
-        <ul data-slot="calendar-legend" className="ez:m-0 ez:flex ez:list-none ez:gap-4 ez:p-0 ez:text-site-caption ez:text-muted">
-          {dotted && (
-            <li className="ez:flex ez:items-center ez:gap-1.5">
-              <span aria-hidden="true" className="ez:size-1 ez:rounded-full ez:bg-primary" />
-              예약 가능
-            </li>
-          )}
-          {sample !== undefined && (
-            <li className="ez:flex ez:items-center ez:gap-1.5">
-              <span aria-hidden="true" className="ez:font-body ez:text-site-note ez:tabular-nums ez:text-site-off ez:line-through">
-                {sample}
-              </span>
-              마감
-            </li>
-          )}
-        </ul>
-      )}
       {mode === "range" ? (
         <>
           <input type="hidden" name={startName} value={current.start ?? ""} />
           <input type="hidden" name={endName} value={current.end ?? ""} />
-          {current.start && (
-            <p className="ez:m-0 ez:text-site-small ez:text-muted">
-              {current.end
-                ? `${dayText(current.start)} ~ ${dayText(current.end)} · ${nightsBetween(current.start, current.end)}박`
-                : `${dayText(current.start)} ~`}
-            </p>
-          )}
         </>
       ) : (
         <input type="hidden" name={name} value={current.start ?? ""} />

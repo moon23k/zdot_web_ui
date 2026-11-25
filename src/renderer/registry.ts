@@ -47,7 +47,7 @@ export type SectionData = {
     links?: PlaceLink[];
     intro?: TemplateSectionData["intro"];
   };
-  product_grid: Record<string, never>;
+  product_grid: { count?: number };
   faq: Record<string, never>;
   category_menu: Record<string, never>;
 } & TemplateSectionData;

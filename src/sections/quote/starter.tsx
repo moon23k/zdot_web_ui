@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { Icon } from "../../components/icon";
 import { cn } from "../../utils/cn";
 import type { QuoteStarter } from "../template/data";
 import { QUOTE_HREF, QUOTE_TITLE } from "./shared";
@@ -19,11 +18,17 @@ export function StarterForm({ data, className, children }: { data: QuoteStarter;
   );
 }
 
+export const OPTION_GRID = "ez:grid ez:grid-cols-2 ez:sm:grid-cols-5";
+
 export function OptionCell({ name, value, className, labelClassName }: { name: string; value: string; className?: string; labelClassName?: string }) {
   return (
-    <label className={cn("ez:relative ez:inline-flex ez:cursor-pointer ez:items-center ez:gap-1.5 ez:has-focus-visible:outline-2 ez:has-focus-visible:outline-offset-2 ez:has-focus-visible:outline-primary", className)}>
-      <input type="radio" name={name} value={value} className="ez:peer ez:sr-only" />
-      <Icon name="check" size="sm" className="ez:hidden ez:shrink-0 ez:text-primary ez:peer-checked:inline-block" />
+    <label
+      className={cn(
+        "ez:relative ez:flex ez:min-w-0 ez:cursor-pointer ez:items-center ez:justify-center ez:rounded-button ez:border ez:border-solid ez:px-2 ez:text-center ez:break-keep ez:has-checked:border-primary ez:has-focus-visible:outline-2 ez:has-focus-visible:outline-offset-2 ez:has-focus-visible:outline-primary",
+        className,
+      )}
+    >
+      <input type="radio" name={name} value={value} className="ez:sr-only" />
       <span className={labelClassName}>{value}</span>
     </label>
   );

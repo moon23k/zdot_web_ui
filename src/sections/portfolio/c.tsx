@@ -21,7 +21,7 @@ const main = "ez:min-w-0 ez:lg:col-span-7";
 
 const side = "ez:min-w-0 ez:lg:col-span-4 ez:lg:col-start-9";
 
-const title = "ez:m-0 ez:font-display ez:text-site-heading ez:font-medium ez:text-fg";
+const title = "ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:text-fg";
 
 const top = "ez:border-0 ez:border-t ez:border-solid ez:border-site-off";
 
@@ -50,7 +50,7 @@ export function Header({ name, logoUrl, nav }: PortfolioHeaderProps) {
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         {nav.length > 0 && (
-          <nav aria-label="주요 메뉴" className="ez:ml-auto ez:flex ez:shrink-0 ez:items-center ez:gap-6 ez:whitespace-nowrap ez:text-site-body ez:font-medium ez:md:gap-8">
+          <nav aria-label="주요 메뉴" className="ez:ml-auto ez:flex ez:shrink-0 ez:items-center ez:gap-6 ez:whitespace-nowrap ez:text-site-body ez:font-normal ez:md:gap-8">
             <PortfolioNavLinks items={nav} className={cn(plain, "ez:py-2")} currentClassName="ez:underline ez:underline-offset-8" />
           </nav>
         )}
@@ -65,7 +65,7 @@ export function Footer({ storeName, phone, hours, address, legal, business, nav,
   return (
     <footer data-slot="site-footer" data-variant="showroom" className="ez:bg-surface-alt ez:text-fg">
       <div className={cn(wrap, "ez:grid ez:gap-8 ez:py-16")}>
-        <p className="ez:m-0 ez:text-site-body ez:font-medium">{storeName}</p>
+        <p className="ez:m-0 ez:text-site-body ez:font-normal">{storeName}</p>
         {nav.length > 0 && (
           <nav aria-label="바닥글 메뉴" className="ez:flex ez:flex-wrap ez:gap-x-6 ez:gap-y-2 ez:text-site-body">
             <PortfolioNavLinks items={nav} className={plain} currentClassName="ez:font-medium" />
@@ -233,7 +233,7 @@ export function Contact({ data }: SectionProps<"store_info">) {
       <dl className={cn(main, top, "ez:m-0 ez:grid ez:content-start ez:lg:row-start-2")}>
         {visitRows(data).map((r) => (
           <div key={r.label} className={cn(row, "ez:grid ez:grid-cols-[minmax(0,5rem)_minmax(0,1fr)] ez:gap-6 ez:py-4")}>
-            <dt className="ez:font-medium ez:text-fg">{r.label}</dt>
+            <dt className="ez:font-normal ez:text-fg">{r.label}</dt>
             <dd className="ez:m-0 ez:min-w-0 ez:break-words ez:text-fg">{r.value}</dd>
           </div>
         ))}

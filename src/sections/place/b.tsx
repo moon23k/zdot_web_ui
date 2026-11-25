@@ -22,12 +22,12 @@ const line = "ez:border-0 ez:border-solid ez:border-site-line";
 const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:px-page";
 
 const logo =
-  "ez:font-display ez:font-medium ez:uppercase ez:tracking-[0.42em] ez:text-fg";
+  "ez:font-display ez:font-normal ez:uppercase ez:tracking-[0.42em] ez:text-fg";
 
 const name =
   "ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:text-fg";
 
-const item = "ez:m-0 ez:text-site-item ez:font-medium ez:text-fg";
+const item = "ez:m-0 ez:text-site-item ez:font-normal ez:text-fg";
 
 const body =
   "ez:m-0 ez:text-site-small ez:leading-relaxed ez:tracking-wide ez:text-fg";

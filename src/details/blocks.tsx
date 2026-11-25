@@ -19,7 +19,7 @@ function Summary({ data, variant }: DetailBlockProps) {
   return (
     <div data-slot="detail-summary" className="ez:grid ez:gap-2 ez:text-fg">
       <h1 className="ez:m-0 ez:text-site-page-sm ez:font-light ez:tracking-[-0.035em] ez:lg:text-site-page">{data.title}</h1>
-      {data.price && <strong className="ez:text-site-heading ez:font-medium ez:tabular-nums">{data.price}</strong>}
+      {data.price && <strong className="ez:text-site-heading ez:font-normal ez:tabular-nums">{data.price}</strong>}
       {variant === "status" && data.status && <span className="ez:text-site-small ez:text-primary">{data.status}</span>}
       {data.chips && <Chips items={data.chips} current={-1} />}
     </div>
@@ -30,7 +30,7 @@ function ShipLine({ data, variant }: DetailBlockProps) {
   const text = variant === "status" ? [data.status, data.ship].filter(Boolean).join(" · ") : data.ship;
   if (!text) return null;
   return (
-    <p className="ez:m-0 ez:inline-flex ez:items-center ez:gap-1.5 ez:text-site-small ez:font-medium ez:text-primary">
+    <p className="ez:m-0 ez:inline-flex ez:items-center ez:gap-1.5 ez:text-site-small ez:font-normal ez:text-primary">
       <span aria-hidden="true" className="ez:size-1.25 ez:rounded-full ez:bg-primary" />
       {text}
     </p>
@@ -87,16 +87,16 @@ function ClassSummary({ data, variant }: DetailBlockProps) {
       data-slot="class-summary"
       className={cn("ez:grid ez:gap-3 ez:rounded-lg ez:p-6 ez:text-fg", variant === "banner" ? "ez:bg-surface-alt ez:md:p-10" : "ez:bg-surface-alt")}
     >
-      <h1 className="ez:m-0 ez:font-display ez:font-title ez:text-3xl ez:tracking-brand">{data.title}</h1>
+      <h1 className="ez:m-0 ez:font-display ez:font-title ez:text-site-section ez:tracking-brand">{data.title}</h1>
       <ul className={cn("ez:m-0 ez:grid ez:list-none ez:gap-2 ez:p-0", variant === "cells" ? "ez:grid-cols-2 ez:md:grid-cols-5" : "ez:grid-cols-2 ez:md:grid-cols-4")}>
         {(data.rows ?? []).map((r, i) => (
           <li key={i} className="ez:grid ez:gap-0.5 ez:rounded-md ez:bg-surface ez:p-3">
-            <span className="ez:text-xs ez:text-muted">{r.label}</span>
+            <span className="ez:text-site-small ez:text-muted">{r.label}</span>
             <strong className="ez:tabular-nums">{r.value}</strong>
           </li>
         ))}
       </ul>
-      {data.price && <strong className="ez:text-xl ez:tabular-nums">{data.price}</strong>}
+      {data.price && <strong className="ez:text-site-heading ez:tabular-nums">{data.price}</strong>}
     </section>
   );
 }
@@ -112,8 +112,8 @@ function Prep({ data }: DetailBlockProps) {
     <Cols m={1} pc={3}>
       {items.map((p) => (
         <div key={p.title} className="ez:grid ez:gap-1 ez:rounded-md ez:bg-surface-alt ez:p-4">
-          <strong className="ez:font-medium">{p.title}</strong>
-          <span className="ez:text-sm ez:text-muted">{p.body}</span>
+          <strong className="ez:font-normal">{p.title}</strong>
+          <span className="ez:text-site-small ez:text-muted">{p.body}</span>
         </div>
       ))}
     </Cols>
@@ -127,8 +127,8 @@ function Teacher({ data }: DetailBlockProps) {
     <section data-slot="teacher" className="ez:grid ez:grid-cols-[56px_1fr] ez:items-start ez:gap-4 ez:text-fg">
       <Pic src={t.image} ratio={1} className="ez:overflow-hidden ez:rounded-full" />
       <div className="ez:grid ez:gap-1">
-        <strong className="ez:font-medium">{t.name}</strong>
-        <p className="ez:m-0 ez:text-sm ez:text-muted">{t.body}</p>
+        <strong className="ez:font-normal">{t.name}</strong>
+        <p className="ez:m-0 ez:text-site-small ez:text-muted">{t.body}</p>
       </div>
     </section>
   );
@@ -157,12 +157,12 @@ function Cohorts({ data }: DetailBlockProps) {
       <Cols m={1} pc={3}>
         {cohorts.map((c) => (
           <div key={c.title} className="ez:grid ez:content-start ez:gap-1.5 ez:rounded-md ez:border ez:border-solid ez:border-primary-border ez:p-4">
-            <strong className="ez:font-medium ez:tabular-nums">{c.title}</strong>
-            <span className="ez:text-sm ez:text-muted ez:tabular-nums">{`${c.period} · ${c.count}`}</span>
+            <strong className="ez:font-normal ez:tabular-nums">{c.title}</strong>
+            <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{`${c.period} · ${c.count}`}</span>
             <SessionStatus session={{ id: c.title, date: "", time: "", name: "", status: c.status, seats_left: c.seats_left }} />
             {c.dates && (
               <Fold title={`수업 날짜 ${c.dates.length}개`}>
-                <span className="ez:text-sm ez:tabular-nums">{c.dates.join(" · ")}</span>
+                <span className="ez:text-site-small ez:tabular-nums">{c.dates.join(" · ")}</span>
               </Fold>
             )}
           </div>
@@ -178,14 +178,14 @@ function Timetable({ data }: DetailBlockProps) {
   return (
     <Block slot="timetable">
       <Title>시간표</Title>
-      <table className="ez:w-full ez:border-collapse ez:text-center ez:text-sm">
+      <table className="ez:w-full ez:border-collapse ez:text-center ez:text-site-small">
         <thead>
           <tr>
             <th className="ez:p-2">
               <span className="ez:sr-only">시간</span>
             </th>
             {t.days.map((d) => (
-              <th key={d} className="ez:p-2 ez:font-medium">
+              <th key={d} className="ez:p-2 ez:font-normal">
                 {d}
               </th>
             ))}
@@ -226,7 +226,7 @@ function Availability({ data }: DetailBlockProps) {
   return (
     <Block slot="availability">
       <Title>{cal.month}</Title>
-      <ol className="ez:m-0 ez:grid ez:list-none ez:grid-cols-7 ez:gap-1 ez:p-0 ez:text-center ez:text-sm">
+      <ol className="ez:m-0 ez:grid ez:list-none ez:grid-cols-7 ez:gap-1 ez:p-0 ez:text-center ez:text-site-small">
         {cal.days.map((d) => (
           <li
             key={d.day}
@@ -237,7 +237,7 @@ function Availability({ data }: DetailBlockProps) {
             )}
           >
             {d.day}
-            {d.price && d.state !== "closed" && <span className="ez:text-[11px] ez:opacity-80">{d.price}</span>}
+            {d.price && d.state !== "closed" && <span className="ez:text-site-label ez:opacity-80">{d.price}</span>}
           </li>
         ))}
       </ol>
@@ -251,7 +251,7 @@ function StayTotal({ data }: DetailBlockProps) {
   return (
     <section data-slot="stay-total" className="ez:grid ez:gap-3 ez:rounded-lg ez:border ez:border-solid ez:border-primary-border ez:p-5 ez:text-fg">
       <Rows rows={[...t.rows, { label: "합계", value: t.total }]} />
-      {t.note && <p className="ez:m-0 ez:text-sm ez:text-primary">{t.note}</p>}
+      {t.note && <p className="ez:m-0 ez:text-site-small ez:text-primary">{t.note}</p>}
       <ButtonLink href={t.href ?? "#"}>{t.button}</ButtonLink>
     </section>
   );
@@ -269,10 +269,11 @@ function RoomInfo({ data }: DetailBlockProps) {
 function CaseInfo({ data }: DetailBlockProps) {
   if (!data.title) return null;
   return (
-    <div data-slot="case-info" className="ez:grid ez:gap-3 ez:text-fg">
-      <h1 className="ez:m-0 ez:font-display ez:font-title ez:text-3xl ez:tracking-brand">{data.title}</h1>
-      {data.status && <span className="ez:text-sm ez:text-muted">{data.status}</span>}
+    <div data-slot="case-info" className="ez:grid ez:gap-7 ez:text-fg">
+      <h1 className="ez:m-0 ez:font-display ez:font-title ez:text-site-section ez:tracking-brand">{data.title}</h1>
+      {data.status && <span className="ez:text-site-small ez:text-muted">{data.status}</span>}
       <Rows rows={data.rows ?? []} />
+      {data.body && <p className="ez:m-0 ez:whitespace-pre-line ez:text-site-body">{data.body}</p>}
       <ButtonLink href={data.estimate?.href ?? "/quote"}>이런 작업 견적 받기</ButtonLink>
     </div>
   );

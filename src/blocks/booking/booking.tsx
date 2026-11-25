@@ -3,26 +3,15 @@ import type { ReactNode } from "react";
 import { DotLine } from "../../components/dot-line";
 import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
-import { pointTag } from "../../utils/styles";
+import { infoRows, pointTag } from "../../utils/styles";
 import { STAR_PATH } from "../../components/star-row";
-
-export function BookingFrame({ action, main, card }: { action: string; main: ReactNode; card: ReactNode }) {
-  return (
-    <form action={action} method="get" data-slot="booking-frame" className="ez:grid ez:gap-10 ez:text-fg ez:lg:grid-cols-[minmax(0,1fr)_420px] ez:lg:items-start ez:lg:gap-x-24">
-      <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-12 ez:lg:gap-16">{main}</div>
-      <aside data-slot="booking-card" className="ez:grid ez:gap-6 ez:rounded-md ez:border ez:border-solid ez:border-site-line ez:bg-surface ez:p-6 ez:lg:sticky ez:lg:top-8 ez:lg:p-8">
-        {card}
-      </aside>
-    </form>
-  );
-}
 
 export function PhotoCollage({ images, name, kind = "stay" }: { images: (string | null)[]; name: string; kind?: "stay" | "class" }) {
   const full = kind === "stay" ? 5 : 3;
   const filled = images.filter(Boolean) as string[];
   const count = filled.length === 0 || filled.length >= full ? full : Math.min(filled.length, 3);
   const shown = Array.from({ length: count }, (_, i) => filled[i] ?? null);
-  return (
+  const collage = (
     <div
       data-slot="photo-collage"
       data-count={count}
@@ -48,11 +37,35 @@ export function PhotoCollage({ images, name, kind = "stay" }: { images: (string 
       ))}
     </div>
   );
+  if (kind !== "stay" || filled.length < 2) return collage;
+  return (
+    <div className="ez:grid ez:gap-3">
+      {collage}
+      <p data-slot="photo-count" aria-hidden="true" className="ez:m-0 ez:text-right ez:text-site-small ez:text-muted ez:tabular-nums">
+        1 / {filled.length}
+      </p>
+    </div>
+  );
 }
 
-const FACT_COLS = ["ez:md:grid-cols-1", "ez:md:grid-cols-2", "ez:md:grid-cols-3", "ez:md:grid-cols-4"];
+export function BookingRows({ rows, ruled = false }: { rows: { label: string; value: ReactNode }[]; ruled?: boolean }) {
+  return (
+    <table data-slot="booking-rows" className={infoRows.table}>
+      <tbody>
+        {rows.map((r) => (
+          <tr key={r.label} className={cn("ez:border-0 ez:border-b ez:border-solid ez:border-site-line", ruled && "ez:first:border-t")}>
+            <th scope="row" className={infoRows.label}>
+              {r.label}
+            </th>
+            <td className={infoRows.value}>{r.value}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
 
-export function BookingHead({ tag, title, rating, chips, facts }: { tag?: string | null; title: string; rating?: { average: number; count: number; label?: string } | null; chips?: string[]; facts?: { label: string; value: string }[] }) {
+export function BookingHead({ tag, title, rating, facts }: { tag?: string | null; title: string; rating?: { average: number; count: number; label?: string } | null; facts?: { label: string; value: string }[] }) {
   return (
     <div data-slot="booking-head" className="ez:grid ez:gap-6">
       <div className="ez:grid ez:gap-3">
@@ -69,7 +82,7 @@ export function BookingHead({ tag, title, rating, chips, facts }: { tag?: string
               <svg viewBox="0 0 24 24" aria-hidden="true" className="ez:size-3.25 ez:text-primary">
                 <path fill="currentColor" d={STAR_PATH} />
               </svg>
-              <span className="ez:font-medium ez:tabular-nums">{rating.average.toFixed(1)}</span>
+              <span className="ez:font-normal ez:tabular-nums">{rating.average.toFixed(1)}</span>
               <span className="ez:text-muted">
                 {rating.label ?? "후기"} {rating.count}
               </span>
@@ -77,42 +90,7 @@ export function BookingHead({ tag, title, rating, chips, facts }: { tag?: string
           )}
         </div>
       </div>
-      {chips && chips.length > 0 && (
-        <ul className="ez:m-0 ez:flex ez:list-none ez:flex-wrap ez:gap-2 ez:p-0">
-          {chips.map((c) => (
-            <li key={c} className="ez:inline-flex ez:h-9.5 ez:items-center ez:rounded-full ez:border ez:border-solid ez:border-site-line ez:px-4 ez:text-site-small">
-              {c}
-            </li>
-          ))}
-        </ul>
-      )}
-      {facts && facts.length > 0 && (
-        <dl className={cn("ez:m-0 ez:grid ez:grid-cols-2 ez:border-0 ez:border-y ez:border-solid ez:border-site-line", FACT_COLS[Math.min(facts.length, FACT_COLS.length) - 1])}>
-          {facts.map((f, i) => (
-            <div key={f.label} className={cn("ez:grid ez:gap-1 ez:py-4", i > 0 && "ez:md:border-0 ez:md:border-l ez:md:border-solid ez:md:border-site-line ez:md:pl-6")}>
-              <dt className="ez:text-site-caption ez:text-muted">{f.label}</dt>
-              <dd className="ez:m-0 ez:font-medium">{f.value}</dd>
-            </div>
-          ))}
-        </dl>
-      )}
-    </div>
-  );
-}
-
-export function CardPrice({ amount, unit, tag }: { amount: string; unit: string; tag?: string | null }) {
-  return (
-    <div className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
-      <p className="ez:m-0 ez:text-site-heading ez:font-medium ez:tabular-nums">
-        {amount}
-        <span className="ez:text-site-small ez:font-normal ez:text-muted"> / {unit}</span>
-      </p>
-      {tag && (
-        <span className={pointTag}>
-          <span aria-hidden="true" className="ez:size-1.25 ez:rounded-full ez:bg-primary" />
-          {tag}
-        </span>
-      )}
+      {facts && facts.length > 0 && <BookingRows rows={facts} ruled />}
     </div>
   );
 }
@@ -124,7 +102,7 @@ export function CardCells({ cells, children }: { cells: { label: string; value: 
         {cells.map((c, i) => (
           <div key={c.label} className={cn("ez:grid ez:gap-0.5 ez:px-4 ez:py-3", i > 0 && "ez:border-0 ez:border-l ez:border-solid ez:border-site-line")}>
             <span className="ez:text-site-caption ez:text-muted">{c.label}</span>
-            <span className="ez:font-medium">{c.value}</span>
+            <span className="ez:font-normal">{c.value}</span>
           </div>
         ))}
       </div>
@@ -166,8 +144,8 @@ export function TimeTiles({ items, value, onChange, name }: { items: { id: strin
         <label
           key={t.id}
           className={cn(
-            "ez:grid ez:cursor-pointer ez:gap-0.5 ez:rounded-sm ez:border ez:border-solid ez:border-site-line ez:px-3.5 ez:py-3 ez:text-site-small",
-            "ez:has-checked:border-primary ez:has-checked:text-primary ez:has-focus-visible:outline-2 ez:has-focus-visible:outline-primary",
+            "ez:grid ez:cursor-pointer ez:gap-0.5 ez:rounded-button ez:border ez:border-solid ez:border-site-line ez:px-3.5 ez:py-3 ez:text-site-small",
+            "ez:has-checked:border-primary ez:has-focus-visible:outline-2 ez:has-focus-visible:outline-primary",
             t.off && "ez:cursor-not-allowed ez:text-site-off",
           )}
         >
@@ -182,7 +160,7 @@ export function TimeTiles({ items, value, onChange, name }: { items: { id: strin
 
 export function SectionSplit({ id, title, children }: { id?: string; title: string; children: ReactNode }) {
   return (
-    <section id={id} className="ez:grid ez:gap-5 ez:text-fg ez:md:grid-cols-[180px_minmax(0,1fr)] ez:md:gap-6">
+    <section id={id} className="ez:grid ez:gap-5 ez:text-fg">
       <h2 className="ez:m-0 ez:text-site-heading">{title}</h2>
       <div className="ez:min-w-0">{children}</div>
     </section>
@@ -201,7 +179,7 @@ export function RoomShelf({ title, rooms }: { title: string; rooms: { id: string
               <Photo src={r.image} alt={r.name} tone={i} sizes="(max-width: 768px) 100vw, 640px" className="ez:aspect-[16/9]" />
               <span className="ez:flex ez:items-baseline ez:justify-between ez:gap-4">
                 <span className="ez:text-site-heading">{r.name}</span>
-                <span className="ez:font-medium ez:tabular-nums">
+                <span className="ez:font-normal ez:tabular-nums">
                   {r.price}
                   <span className="ez:text-site-small ez:font-normal ez:text-muted"> / {r.unit}</span>
                 </span>

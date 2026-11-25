@@ -130,7 +130,7 @@ export function StoreInfo({ data }: SectionProps<"store_info">) {
           <div className="ez:relative">
             <Pic src={data.image} ratio={1.6} tone={3} />
             {data.title && !empty && (
-              <span className="ez:absolute ez:bottom-6 ez:left-6 ez:inline-flex ez:items-center ez:gap-2.5 ez:rounded-full ez:bg-surface ez:py-2.5 ez:pr-4.5 ez:pl-3 ez:text-site-small ez:font-medium">
+              <span className="ez:absolute ez:bottom-6 ez:left-6 ez:inline-flex ez:items-center ez:gap-2.5 ez:rounded-button ez:bg-surface ez:py-2.5 ez:pr-4.5 ez:pl-3 ez:text-site-small ez:font-normal">
                 <Icon name="pin" size="sm" className="ez:text-primary" />
                 {data.title}
               </span>

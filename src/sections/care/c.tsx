@@ -21,7 +21,7 @@ const edge = "ez:border-0 ez:border-solid ez:border-site-edge";
 
 const grid = "ez:grid ez:text-fg ez:lg:grid-cols-12 ez:lg:gap-x-gutter";
 
-const h2 = "ez:m-0 ez:font-display ez:text-site-heading ez:font-medium ez:tracking-wide ez:text-fg";
+const h2 = "ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:tracking-wide ez:text-fg";
 
 const head = "ez:lg:col-span-2 ez:lg:col-start-1";
 
@@ -33,11 +33,11 @@ const button = cn(
   focusRing,
 );
 
-const soft = cn(button, "ez:bg-surface-alt");
+const soft = button;
 
 const quiet = cn("ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4", focusRing);
 
-const label = "ez:text-site-small ez:font-medium ez:tracking-wider ez:text-fg";
+const label = "ez:text-site-small ez:font-normal ez:tracking-wider ez:text-fg";
 
 const value = "ez:m-0 ez:min-w-0 ez:text-site-body ez:tracking-wide ez:break-words ez:text-fg";
 
@@ -66,7 +66,7 @@ export function Header({ name, logoUrl, phone, nav, links }: CareHeaderProps) {
   return (
     <header data-slot="site-header" data-variant="showroom" className="ez:bg-transparent">
       <div className="ez:mx-auto ez:flex ez:min-h-16 ez:max-w-wrap ez:items-center ez:gap-6 ez:px-page ez:lg:min-h-24">
-        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-counter ez:font-medium ez:tracking-wide ez:text-fg ez:no-underline", focusRing)}>
+        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-counter ez:font-normal ez:tracking-wide ez:text-fg ez:no-underline", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         <nav aria-label="주요 메뉴" className="ez:ml-auto ez:flex ez:min-w-0 ez:gap-7 ez:overflow-hidden ez:whitespace-nowrap ez:text-site-body ez:tracking-wider ez:max-lg:hidden">
@@ -85,7 +85,7 @@ export function Footer({ storeName, phone, hours, address, legal, business, nav,
     <footer data-slot="site-footer" data-variant="showroom" className="ez:text-site-small ez:text-muted">
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-16 ez:pb-12">
         <div className={cn(rule, grid, "ez:gap-y-8 ez:border-t ez:pt-12")}>
-          <p className="ez:m-0 ez:min-w-0 ez:text-site-counter ez:font-medium ez:tracking-wide ez:text-fg ez:lg:col-span-4">{storeName}</p>
+          <p className="ez:m-0 ez:min-w-0 ez:text-site-counter ez:font-normal ez:tracking-wide ez:text-fg ez:lg:col-span-4">{storeName}</p>
           {nav.length > 0 && (
             <nav aria-label="사이트 메뉴" className="ez:grid ez:content-start ez:justify-items-start ez:gap-2 ez:lg:col-span-2 ez:lg:col-start-5">
               <CareNavLinks items={nav} className={cn("ez:tracking-wide", quiet)} />
@@ -162,9 +162,9 @@ export function Hero({ data, context }: SectionProps<"hero">) {
         {(title || name) && (
           <div className="ez:grid ez:gap-1">
             {title ? (
-              <h1 className="ez:m-0 ez:font-display ez:text-site-heading ez:font-medium ez:tracking-wide ez:text-balance ez:text-fg">{title}</h1>
+              <h1 className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:tracking-wide ez:text-balance ez:text-fg">{title}</h1>
             ) : (
-              <p className="ez:m-0 ez:font-display ez:text-site-heading ez:font-medium ez:tracking-wide ez:text-fg">{name}</p>
+              <p className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:tracking-wide ez:text-fg">{name}</p>
             )}
             {sub && (
               <p data-slot="hero-sub" className="ez:m-0 ez:tracking-wide ez:text-muted">
@@ -305,7 +305,7 @@ export function Location({ data }: SectionProps<"location">) {
 const fold = cn(rule, "ez:border-b");
 
 const summary = cn(
-  "ez:flex ez:min-h-14 ez:cursor-pointer ez:list-none ez:items-center ez:justify-between ez:gap-6 ez:py-4 ez:text-site-body ez:font-medium ez:tracking-wide ez:text-fg ez:[&::-webkit-details-marker]:hidden",
+  "ez:flex ez:min-h-14 ez:cursor-pointer ez:list-none ez:items-center ez:justify-between ez:gap-6 ez:py-4 ez:text-site-body ez:font-normal ez:tracking-wide ez:text-fg ez:[&::-webkit-details-marker]:hidden",
   focusRing,
 );
 

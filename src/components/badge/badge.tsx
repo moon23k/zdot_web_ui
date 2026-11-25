@@ -4,7 +4,7 @@ import type { Tone } from "../../theme/contract";
 import { cn } from "../../utils/cn";
 
 const badgeVariants = cva(
-  "ez:inline-flex ez:items-center ez:rounded-full ez:px-2 ez:py-0.5 ez:text-site-caption ez:font-medium ez:whitespace-nowrap",
+  "ez:inline-flex ez:items-center ez:rounded-button ez:px-2 ez:py-0.5 ez:text-site-caption ez:font-normal ez:whitespace-nowrap",
   {
     variants: {
       tone: {

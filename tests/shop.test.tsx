@@ -113,6 +113,31 @@ describe("shop page edges", () => {
     expect(hero.querySelector("h1")?.closest('[data-slot="photo"]')).toBeNull();
   });
 
+  it("cuts the b new row to fives without a lone cell, keeps one review per product and drops the a eyebrows", () => {
+    const items = Array.from({ length: 12 }, (_, i) => ({ ...products[0], id: `p${i}`, name: `상품 ${i}` }));
+    const view = (letter: "a" | "b", count: number, sections: { kind: string; data: Record<string, unknown> }[]) =>
+      render(<SiteRenderer page={{ sections, arranged: true }} context={{ products: items.slice(0, count), categories: [], faqs: [], shipping: null }} template={resolveTemplate("shop", letter)} />).container;
+    const cells = (count: number) => [...view("b", count, [{ kind: "product_grid", data: {} }]).querySelectorAll('[data-slot="product-grid"] [data-slot="product-card"]')].map((card) => card.parentElement?.className ?? "");
+    expect(cells(6)).toHaveLength(5);
+    expect(cells(6)[4]).toContain("ez:max-md:hidden");
+    expect(cells(12)).toHaveLength(5);
+    expect(cells(4)).toHaveLength(4);
+    expect(cells(4)[3]).toContain("ez:md:max-lg:hidden");
+    const best = [...view("b", 0, [{ kind: "best_grid", data: { items: items.slice(0, 7) } }]).querySelectorAll('[data-slot="best-grid"] [data-slot="product-card"]')];
+    expect(best).toHaveLength(5);
+    expect(best[4].parentElement?.className).toContain("ez:max-md:hidden");
+    const capped = view("a", 4, [{ kind: "product_grid", data: { count: 3 } }]);
+    expect(capped.querySelectorAll('[data-slot="product-grid"] [data-slot="product-card"]')).toHaveLength(3);
+    const reviews = [
+      { rating: 5, body: "가", name: "김", product: "p0" },
+      { rating: 5, body: "나", name: "이", product: "p0" },
+      { rating: 4, body: "다", name: "박", product: "p1" },
+    ];
+    expect(view("b", 2, [{ kind: "reviews", data: { items: reviews } }]).querySelectorAll('[data-slot="reviews"] article')).toHaveLength(2);
+    const a = view("a", 4, [{ kind: "product_grid", data: {} }]);
+    expect(a.querySelector('[data-slot="product-grid"] .ez\\:uppercase')).toBeNull();
+  });
+
   it("turns the kit off on every redesigned template and keeps it without a template", () => {
     for (const main of ["shop", "class", "stay", "quote"] as const) for (const letter of ["a", "b", "c"]) expect(applyTemplate(paletteDesign, resolveTemplate(main, letter)).color?.accent).toBeUndefined();
     expect(applyTemplate(paletteDesign, null).color?.accent).toBe(paletteDesign.color?.accent);

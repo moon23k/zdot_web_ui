@@ -12,6 +12,7 @@ export type OverlayProps = {
   onOpenChange: (open: boolean) => void;
   children?: ReactNode;
   closeButton?: boolean;
+  container?: HTMLElement | null;
 };
 
 export const overlaySurface = "ez:box-border ez:bg-surface ez:text-fg ez:font-body ez:break-keep ez:shadow-xl";
@@ -23,12 +24,13 @@ export function OverlayFrame({
   onOpenChange,
   children,
   closeButton = true,
+  container,
   slot,
   className,
 }: OverlayProps & { slot: string; className: string }) {
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
-      <DialogPrimitive.Portal>
+      <DialogPrimitive.Portal container={container}>
         <DialogPrimitive.Overlay className="ez:fixed ez:inset-0 ez:z-50 ez:bg-overlay" />
         <DialogPrimitive.Content
           data-slot={slot}
@@ -37,16 +39,16 @@ export function OverlayFrame({
         >
           <div className="ez:flex ez:items-start ez:justify-between ez:gap-3">
             <div className="ez:grid ez:gap-1">
-              <DialogPrimitive.Title className="ez:m-0 ez:text-lg ez:font-medium">{title}</DialogPrimitive.Title>
+              <DialogPrimitive.Title className="ez:m-0 ez:text-site-item ez:font-normal">{title}</DialogPrimitive.Title>
               {description && (
-                <DialogPrimitive.Description className="ez:m-0 ez:text-sm ez:text-muted">{description}</DialogPrimitive.Description>
+                <DialogPrimitive.Description className="ez:m-0 ez:text-site-small ez:text-muted">{description}</DialogPrimitive.Description>
               )}
             </div>
             {closeButton && (
               <DialogPrimitive.Close
                 aria-label="닫기"
                 className={cn(
-                  "ez:-m-2 ez:size-11 ez:shrink-0 ez:p-0 ez:border-0 ez:bg-transparent ez:text-2xl ez:leading-none ez:text-muted ez:cursor-pointer ez:rounded-sm",
+                  "ez:-m-2 ez:size-11 ez:shrink-0 ez:p-0 ez:border-0 ez:bg-transparent ez:text-site-heading ez:leading-none ez:text-muted ez:cursor-pointer ez:rounded-sm",
                   focusRing,
                 )}
               >

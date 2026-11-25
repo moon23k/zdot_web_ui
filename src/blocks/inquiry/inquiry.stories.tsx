@@ -65,6 +65,12 @@ function ThreadExample() {
   );
 }
 
+function LabeledExample() {
+  return <InquiryThread store="달빛 디저트" messages={messages} label="메시지" />;
+}
+
 export const List: StoryObj = { render: () => <ListExample /> };
 
 export const Thread: StoryObj = { render: () => <ThreadExample /> };
+
+export const Labeled: StoryObj = { render: () => <LabeledExample /> };

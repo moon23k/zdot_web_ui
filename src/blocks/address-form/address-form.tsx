@@ -33,11 +33,13 @@ export function AddressForm({
   mock,
   onPostalChange,
   bare,
+  contact = true,
 }: {
   initial?: AddressValue;
   mock?: boolean;
   onPostalChange?: (postal: string) => void;
   bare?: boolean;
+  contact?: boolean;
 }) {
   const [postal, setPostal] = useState(initial?.postal_code ?? "");
   const [address, setAddress] = useState(initial?.address ?? "");
@@ -61,12 +63,16 @@ export function AddressForm({
   return (
     <fieldset data-slot="address-form" className={cn(fieldset, "ez:gap-6 ez:md:grid-cols-2", bare && "ez:md:col-span-2")}>
       <legend className={cn(legend, "ez:mb-4 ez:text-site-heading ez:text-fg", bare && "ez:sr-only")}>배송지</legend>
-      <Field label="받는 분">
-        <Input name="recipient" defaultValue={initial?.recipient} required maxLength={100} autoComplete="name" />
-      </Field>
-      <Field label="휴대폰 번호">
-        <Input name="phone" defaultValue={initial?.phone} required inputMode="tel" autoComplete="tel" placeholder="010-0000-0000" />
-      </Field>
+      {contact && (
+        <>
+          <Field label="받는 분">
+            <Input name="recipient" defaultValue={initial?.recipient} required maxLength={100} autoComplete="name" />
+          </Field>
+          <Field label="휴대폰 번호">
+            <Input name="phone" defaultValue={initial?.phone} required inputMode="tel" autoComplete="tel" placeholder="010-0000-0000" />
+          </Field>
+        </>
+      )}
       <input type="hidden" name="postal_code" value={postal} />
       <input type="hidden" name="address" value={address} />
       <div className="ez:grid ez:gap-2 ez:md:col-span-2">

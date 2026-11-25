@@ -1,5 +1,6 @@
 import NextLink from "next/link";
 import type { ReactNode } from "react";
+import { Button, ButtonLink } from "../../components/button";
 import { Icon } from "../../components/icon";
 import { StarRow } from "../../components/star-row";
 import { SiteLogo } from "../../blocks/site-header/site-logo";
@@ -10,14 +11,12 @@ import { Bar, BlankButton, BlankPrice, BlankStars, Lines, Pic } from "../kit";
 import type { Case, QuoteFigures, QuoteStarter } from "../template/data";
 import { QuoteNavLinks } from "./nav";
 import { average, CASES_HREF, caseView, includesOf, leadCase, QUOTE_CONSENT, QUOTE_HREF, QUOTE_TITLE, reviewCount } from "./shared";
-import { OptionCell, StarterForm, starterState } from "./starter";
+import { OPTION_GRID, OptionCell, StarterForm, starterState } from "./starter";
 import type { QuoteFooterProps, QuoteHeaderProps, QuoteListProps } from "./types";
 
 const line = "ez:border-0 ez:border-solid ez:border-site-line";
 
 const edge = "ez:border-0 ez:border-solid ez:border-site-edge";
-
-const soft = "ez:inline-flex ez:items-center ez:justify-center ez:gap-2.5 ez:whitespace-nowrap ez:border ez:border-solid ez:border-site-edge ez:bg-surface-alt ez:font-medium ez:text-fg ez:no-underline";
 
 const big = "ez:h-14 ez:px-8 ez:text-site-item";
 
@@ -78,9 +77,9 @@ export function Header({ name, logoUrl, phone, nav, links }: QuoteHeaderProps) {
           <NextLink href={links.lookup.href} className={cn("ez:whitespace-nowrap ez:text-fg ez:no-underline ez:max-md:hidden", focusRing)}>
             {links.lookup.label}
           </NextLink>
-          <NextLink href={links.request.href} className={cn(soft, "ez:h-10 ez:px-5", focusRing)}>
+          <ButtonLink href={links.request.href} variant="outline" className="ez:h-10 ez:min-h-0 ez:px-5 ez:text-site-body">
             {links.request.label}
-          </NextLink>
+          </ButtonLink>
         </div>
       </div>
     </header>
@@ -131,7 +130,7 @@ function PriceSheet({ rows, storeName, blank }: { rows: { label: ReactNode; valu
                 <th scope="row" className={cn(cell, "ez:py-4 ez:text-site-body ez:text-muted")}>
                   {r.label}
                 </th>
-                <td className={cn(cell, "ez:py-4 ez:text-right ez:text-site-heading ez:font-medium ez:text-fg ez:tabular-nums")}>{r.value ?? null}</td>
+                <td className={cn(cell, "ez:py-4 ez:text-right ez:text-site-heading ez:font-normal ez:text-fg ez:tabular-nums")}>{r.value ?? null}</td>
               </tr>
             ))
           : [0, 1, 2, 3].map((i) => (
@@ -149,7 +148,7 @@ function PriceSheet({ rows, storeName, blank }: { rows: { label: ReactNode; valu
         <tfoot>
           <tr>
             <td colSpan={2} className="ez:p-0">
-              <NextLink href={QUOTE_HREF} className={cn("ez:flex ez:h-15 ez:items-center ez:justify-between ez:px-6 ez:font-medium ez:text-fg ez:no-underline", focusRing)}>
+              <NextLink href={QUOTE_HREF} className={cn("ez:flex ez:h-15 ez:items-center ez:justify-between ez:px-6 ez:font-normal ez:text-fg ez:no-underline", focusRing)}>
                 {QUOTE_TITLE.request}
                 <Icon name="right" size="sm" />
               </NextLink>
@@ -193,10 +192,10 @@ export function Hero({ data, context }: SectionProps<"hero">) {
           </div>
         ) : (
           <div className="ez:mt-12 ez:flex ez:flex-wrap ez:items-center ez:gap-8">
-            <NextLink href={QUOTE_HREF} className={cn(soft, big, focusRing)}>
+            <ButtonLink href={QUOTE_HREF} variant="outline" className={big}>
               {QUOTE_TITLE.request}
               <Icon name="right" size="sm" />
-            </NextLink>
+            </ButtonLink>
             {prices && (
               <NextLink href="/#packages" className={cn(textLink, focusRing)}>
                 {QUOTE_TITLE.prices}
@@ -283,8 +282,8 @@ export function Trust({ data }: SectionProps<"trust_line">) {
 
 type PackageItem = NonNullable<SectionProps<"package_cards">["data"]["items"]>[number];
 
-function Includes({ lines, className }: { lines: string[]; className?: string }) {
-  if (!lines.length) return null;
+function Includes({ lines, className, keep }: { lines: string[]; className?: string; keep?: boolean }) {
+  if (!lines.length) return keep ? <div aria-hidden="true" data-slot="package-rule" className={className} /> : null;
   return (
     <ul aria-label={QUOTE_TITLE.includes} data-slot="package-includes" className={cn("ez:m-0 ez:grid ez:list-none ez:gap-2 ez:p-0", className)}>
       {lines.map((text, i) => (
@@ -303,9 +302,9 @@ function PackageColumns({ items }: { items: (PackageItem | null)[] }) {
     <ul className={cn(line, "ez:m-0 ez:grid ez:list-none ez:grid-cols-2 ez:border-t ez:p-0", MD_COLS[cols])}>
       {items.map((p, i) => (
         <li key={p ? `${p.name}-${i}` : i} className={cn(ruled(i, cols), "ez:flex ez:flex-col ez:items-start ez:border-b ez:py-7 ez:pr-4")}>
-          <span className="ez:text-site-item ez:font-medium ez:text-fg">{p ? p.name : <Bar />}</span>
-          <span className="ez:mt-2.5 ez:text-site-rank ez:font-medium ez:text-fg ez:tabular-nums ez:break-words">{p ? p.price : <BlankPrice />}</span>
-          <Includes lines={includesOf(p)} className={cn(line, "ez:mt-5 ez:w-full ez:border-t ez:pt-4")} />
+          <span className="ez:min-h-[2lh] ez:text-site-item ez:font-normal ez:break-keep ez:text-fg">{p ? p.name : <Bar />}</span>
+          <span className="ez:mt-2.5 ez:text-site-rank ez:font-normal ez:text-fg ez:tabular-nums ez:break-words">{p ? p.price : <BlankPrice />}</span>
+          <Includes lines={includesOf(p)} keep={Boolean(p)} className={cn(line, "ez:mt-5 ez:w-full ez:border-t ez:pt-4")} />
           {p && (
             <div className="ez:mt-auto ez:pt-5">
               <NextLink href={QUOTE_HREF} aria-label={`${p.name} ${QUOTE_TITLE.request}`} className={cn(textLink, "ez:text-site-note", focusRing)}>
@@ -324,8 +323,8 @@ function PackageRows({ items }: { items: PackageItem[] }) {
     <ul className={cn(line, "ez:m-0 ez:list-none ez:border-t ez:p-0")}>
       {items.map((p, i) => (
         <li key={`${p.name}-${i}`} className={cn(line, "ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-10 ez:gap-y-2 ez:border-b ez:py-6")}>
-          <span className="ez:min-w-0 ez:flex-1 ez:text-site-item ez:font-medium ez:text-fg">{p.name}</span>
-          <span className="ez:text-site-rank ez:font-medium ez:text-fg ez:tabular-nums">{p.price}</span>
+          <span className="ez:min-w-0 ez:flex-1 ez:text-site-item ez:font-normal ez:text-fg">{p.name}</span>
+          <span className="ez:text-site-rank ez:font-normal ez:text-fg ez:tabular-nums">{p.price}</span>
           <NextLink href={QUOTE_HREF} aria-label={`${p.name} ${QUOTE_TITLE.request}`} className={cn(textLink, "ez:text-site-note", focusRing)}>
             {QUOTE_TITLE.request}
           </NextLink>
@@ -383,7 +382,7 @@ function LedgerRow({ c, tone }: { c: Case | null; tone: number }) {
       </td>
       <Cell row={Boolean(view)} className="ez:w-auto ez:py-6 ez:pr-8 ez:text-left ez:align-middle ez:font-normal ez:max-md:min-w-0 ez:max-md:flex-1 ez:max-md:p-0">
         {view ? (
-          <NextLink href={view.href} className={cn("ez:text-site-item ez:font-medium ez:text-fg ez:no-underline ez:hover:underline", focusRing)}>
+          <NextLink href={view.href} className={cn("ez:text-site-item ez:font-normal ez:text-fg ez:no-underline ez:hover:underline", focusRing)}>
             {view.title}
           </NextLink>
         ) : (
@@ -522,7 +521,7 @@ export function Faq({ context }: SectionProps<"faq">) {
 
 const formRow = cn(line, "ez:flow-root ez:border-b ez:px-6 ez:py-4");
 
-const formLabel = "ez:m-0 ez:p-0 ez:text-site-body ez:font-medium ez:text-fg ez:md:float-left ez:md:w-22 ez:md:py-2.5 ez:max-md:mb-3";
+const formLabel = "ez:m-0 ez:p-0 ez:text-site-body ez:font-normal ez:text-fg ez:md:float-left ez:md:w-22 ez:md:py-2.5 ez:max-md:mb-3";
 
 function RestRow({ rest }: { rest?: string[] }) {
   if (!rest?.length) return null;
@@ -557,9 +556,9 @@ function RequestBox({ data }: { data: QuoteStarter }) {
             <span className={cn(formLabel, "ez:block")}>
               <Bar size="short" />
             </span>
-            <div className="ez:flex ez:flex-wrap ez:gap-1.5">
+            <div className={cn(OPTION_GRID, "ez:gap-1.5")}>
               {[0, 1, 2, 3].map((j) => (
-                <span key={j} className={cn(edge, "ez:inline-flex ez:h-11 ez:w-24 ez:items-center ez:justify-center ez:border")}>
+                <span key={j} className={cn(edge, "ez:inline-flex ez:h-11 ez:items-center ez:justify-center ez:rounded-button ez:border")}>
                   <Bar size="short" />
                 </span>
               ))}
@@ -578,24 +577,19 @@ function RequestBox({ data }: { data: QuoteStarter }) {
       {(data.questions ?? []).map((q) => (
         <fieldset key={q.id} className={cn(formRow, "ez:m-0 ez:min-w-0")}>
           <legend className={formLabel}>{q.label}</legend>
-          <div className="ez:flex ez:flex-wrap ez:gap-1.5">
+          <div className={cn(OPTION_GRID, "ez:gap-1.5")}>
             {q.options.map((o) => (
-              <OptionCell
-                key={o}
-                name={q.id}
-                value={o}
-                className={cn(edge, "ez:h-11 ez:whitespace-nowrap ez:border ez:px-3 ez:text-site-body ez:text-muted ez:has-checked:bg-surface-alt ez:has-checked:font-medium ez:has-checked:text-fg")}
-              />
+              <OptionCell key={o} name={q.id} value={o} className="ez:min-h-11 ez:border-site-edge ez:text-site-body ez:text-muted" />
             ))}
           </div>
         </fieldset>
       ))}
       <RestRow rest={data.rest} />
       <div className="ez:flex ez:flex-wrap ez:items-center ez:gap-x-7 ez:gap-y-3 ez:p-6">
-        <button type="submit" className={cn(soft, big, "ez:cursor-pointer", focusRing)}>
+        <Button type="submit" className={big}>
           {QUOTE_TITLE.request}
           <Icon name="right" size="sm" />
-        </button>
+        </Button>
         <p className="ez:m-0 ez:min-w-0 ez:flex-1 ez:text-site-small ez:text-muted">{QUOTE_CONSENT}</p>
       </div>
     </StarterForm>
@@ -611,7 +605,7 @@ function ContactColumn({ phone, hours, blank }: { phone?: string | null; hours?:
           <dt className="ez:text-site-small ez:text-muted">{QUOTE_TITLE.center}</dt>
           <dd className="ez:m-0">
             {phone ? (
-              <a href={tel(phone)} className={cn("ez:text-site-rank ez:font-medium ez:text-fg ez:no-underline ez:tabular-nums", focusRing)}>
+              <a href={tel(phone)} className={cn("ez:text-site-rank ez:font-normal ez:text-fg ez:no-underline ez:tabular-nums", focusRing)}>
                 {phone}
               </a>
             ) : (
@@ -660,7 +654,7 @@ export function Footer({ storeName, phone, hours, business, nav, guide, account,
           <div className="ez:grid ez:content-start ez:gap-1.5 ez:lg:col-span-2 ez:lg:pr-6">
             <span className="ez:text-site-small ez:text-muted">{QUOTE_TITLE.center}</span>
             {phone && (
-              <a href={tel(phone)} className={cn("ez:text-site-heading ez:font-medium ez:text-fg ez:no-underline ez:tabular-nums", focusRing)}>
+              <a href={tel(phone)} className={cn("ez:text-site-heading ez:font-normal ez:text-fg ez:no-underline ez:tabular-nums", focusRing)}>
                 {phone}
               </a>
             )}
@@ -700,7 +694,7 @@ function ListRow({ c, tone }: { c: Case; tone: number }) {
           <div className="ez:w-32 ez:shrink-0 ez:md:w-42">
             <Pic src={view.image} ratio={3 / 2} tone={tone} />
           </div>
-          <span className="ez:min-w-0 ez:text-site-item ez:font-medium">{view.title}</span>
+          <span className="ez:min-w-0 ez:text-site-item ez:font-normal">{view.title}</span>
         </NextLink>
       </th>
       <td className={cn(cell, "ez:w-35 ez:text-muted")}>
@@ -729,10 +723,10 @@ function ListRequest({ data, storeName }: { data: QuoteStarter; storeName?: stri
       {storeName && <p className="ez:m-0 ez:mr-auto ez:min-w-0 ez:font-display ez:text-site-title ez:font-normal ez:text-fg">{storeName}</p>}
       <div className={cn("ez:flex ez:flex-wrap ez:items-center ez:gap-x-10 ez:gap-y-6", !storeName && "ez:ml-auto")}>
         {state === "open" ? (
-          <NextLink href={data.href ?? QUOTE_HREF} className={cn(soft, big, focusRing)}>
+          <ButtonLink href={data.href ?? QUOTE_HREF} variant="outline" className={big}>
             {QUOTE_TITLE.request}
             <Icon name="right" size="sm" />
-          </NextLink>
+          </ButtonLink>
         ) : state === "closed" ? (
           <p className="ez:m-0 ez:text-site-item ez:text-fg">{QUOTE_TITLE.closed}</p>
         ) : (
@@ -741,7 +735,7 @@ function ListRequest({ data, storeName }: { data: QuoteStarter; storeName?: stri
         {data.phone && (
           <span className="ez:grid ez:gap-0.5">
             <span className="ez:text-site-small ez:text-muted">{QUOTE_TITLE.center}</span>
-            <a href={tel(data.phone)} className={cn("ez:text-site-heading ez:font-medium ez:text-fg ez:no-underline ez:tabular-nums", focusRing)}>
+            <a href={tel(data.phone)} className={cn("ez:text-site-heading ez:font-normal ez:text-fg ez:no-underline ez:tabular-nums", focusRing)}>
               {data.phone}
             </a>
           </span>
@@ -767,7 +761,7 @@ export function List({ title, count, tabs, cases, request, storeName }: QuoteLis
               aria-current={t.on ? "page" : undefined}
               className={cn(
                 "ez:-mb-px ez:border-0 ez:border-b ez:border-solid ez:border-transparent ez:pb-3.5 ez:text-site-body ez:text-muted ez:no-underline ez:hover:text-fg",
-                t.on && "ez:border-muted ez:font-semibold ez:text-fg",
+                t.on && "ez:border-muted ez:font-medium ez:text-fg",
                 focusRing,
               )}
             >

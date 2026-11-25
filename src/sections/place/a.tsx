@@ -24,10 +24,10 @@ const bleed = "ez:mx-[calc(50%-50vw)]";
 const grid = "ez:grid ez:gap-y-10 ez:lg:grid-cols-12 ez:lg:gap-x-gutter";
 
 const display =
-  "ez:m-0 ez:font-display ez:text-site-name ez:font-semibold ez:tracking-tight ez:text-fg ez:lg:text-site-display-md";
+  "ez:m-0 ez:font-display ez:text-site-name ez:font-medium ez:tracking-tight ez:text-fg ez:lg:text-site-display-md";
 
 const title =
-  "ez:m-0 ez:font-display ez:text-site-heading ez:font-semibold ez:tracking-tight ez:text-fg ez:lg:text-site-title";
+  "ez:m-0 ez:font-display ez:text-site-heading ez:font-medium ez:tracking-tight ez:text-fg ez:lg:text-site-title";
 
 const quiet = cn("ez:text-muted ez:no-underline ez:hover:text-fg", focusRing);
 
@@ -47,7 +47,7 @@ function Go({
       href={href}
       {...(external ? out : {})}
       className={cn(
-        "ez:inline-flex ez:items-center ez:gap-3 ez:justify-self-start ez:py-1 ez:text-site-small ez:font-medium ez:text-fg ez:no-underline ez:hover:text-muted",
+        "ez:inline-flex ez:items-center ez:gap-3 ez:justify-self-start ez:py-1 ez:text-site-small ez:font-normal ez:text-fg ez:no-underline ez:hover:text-muted",
         focusRing
       )}
     >
@@ -84,7 +84,7 @@ export function Header({ name, logoUrl, phone, nav, links }: PlaceHeaderProps) {
           <NextLink
             href="/"
             className={cn(
-              "ez:min-w-0 ez:font-display ez:text-site-counter ez:font-medium ez:leading-none ez:text-fg ez:no-underline",
+              "ez:min-w-0 ez:font-display ez:text-site-counter ez:font-normal ez:leading-none ez:text-fg ez:no-underline",
               focusRing
             )}
           >
@@ -92,7 +92,7 @@ export function Header({ name, logoUrl, phone, nav, links }: PlaceHeaderProps) {
           </NextLink>
           <nav
             aria-label="주요 메뉴"
-            className="ez:ml-auto ez:flex ez:min-w-0 ez:gap-8 ez:whitespace-nowrap ez:text-site-small ez:font-medium ez:max-lg:hidden"
+            className="ez:ml-auto ez:flex ez:min-w-0 ez:gap-8 ez:whitespace-nowrap ez:text-site-small ez:font-normal ez:max-lg:hidden"
           >
             <PlaceNavLinks
               items={nav}
@@ -103,7 +103,7 @@ export function Header({ name, logoUrl, phone, nav, links }: PlaceHeaderProps) {
             />
           </nav>
           {(links.length > 0 || phone) && (
-            <div className="ez:ml-auto ez:flex ez:shrink-0 ez:items-center ez:gap-8 ez:whitespace-nowrap ez:text-site-small ez:font-medium ez:lg:ml-0">
+            <div className="ez:ml-auto ez:flex ez:shrink-0 ez:items-center ez:gap-8 ez:whitespace-nowrap ez:text-site-small ez:font-normal ez:lg:ml-0">
               {links.map((l) => (
                 <a
                   key={l.key}
@@ -144,7 +144,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
   const blank = !heading && !image;
   const over = Boolean(image);
   const logo =
-    "ez:m-0 ez:max-w-4xl ez:font-display ez:text-site-page ez:font-medium ez:leading-none ez:text-balance ez:text-fg ez:lg:text-site-hero";
+    "ez:m-0 ez:max-w-4xl ez:font-display ez:text-site-page ez:font-normal ez:leading-none ez:text-balance ez:text-fg ez:lg:text-site-hero";
   return (
     <section
       data-slot="hero"
@@ -182,7 +182,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
           {heading ? (
             <>
               {name && (
-                <p className="ez:m-0 ez:mb-6 ez:text-site-small ez:font-medium ez:tracking-widest ez:text-muted">
+                <p className="ez:m-0 ez:mb-6 ez:text-site-small ez:font-normal ez:tracking-widest ez:text-muted">
                   {name}
                 </p>
               )}
@@ -390,7 +390,7 @@ export function Store({ data, context }: SectionProps<"store_info">) {
                 key={r.label}
                 className="ez:grid ez:grid-cols-[minmax(0,7rem)_minmax(0,1fr)] ez:gap-4"
               >
-                <dt className="ez:text-site-small ez:font-medium ez:leading-relaxed ez:text-muted">
+                <dt className="ez:text-site-small ez:font-normal ez:leading-relaxed ez:text-muted">
                   {r.label}
                 </dt>
                 <dd className="ez:m-0 ez:min-w-0 ez:text-site-note ez:leading-relaxed ez:text-fg">
@@ -442,7 +442,7 @@ export function Footer({
     >
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-18 ez:pb-12 ez:lg:pt-24 ez:lg:pb-16">
         <div className="ez:grid ez:gap-10 ez:text-site-small ez:md:grid-cols-12 ez:md:gap-x-gutter">
-          <p className="ez:m-0 ez:font-display ez:text-site-heading ez:font-medium ez:text-fg ez:md:col-span-5 ez:lg:text-site-title">
+          <p className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:text-fg ez:md:col-span-5 ez:lg:text-site-title">
             {storeName}
           </p>
           {(nav.length > 0 || links.length > 0) && (

@@ -65,7 +65,7 @@ describe("store font", () => {
 
   it("defaults to the fixed hierarchy", () => {
     const vars = designVars({});
-    expect([vars["--ezd-title-weight"], vars["--ezd-subtitle-weight"], vars["--ezd-body-weight"]]).toEqual(["700", "600", "400"]);
+    expect([vars["--ezd-display-weight"], vars["--ezd-title-weight"], vars["--ezd-subtitle-weight"], vars["--ezd-body-weight"]]).toEqual(["400", "400", "400", "400"]);
     expect(vars["--ezd-body-style"]).toBe("normal");
   });
 

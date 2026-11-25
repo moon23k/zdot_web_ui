@@ -136,13 +136,40 @@
   margin-top: 2px;
   accent-color: var(--ezd-primary);
 }
+.ez-check input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  flex: none;
+  margin: 2px 0 0;
+  border: 1px solid var(--ez-color-site-faint);
+  border-radius: min(var(--ezd-button-radius), 6px);
+  background: var(--ezd-surface);
+  cursor: pointer;
+}
+.ez-check input[type="checkbox"]:checked {
+  background: var(--ezd-point-soft);
+  border-color: var(--ezd-primary);
+}
+.ez-check input[type="checkbox"]:checked::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ezd-primary);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3.2L15 7' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3.2L15 7' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.ez-check input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
 .ez-check small {
   display: block;
   margin-top: 4px;
 }
 .ez-form {
   display: grid;
-  gap: 4px;
+  gap: 24px;
   max-width: 480px;
 }
 :where(.ez-root) :is(strong, b, th) {
@@ -193,7 +220,13 @@
 }
 .ez-gallery {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
+  margin: 0;
+}
+.ez-gallery > [data-slot="photo"] {
+  width: 100%;
+  margin: 0;
 }
 
 .ez-lines {
@@ -216,7 +249,9 @@
 .ez-order__actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: stretch;
   gap: 8px;
+  margin-left: auto;
 }
 .ez-order__confirm {
   display: grid;
@@ -249,15 +284,19 @@
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
+  background: var(--ezd-primary);
+  color: var(--ezd-on-primary);
   transition: background var(--ezd-duration), border-color var(--ezd-duration);
 }
 .ez-btn--secondary {
   background: transparent;
-  border-color: var(--ezd-primary-border);
+  border-color: var(--ez-color-site-edge);
   color: var(--ezd-text);
 }
 .ez-btn:disabled {
-  opacity: 0.45;
+  background: var(--ezd-off);
+  border-color: transparent;
+  color: var(--ezd-off-ink);
   cursor: not-allowed;
 }
 .ez-input {
@@ -284,8 +323,6 @@
   min-height: var(--ezd-control);
   padding: 0 28px;
   font-weight: 500;
-  background: var(--ezd-point-soft);
-  color: var(--ezd-primary);
 }
 :where(.ez-root[data-frame="gallery"]) .ez-btn--secondary {
   background: transparent;
@@ -328,6 +365,11 @@
   width: 32%;
   padding-right: 16px;
 }
+:where(.ez-root[data-frame="gallery"] table:not([class])) td {
+  font-size: var(--ez-text-site-body);
+  line-height: var(--ez-text-site-body--line-height);
+  color: var(--ezd-text);
+}
 .ez-liked {
   color: var(--ezd-primary);
   fill: currentColor;
@@ -349,13 +391,13 @@
   margin: 0;
   font-size: var(--ez-text-site-item);
   line-height: var(--ez-text-site-item--line-height);
-  font-weight: 500;
+  font-weight: 400;
 }
 .ez-count {
   margin-left: 2px;
   vertical-align: top;
   font-size: var(--ez-text-site-small);
-  font-weight: 500;
+  font-weight: 400;
   color: var(--ezd-primary);
 }
 .ez-booking-dates {

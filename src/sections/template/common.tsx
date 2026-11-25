@@ -3,7 +3,7 @@ import { ButtonLink } from "../../components/button";
 import type { SectionProps } from "../../renderer/registry";
 import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
-import { countSup, figure } from "../../utils/styles";
+import { countSup, numeral } from "../../utils/styles";
 import { StarRow } from "../../components/star-row";
 import type { Review } from "./data";
 import { Bar, BlankStars, Lines, Pairs, Pic, Split } from "../kit";
@@ -115,7 +115,7 @@ export function ProcessSteps({ data }: SectionProps<"process_steps">) {
               <span className="ez:size-2.25 ez:rounded-full ez:bg-primary" />
               <span className="ez:h-px ez:flex-1 ez:bg-site-line" />
             </span>
-            <span className={cn(figure, "ez:text-site-section ez:leading-none")}>{i + 1}</span>
+            <span className={cn(numeral, "ez:text-site-section ez:leading-none")}>{i + 1}</span>
             <span className="ez:text-site-heading">{s || <Bar size="short" />}</span>
           </li>
         ))}
@@ -131,7 +131,7 @@ export function Numbers({ data }: SectionProps<"numbers">) {
     <dl data-slot="numbers" data-blank={items.length ? undefined : ""} className="ez:m-0 ez:grid ez:grid-cols-2 ez:gap-y-6 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-7 ez:text-fg ez:md:grid-cols-4">
       {shown.map((n) => (
         <div key={n.label} className="ez:flex ez:items-baseline ez:gap-3">
-          <dd className={cn(figure, "ez:order-1 ez:m-0 ez:text-site-figure-lg")}>{n.value || <Bar size="short" />}</dd>
+          <dd className={cn(numeral, "ez:order-1 ez:m-0 ez:text-site-figure-lg")}>{n.value || <Bar size="short" />}</dd>
           <dt className="ez:order-2 ez:text-site-small ez:text-muted">{n.label}</dt>
         </div>
       ))}

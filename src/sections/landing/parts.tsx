@@ -13,7 +13,7 @@ import type { LandingFooterProps, LandingHeaderProps } from "./types";
 
 const rule = "ez:border-0 ez:border-solid ez:border-site-line";
 
-const heading = "ez:m-0 ez:font-display ez:text-site-section ez:font-medium ez:text-fg";
+const heading = "ez:m-0 ez:font-display ez:text-site-section ez:font-normal ez:text-fg";
 
 const link = cn(textLink, focusRing);
 
@@ -37,7 +37,7 @@ export function InfoList({ rows }: { rows: { label: string; value: ReactNode }[]
     <dl className={cn(rule, "ez:m-0 ez:grid ez:border-t")}>
       {rows.map((r) => (
         <div key={r.label} className={cn(rule, "ez:grid ez:grid-cols-[minmax(0,8rem)_minmax(0,1fr)] ez:gap-4 ez:border-b ez:py-3.5")}>
-          <dt className="ez:font-medium ez:text-fg">{r.label}</dt>
+          <dt className="ez:font-normal ez:text-fg">{r.label}</dt>
           <dd className="ez:m-0 ez:min-w-0 ez:text-fg">{r.value}</dd>
         </div>
       ))}
@@ -88,7 +88,7 @@ export function StandInHeader({ name, logoUrl, phone, nav, links }: LandingHeade
   return (
     <header data-slot="site-header" className={cn(rule, "ez:border-b ez:bg-surface")}>
       <div className="ez:mx-auto ez:flex ez:min-h-16 ez:max-w-wrap ez:items-center ez:gap-6 ez:px-page">
-        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-counter ez:font-medium ez:text-fg ez:no-underline", focusRing)}>
+        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-counter ez:font-normal ez:text-fg ez:no-underline", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         <nav aria-label="주요 메뉴" className="ez:flex ez:min-w-0 ez:flex-1 ez:flex-wrap ez:gap-x-8 ez:text-site-body ez:max-lg:hidden">
@@ -111,7 +111,7 @@ export function StandInFooter({ storeName, phone, hours, address, business, link
   return (
     <footer data-slot="site-footer" className={cn(rule, "ez:border-t ez:text-fg")}>
       <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-6 ez:px-page ez:py-12 ez:text-site-note">
-        <p className="ez:m-0 ez:text-site-counter ez:font-medium">{storeName}</p>
+        <p className="ez:m-0 ez:text-site-counter ez:font-normal">{storeName}</p>
         <div className="ez:grid ez:gap-1 ez:text-muted">
           {address && <span>{address}</span>}
           {phone && <span className="ez:tabular-nums">{phone}</span>}
@@ -137,7 +137,7 @@ export function StandInHero({ data, context }: SectionProps<"hero">) {
   return (
     <section data-slot="hero" data-blank={data.image || title ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg">
       <Pic src={data.image} ratio={1.5} />
-      {title ? <h1 className="ez:m-0 ez:font-display ez:text-site-section ez:font-medium">{title}</h1> : context.storeName && <p className="ez:m-0 ez:text-site-section ez:font-medium">{context.storeName}</p>}
+      {title ? <h1 className="ez:m-0 ez:font-display ez:text-site-section ez:font-normal">{title}</h1> : context.storeName && <p className="ez:m-0 ez:text-site-section ez:font-normal">{context.storeName}</p>}
       {title && sub && (
         <p data-slot="hero-sub" className="ez:m-0 ez:text-muted">
           {sub}
@@ -196,7 +196,7 @@ export function MenuBlock({ data, title, id }: SectionProps<"menu"> & { title: s
         <div className="ez:grid ez:gap-10 ez:md:grid-cols-2 ez:lg:grid-cols-3">
           {groups.map((g) => (
             <div key={g.id ?? "all"} className="ez:grid ez:content-start ez:gap-3">
-              {g.name && <h3 className="ez:m-0 ez:text-site-item ez:font-medium">{g.name}</h3>}
+              {g.name && <h3 className="ez:m-0 ez:text-site-item ez:font-normal">{g.name}</h3>}
               <dl className={cn(rule, "ez:m-0 ez:border-t")}>
                 {g.items.map((item) => (
                   <div key={item.id} className={cn(rule, "ez:flex ez:items-baseline ez:justify-between ez:gap-6 ez:border-b ez:py-3")}>

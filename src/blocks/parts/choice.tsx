@@ -16,7 +16,7 @@ export function Choice({
       <input className={cn("ez:m-0 ez:mt-[0.175rem] ez:size-5 ez:shrink-0 ez:accent-primary", focusRing)} {...input} />
       <span className="ez:grid ez:gap-1">
         <span>{label}</span>
-        {description && <span className="ez:text-sm ez:text-muted">{description}</span>}
+        {description && <span className="ez:text-site-small ez:text-muted">{description}</span>}
       </span>
     </label>
   );

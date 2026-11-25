@@ -11,8 +11,8 @@ const step = cn(
 );
 
 const sizes = {
-  md: { box: "ez:h-11", step: "ez:size-11 ez:text-base", input: "ez:w-7" },
-  sm: { box: "ez:h-9", step: "ez:size-9 ez:text-base", input: "ez:w-7" },
+  md: { box: "ez:h-11", step: "ez:size-11 ez:text-site-body", input: "ez:w-7" },
+  sm: { box: "ez:h-9", step: "ez:size-9 ez:text-site-body", input: "ez:w-7" },
 };
 
 export function Quantity({
@@ -47,7 +47,7 @@ export function Quantity({
     <span
       data-slot="quantity"
       className={cn(
-        "ez:inline-flex ez:items-center ez:box-border ez:rounded-full ez:border ez:border-solid ez:border-site-line ez:bg-transparent",
+        "ez:inline-flex ez:items-center ez:box-border ez:rounded-button ez:border ez:border-solid ez:border-site-line ez:bg-transparent",
         z.box,
         className,
       )}
@@ -61,7 +61,7 @@ export function Quantity({
         readOnly
         aria-label={`${prefix}수량`}
         inputMode="numeric"
-        className={cn(z.input, "ez:m-0 ez:p-0 ez:border-0 ez:bg-transparent ez:text-center ez:text-fg ez:font-body ez:font-medium ez:text-site-lead ez:tabular-nums")}
+        className={cn(z.input, "ez:m-0 ez:p-0 ez:border-0 ez:bg-transparent ez:text-center ez:text-fg ez:font-body ez:font-normal ez:text-site-lead ez:tabular-nums")}
       />
       <button type="button" className={cn(step, z.step)} aria-label={`${prefix}수량 늘리기`} onClick={() => set(current + 1)} disabled={current >= max}>
         +

@@ -16,9 +16,9 @@ const rule = "ez:border-0 ez:border-solid ez:border-site-line";
 
 const edge = "ez:border-0 ez:border-solid ez:border-site-edge";
 
-const h2 = "ez:m-0 ez:shrink-0 ez:font-display ez:text-site-note ez:font-medium ez:tracking-widest ez:text-fg";
+const h2 = "ez:m-0 ez:shrink-0 ez:font-display ez:text-site-note ez:font-normal ez:tracking-widest ez:text-fg";
 
-const small = "ez:text-site-small ez:font-medium ez:tracking-wider ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4";
+const small = "ez:text-site-small ez:font-normal ez:tracking-wider ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4";
 
 const boxed = cn(
   edge,
@@ -26,7 +26,7 @@ const boxed = cn(
   focusRing,
 );
 
-const label = "ez:text-site-note ez:font-medium ez:tracking-wider ez:text-fg ez:underline ez:decoration-1 ez:underline-offset-4";
+const label = "ez:text-site-note ez:font-normal ez:tracking-wider ez:text-fg ez:underline ez:decoration-1 ez:underline-offset-4";
 
 const grid = "ez:grid ez:text-fg ez:lg:grid-cols-12 ez:lg:gap-x-gutter";
 
@@ -47,7 +47,7 @@ export function Header({ name, logoUrl, phone, nav, links }: PlaceHeaderProps) {
         </nav>
         <NextLink
           href="/"
-          className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-counter ez:font-medium ez:tracking-widest ez:text-fg ez:no-underline ez:lg:justify-self-center", focusRing)}
+          className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-counter ez:font-normal ez:tracking-widest ez:text-fg ez:no-underline ez:lg:justify-self-center", focusRing)}
         >
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
@@ -276,7 +276,7 @@ export function Faq({ context }: SectionProps<"faq">) {
         {faqs.length
           ? faqs.map((f) => (
               <div key={f.id} className={qaRow}>
-                <dt className="ez:flex ez:min-w-0 ez:gap-2 ez:font-medium ez:leading-relaxed ez:tracking-wide ez:text-fg">
+                <dt className="ez:flex ez:min-w-0 ez:gap-2 ez:font-normal ez:leading-relaxed ez:tracking-wide ez:text-fg">
                   <span aria-hidden="true" className="ez:shrink-0 ez:text-muted">
                     Q.
                   </span>

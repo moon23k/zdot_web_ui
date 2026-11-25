@@ -30,6 +30,7 @@ export function BuyBox({
   checkoutPath = "/checkout",
   rating,
   aside,
+  lead,
 }: {
   product: ProductDetail;
   addAction: FormAction;
@@ -38,6 +39,7 @@ export function BuyBox({
   checkoutPath?: string;
   rating?: { average: number; count: number } | null;
   aside?: ReactNode;
+  lead?: string[];
 }) {
   const first = product.variants.find((v) => v.in_stock) ?? product.variants[0];
   const [variantId, setVariantId] = useState(first?.id ?? "");
@@ -72,12 +74,12 @@ export function BuyBox({
         {rating && rating.count > 0 && (
           <NextLink href="#reviews" className="ez:flex ez:items-center ez:gap-2 ez:text-site-small ez:text-fg ez:no-underline">
             <StarRow rating={rating.average} />
-            <span className="ez:font-medium ez:tabular-nums">{rating.average.toFixed(1)}</span>
+            <span className="ez:tabular-nums">{rating.average.toFixed(1)}</span>
             <span className="ez:text-muted">리뷰 {rating.count}</span>
           </NextLink>
         )}
       </div>
-      <p className="ez:m-0 ez:flex ez:flex-wrap ez:items-baseline ez:gap-2 ez:text-site-heading ez:font-medium ez:tabular-nums">
+      <p className="ez:m-0 ez:flex ez:flex-wrap ez:items-baseline ez:gap-2 ez:text-site-heading ez:font-normal ez:tabular-nums">
         {sale > 0 && !soldOut && <span className="ez:text-primary">{sale}%</span>}
         <span className={soldOut ? "ez:text-muted" : undefined}>
           {won(from ?? unit)}
@@ -85,6 +87,15 @@ export function BuyBox({
         </span>
         {sale > 0 && !soldOut && <s className="ez:text-site-small ez:font-normal ez:text-muted">{won(product.list_price)}</s>}
       </p>
+      {lead && lead.length > 0 && (
+        <div data-slot="buy-lead" className="ez:grid ez:gap-2 ez:text-site-body">
+          {lead.map((line, i) => (
+            <p key={i} className={cn("ez:m-0 ez:whitespace-pre-line", i > 0 && "ez:text-muted")}>
+              {line}
+            </p>
+          ))}
+        </div>
+      )}
       {options && <hr className="ez:m-0 ez:h-px ez:border-0 ez:bg-site-line" />}
       {!selling && !soldOut && (
         <p className="ez:m-0 ez:flex ez:items-center ez:gap-2 ez:rounded-md ez:bg-surface-alt ez:p-3 ez:text-site-small">
@@ -148,10 +159,12 @@ export function BuyBox({
           <div className="ez:grid ez:gap-2 ez:border-0 ez:border-y ez:border-solid ez:border-site-line ez:py-4.5">
             <div className="ez:flex ez:flex-wrap ez:items-center ez:justify-between ez:gap-3">
               <Quantity value={quantity} onChange={setQuantity} />
-              <p className="ez:m-0 ez:flex ez:items-baseline ez:gap-3.5">
-                <span className="ez:text-site-small ez:text-muted">총 상품 금액</span>
-                <strong className="ez:text-site-heading ez:font-medium ez:tabular-nums ez:whitespace-nowrap">{won(unit * quantity)}</strong>
-              </p>
+              {quantity > 1 && (
+                <p className="ez:m-0 ez:flex ez:items-baseline ez:gap-3.5">
+                  <span className="ez:text-site-small ez:text-muted">총 상품 금액</span>
+                  <strong className="ez:text-site-heading ez:font-medium ez:tabular-nums ez:whitespace-nowrap">{won(unit * quantity)}</strong>
+                </p>
+              )}
             </div>
             {product.non_returnable && <Status icon="ban">교환·반품 불가</Status>}
           </div>
@@ -178,7 +191,7 @@ export function BuyBox({
           <Photo src={product.cover_url} alt="" sizes="64px" className="ez:w-16 ez:shrink-0 ez:aspect-[4/5]" />
           <div className="ez:grid ez:gap-0.5">
             <span>{product.name}</span>
-            <span className="ez:text-[13px] ez:text-muted">
+            <span className="ez:text-site-small ez:text-muted">
               {[options ? variant?.label : null, `${quantity}개`].filter(Boolean).join(" · ")}
             </span>
             <strong className="ez:font-medium ez:tabular-nums">{won(unit * quantity)}</strong>

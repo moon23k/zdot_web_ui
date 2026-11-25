@@ -27,14 +27,56 @@ function FitName({ name }: { name: string }) {
     return () => watch.disconnect();
   }, [name]);
   return (
-    <span ref={ref} data-wrap={wrap || undefined} className={cn("ez:block ez:max-lg:line-clamp-2 ez:lg:whitespace-nowrap", wrap && "ez:max-lg:text-site-heading")}>
+    <span ref={ref} data-wrap={wrap || undefined} className={cn("ez:block ez:min-w-0 ez:max-lg:line-clamp-2 ez:lg:whitespace-nowrap", wrap && "ez:max-lg:text-site-heading")}>
       {name}
     </span>
   );
 }
 
+const MARK_RATIO = 1.6;
+
+type Shape = "pending" | "mark" | "wide" | "failed";
+
+function shapeOf(img: HTMLImageElement): Shape {
+  if (!img.complete) return "pending";
+  if (!img.naturalWidth || !img.naturalHeight) return "failed";
+  return img.naturalWidth / img.naturalHeight < MARK_RATIO ? "mark" : "wide";
+}
+
+const known = new Map<string, Shape>();
+
+function LogoImage({ name, src }: { name: string; src: string }) {
+  const ref = useRef<HTMLImageElement>(null);
+  const [shape, setShape] = useState<Shape>(() => known.get(src) ?? "pending");
+  const settle = (next: Shape) => {
+    if (next !== "pending") known.set(src, next);
+    setShape(next);
+  };
+  useLayoutEffect(() => {
+    const img = ref.current;
+    if (!img || known.has(src)) return;
+    const next = shapeOf(img);
+    if (next !== "pending") known.set(src, next);
+    setShape(next);
+  }, [src]);
+  if (shape === "failed") return <FitName name={name} />;
+  const mark = shape === "mark";
+  return (
+    <span data-slot="site-logo" data-shape={shape} className="ez:flex ez:min-w-0 ez:items-center ez:gap-3">
+      <img
+        ref={ref}
+        src={src}
+        alt={mark ? "" : name}
+        className="ez:block ez:h-9 ez:w-auto ez:max-w-full ez:flex-none ez:object-contain ez:object-left"
+        onLoad={(e) => settle(shapeOf(e.currentTarget))}
+        onError={() => settle("failed")}
+      />
+      {mark && <FitName name={name} />}
+    </span>
+  );
+}
+
 export function SiteLogo({ name, src }: { name: string; src?: string | null }) {
-  const [failed, setFailed] = useState(false);
-  if (!src || failed) return <FitName name={name} />;
-  return <img src={src} alt={name} className="ez:block ez:h-9 ez:w-auto ez:max-w-full ez:object-contain ez:object-left" onError={() => setFailed(true)} />;
+  if (!src) return <FitName name={name} />;
+  return <LogoImage key={src} name={name} src={src} />;
 }

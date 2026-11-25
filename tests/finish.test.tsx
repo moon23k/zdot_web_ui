@@ -267,43 +267,40 @@ describe("수업 달력의 표시", () => {
   ];
   const cell = (root: HTMLElement, day: number) => root.querySelector(`button[aria-label^="11월 ${day}일 "]`)!;
 
-  it("수업 없는 날은 흐리게, 다 찬 날은 취소선, 열린 날은 점", () => {
-    const root = render(<Calendar days={days} dots legend />).container;
+  it("수업 없는 날은 흐리게, 다 찬 날은 숫자 아래 마감, 열린 날은 잉크 500", () => {
+    const root = render(<Calendar days={days} availability />).container;
     expect(cell(root, 2).className).not.toContain("ez:line-through");
     expect(cell(root, 2).hasAttribute("data-outside")).toBe(true);
     expect((cell(root, 2) as HTMLButtonElement).disabled).toBe(true);
-    expect(cell(root, 3).className).toContain("ez:line-through");
-    expect(cell(root, 3).className).not.toContain("ez:after:bg-primary");
-    expect(cell(root, 4).className).toContain("ez:after:bg-primary");
-    expect(cell(root, 4).className).not.toContain("ez:line-through");
-  });
-
-  const legendOf = (list: CalendarDate[]) => render(<Calendar days={list} dots legend />).container.querySelector("[data-slot=calendar-legend]");
-
-  it("범례는 예약 가능 · 마감 두 줄을 실제 표시 모양으로", () => {
-    const legend = legendOf(days)!;
-    const rows = [...legend.querySelectorAll("li")];
-    expect(rows.map((r) => r.textContent)).toEqual(["예약 가능", "3마감"]);
-    expect(rows[0].querySelector("span")?.className).toContain("ez:bg-primary");
-    const sample = rows[1].querySelector("span")!.className;
-    for (const name of ["ez:line-through", "ez:text-site-off", "ez:text-site-note", "ez:tabular-nums"]) expect(sample).toContain(name);
-    expect(legend.className).toContain("ez:text-site-caption");
-  });
-
-  it("마감 견본은 취소선 날 중 두 자리 날짜를 먼저 쓴다", () => {
-    const legend = legendOf([...days, { date: "2026-11-12", disabled: true }])!;
-    expect(legend.querySelectorAll("li")[1].textContent).toBe("12마감");
-  });
-
-  it("범례는 달력에 실제로 있는 상태만", () => {
-    expect([...legendOf(days.filter((d) => d.date !== "2026-11-03"))!.querySelectorAll("li")].map((r) => r.textContent)).toEqual(["예약 가능"]);
-    expect([...legendOf(days.filter((d) => d.date !== "2026-11-04"))!.querySelectorAll("li")].map((r) => r.textContent)).toEqual(["3마감"]);
-    expect(legendOf([days[0]])).toBeNull();
-  });
-
-  it("범례를 켜지 않은 달력은 그대로", () => {
-    const root = render(<Calendar days={days} dots />).container;
+    expect(cell(root, 2).textContent).toBe("2");
+    expect(cell(root, 3).className).not.toContain("ez:line-through");
+    expect(cell(root, 3).textContent).toBe("3마감");
+    expect(cell(root, 3).getAttribute("aria-label")).toContain("마감");
+    expect(cell(root, 3).querySelectorAll("span")[1].className).toContain("ez:text-site-small");
+    expect(cell(root, 4).className).toContain("ez:font-medium");
+    expect(cell(root, 4).className).not.toContain("ez:after:");
     expect(root.querySelector("[data-slot=calendar-legend]")).toBeNull();
-    expect(root.querySelector("[data-slot=calendar]")!.children).toHaveLength(2);
+  });
+
+  it("고른 날은 메인 컬러 1px 테두리 하나, 면 · 글자색 없이", () => {
+    const root = render(<Calendar days={days} value={{ start: "2026-11-04" }} availability />).container;
+    const picked = cell(root, 4).className;
+    expect(picked).toContain("ez:shadow-[inset_0_0_0_1px_var(--ezd-primary)]");
+    expect(picked).not.toContain("ez:bg-point-soft");
+    expect(picked).not.toContain("ez:text-primary");
+  });
+
+  it("마감 표시를 켜지 않은 달력은 취소선 그대로", () => {
+    const root = render(<Calendar days={days} />).container;
+    expect(cell(root, 3).className).toContain("ez:line-through");
+    expect(cell(root, 3).textContent).toBe("3");
+    expect(cell(root, 4).className).not.toContain("ez:font-medium");
+  });
+
+  it("화살표 · 날짜 칸은 단추 반경", () => {
+    const root = render(<Calendar days={days} />).container;
+    expect(root.querySelector(".ez\\:rounded-full")).toBeNull();
+    expect(cell(root, 4).className).toContain("ez:rounded-button");
+    expect(root.querySelector('button[aria-label="다음 달"]')!.className).toContain("ez:rounded-button");
   });
 });

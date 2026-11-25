@@ -76,3 +76,5 @@ const doc: DetailDocValue = {
 };
 
 export const Default: StoryObj = { render: () => <DetailDoc doc={doc} /> };
+
+export const Split: StoryObj = { render: () => <DetailDoc doc={doc} split /> };

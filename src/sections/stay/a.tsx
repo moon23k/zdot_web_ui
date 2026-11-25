@@ -1,6 +1,7 @@
 import NextLink from "next/link";
 import type { ReactNode } from "react";
 import { SiteLogo } from "../../blocks/site-header/site-logo";
+import { Button } from "../../components/button";
 import { Icon } from "../../components/icon";
 import { Photo } from "../../components/photo";
 import { StarRow } from "../../components/star-row";
@@ -28,12 +29,9 @@ const subLink = cn(textLink, "ez:border-site-line ez:font-normal ez:text-site-bo
 
 const select = cn("ez:m-0 ez:cursor-pointer ez:appearance-none ez:border-0 ez:bg-transparent ez:p-0 ez:font-body ez:tabular-nums", focusRing);
 
-function Head({ eyebrow, title }: { eyebrow: string; title: string }) {
+function Head({ title }: { title: string }) {
   return (
-    <div className="ez:grid ez:justify-items-center ez:gap-3.5 ez:text-center">
-      <span aria-hidden="true" className="ez:text-site-small ez:uppercase ez:tracking-widest ez:text-muted">
-        {eyebrow}
-      </span>
+    <div className="ez:grid ez:justify-items-center ez:text-center">
       <h2 className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:leading-snug ez:lg:text-site-title">{title}</h2>
     </div>
   );
@@ -62,7 +60,7 @@ export function Header({ name, logoUrl, nav, links }: StayHeaderProps) {
           <NextLink
             href="/"
             className={cn(
-              "ez:min-w-0 ez:font-display ez:text-site-heading ez:font-medium ez:leading-none ez:tracking-wide ez:text-fg ez:no-underline ez:lg:justify-self-center ez:lg:text-center ez:lg:text-site-logo",
+              "ez:min-w-0 ez:font-display ez:text-site-heading ez:font-normal ez:leading-none ez:tracking-wide ez:text-fg ez:no-underline ez:lg:justify-self-center ez:lg:text-center ez:lg:text-site-logo",
               focusRing,
             )}
           >
@@ -133,7 +131,7 @@ const cellLabel = "ez:text-site-small ez:text-muted";
 
 const cellValue = "ez:flex ez:items-center ez:gap-2.5 ez:text-site-item ez:font-normal";
 
-const go = "ez:col-span-2 ez:flex ez:min-h-14 ez:items-center ez:justify-center ez:gap-3.5 ez:px-11 ez:font-body ez:text-site-body ez:font-medium ez:text-fg ez:md:col-span-1 ez:md:min-h-0";
+const go = "ez:col-span-2 ez:flex ez:h-auto ez:min-h-14 ez:items-center ez:justify-center ez:gap-3.5 ez:rounded-none ez:px-11 ez:font-body ez:text-site-body ez:md:col-span-1 ez:md:min-h-0";
 
 export function Booking({ data }: SectionProps<"booking_strip">) {
   const labels = [STAY_TITLE.dateIn, STAY_TITLE.dateOut, STAY_TITLE.guests];
@@ -149,7 +147,7 @@ export function Booking({ data }: SectionProps<"booking_strip">) {
               </span>
             </div>
           ))}
-          <BlankButton variant="outline" className={cn(go, "ez:h-auto ez:rounded-none ez:border-0 ez:bg-surface-alt")}>
+          <BlankButton variant="outline" className={cn(go, "ez:border-0 ez:bg-surface-alt")}>
             {STAY_TITLE.find}
           </BlankButton>
         </div>
@@ -190,10 +188,10 @@ export function Booking({ data }: SectionProps<"booking_strip">) {
             </span>
           </span>
         </div>
-        <button type="submit" className={cn(go, "ez:m-0 ez:cursor-pointer ez:border-0 ez:bg-surface-alt", focusRing)}>
+        <Button type="submit" className={go}>
           {STAY_TITLE.find}
           <Icon name="right" />
-        </button>
+        </Button>
       </StayForm>
     </section>
   );
@@ -211,9 +209,6 @@ export function Story({ data }: SectionProps<"testimonial">) {
     <section data-slot="testimonial" data-blank={review ? undefined : ""} data-bleed="" className={cn("ez:grid ez:bg-surface-alt ez:text-fg ez:lg:grid-cols-2", bleed)}>
       <Photo src={data.image} alt="" sizes="(max-width: 1024px) 100vw, 50vw" tone={1} className="ez:aspect-[4/5] ez:rounded-none ez:lg:aspect-auto ez:lg:h-225" />
       <div className="ez:flex ez:flex-col ez:items-start ez:justify-center ez:gap-6 ez:px-page ez:py-14 ez:lg:gap-7 ez:lg:px-30 ez:lg:py-20">
-        <span aria-hidden="true" className="ez:text-site-small ez:uppercase ez:tracking-widest ez:text-muted">
-          Review
-        </span>
         {review ? (
           <figure className="ez:m-0 ez:grid ez:max-w-130 ez:gap-6 ez:lg:gap-7">
             {review.rating != null && <StarRow rating={review.rating} className="ez:text-muted" />}
@@ -244,7 +239,7 @@ export function Story({ data }: SectionProps<"testimonial">) {
   );
 }
 
-type Fact = { label: string; value: ReactNode; strong?: boolean };
+type Fact = { label: string; value: ReactNode };
 
 function Facts({ rows }: { rows: Fact[] }) {
   return (
@@ -252,7 +247,7 @@ function Facts({ rows }: { rows: Fact[] }) {
       {rows.map((r) => (
         <div key={r.label} className={cn(line, "ez:grid ez:grid-cols-[1fr_3fr] ez:gap-4 ez:border-b ez:py-3 ez:text-site-body")}>
           <dt className="ez:text-muted">{r.label}</dt>
-          <dd className={cn("ez:m-0 ez:text-fg ez:tabular-nums", r.strong && "ez:font-medium")}>{r.value}</dd>
+          <dd className="ez:m-0 ez:text-fg ez:tabular-nums">{r.value}</dd>
         </div>
       ))}
     </dl>
@@ -307,10 +302,10 @@ function RoomRow({ v, index, list, dates }: { v: RoomView; index: number; list?:
             />
             <div className="ez:mt-7 ez:mb-1.5 ez:flex ez:flex-col">
               {q && <span className="ez:text-site-note ez:text-muted ez:tabular-nums">{[dates, q.nights].filter(Boolean).join(" · ")}</span>}
-              <span className={cn("ez:text-site-heading ez:font-medium ez:tabular-nums", full ? "ez:text-muted" : "ez:text-fg")}>{q ? q.price : v.from}</span>
+              <span className={cn("ez:text-site-heading ez:tabular-nums", q ? "ez:font-medium" : "ez:font-normal", full ? "ez:text-muted" : "ez:text-fg")}>{q ? q.price : v.from}</span>
             </div>
             <div className="ez:mb-8 ez:min-h-5">
-              {full ? <p className="ez:m-0 ez:text-site-note ez:font-medium ez:text-fg">{q?.note}</p> : <Small items={state} />}
+              {full ? <p className="ez:m-0 ez:text-site-note ez:font-normal ez:text-fg">{q?.note}</p> : <Small items={state} />}
             </div>
             <div className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-8">
               {v.book && (
@@ -325,7 +320,7 @@ function RoomRow({ v, index, list, dates }: { v: RoomView; index: number; list?:
           </>
         ) : (
           <>
-            <Facts rows={[...(v.guests ? [{ label: STAY_TITLE.guests, value: v.guests }] : []), { label: STAY_TITLE.price, value: v.from, strong: true }]} />
+            <Facts rows={[...(v.guests ? [{ label: STAY_TITLE.guests, value: v.guests }] : []), { label: STAY_TITLE.price, value: v.from }]} />
             <Small items={state} className="ez:mt-3" />
             <div className="ez:mt-9 ez:flex ez:flex-wrap ez:items-baseline ez:gap-8">
               <NextLink href={v.href} className={cn(link, focusRing)}>
@@ -367,7 +362,7 @@ export function Rooms({ data }: SectionProps<"room_list">) {
   const views = (data.rooms ?? []).slice(0, 2).map(roomView);
   return (
     <section data-slot="room-list" id="rooms" data-blank={views.length ? undefined : ""} className="ez:grid ez:text-fg">
-      <Head eyebrow="Rooms" title={STAY_TITLE.rooms} />
+      <Head title={STAY_TITLE.rooms} />
       <div className={cn(body, rows)}>
         {views.length ? views.map((v, i) => <RoomRow key={v.id} v={v} index={i} />) : [0, 1].map((i) => <BlankRow key={i} index={i} />)}
       </div>
@@ -391,7 +386,7 @@ export function Gallery({ data }: SectionProps<"gallery">) {
   const tiles = images.length ? images : [null, null, null, null, null];
   return (
     <section data-slot="gallery" id="gallery" data-blank={images.length ? undefined : ""} className="ez:grid ez:text-fg">
-      <Head eyebrow="Gallery" title={STAY_TITLE.gallery} />
+      <Head title={STAY_TITLE.gallery} />
       {mosaic ? (
         <div className={cn(body, "ez:grid ez:grid-cols-2 ez:gap-2 ez:md:h-100 ez:md:grid-cols-4 ez:md:grid-rows-2 ez:lg:h-132")}>
           {tiles.map((src, i) => (
@@ -428,7 +423,7 @@ export function Amenities({ data }: SectionProps<"amenities">) {
   const cols = AMENITY_COLS[items.length] ?? "ez:grid-cols-2 ez:md:grid-cols-3 ez:lg:grid-cols-5";
   return (
     <section data-slot="amenities" id="amenities" data-blank={items.length ? undefined : ""} className="ez:grid ez:text-fg">
-      <Head eyebrow="Amenities" title={STAY_TITLE.amenities} />
+      <Head title={STAY_TITLE.amenities} />
       <ul className={cn("ez:m-0", body, line, "ez:grid ez:list-none ez:border-t ez:p-0", items.length ? cols : "ez:grid-cols-2 ez:md:grid-cols-5")}>
         {items.length
           ? items.map((it, i) => (
@@ -449,7 +444,7 @@ export function Amenities({ data }: SectionProps<"amenities">) {
 
 const infoCol = cn(line, "ez:grid ez:content-start ez:gap-7 ez:py-10 ez:md:px-8 ez:md:pt-12 ez:md:pb-14 ez:lg:px-12");
 
-const infoHead = "ez:m-0 ez:text-site-body ez:font-medium ez:text-fg";
+const infoHead = "ez:m-0 ez:text-site-body ez:font-normal ez:text-fg";
 
 function Clock({ label, value }: { label: string; value?: string | null }) {
   return (
@@ -468,7 +463,7 @@ export function Info({ data }: SectionProps<"house_rules">) {
   const blank = !data.check_in && !data.check_out && !rules.length && !cancel.length;
   return (
     <section data-slot="house-rules" id="rules" data-blank={blank ? "" : undefined} className="ez:grid ez:text-fg">
-      <Head eyebrow="Information" title={STAY_TITLE.info} />
+      <Head title={STAY_TITLE.info} />
       <div className={cn(body, line, "ez:grid ez:border-y ez:md:grid-cols-3")}>
         <div className={cn(infoCol, "ez:md:pl-0 ez:lg:pl-0")}>
           <h3 className={infoHead}>{STAY_TITLE.times}</h3>
@@ -501,7 +496,7 @@ export function Info({ data }: SectionProps<"house_rules">) {
                 {cancel.map((r, i) =>
                   "group" in r ? (
                     <tr key={i} className={cn(line, "ez:border-b")}>
-                      <th scope="colgroup" colSpan={2} className="ez:w-auto ez:border-0 ez:pt-5 ez:pb-2.5 ez:text-left ez:font-medium ez:text-fg">
+                      <th scope="colgroup" colSpan={2} className="ez:w-auto ez:border-0 ez:pt-5 ez:pb-2.5 ez:text-left ez:font-normal ez:text-fg">
                         {r.group}
                       </th>
                     </tr>
@@ -542,7 +537,7 @@ export function Location({ data }: SectionProps<"location">) {
   const pin = <Icon name="pin" className="ez:size-10" />;
   return (
     <section data-slot="location" id="location" data-blank={address ? undefined : ""} className="ez:grid ez:text-fg">
-      <Head eyebrow="Location" title={STAY_TITLE.location} />
+      <Head title={STAY_TITLE.location} />
       <div className={cn(body, "ez:grid ez:items-start ez:gap-x-18 ez:gap-y-8 ez:lg:grid-cols-[2fr_1fr]")}>
         {address && data.href ? (
           <a href={data.href} target="_blank" rel="noopener" aria-label={MAP_LABEL} className={cn(map, "ez:relative ez:overflow-hidden ez:text-fg ez:no-underline", focusRing)}>
@@ -580,7 +575,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
   const room = (id?: string | null) => (id ? context.products.find((p) => p.id === id)?.name : undefined);
   return (
     <section data-slot="reviews" id="reviews" data-blank={items.length ? undefined : ""} className="ez:grid ez:text-fg">
-      <Head eyebrow="Reviews" title={STAY_TITLE.reviews} />
+      <Head title={STAY_TITLE.reviews} />
       <div className="ez:mt-6 ez:flex ez:flex-wrap ez:items-center ez:justify-center ez:gap-x-4.5 ez:gap-y-2 ez:lg:mt-10">
         {items.length ? (
           <>
@@ -756,7 +751,7 @@ function Rates({ views, peak }: { views: RoomView[]; peak: boolean }) {
   const th = "ez:w-auto ez:py-5 ez:pl-4 ez:text-right ez:font-normal";
   return (
     <section id="rates" className="ez:mt-24 ez:grid ez:lg:mt-32">
-      <Head eyebrow="Rates" title={STAY_TITLE.rates} />
+      <Head title={STAY_TITLE.rates} />
       <div className={cn(body, "ez:overflow-x-auto")}>
         <table className={cn(line, "ez:w-full ez:min-w-160 ez:table-fixed ez:border-collapse ez:border-t ez:text-site-body")}>
           <thead>
@@ -779,7 +774,7 @@ function Rates({ views, peak }: { views: RoomView[]; peak: boolean }) {
               const values = r.rates ? [r.rates.weekday, r.rates.weekend, ...(peak ? [r.rates.peak, r.rates.peakWeekend] : [])] : cols.map(() => null);
               return (
                 <tr key={r.id} className={cn(line, "ez:border-b")}>
-                  <th scope="row" className="ez:w-auto ez:py-5 ez:pr-4 ez:text-left ez:font-medium ez:text-fg">
+                  <th scope="row" className="ez:w-auto ez:py-5 ez:pr-4 ez:text-left ez:font-normal ez:text-fg">
                     {r.name}
                   </th>
                   {values.map((v, i) => (

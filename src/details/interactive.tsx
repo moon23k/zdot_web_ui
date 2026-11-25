@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useRef, useState, type KeyboardEvent } from "react";
-import { ButtonLink } from "../components/button";
+import { Button, ButtonLink } from "../components/button";
 import { Fold, statusText } from "../sections/kit";
 import { cn } from "../utils/cn";
 import type { DetailData } from "./data";
@@ -72,7 +72,7 @@ export function BookingBox({ data }: DetailBlockProps) {
   const chosen = sessions.find((s) => s.id === pick);
   return (
     <section data-slot="booking-box" className="ez:grid ez:gap-3 ez:rounded-md ez:border ez:border-solid ez:border-site-line ez:bg-surface ez:p-6 ez:text-fg">
-      <strong className="ez:font-medium">날짜 고르기</strong>
+      <strong className="ez:font-normal">날짜 고르기</strong>
       <ul className="ez:m-0 ez:grid ez:list-none ez:gap-1 ez:p-0">
         {sessions.map((s) => (
           <li key={s.id}>
@@ -81,7 +81,7 @@ export function BookingBox({ data }: DetailBlockProps) {
                 <input type="radio" name="session" value={s.id} checked={pick === s.id} disabled={s.status === "full"} onChange={() => setPick(s.id)} />
                 <span className="ez:tabular-nums">{`${s.date} ${s.time}`}</span>
               </span>
-              <span className="ez:text-sm">{s.status === "few" && s.seats_left ? `남은 자리 ${s.seats_left}` : statusText[s.status]}</span>
+              <span className="ez:text-site-small">{s.status === "few" && s.seats_left ? `남은 자리 ${s.seats_left}` : statusText[s.status]}</span>
             </label>
           </li>
         ))}
@@ -100,7 +100,7 @@ export function QuoteForm({ data, variant }: DetailBlockProps) {
   return (
     <form data-slot="quote-form" data-variant={variant} className="ez:grid ez:gap-5 ez:text-fg ez:md:grid-cols-[1.4fr_1fr] ez:md:items-start">
       <div className="ez:grid ez:gap-5">
-        <ol className="ez:m-0 ez:grid ez:list-none ez:auto-cols-fr ez:grid-flow-col ez:gap-1 ez:p-0 ez:text-xs">
+        <ol className="ez:m-0 ez:grid ez:list-none ez:auto-cols-fr ez:grid-flow-col ez:gap-1 ez:p-0 ez:text-site-small">
           {f.steps.map((s, i) => (
             <li key={s} className={cn("ez:border-0 ez:border-t-4 ez:border-solid ez:pt-1.5", i <= step ? "ez:border-primary ez:text-fg" : "ez:border-primary-border ez:text-muted")}>
               {s}
@@ -109,7 +109,7 @@ export function QuoteForm({ data, variant }: DetailBlockProps) {
         </ol>
         {f.groups.map((g) => (
           <fieldset key={g.label} className="ez:m-0 ez:grid ez:gap-2 ez:border-0 ez:p-0">
-            <legend className="ez:mb-2 ez:font-medium">{g.label}</legend>
+            <legend className="ez:mb-2 ez:font-normal">{g.label}</legend>
             <div className="ez:flex ez:flex-wrap ez:gap-2">
               {g.options.map((o, i) => (
                 <label key={o} className="ez:cursor-pointer">
@@ -124,25 +124,23 @@ export function QuoteForm({ data, variant }: DetailBlockProps) {
         ))}
         {variant === "steps" && (
           <div className="ez:grid ez:grid-cols-2 ez:gap-2">
-            <button type="button" onClick={() => setStep((s) => Math.max(0, s - 1))} className="ez:min-h-11 ez:rounded-button ez:border ez:border-solid ez:border-primary ez:bg-surface ez:text-primary">
+            <Button type="button" variant="outline" onClick={() => setStep((s) => Math.max(0, s - 1))}>
               이전
-            </button>
-            <button type="button" onClick={() => setStep((s) => Math.min(f.steps.length - 1, s + 1))} className="ez:min-h-11 ez:rounded-button ez:border-0 ez:bg-point-soft ez:font-medium ez:text-primary">
+            </Button>
+            <Button type="button" onClick={() => setStep((s) => Math.min(f.steps.length - 1, s + 1))}>
               다음
-            </button>
+            </Button>
           </div>
         )}
       </div>
       <aside className="ez:sticky ez:bottom-0 ez:grid ez:gap-3 ez:rounded-lg ez:border ez:border-solid ez:border-primary-border ez:bg-surface ez:p-4 ez:md:top-20">
         {f.total && (
           <span className="ez:flex ez:items-baseline ez:justify-between">
-            <span className="ez:text-sm ez:text-muted">예상 금액</span>
-            <strong className="ez:text-xl ez:tabular-nums">{f.total}</strong>
+            <span className="ez:text-site-small ez:text-muted">예상 금액</span>
+            <strong className="ez:text-site-heading ez:tabular-nums">{f.total}</strong>
           </span>
         )}
-        <button type="submit" className="ez:min-h-12 ez:rounded-button ez:border-0 ez:bg-point-soft ez:font-medium ez:text-primary">
-          {f.button}
-        </button>
+        <Button type="submit">{f.button}</Button>
       </aside>
     </form>
   );

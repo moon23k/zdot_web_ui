@@ -53,7 +53,7 @@ export function Header({ name, logoUrl, phone, nav, links }: OfficeHeaderProps) 
         <NextLink
           href="/"
           className={cn(
-            "ez:min-w-0 ez:justify-self-start ez:font-display ez:text-site-heading ez:font-medium ez:leading-none ez:text-fg ez:no-underline",
+            "ez:min-w-0 ez:justify-self-start ez:font-display ez:text-site-heading ez:font-normal ez:leading-none ez:text-fg ez:no-underline",
             focusRing,
           )}
         >
@@ -131,7 +131,7 @@ export function Cases({ data }: SectionProps<"case_grid">) {
                     <Pic src={c.image} ratio={0.8} tone={i} />
                     <span className={caption}>
                       <span className="ez:grid ez:min-w-0">
-                        <span className="ez:text-site-item ez:font-medium ez:text-fg">{c.title}</span>
+                        <span className="ez:text-site-item ez:font-normal ez:text-fg">{c.title}</span>
                         {meta && <span className="ez:text-site-small ez:text-muted">{meta}</span>}
                       </span>
                       <Icon name="right" size="sm" className="ez:shrink-0 ez:text-muted ez:group-hover:text-fg" />
@@ -190,7 +190,7 @@ export function Footer({ storeName, phone, hours, address, business, nav, links,
     <footer data-slot="site-footer" className={cn(rule, "ez:border-t ez:text-fg")}>
       <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-10 ez:px-page ez:pt-16 ez:pb-24 ez:text-site-body ez:md:grid-cols-12 ez:md:gap-x-gutter">
         <div className="ez:grid ez:content-between ez:gap-10 ez:md:col-span-6 ez:lg:col-span-4 ez:lg:col-start-3">
-          <p className="ez:m-0 ez:font-display ez:text-site-heading ez:font-medium ez:text-fg">{storeName}</p>
+          <p className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:text-fg">{storeName}</p>
           {links.length > 0 && (
             <ul className="ez:m-0 ez:flex ez:list-none ez:flex-wrap ez:gap-x-6 ez:gap-y-2 ez:p-0 ez:text-site-small">
               {links.map((l) => (

@@ -1,6 +1,7 @@
 import NextLink from "next/link";
 import { Fragment, type ReactNode } from "react";
 import { SiteLogo } from "../../blocks/site-header/site-logo";
+import { Button, ButtonLink } from "../../components/button";
 import { Icon } from "../../components/icon";
 import { StarRow } from "../../components/star-row";
 import type { SectionProps } from "../../renderer/registry";
@@ -10,15 +11,12 @@ import { Bar, BlankButton, BlankPrice, BlankStars, Lines, Pic } from "../kit";
 import type { Case, QuoteFigures, QuoteStarter, TemplateSectionData } from "../template/data";
 import { QuoteNavLinks } from "./nav";
 import { average, businessLine, CASES_HREF, caseView, hasFigures, leadCase, QUOTE_CONSENT, QUOTE_HREF, QUOTE_TITLE, restCases, reviewCount } from "./shared";
-import { OptionCell, StarterForm, starterState } from "./starter";
+import { OPTION_GRID, OptionCell, StarterForm, starterState } from "./starter";
 import type { CaseFact, CaseView, QuoteFooterProps, QuoteHeaderProps, QuoteListProps } from "./types";
 
 const rule = "ez:border-0 ez:border-solid ez:border-site-line";
 
 const ruled = cn(rule, "ez:border-t ez:pt-section");
-
-const soft =
-  "ez:inline-flex ez:items-center ez:justify-center ez:gap-2.5 ez:rounded-button ez:border ez:border-solid ez:border-site-edge ez:bg-surface-alt ez:font-medium ez:text-fg ez:no-underline ez:whitespace-nowrap";
 
 const heading = "ez:m-0 ez:font-display ez:text-site-section ez:font-normal ez:text-fg ez:lg:text-site-figure-lg";
 
@@ -131,7 +129,7 @@ export function Header({ name, logoUrl, phone, nav, links }: QuoteHeaderProps) {
   return (
     <header data-slot="site-header" className={cn(rule, "ez:border-b ez:bg-surface")}>
       <div className="ez:mx-auto ez:flex ez:min-h-16 ez:max-w-wrap ez:items-center ez:gap-6 ez:px-page ez:lg:min-h-18">
-        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-counter ez:font-medium ez:text-fg ez:no-underline ez:lg:w-60 ez:lg:shrink-0", focusRing)}>
+        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-counter ez:font-normal ez:text-fg ez:no-underline ez:lg:w-60 ez:lg:shrink-0", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         <nav aria-label="주요 메뉴" className="ez:flex ez:min-w-0 ez:flex-1 ez:flex-wrap ez:gap-x-8 ez:gap-y-1 ez:text-site-body ez:max-lg:hidden">
@@ -147,9 +145,9 @@ export function Header({ name, logoUrl, phone, nav, links }: QuoteHeaderProps) {
           <NextLink href={links.lookup.href} className={cn("ez:text-muted ez:no-underline ez:hover:text-fg ez:max-md:hidden", focusRing)}>
             {links.lookup.label}
           </NextLink>
-          <NextLink href={links.request.href} className={cn(soft, "ez:h-10 ez:px-4.5", focusRing)}>
+          <ButtonLink href={links.request.href} variant="outline" className="ez:h-10 ez:min-h-0 ez:px-4.5 ez:text-site-body">
             {links.request.label}
-          </NextLink>
+          </ButtonLink>
         </div>
       </div>
     </header>
@@ -192,10 +190,10 @@ export function Hero({ data, context }: SectionProps<"hero">) {
             </BlankButton>
           ) : (
             <div className="ez:flex ez:flex-wrap ez:items-center ez:gap-7">
-              <NextLink href={QUOTE_HREF} className={cn(soft, "ez:h-14 ez:px-7 ez:text-site-item", focusRing)}>
+              <ButtonLink href={QUOTE_HREF} variant="outline" className="ez:h-14 ez:px-7 ez:text-site-item">
                 {QUOTE_TITLE.request}
                 <Icon name="right" size="sm" />
-              </NextLink>
+              </ButtonLink>
               <NextLink href={CASES_HREF} className={cn(textLink, "ez:text-site-body", focusRing)}>
                 {QUOTE_TITLE.cases}
               </NextLink>
@@ -209,7 +207,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
           <NextLink href={view.href} className={cn("ez:grid ez:gap-4 ez:text-fg ez:no-underline", focusRing)}>
             {photo}
             <span className="ez:grid ez:gap-1">
-              <span className="ez:font-medium ez:text-fg">{view.title}</span>
+              <span className="ez:font-normal ez:text-fg">{view.title}</span>
               {view.line && <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{view.line}</span>}
               {view.scope && <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{view.scope}</span>}
             </span>
@@ -266,7 +264,7 @@ function Work({ c }: { c: Case | null }) {
     <>
       <Pic src={view?.image} ratio={3 / 2} />
       <div className="ez:mt-5 ez:grid ez:gap-2">
-        {view ? <h3 className="ez:m-0 ez:text-site-item ez:font-medium ez:text-fg ez:md:text-site-heading">{view.title}</h3> : <Bar className="ez:text-site-item ez:md:text-site-heading" />}
+        {view ? <h3 className="ez:m-0 ez:text-site-item ez:font-normal ez:text-fg ez:md:text-site-heading">{view.title}</h3> : <Bar className="ez:text-site-item ez:md:text-site-heading" />}
         <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{view ? factLine(view) : <Bar size="long" />}</span>
       </div>
     </>
@@ -317,7 +315,7 @@ export function Prices({ data }: SectionProps<"price_tiers">) {
           ? items.map((it, i) => (
               <li key={i}>
                 <NextLink href={QUOTE_HREF} className={cn(row, "ez:text-fg ez:no-underline", focusRing)}>
-                  <span className="ez:min-w-0 ez:text-site-item ez:font-medium ez:md:text-site-counter">{it.label}</span>
+                  <span className="ez:min-w-0 ez:text-site-item ez:font-normal ez:md:text-site-counter">{it.label}</span>
                   <span className="ez:text-site-item ez:font-normal ez:whitespace-nowrap ez:tabular-nums">{it.value}</span>
                   <Icon name="right" size="sm" className="ez:text-muted" />
                 </NextLink>
@@ -385,10 +383,10 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
               )}
             >
               {r ? <StarRow rating={r.rating} className="ez:text-fg" /> : <BlankStars />}
-              {r ? <p className="ez:m-0 ez:text-fg">{r.body}</p> : <Lines />}
+              {r ? <p className="ez:m-0 ez:min-h-[2lh] ez:text-pretty ez:text-fg">{r.body}</p> : <Lines />}
               {r && (
                 <span className="ez:mt-1 ez:grid ez:gap-1">
-                  {product?.name && <span className="ez:text-site-note ez:font-medium ez:text-fg">{product.name}</span>}
+                  {product?.name && <span className="ez:text-site-note ez:font-normal ez:text-fg">{product.name}</span>}
                   <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{[r.name, r.date].filter(Boolean).join(" · ")}</span>
                 </span>
               )}
@@ -428,7 +426,7 @@ export function Faq({ context }: SectionProps<"faq">) {
   );
 }
 
-const cell = "ez:min-h-11 ez:border ez:border-solid ez:border-site-edge ez:bg-surface ez:px-4 ez:text-site-body ez:text-fg ez:has-checked:border-site-field ez:has-checked:bg-surface-alt ez:has-checked:font-medium";
+const cell = "ez:min-h-11 ez:border-site-edge ez:bg-surface ez:text-site-body ez:text-fg";
 
 function Rest({ names }: { names?: string[] }) {
   if (!names?.length) return null;
@@ -457,9 +455,9 @@ function Starter({ data }: { data: QuoteStarter }) {
         {[0, 1, 2].map((i) => (
           <div key={i} className="ez:grid ez:gap-2.5">
             <Bar size="short" />
-            <div className="ez:flex ez:flex-wrap ez:gap-2">
+            <div className={cn(OPTION_GRID, "ez:gap-2")}>
               {[0, 1, 2, 3].map((j) => (
-                <span key={j} className="ez:inline-flex ez:h-11 ez:w-24 ez:items-center ez:justify-center ez:border ez:border-solid ez:border-site-edge ez:bg-surface">
+                <span key={j} className="ez:inline-flex ez:h-11 ez:items-center ez:justify-center ez:rounded-button ez:border ez:border-solid ez:border-site-edge ez:bg-surface">
                   <Bar size="short" />
                 </span>
               ))}
@@ -477,7 +475,7 @@ function Starter({ data }: { data: QuoteStarter }) {
       {(data.questions ?? []).map((q) => (
         <fieldset key={q.id} className="ez:m-0 ez:min-w-0 ez:border-0 ez:p-0">
           <legend className="ez:mb-2.5 ez:p-0 ez:text-site-note ez:text-muted">{q.label}</legend>
-          <div className="ez:flex ez:flex-wrap ez:gap-2">
+          <div className={cn(OPTION_GRID, "ez:gap-2")}>
             {q.options.map((o) => (
               <OptionCell key={o} name={q.id} value={o} className={cell} />
             ))}
@@ -486,13 +484,10 @@ function Starter({ data }: { data: QuoteStarter }) {
       ))}
       <Rest names={data.rest} />
       <div className="ez:grid ez:gap-4 ez:pt-1">
-        <button
-          type="submit"
-          className={cn(soft, "ez:h-14 ez:cursor-pointer ez:justify-self-start ez:border-site-field ez:bg-surface ez:px-7 ez:text-site-item", focusRing)}
-        >
+        <Button type="submit" className="ez:h-14 ez:justify-self-start ez:px-7 ez:text-site-item">
           {QUOTE_TITLE.request}
           <Icon name="right" size="sm" />
-        </button>
+        </Button>
         <p className="ez:m-0 ez:text-site-small ez:text-muted">{QUOTE_CONSENT}</p>
       </div>
     </StarterForm>
@@ -539,7 +534,7 @@ export function Footer({ storeName, phone, hours, business, nav, guide, account,
     <footer data-slot="site-footer" className={cn(rule, "ez:border-t ez:text-fg")}>
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-18 ez:pb-12">
         <div className={cn(rule, "ez:grid ez:gap-10 ez:border-b ez:pb-12 ez:md:grid-cols-3")}>
-          <p className="ez:m-0 ez:text-site-counter ez:font-medium ez:text-fg">{storeName}</p>
+          <p className="ez:m-0 ez:text-site-counter ez:font-normal ez:text-fg">{storeName}</p>
           <div className="ez:grid ez:content-start ez:gap-1">
             {(phone || hours) && <span className="ez:mb-2 ez:text-site-note ez:text-muted">{QUOTE_TITLE.center}</span>}
             {phone && (

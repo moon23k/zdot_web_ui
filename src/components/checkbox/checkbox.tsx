@@ -19,7 +19,7 @@ export function Checkbox({
       <CheckboxPrimitive.Root
         id={inputId}
         className={cn(
-          "ez:mt-0.5 ez:size-5 ez:shrink-0 ez:box-border ez:p-0 ez:rounded-[6px] ez:border ez:border-solid ez:border-site-faint ez:bg-surface ez:cursor-pointer",
+          "ez:mt-0.5 ez:size-5 ez:shrink-0 ez:box-border ez:p-0 ez:rounded-[min(var(--ezd-button-radius),6px)] ez:border ez:border-solid ez:border-site-faint ez:bg-surface ez:cursor-pointer",
           "ez:data-[state=checked]:bg-point-soft ez:data-[state=checked]:border-primary ez:text-primary",
           "ez:disabled:cursor-not-allowed ez:disabled:opacity-45",
           focusRing,

@@ -29,12 +29,9 @@ const row = "ez:-mx-3 ez:flex ez:flex-wrap ez:justify-center ez:gap-y-12 ez:lg:g
 
 const cell = cn(ROW_ITEM[3], "ez:px-3");
 
-function Head({ eyebrow, title, align = "center" }: { eyebrow: string; title: string; align?: "center" | "start" }) {
+function Head({ title, align = "center" }: { title: string; align?: "center" | "start" }) {
   return (
-    <div className={cn("ez:grid ez:gap-3.5", align === "center" ? "ez:justify-items-center ez:text-center" : "ez:justify-items-start")}>
-      <span aria-hidden="true" className="ez:text-site-small ez:uppercase ez:tracking-widest ez:text-muted">
-        {eyebrow}
-      </span>
+    <div className={cn("ez:grid", align === "center" ? "ez:justify-items-center ez:text-center" : "ez:justify-items-start")}>
       <h2 className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:leading-snug ez:lg:text-site-title">{title}</h2>
     </div>
   );
@@ -66,7 +63,7 @@ function Card({ c, preload, tags }: { c: ClassCard; preload?: boolean; tags: boo
       <Photo src={c.image} alt={c.name} preload={preload} sizes="(max-width: 768px) 50vw, 440px" className="ez:aspect-[4/5]" />
       <span className="ez:grid ez:justify-items-center ez:pt-5 ez:text-center ez:lg:pt-6">
         {tags && <span className="ez:mb-3 ez:block ez:h-4 ez:text-site-small ez:leading-none ez:tracking-widest ez:text-muted">{labels}</span>}
-        <span className="ez:line-clamp-2 ez:text-site-item ez:font-medium ez:underline-offset-4 ez:group-hover:underline">{c.name}</span>
+        <span className="ez:line-clamp-2 ez:text-site-item ez:font-normal ez:underline-offset-4 ez:group-hover:underline">{c.name}</span>
         {detail && <span className="ez:mt-1.5 ez:text-site-body ez:text-muted">{detail}</span>}
         {c.price && <span className="ez:mt-1 ez:text-site-body ez:tabular-nums">{c.price}</span>}
         {c.next && <span className="ez:mt-2.5 ez:text-site-body ez:text-muted">{c.next}</span>}
@@ -96,7 +93,7 @@ function SessionRow({ s }: { s: Session }) {
   const v = sessionView(s);
   const meta = [v.kind, v.length, v.count].filter(Boolean).join(" · ");
   const seats = (
-    <span className={cn("ez:text-site-body", v.few && !v.full ? "ez:font-semibold ez:text-fg" : "ez:text-muted")}>{v.seats}</span>
+    <span className={cn("ez:text-site-body", v.few && !v.full ? "ez:font-medium ez:text-fg" : "ez:text-muted")}>{v.seats}</span>
   );
   return (
     <li
@@ -115,7 +112,7 @@ function SessionRow({ s }: { s: Session }) {
       </span>
       <span className="ez:tabular-nums ez:max-lg:hidden">{v.time}</span>
       <span className="ez:grid ez:min-w-0 ez:gap-1">
-        <span className={cn("ez:text-site-item", !v.full && "ez:font-medium")}>{v.name}</span>
+        <span className="ez:text-site-item ez:font-normal">{v.name}</span>
         {meta && <span className="ez:text-site-note ez:text-muted">{meta}</span>}
         {v.seats && <span className="ez:lg:hidden">{seats}</span>}
       </span>
@@ -179,7 +176,7 @@ export function Header({ name, logoUrl, nav, links }: ClassHeaderProps) {
           <NextLink
             href="/"
             className={cn(
-              "ez:min-w-0 ez:font-display ez:text-site-heading ez:font-medium ez:leading-none ez:tracking-wide ez:text-fg ez:no-underline ez:lg:justify-self-center ez:lg:text-center ez:lg:text-site-logo",
+              "ez:min-w-0 ez:font-display ez:text-site-heading ez:font-normal ez:leading-none ez:tracking-wide ez:text-fg ez:no-underline ez:lg:justify-self-center ez:lg:text-center ez:lg:text-site-logo",
               focusRing,
             )}
           >
@@ -241,7 +238,7 @@ export function Classes({ data }: SectionProps<"class_list">) {
   const tags = tagged(classes);
   return (
     <section data-slot="class-list" id="classes" data-blank={classes.length ? undefined : ""} className="ez:grid ez:text-fg">
-      <Head eyebrow="Classes" title={CLASS_TITLE.classes} />
+      <Head title={CLASS_TITLE.classes} />
       <div className={cn(body, row)}>
         {classes.length
           ? classes.map((c, i) => (
@@ -268,9 +265,6 @@ export function Studio({ data, context }: SectionProps<"photo_band">) {
     <section data-slot="photo-band" data-blank={image ? undefined : ""} data-bleed="" className={cn("ez:grid ez:bg-surface-alt ez:text-fg ez:lg:grid-cols-2", bleed)}>
       <Photo src={image} alt="" sizes="(max-width: 1024px) 100vw, 50vw" tone={1} className="ez:aspect-[4/5] ez:rounded-none ez:lg:aspect-auto ez:lg:h-225" />
       <div className="ez:flex ez:flex-col ez:items-start ez:justify-center ez:gap-6 ez:px-page ez:py-14 ez:lg:gap-7 ez:lg:px-30 ez:lg:py-20">
-        <span aria-hidden="true" className="ez:text-site-small ez:uppercase ez:tracking-widest ez:text-muted">
-          Studio
-        </span>
         {image && name ? (
           <p className="ez:m-0 ez:font-display ez:text-site-name ez:font-normal ez:leading-tight ez:wrap-break-word ez:lg:text-site-page">{name}</p>
         ) : (
@@ -301,7 +295,7 @@ export function Schedule({ data }: SectionProps<"class_schedule">) {
   const sessions = (data.sessions ?? []).slice(0, 6);
   return (
     <section data-slot="class-schedule" id="schedule" data-blank={sessions.length ? undefined : ""} className="ez:grid ez:text-fg">
-      <Head eyebrow="Schedule" title={CLASS_TITLE.schedule} />
+      <Head title={CLASS_TITLE.schedule} />
       <div className={body}>
         <Rows sessions={sessions} />
       </div>
@@ -377,7 +371,7 @@ export function Location({ data }: SectionProps<"location">) {
         <div className={map}>{pin}</div>
       )}
       <div className="ez:grid ez:content-start ez:gap-10 ez:lg:gap-12 ez:lg:pt-6 ez:lg:pl-18">
-        <Head eyebrow="Visit" title={CLASS_TITLE.location} align="start" />
+        <Head title={CLASS_TITLE.location} align="start" />
         <dl className="ez:m-0 ez:grid ez:grid-cols-[auto_minmax(0,1fr)] ez:gap-x-10 ez:gap-y-5.5">
           {rows.map(([label, value]) => (
             <div key={label} className="ez:contents">
@@ -494,7 +488,7 @@ export function List({ view, title, count, crumbs, tabs, sorts, classes, session
                 key={t.href}
                 href={t.href}
                 aria-current={t.on ? "page" : undefined}
-                className={cn("ez:inline-flex ez:min-h-11 ez:items-center ez:gap-1.5 ez:no-underline ez:hover:text-fg", t.on ? "ez:font-semibold ez:text-fg" : "ez:text-muted", focusRing)}
+                className={cn("ez:inline-flex ez:min-h-11 ez:items-center ez:gap-1.5 ez:no-underline ez:hover:text-fg", t.on ? "ez:font-medium ez:text-fg" : "ez:text-muted", focusRing)}
               >
                 {t.label}
                 {t.count != null && <span className="ez:text-site-small ez:font-normal ez:text-muted ez:tabular-nums">{t.count}</span>}
@@ -522,7 +516,7 @@ export function List({ view, title, count, crumbs, tabs, sorts, classes, session
                 key={s.href}
                 href={s.href}
                 aria-current={s.on ? "true" : undefined}
-                className={cn("ez:inline-flex ez:min-h-11 ez:items-center ez:no-underline ez:hover:text-fg", s.on ? "ez:font-semibold ez:text-fg" : "ez:text-muted", focusRing)}
+                className={cn("ez:inline-flex ez:min-h-11 ez:items-center ez:no-underline ez:hover:text-fg", s.on ? "ez:font-medium ez:text-fg" : "ez:text-muted", focusRing)}
               >
                 {s.label}
               </NextLink>

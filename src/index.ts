@@ -24,7 +24,7 @@ export type { StayListProps, StaySearch } from "./sections/stay/types";
 export { ProductGallery } from "./blocks/product-gallery";
 export { AnchorTabs } from "./blocks/anchor-tabs";
 export { Fold } from "./sections/kit";
-export { BookingFrame, BookingHead, CardCells, CardPrice, CardRow, CardTotal, PhotoCollage, RoomShelf, SectionSplit, TimeTiles } from "./blocks/booking";
+export { BookingFrame, BookingHead, BookingRows, CardCells, CardPrice, CardRow, CardTotal, PhotoCollage, RoomShelf, SectionSplit, TimeTiles, type BookingBar } from "./blocks/booking";
 export { BuyBox } from "./blocks/buy-box";
 export { CartLine } from "./blocks/cart-line";
 export { CartView } from "./blocks/cart-view";
@@ -51,6 +51,7 @@ export { CheckoutItems, type CheckoutLine } from "./blocks/checkout-items";
 export { popupStyleOf, StorePopup, type PopupPosition, type PopupSize, type PopupStyle, type PopupStyleSetting, type StorePopupItem } from "./blocks/store-popup";
 export { PayWidget, payOf, type PayRequest, type PaySetting, type PayShape } from "./blocks/pay-widget";
 export { DepositInfo } from "./blocks/parts/deposit-info";
+export { OrderNumber } from "./blocks/parts/deposit-info";
 export { OrderList, type OrderRow } from "./blocks/order-list";
 export {
   OrderDetail,
@@ -109,6 +110,8 @@ export {
 export { templates, templateHome, resolveTemplate } from "./templates";
 export type * from "./templates/types";
 export { DetailLayout, detailBlocks, type DetailBlockProps } from "./details";
+export { DetailSplit } from "./details/split";
+export { liftDetail, type DetailLift } from "./blocks/detail-doc";
 export type * from "./details/data";
 export {
   templateSections,
@@ -117,3 +120,5 @@ export {
   SessionStatus,
 } from "./sections/template";
 export type * from "./sections/template/data";
+export { infoRows, numeral, numeralStep } from "./utils/styles";
+export type { EmptyStateAlign } from "./components/empty-state/empty-state";

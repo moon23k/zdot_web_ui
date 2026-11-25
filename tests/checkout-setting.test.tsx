@@ -4,7 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { CheckoutSection, checkoutOf, Field, Input, RequestNote } from "../src";
 import { cn } from "../src/utils/cn";
-import { figure } from "../src/utils/styles";
+import { numeralStep } from "../src/utils/styles";
 import { expectNoA11yViolations } from "./a11y";
 
 function Before({ n, title, children, last }: { n: number; title: string; children: React.ReactNode; last?: boolean }) {
@@ -15,7 +15,7 @@ function Before({ n, title, children, last }: { n: number; title: string; childr
     >
       <div className="ez:flex ez:items-center ez:justify-between ez:gap-3">
         <h2 className="ez:m-0 ez:flex ez:items-baseline ez:gap-3.5 ez:text-site-heading">
-          <span className={cn(figure, "ez:text-site-heading ez:leading-none ez:text-primary")}>{n}</span>
+          <span className={cn(numeralStep, "ez:text-site-heading ez:leading-none ez:text-primary")}>{n}</span>
           {title}
         </h2>
         {undefined}

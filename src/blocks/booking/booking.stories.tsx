@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useState } from "react";
 import products from "../../__stories__/fixtures/products.json";
-import { BookingFrame, BookingHead, Button, CardCells, CardPrice, CardRow, CardTotal, PhotoCollage, Quantity, RoomShelf, SectionSplit, TimeTiles } from "../../index";
+import { BookingFrame, BookingHead, BookingRows, Button, CardCells, CardPrice, CardRow, CardTotal, PhotoCollage, Quantity, RoomShelf, SectionSplit, TimeTiles } from "../../index";
 
 const meta: Meta<typeof BookingFrame> = {
   title: "Blocks/BookingFrame",
@@ -17,6 +17,7 @@ function ClassExample() {
   return (
     <BookingFrame
       action="/checkout"
+      bar={{ title: "물레 도자기 원데이", label: "예약하기", amount: "65,000원", unit: "1인" }}
       main={
         <>
           <PhotoCollage images={photos} name="물레 도자기 원데이" kind="class" />
@@ -58,7 +59,20 @@ function StayExample() {
       <PhotoCollage images={photos} name="바다 앞 독채" />
       <BookingFrame
         action="/checkout"
-        main={<BookingHead title="바다 앞 독채" chips={["기준 2 · 최대 4인", "입실 15:00"]} />}
+        bar={{ title: "바다 앞 독채", label: "예약하기", amount: "99,000원", unit: "1박" }}
+        main={
+          <>
+            <BookingHead title="바다 앞 독채" />
+            <SectionSplit title="이용 규칙">
+              <BookingRows
+                rows={[
+                  { label: "입실 · 퇴실", value: "15:00 · 11:00" },
+                  { label: "인원", value: "기준 2명 · 최대 4명" },
+                ]}
+              />
+            </SectionSplit>
+          </>
+        }
         card={
           <>
             <CardPrice amount="99,000원" unit="1박" tag="1실 남음" />
@@ -68,7 +82,7 @@ function StayExample() {
                 { label: "체크아웃", value: "11월 30일 일" },
               ]}
             />
-            <CardTotal rows={[{ label: "추가 요금", value: "주문서에서 계산" }]} label="객실 · 2박" value="198,000원" />
+            <CardTotal label="합계" value="198,000원" />
           </>
         }
       />

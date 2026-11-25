@@ -56,3 +56,7 @@ export const LongName: StoryObj = { render: () => <LongNameExample /> };
 export const NotSelling: StoryObj = { render: () => <NotSellingExample /> };
 
 export const SoldOut: StoryObj = { render: () => <SoldOutExample /> };
+
+export const WithLead: StoryObj = {
+  render: () => <BuyBox product={productDetail} lead={["린넨 셔츠", "프렌치 린넨 100%"]} addAction={async () => ({})} />,
+};

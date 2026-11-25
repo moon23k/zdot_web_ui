@@ -43,6 +43,81 @@ const NIGHT_MIX = {
 
 const mix = (color: string, share: number, base: string) => `color-mix(in srgb, ${color} ${share}%, ${base})`;
 
+const OFF_MIX = { fill: 6, ink: 45 } as const;
+
+const ON_PRIMARY_MIN = 4.5;
+
+const ON_LIGHT = "#ffffff";
+
+const ON_DARK = "#111111";
+
+const INK_SOFTEN = 16;
+
+const INK_MIN = 7;
+
+type Rgb = [number, number, number];
+
+function rgbOf(value: string): Rgb | null {
+  const hex = /^#([0-9a-f]{6})$/i.exec(value.trim());
+  if (hex) return [0, 2, 4].map((i) => parseInt(hex[1].slice(i, i + 2), 16)) as Rgb;
+  const mixed = /^color-mix\(in srgb, (#[0-9a-f]{6}) (\d+(?:\.\d+)?)%, (#[0-9a-f]{6})\)$/i.exec(value.trim());
+  if (!mixed) return null;
+  const a = rgbOf(mixed[1]);
+  const b = rgbOf(mixed[3]);
+  return a && b ? blend(a, Number(mixed[2]), b) : null;
+}
+
+function blend(a: Rgb, share: number, b: Rgb): Rgb {
+  return a.map((v, i) => Math.round((v * share + b[i] * (100 - share)) / 100)) as Rgb;
+}
+
+function hexOf(rgb: Rgb): string {
+  return `#${rgb.map((v) => v.toString(16).padStart(2, "0")).join("")}`;
+}
+
+function lum(rgb: Rgb): number {
+  const [r, g, b] = rgb.map((c) => {
+    const v = c / 255;
+    return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function luminance(value: string): number | null {
+  const rgb = rgbOf(value);
+  return rgb ? lum(rgb) : null;
+}
+
+function contrast(a: number, b: number): number {
+  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+}
+
+const HEAD_WEIGHT = { base: 400, max: 500 } as const;
+
+function headWeight(weight: number | undefined): string {
+  return String(Math.min(weight ?? HEAD_WEIGHT.base, HEAD_WEIGHT.max));
+}
+
+export function inkOf(text: string, surface: string): string {
+  const t = rgbOf(text);
+  const s = rgbOf(surface);
+  if (!t || !s) return text;
+  for (let soften = INK_SOFTEN; soften > 0; soften -= 1) {
+    const ink = blend(t, 100 - soften, s);
+    if (contrast(lum(ink), lum(s)) >= INK_MIN) return hexOf(ink);
+  }
+  return text;
+}
+
+export function onPrimary(primary: string, on: string): string {
+  const p = luminance(primary);
+  const o = luminance(on);
+  if (p === null || (o !== null && contrast(p, o) >= ON_PRIMARY_MIN)) return on;
+  const light = contrast(p, luminance(ON_LIGHT) ?? 1);
+  const dark = contrast(p, luminance(ON_DARK) ?? 0);
+  return light >= dark ? ON_LIGHT : ON_DARK;
+}
+
 function nightColor(color: Color): Color {
   const ink = color.text ?? FALLBACK.text;
   const paper = color.surface ?? FALLBACK.surface;
@@ -92,14 +167,16 @@ export function designVars(design: Design | null | undefined, site?: boolean | S
   const styles = d.font?.styles;
   return {
     "--ezd-primary": color.primary,
-    "--ezd-on-primary": color.on_primary,
+    "--ezd-on-primary": onPrimary(color.primary, color.on_primary),
     "--ezd-primary-hover": color.primary_hover,
     "--ezd-primary-tint": color.primary_tint,
     "--ezd-point-soft": `color-mix(in srgb, ${color.primary} 8%, ${color.surface})`,
+    "--ezd-off": mix(color.text, OFF_MIX.fill, color.surface),
+    "--ezd-off-ink": mix(color.text, OFF_MIX.ink, color.surface),
     "--ezd-primary-border": color.primary_border,
     "--ezd-surface": color.surface,
     "--ezd-surface-alt": color.surface_alt,
-    "--ezd-text": color.text,
+    "--ezd-text": inkOf(color.text, color.surface),
     "--ezd-muted": color.text_muted,
     "--ezd-radius-sm": `${d.shape?.radius_sm ?? SYSTEM_RADIUS.sm}px`,
     "--ezd-radius-md": `${d.shape?.radius_md ?? SYSTEM_RADIUS.md}px`,
@@ -116,10 +193,10 @@ export function designVars(design: Design | null | undefined, site?: boolean | S
     "--ezd-font-display": family(d.font?.display),
     "--ezd-font-body": family(d.font?.body),
     "--ezd-font-figure": `var(--zdot-font-figure, ${SYSTEM_FIGURE_FONT})`,
-    "--ezd-display-weight": String(styles?.title?.weight ?? d.font?.display_weight ?? 600),
-    "--ezd-title-weight": String(styles?.title?.weight ?? 700),
+    "--ezd-display-weight": headWeight(styles?.title?.weight ?? d.font?.display_weight),
+    "--ezd-title-weight": headWeight(styles?.title?.weight),
     "--ezd-title-style": styles?.title?.style ?? "normal",
-    "--ezd-subtitle-weight": String(styles?.subtitle?.weight ?? 600),
+    "--ezd-subtitle-weight": headWeight(styles?.subtitle?.weight),
     "--ezd-subtitle-style": styles?.subtitle?.style ?? "normal",
     "--ezd-body-weight": String(styles?.body?.weight ?? 400),
     "--ezd-body-style": styles?.body?.style ?? "normal",
@@ -166,7 +243,7 @@ const PHOTO_CORNER: Record<string, number> = { "0": 0, "4": 4, "6": 6, "16": 16,
 const SHAPES: Record<NonNullable<TemplateDesign["look"]["shape"]>, NonNullable<Design["shape"]>> = {
   square: { radius_sm: 0, radius_md: 0, radius_lg: 0, button_shape: "square", line: 0 },
   soft: { radius_sm: 4, radius_md: 6, radius_lg: 6, button_shape: "rounded", line: 0 },
-  round: { radius_sm: 14, radius_md: 20, radius_lg: 24, button_shape: "pill", line: 0 },
+  round: { radius_sm: 14, radius_md: 14, radius_lg: 14, button_shape: "rounded", line: 0 },
 };
 
 const KIT_FACES = ["secondary", "accent", "on_accent"] as const;

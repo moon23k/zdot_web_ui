@@ -1,6 +1,7 @@
 import NextLink from "next/link";
 import type { ReactNode } from "react";
 import { SiteLogo } from "../../blocks/site-header/site-logo";
+import { Button } from "../../components/button";
 import { Icon, type IconName } from "../../components/icon";
 import { Photo } from "../../components/photo";
 import { StarRow } from "../../components/star-row";
@@ -21,7 +22,7 @@ import { MAP_LABEL, SampleMap } from "./map";
 
 const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:box-border ez:px-page";
 
-const heading = "ez:m-0 ez:font-body ez:text-site-heading ez:font-medium ez:text-fg";
+const heading = "ez:m-0 ez:font-body ez:text-site-heading ez:font-normal ez:text-fg";
 
 const line = "ez:border-0 ez:border-solid ez:border-site-line";
 
@@ -34,7 +35,7 @@ const navLink = cn("ez:flex ez:h-full ez:items-center ez:text-site-body ez:text-
 const navOn = "ez:font-medium ez:text-fg";
 
 const soft = cn(
-  "ez:inline-flex ez:items-center ez:justify-center ez:rounded-sm ez:border ez:border-solid ez:border-site-line ez:bg-surface-alt ez:font-body ez:text-site-body ez:font-medium ez:text-fg ez:no-underline ez:hover:border-site-edge",
+  "ez:inline-flex ez:items-center ez:justify-center ez:rounded-sm ez:border ez:border-solid ez:border-site-edge ez:bg-transparent ez:font-body ez:text-site-body ez:font-medium ez:text-fg ez:no-underline ez:hover:border-muted",
   focusRing,
 );
 
@@ -53,7 +54,7 @@ export function Header({ name, logoUrl, nav, links }: StayHeaderProps) {
   return (
     <header data-slot="site-header" data-variant="catalog" className="ez:bg-surface ez:text-fg">
       <div className={cn(wrap, "ez:grid ez:h-16 ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-4 ez:lg:h-19 ez:lg:gap-10")}>
-        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:font-medium ez:text-fg ez:no-underline", focusRing)}>
+        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:font-normal ez:text-fg ez:no-underline", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         <div className="ez:flex ez:items-center ez:justify-end ez:gap-2 ez:lg:gap-3">
@@ -81,7 +82,7 @@ export function Header({ name, logoUrl, nav, links }: StayHeaderProps) {
 function FooterColumn({ title, items }: { title: string; items: FooterLink[] }) {
   return (
     <nav aria-label={title} className="ez:flex ez:flex-col">
-      <span className="ez:mb-3.5 ez:text-site-note ez:font-medium ez:text-fg">{title}</span>
+      <span className="ez:mb-3.5 ez:text-site-note ez:font-normal ez:text-fg">{title}</span>
       {items.map((l) => (
         <NextLink
           key={l.href}
@@ -100,9 +101,9 @@ export function Footer({ storeName, phone, hours, legal, stay, guide, account, t
     <footer data-slot="site-footer" data-variant="catalog" className={cn(line, "ez:border-t ez:text-fg")}>
       <div className={cn(wrap, "ez:grid ez:grid-cols-2 ez:gap-x-8 ez:gap-y-10 ez:pt-13 ez:pb-10 ez:md:grid-cols-4 ez:lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr]")}>
         <div className="ez:col-span-2 ez:flex ez:flex-col ez:md:col-span-4 ez:lg:col-span-1">
-          <span className="ez:mb-3.5 ez:text-site-note ez:font-medium ez:text-fg">{STAY_TITLE.center}</span>
+          <span className="ez:mb-3.5 ez:text-site-note ez:font-normal ez:text-fg">{STAY_TITLE.center}</span>
           {phone && (
-            <a href={`tel:${phone}`} className={cn("ez:mb-2 ez:self-start ez:text-site-rank ez:font-medium ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
+            <a href={`tel:${phone}`} className={cn("ez:mb-2 ez:self-start ez:text-site-rank ez:font-normal ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
               {phone}
             </a>
           )}
@@ -115,7 +116,7 @@ export function Footer({ storeName, phone, hours, legal, stay, guide, account, t
       </div>
       <div className={wrap}>
         <div className={cn(line, "ez:grid ez:gap-x-8 ez:gap-y-1.5 ez:border-t ez:pt-7 ez:pb-10 ez:lg:grid-cols-[1.6fr_4fr]")}>
-          <p className="ez:m-0 ez:text-site-item ez:font-medium ez:text-fg ez:lg:row-span-2">{storeName}</p>
+          <p className="ez:m-0 ez:text-site-item ez:font-normal ez:text-fg ez:lg:row-span-2">{storeName}</p>
           <p className="ez:m-0 ez:text-site-small ez:text-muted">{legal}</p>
           <p className="ez:m-0 ez:text-site-small ez:text-muted">© {storeName}. All rights reserved.</p>
         </div>
@@ -245,12 +246,12 @@ function CellText({ label, children }: { label: string; children: ReactNode }) {
   return (
     <span className="ez:grid ez:min-w-0 ez:gap-0.5">
       <span className="ez:text-site-small ez:text-muted">{label}</span>
-      <span className="ez:flex ez:min-w-0 ez:items-baseline ez:gap-2 ez:text-site-body ez:font-medium ez:whitespace-nowrap ez:text-fg">{children}</span>
+      <span className="ez:flex ez:min-w-0 ez:items-baseline ez:gap-2 ez:text-site-body ez:font-normal ez:whitespace-nowrap ez:text-fg">{children}</span>
     </span>
   );
 }
 
-const pick = "ez:cursor-pointer ez:appearance-none ez:border-0 ez:bg-transparent ez:px-0.5 ez:font-body ez:text-site-body ez:font-medium ez:text-fg";
+const pick = "ez:cursor-pointer ez:appearance-none ez:border-0 ez:bg-transparent ez:px-0.5 ez:font-body ez:text-site-body ez:font-normal ez:text-fg";
 
 function BarForm({ max, initial, action }: { max: number; initial?: StaySearch | null; action?: string | null }) {
   return (
@@ -287,18 +288,10 @@ function BarForm({ max, initial, action }: { max: number; initial?: StaySearch |
         </CellText>
         <Icon name="down" size="sm" className="ez:ml-auto" />
       </div>
-      <button
-        type="submit"
-        className={cn(
-          barGo,
-          "ez:m-0 ez:inline-flex ez:cursor-pointer ez:items-center ez:justify-center ez:gap-1 ez:border-0 ez:bg-surface-alt ez:px-6 ez:font-body ez:text-site-body ez:font-medium ez:text-fg",
-          focusRing,
-          "ez:focus-visible:-outline-offset-4",
-        )}
-      >
+      <Button type="submit" className={cn(barGo, "ez:h-auto ez:gap-1 ez:rounded-none ez:px-6 ez:text-site-body ez:focus-visible:-outline-offset-4")}>
         {STAY_TITLE.find}
         <Icon name="next" size="sm" />
-      </button>
+      </Button>
     </StayForm>
   );
 }
@@ -360,12 +353,12 @@ function RoomCard({ room, tone, few }: { room: Room; tone: number; few?: boolean
       <span className="ez:grid ez:min-w-0 ez:gap-0.5">
         <span className="ez:flex ez:items-baseline ez:justify-between ez:gap-2 ez:text-site-small ez:text-muted">
           <span className="ez:min-w-0 ez:truncate">{v.guests}</span>
-          {tag && <span className="ez:shrink-0 ez:font-medium">{tag}</span>}
+          {tag && <span className="ez:shrink-0">{tag}</span>}
         </span>
         <span className="ez:truncate ez:text-site-body ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
         <span className="ez:mt-1.5 ez:flex ez:items-baseline ez:gap-1.5 ez:tabular-nums">
           {unit && <span className="ez:text-site-small ez:text-muted">{unit}</span>}
-          <span className={cn("ez:min-w-0 ez:truncate ez:text-site-figure ez:font-medium", v.today ? "ez:text-muted" : "ez:text-fg")}>{amount}</span>
+          <span className={cn("ez:min-w-0 ez:truncate ez:text-site-figure ez:font-normal", v.today ? "ez:text-muted" : "ez:text-fg")}>{amount}</span>
           <span className="ez:ml-auto ez:inline-flex ez:shrink-0 ez:items-center ez:gap-0.5 ez:text-site-note ez:text-muted ez:max-md:hidden">
             {STAY_TITLE.view}
             <Icon name="next" size="sm" />
@@ -461,7 +454,7 @@ export function AddOns({ data }: SectionProps<"add_ons">) {
         {items.length
           ? items.map((a, i) => (
               <li key={`${a.name}-${i}`} className={cn(line, "ez:grid ez:content-center ez:gap-1 ez:px-6 ez:py-6 ez:md:min-h-30 ez:md:px-8", addOnEdge(i, cols))}>
-                <span className="ez:text-site-body ez:font-medium ez:text-fg">{a.name}</span>
+                <span className="ez:text-site-body ez:font-normal ez:text-fg">{a.name}</span>
                 <span className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-1 ez:tabular-nums">
                   <span className="ez:text-site-body ez:text-fg">{a.price}</span>
                   <span className="ez:text-site-small ez:text-muted">/ {a.unit}</span>
@@ -484,7 +477,7 @@ export function AddOns({ data }: SectionProps<"add_ons">) {
 
 const infoCol = cn(line, "ez:grid ez:min-w-0 ez:content-start ez:gap-5 ez:px-6 ez:py-7 ez:md:px-9 ez:md:pt-8 ez:md:pb-9");
 
-const infoTitle = "ez:m-0 ez:font-body ez:text-site-body ez:font-medium ez:text-fg";
+const infoTitle = "ez:m-0 ez:font-body ez:text-site-body ez:font-normal ez:text-fg";
 
 export function Info({ data }: SectionProps<"house_rules">) {
   const rules = data.rules ?? [];
@@ -575,10 +568,9 @@ type ReviewItem = NonNullable<SectionProps<"reviews">["data"]["items"]>[number];
 
 type ReviewRoom = SectionProps<"reviews">["context"]["products"][number];
 
-function ReviewCard({ item, room, tone }: { item: ReviewItem; room?: ReviewRoom; tone: number }) {
+function ReviewCard({ item, room }: { item: ReviewItem; room?: ReviewRoom }) {
   return (
     <article className="ez:flex ez:min-w-0 ez:gap-4 ez:rounded-md ez:border ez:border-solid ez:border-site-line ez:bg-surface ez:p-5">
-      {room && <Photo src={room.cover_url} alt={room.name} tone={tone} sizes="80px" className="ez:aspect-square ez:size-20 ez:shrink-0 ez:rounded-sm" />}
       <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-1.5">
         <StarRow rating={item.rating} className="ez:text-muted" />
         <p className="ez:m-0 ez:line-clamp-2 ez:text-site-body ez:text-muted">{item.body}</p>
@@ -588,10 +580,9 @@ function ReviewCard({ item, room, tone }: { item: ReviewItem; room?: ReviewRoom;
   );
 }
 
-function BlankReview({ tone }: { tone: number }) {
+function BlankReview() {
   return (
     <div className="ez:flex ez:min-w-0 ez:gap-4 ez:rounded-md ez:border ez:border-solid ez:border-site-line ez:bg-surface ez:p-5">
-      <Photo src={null} alt="" tone={tone} className="ez:aspect-square ez:size-20 ez:shrink-0 ez:rounded-sm" />
       <div className="ez:grid ez:min-w-0 ez:flex-1 ez:content-start ez:gap-2">
         <BlankStars />
         <Lines />
@@ -610,7 +601,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
     average != null ? (
       <span className="ez:inline-flex ez:items-center ez:gap-1 ez:tabular-nums">
         <Icon name="star" size="sm" className="ez:fill-current ez:text-muted" />
-        <span className="ez:text-site-item ez:font-medium ez:text-fg">{average.toFixed(1)}</span>
+        <span className="ez:text-site-item ez:font-normal ez:text-fg">{average.toFixed(1)}</span>
         {data.count != null && <span className="ez:ml-1 ez:text-site-body ez:text-muted">{data.count}</span>}
       </span>
     ) : null;
@@ -627,8 +618,8 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
         <Head title={STAY_TITLE.reviews} aside={aside} />
         <div className={cn("ez:grid ez:gap-4 ez:lg:gap-5", fillCols(items.length || 3))}>
           {items.length
-            ? items.map((r, i) => <ReviewCard key={`${r.name}-${r.date ?? ""}-${i}`} item={r} tone={i} room={r.product ? context.products.find((p) => p.id === r.product) : undefined} />)
-            : [0, 1, 2].map((i) => <BlankReview key={i} tone={i} />)}
+            ? items.map((r, i) => <ReviewCard key={`${r.name}-${r.date ?? ""}-${i}`} item={r} room={r.product ? context.products.find((p) => p.id === r.product) : undefined} />)
+            : [0, 1, 2].map((i) => <BlankReview key={i} />)}
         </div>
       </div>
     </section>
@@ -694,10 +685,10 @@ function RoomRow({ room, search, tone }: { room: Room; search: StaySearch; tone:
         {(v.guests || v.sample) && (
           <p className="ez:m-0 ez:flex ez:gap-2 ez:text-site-small ez:text-muted">
             {v.guests && <span>{v.guests}</span>}
-            {v.sample && <span className="ez:font-medium">{STAY_TITLE.sample}</span>}
+            {v.sample && <span>{STAY_TITLE.sample}</span>}
           </p>
         )}
-        <h2 className={cn("ez:m-0 ez:mb-2.5 ez:font-body ez:text-site-heading ez:font-medium", full ? "ez:text-muted" : "ez:text-fg")}>{v.name}</h2>
+        <h2 className={cn("ez:m-0 ez:mb-2.5 ez:font-body ez:text-site-heading ez:font-normal", full ? "ez:text-muted" : "ez:text-fg")}>{v.name}</h2>
         {stayTimes && (
           <p className="ez:m-0 ez:flex ez:items-center ez:gap-2 ez:text-site-body ez:text-muted">
             <Icon name="clock" size="sm" />
@@ -731,9 +722,9 @@ function RoomRow({ room, search, tone }: { room: Room; search: StaySearch; tone:
           )}
           <p className="ez:m-0 ez:flex ez:items-baseline ez:gap-1.5 ez:tabular-nums">
             {!q && unit && <span className="ez:text-site-small ez:text-muted">{unit}</span>}
-            <span className={cn("ez:text-site-rank ez:font-medium", full ? "ez:text-muted" : "ez:text-fg")}>{q ? q.price : amount}</span>
+            <span className={cn("ez:text-site-rank", q ? "ez:font-medium" : "ez:font-normal", full ? "ez:text-muted" : "ez:text-fg")}>{q ? q.price : amount}</span>
           </p>
-          {note && <p className={cn("ez:m-0 ez:text-site-small ez:text-muted", q && q.state !== "open" && "ez:font-medium")}>{note}</p>}
+          {note && <p className="ez:m-0 ez:text-site-small ez:text-muted">{note}</p>}
         </div>
         {v.book && (
           <NextLink href={v.book} className={cn(soft, "ez:mt-6 ez:h-12 ez:w-full ez:lg:mt-auto")}>
@@ -773,7 +764,7 @@ function RateTable({ rooms, peak }: { rooms: Room[]; peak: boolean }) {
             <tbody className="ez:tabular-nums">
               {views.map((r) => (
                 <tr key={r.id} className={cn(line, "ez:border-t")}>
-                  <th scope="row" className="ez:h-13 ez:w-auto ez:px-6 ez:text-left ez:font-medium ez:whitespace-nowrap ez:text-fg">
+                  <th scope="row" className="ez:h-13 ez:w-auto ez:px-6 ez:text-left ez:font-normal ez:whitespace-nowrap ez:text-fg">
                     {r.name}
                   </th>
                   <td className={cn(rateCell, "ez:text-fg")}>{r.rates?.weekday ?? "–"}</td>
@@ -790,10 +781,10 @@ function RateTable({ rooms, peak }: { rooms: Room[]; peak: boolean }) {
           <p className={cn(line, "ez:m-0 ez:flex ez:flex-wrap ez:items-center ez:gap-x-8 ez:gap-y-1 ez:border-t ez:px-6 ez:py-3.5 ez:text-site-body ez:text-muted ez:tabular-nums")}>
             <span className="ez:mr-auto ez:text-site-note">{STAY_TITLE.extra}</span>
             <span>
-              {STAY_TITLE.adults} <span className="ez:ml-1.5 ez:font-medium ez:text-fg">{won(first.extra_adult_fee ?? 0)}</span>
+              {STAY_TITLE.adults} <span className="ez:ml-1.5 ez:text-fg">{won(first.extra_adult_fee ?? 0)}</span>
             </span>
             <span>
-              {STAY_TITLE.children} <span className="ez:ml-1.5 ez:font-medium ez:text-fg">{won(first.extra_child_fee ?? 0)}</span>
+              {STAY_TITLE.children} <span className="ez:ml-1.5 ez:text-fg">{won(first.extra_child_fee ?? 0)}</span>
             </span>
           </p>
         )}
@@ -820,7 +811,7 @@ export function List({ title, count, crumbs, search, rooms, peak }: StayListProp
         ))}
       </nav>
       <div className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2.5 ez:gap-y-1 ez:pt-3">
-        <h1 className="ez:m-0 ez:font-body ez:text-site-heading ez:font-medium ez:text-fg ez:md:text-site-title ez:md:font-medium">{title}</h1>
+        <h1 className="ez:m-0 ez:font-body ez:text-site-heading ez:font-normal ez:text-fg ez:md:text-site-title">{title}</h1>
         <span className="ez:text-site-body ez:text-muted ez:tabular-nums">{count}</span>
       </div>
       <div data-slot="stay-search" className="ez:pt-6">

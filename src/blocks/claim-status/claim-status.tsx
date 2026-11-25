@@ -57,7 +57,7 @@ export function ClaimStatus({ claims, action }: { claims: ClaimView[]; action?: 
   if (!claims.length) return null;
   return (
     <section data-slot="claim-status" className="ez:mt-8 ez:grid ez:gap-2">
-      <h2 className="ez:m-0 ez:font-body ez:text-lg ez:font-medium">취소 · 반품 · 교환</h2>
+      <h2 className="ez:m-0 ez:font-body ez:text-site-item ez:font-normal">취소 · 반품 · 교환</h2>
       <ul className={lineList}>
         {claims.map((c) => {
           const closed = CLOSED.includes(c.status);
@@ -66,7 +66,7 @@ export function ClaimStatus({ claims, action }: { claims: ClaimView[]; action?: 
             <li key={c.id} className="ez:grid ez:gap-1 ez:border-0 ez:border-b ez:border-solid ez:border-primary-border ez:py-3.5">
               <span className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
                 <strong className={cn("ez:font-medium", closed ? "ez:text-fg" : "ez:text-primary")}>{STATUS[c.kind][c.status]}</strong>
-                <span className="ez:text-[13px] ez:tabular-nums ez:text-muted">
+                <span className="ez:text-site-small ez:tabular-nums ez:text-muted">
                   {KIND[c.kind]} · {kstMonthDay(c.created_at)}
                 </span>
               </span>

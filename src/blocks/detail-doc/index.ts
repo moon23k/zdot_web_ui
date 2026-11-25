@@ -1,1 +1,1 @@
-export { DetailDoc, DETAIL_FONTS, detailFontSize, detailLineHeight, detailTracking, detailBlockSpace, type DetailBlock, type DetailDocValue, type DetailLayer, type DetailTextStyle, type DetailFont } from "./detail-doc";
+export { DetailDoc, liftDetail, type DetailLift, DETAIL_FONTS, detailFontSize, detailLineHeight, detailTracking, detailBlockSpace, type DetailBlock, type DetailDocValue, type DetailLayer, type DetailTextStyle, type DetailFont } from "./detail-doc";

@@ -17,7 +17,7 @@ const policies = [
 ];
 
 function mainColored(root: Element): Element[] {
-  return [...root.querySelectorAll("[class]")].filter((el) => /(^|\s)ez:(?:[a-z-]+:)*(bg|text|border|fill|stroke)-primary(\/|\s|$)/.test(el.getAttribute("class") ?? ""));
+  return [...root.querySelectorAll("[class]")].filter((el) => el.getAttribute("data-slot") !== "button" && /(^|\s)ez:(?:[a-z-]+:)*(bg|text|border|fill|stroke)-primary(\/|\s|$)/.test(el.getAttribute("class") ?? ""));
 }
 
 function home(letter: (typeof letters)[number], sections = homeSections.quote, arranged = false) {
@@ -80,17 +80,24 @@ describe.each(letters)("quote %s", (letter) => {
       expect(radios.every((r) => !r.checked)).toBe(true);
       expect(radios[0].closest("fieldset")?.querySelector("legend")).toHaveTextContent(q.label);
     }
-    expect(form.querySelector('button[type="submit"]')).toHaveTextContent("견적 요청");
+    const submit = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    expect(submit).toHaveTextContent("견적 요청");
+    expect(submit).toHaveAttribute("data-slot", "button");
+    expect(submit.className).toContain("ez:bg-primary");
     expect(root.textContent).toContain(QUOTE_CONSENT);
   });
 
-  it("uses the main color only for the chosen option check", () => {
+  it("marks a chosen option only with a main color border in a five-column grid", () => {
     const root = home(letter);
     const colored = mainColored(root);
     expect(colored.length).toBeGreaterThan(0);
     for (const el of colored) {
-      expect(el.tagName.toLowerCase()).toBe("svg");
-      expect(el.closest("label")?.querySelector('input[type="radio"]')).not.toBeNull();
+      expect(el.tagName.toLowerCase()).toBe("label");
+      expect(el.querySelector(':scope > input[type="radio"]')).not.toBeNull();
+      expect(el.className).toContain("ez:has-checked:border-primary");
+      expect(el.className).not.toMatch(/has-checked:(bg|font|text)-/);
+      expect(el.querySelector("svg")).toBeNull();
+      expect(el.parentElement?.className).toContain("ez:sm:grid-cols-5");
     }
     expect(applyTemplate(paletteDesign, template).color?.accent).toBeUndefined();
   });
@@ -156,5 +163,15 @@ describe("quote package includes", () => {
       const root = home(letter, [{ kind: "package_cards", v: 1, data: { items: [{ name: "기본", price: "100,000원" }, { name: "표준", price: "200,000원", includes: [" "] }, { name: "확장", price: "300,000원" }] } }], true);
       expect(root.querySelector('[data-slot="package-includes"]')).toBeNull();
     }
+  });
+
+  it("keeps the include rule in every b package column so the prices line up", () => {
+    const items = [{ name: "기본", price: "100,000원" }, { name: "표준", price: "200,000원", includes: ["보정 2회"] }, { name: "확장", price: "300,000원" }];
+    const block = home("b", [{ kind: "package_cards", v: 1, data: { items } }], true).querySelector('[data-slot="package-cards"]') as HTMLElement;
+    const cols = [...block.querySelectorAll("ul > li.ez\\:flex-col")];
+    expect(cols).toHaveLength(3);
+    for (const col of cols) expect(col.querySelectorAll('[data-slot="package-includes"], [data-slot="package-rule"]')).toHaveLength(1);
+    expect(block.querySelectorAll('[data-slot="package-rule"][aria-hidden="true"]')).toHaveLength(2);
+    for (const col of cols) expect(col.firstElementChild?.className).toContain("ez:min-h-[2lh]");
   });
 });

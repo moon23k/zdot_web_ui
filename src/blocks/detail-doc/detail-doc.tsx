@@ -1,4 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
+import { cn } from "../../utils/cn";
+import { infoRows } from "../../utils/styles";
 
 export type DetailFont = "gothic" | "serif" | "display" | "hand";
 export type DetailTextStyle = {
@@ -103,35 +105,89 @@ function lineColor(color?: string | null): string {
 
 const filled = (l: DetailLayer | undefined): l is DetailLayer => !!l && !l.hidden && !!l.text?.trim();
 
-function Cell({ layer }: { layer: DetailLayer | undefined }) {
-  if (!filled(layer)) return <div />;
-  return (
-    <div style={{ textAlign: layer.style?.align ?? "left" }}>
-      <p style={textStyle(layer.style)}>{layer.text}</p>
-    </div>
-  );
-}
-
-function Table({ layers }: { layers: DetailLayer[] }) {
+function tableRows(layers: DetailLayer[]): [DetailLayer, DetailLayer | undefined][] {
   const texts = layers.filter((l) => l.type === "text");
   const rows: [DetailLayer, DetailLayer | undefined][] = [];
   texts.forEach((label, i) => {
     const value = texts[i + 1];
     if (i % 2 === 0 && (filled(label) || filled(value))) rows.push([label, value]);
   });
-  if (!rows.length) return null;
-  const line = `1px solid ${lineColor(texts[1]?.style?.color)}`;
+  return rows;
+}
+
+const SPLIT = "ez:grid ez:gap-5 ez:md:grid-cols-[180px_minmax(0,1fr)] ez:md:gap-x-6 ez:md:gap-y-0";
+const HEAD_CHARS = 20;
+
+function headOf(texts: DetailLayer[]): DetailLayer | null {
+  const [first, next] = texts;
+  if (!first || !next) return null;
+  const size = (l: DetailLayer) => detailFontSize(l.style?.size);
+  const weight = (l: DetailLayer) => WEIGHT[l.style?.weight ?? "regular"];
+  const text = first.text?.trim() ?? "";
+  const short = !text.includes("\n") && text.length <= HEAD_CHARS;
+  return size(first) > size(next) || weight(first) > weight(next) || short ? first : null;
+}
+
+function SplitTexts({ layers }: { layers: DetailLayer[] }) {
+  const texts = layers.filter((l) => l.type === "text" && filled(l));
+  if (!texts.length) return null;
+  const head = headOf(texts);
+  const body = head ? texts.slice(1) : texts;
   return (
-    <div className="ez:px-5 ez:py-6">
-      {rows.map(([label, value], i) => (
-        <div
-          key={label.id}
-          data-row=""
-          className="ez:grid ez:grid-cols-[28%_1fr] ez:items-baseline ez:py-3"
-          style={{ borderTop: line, borderBottom: i === rows.length - 1 ? line : undefined }}
-        >
-          <Cell layer={label} />
-          <Cell layer={value} />
+    <div data-slot="detail-split" className={`${SPLIT} ez:py-6`}>
+      {head ? (
+        <div data-slot="detail-split-head" style={{ textAlign: head.style?.align ?? "left" }}>
+          <p style={textStyle(head.style)}>{head.text}</p>
+        </div>
+      ) : (
+        <div className="ez:max-md:hidden" />
+      )}
+      <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-2">
+        {body.map((l) => (
+          <div key={l.id} style={{ textAlign: l.style?.align ?? "left" }}>
+            <p style={textStyle(l.style)}>{l.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export type DetailLift = { lead: string[]; rows: { label: string; value: string }[]; doc: DetailDocValue };
+
+export function liftDetail(doc: DetailDocValue | null | undefined): DetailLift | null {
+  const [first, second, ...rest] = doc?.blocks ?? [];
+  if (first?.layout !== "text" || second?.layout !== "table") return null;
+  const lead = first.layers.filter((l) => l.type === "text" && filled(l)).map((l) => (l.text ?? "").trim());
+  const pairs = tableRows(second.layers);
+  if (!lead.length || !pairs.length) return null;
+  const rows: DetailLift["rows"] = [];
+  for (const [label, value] of pairs) {
+    if (!filled(label) || !filled(value)) return null;
+    rows.push({ label: (label.text ?? "").trim(), value: (value.text ?? "").trim() });
+  }
+  return { lead, rows, doc: { ...doc, blocks: rest } };
+}
+
+function RowCell({ layer, className }: { layer: DetailLayer | undefined; className: string }) {
+  if (!filled(layer)) return <div />;
+  const s = layer.style ?? {};
+  return (
+    <p className={cn("ez:m-0 ez:whitespace-pre-line", className)} style={{ textAlign: s.align ?? "left", fontWeight: s.weight ? WEIGHT[s.weight] : undefined }}>
+      {layer.text}
+    </p>
+  );
+}
+
+function Table({ layers }: { layers: DetailLayer[] }) {
+  const rows = tableRows(layers);
+  if (!rows.length) return null;
+  return (
+    <div className="ez:py-6">
+      {rows.map(([label, value]) => (
+        <div key={label.id} data-row="" className={cn("ez:grid ez:grid-cols-[32%_minmax(0,1fr)] ez:items-baseline ez:py-2.5", infoRows.row)}>
+          <RowCell layer={label} className="ez:pr-3 ez:text-site-small ez:text-muted" />
+          <RowCell layer={value} className="ez:text-site-body ez:text-fg ez:tabular-nums" />
         </div>
       ))}
     </div>
@@ -182,7 +238,7 @@ function Img({ layer }: { layer: DetailLayer }) {
   return <img src={layer.url} alt="" loading="lazy" decoding="async" className="ez:block ez:h-auto ez:w-full" />;
 }
 
-function Block({ block }: { block: DetailBlock }) {
+function Block({ block, split = false }: { block: DetailBlock; split?: boolean }) {
   const shown = block.layers.filter((l) => !l.hidden);
   const images = shown.filter((l) => l.type === "image");
   const bg: CSSProperties = {
@@ -196,7 +252,7 @@ function Block({ block }: { block: DetailBlock }) {
   let body: ReactNode;
   switch (block.layout) {
     case "text":
-      body = <Texts layers={shown} />;
+      body = split ? <SplitTexts layers={shown} /> : <Texts layers={shown} />;
       break;
     case "image":
       body = images.map((l) => <Img key={l.id} layer={l} />);
@@ -249,6 +305,16 @@ function Block({ block }: { block: DetailBlock }) {
         </>
       );
   }
+  if (split && block.layout !== "text") {
+    return (
+      <div className={SPLIT}>
+        <div className="ez:max-md:hidden" />
+        <div data-layout={block.layout} style={bg} className={cn("ez:min-w-0", block.layout !== "table" && "ez:max-w-180")}>
+          {body}
+        </div>
+      </div>
+    );
+  }
   return (
     <div data-layout={block.layout} style={bg}>
       {body}
@@ -256,18 +322,24 @@ function Block({ block }: { block: DetailBlock }) {
   );
 }
 
-export function DetailDoc({ doc }: { doc: DetailDocValue | null | undefined }) {
+export function DetailDoc({ doc, split = false }: { doc: DetailDocValue | null | undefined; split?: boolean }) {
   const blocks = doc?.blocks ?? [];
   if (!blocks.length) return null;
   const fonts = new Set<DetailFont>();
   for (const b of blocks) for (const l of b.layers) if (l.type === "text") fonts.add(l.style?.font ?? "gothic");
   return (
-    <section data-slot="detail-doc" aria-label="상세 정보" className="ez:mx-auto ez:grid ez:w-full ez:max-w-180" style={{ backgroundColor: doc?.background ?? undefined }}>
+    <section
+      data-slot="detail-doc"
+      data-split={split ? "" : undefined}
+      aria-label="상세 정보"
+      className={split ? "ez:grid ez:w-full ez:pt-6" : "ez:grid ez:w-full"}
+      style={{ backgroundColor: doc?.background ?? undefined }}
+    >
       {[...fonts].map((f) => (
         <link key={f} rel="stylesheet" href={DETAIL_FONTS[f].href} precedence="default" />
       ))}
       {blocks.map((b) => (
-        <Block key={b.id} block={b} />
+        <Block key={b.id} block={b} split={split} />
       ))}
     </section>
   );

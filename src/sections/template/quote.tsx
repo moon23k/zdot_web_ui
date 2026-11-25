@@ -4,7 +4,7 @@ import { ButtonLink } from "../../components/button";
 import { Icon } from "../../components/icon";
 import type { SectionProps } from "../../renderer/registry";
 import { cn } from "../../utils/cn";
-import { countSup, figure, focusRing, textLink } from "../../utils/styles";
+import { countSup, focusRing, numeralStep, textLink } from "../../utils/styles";
 import type { Case, TemplateSectionData } from "./data";
 import { Bar, BlankButton, BlankPrice, Chips, Pic } from "../kit";
 import { pcCols } from "../../utils/styles";
@@ -18,9 +18,9 @@ export function PriceTiers({ data }: SectionProps<"price_tiers">) {
         <ol className="ez:m-0 ez:list-none ez:p-0">
           {(items.length ? items : [null, null, null]).map((it, i) => (
             <li key={i} className="ez:grid ez:grid-cols-[40px_1fr_auto] ez:items-baseline ez:gap-6 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:py-7 ez:lg:grid-cols-[56px_1fr_200px]">
-              <span className={cn(figure, "ez:text-site-heading ez:text-primary")}>{it ? String(i + 1).padStart(2, "0") : null}</span>
+              <span className={cn(numeralStep, "ez:text-site-heading ez:text-primary")}>{it ? String(i + 1).padStart(2, "0") : null}</span>
               <span className="ez:text-site-heading ez:font-light ez:tracking-[-0.03em] ez:lg:text-site-logo">{it ? it.label : <Bar />}</span>
-              <span className="ez:text-right ez:font-medium ez:tabular-nums">{it ? it.value : <BlankPrice />}</span>
+              <span className="ez:text-right ez:font-normal ez:tabular-nums">{it ? it.value : <BlankPrice />}</span>
             </li>
           ))}
         </ol>
@@ -101,7 +101,7 @@ export function CaseGrid({ data, variant }: SectionProps<"case_grid">) {
             {cases.length > 0 && <span className={countSup}>{cases.length}</span>}
           </h2>
           {cases.length > 3 && (
-            <NextLink href="/cases" className="ez:shrink-0 ez:border-0 ez:border-b ez:border-solid ez:border-site-faint ez:pb-1 ez:text-site-small ez:font-medium ez:text-fg ez:no-underline">
+            <NextLink href="/cases" className="ez:shrink-0 ez:border-0 ez:border-b ez:border-solid ez:border-site-faint ez:pb-1 ez:text-site-small ez:font-normal ez:text-fg ez:no-underline">
               전체 보기
             </NextLink>
           )}

@@ -75,7 +75,7 @@ export function InquiryGreeting({
     >
       <p className="ez:m-0">{greetingOf(store)}</p>
       {aiNotice && (
-        <span className="ez:flex ez:items-center ez:gap-1 ez:text-[13px] ez:text-muted">
+        <span className="ez:flex ez:items-center ez:gap-1 ez:text-site-small ez:text-muted">
           <Sparkle />
           {AI_NOTICE}
         </span>
@@ -108,7 +108,7 @@ export function InquiryList({
   inquiries: InquiryRow[];
   href?: (id: string) => string;
 }) {
-  if (!inquiries.length) return <EmptyState title="남긴 문의가 없어요" />;
+  if (!inquiries.length) return <EmptyState title="남긴 문의가 없어요" align="start" className="ez:pt-10" />;
   return (
     <ul data-slot="inquiry-list" className={cn(lineList, "ez:max-w-180")}>
       {inquiries.map((q) => (
@@ -123,16 +123,16 @@ export function InquiryList({
               </span>
               <span
                 className={cn(
-                  "ez:shrink-0 ez:text-[13px]",
+                  "ez:shrink-0 ez:text-site-small",
                   q.status === "answered"
-                    ? "ez:font-medium ez:text-primary"
+                    ? "ez:text-primary"
                     : "ez:text-muted"
                 )}
               >
                 {STATUS[q.status]}
               </span>
             </span>
-            <span className="ez:text-[13px] ez:tabular-nums ez:text-muted">
+            <span className="ez:text-site-small ez:tabular-nums ez:text-muted">
               {[
                 q.product_name,
                 q.order_number && `주문 ${q.order_number}`,
@@ -153,19 +153,22 @@ export function InquiryThread({
   store,
   header,
   footer,
+  label,
 }: {
   messages: InquiryMessageView[];
   store: string;
   header?: ReactNode;
   footer?: ReactNode;
+  label?: string;
 }) {
   return (
     <section
       data-slot="inquiry-thread"
-      className="ez:grid ez:max-w-180 ez:gap-4"
+      className={label ? "ez:grid ez:gap-4 ez:md:grid-cols-[32%_minmax(0,1fr)] ez:md:gap-x-0" : "ez:grid ez:max-w-180 ez:gap-4"}
     >
       {header}
-      <ol className={cn(lineList, "ez:grid ez:gap-3")}>
+      {label && <span className="ez:text-site-small ez:text-muted ez:md:col-start-1 ez:md:row-start-1">{label}</span>}
+      <ol className={cn(lineList, "ez:grid ez:gap-3", label && "ez:md:col-start-2")}>
         {messages.map((m, i) => (
           <li
             key={`${m.created_at}-${i}`}
@@ -176,8 +179,8 @@ export function InquiryThread({
                 : "ez:border ez:border-solid ez:border-primary-border"
             )}
           >
-            <span className="ez:flex ez:items-center ez:gap-2 ez:text-[13px] ez:text-muted">
-              <span className="ez:font-medium ez:text-fg">
+            <span className="ez:flex ez:items-center ez:gap-2 ez:text-site-small ez:text-muted">
+              <span className="ez:font-normal ez:text-fg">
                 {m.author === "customer" ? "나" : store}
               </span>
               <span className="ez:tabular-nums">{kstMonthDayTime(m.created_at)}</span>
@@ -198,7 +201,13 @@ export function InquiryThread({
           </li>
         ))}
       </ol>
-      {footer}
+      {label && footer ? (
+        <div data-slot="inquiry-reply" className="ez:min-w-0 ez:md:col-start-2 ez:[&_form]:max-w-none ez:[&_[data-slot=field]>label>span:first-child]:sr-only">
+          {footer}
+        </div>
+      ) : (
+        footer
+      )}
     </section>
   );
 }

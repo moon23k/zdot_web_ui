@@ -19,7 +19,7 @@ export function AddressText({
           {phone && <span className="ez:ml-2 ez:text-muted">{phone}</span>}
         </span>
       )}
-      <span className="ez:text-[13px]">
+      <span className="ez:text-site-small">
         {postalCode && <span className="ez:text-muted">({postalCode}) </span>}
         {address} {detail ?? ""}
       </span>

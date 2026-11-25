@@ -46,6 +46,18 @@ function home(letter: (typeof letters)[number], sections = homeSections.class) {
   return render(<SiteRenderer page={{ sections, arranged: true }} context={context} template={resolveTemplate("class", letter)} />).container;
 }
 
+describe("class c hero", () => {
+  it("draws no blank line under the store name when the hero has a photo but no title", () => {
+    const sections = [{ kind: "hero" as const, v: 1, data: { image: "/sample/hero.jpg" } }];
+    const hero = home("c", sections).querySelector('[data-slot="hero"]') as HTMLElement;
+    expect(hero).not.toHaveAttribute("data-blank");
+    expect(hero.querySelectorAll('[data-slot="blank-bar"]')).toHaveLength(0);
+    const blank = home("c", [{ kind: "hero" as const, v: 1, data: {} }]).querySelector('[data-slot="hero"]') as HTMLElement;
+    expect(blank).toHaveAttribute("data-blank");
+    expect(blank.querySelectorAll('[data-slot="blank-bar"]').length).toBeGreaterThan(0);
+  });
+});
+
 describe.each(letters)("class %s", (letter) => {
   const template = resolveTemplate("class", letter);
 
@@ -165,15 +177,15 @@ describe("booking head facts", () => {
     { label: "난이도", value: "입문" },
   ];
 
-  it.each([1, 2, 3, 4, 5])("wide columns follow %i facts", (count) => {
-    const { container } = render(<BookingHead title="물레 원데이" facts={all.slice(0, count)} />);
-    const classes = (container.querySelector("dl")?.getAttribute("class") ?? "").split(" ");
-    expect(classes).toContain("ez:grid-cols-2");
-    expect(classes.filter((c) => c.startsWith("ez:md:grid-cols-"))).toEqual([`ez:md:grid-cols-${Math.min(count, 4)}`]);
-  });
-
-  it("keeps the four-column classes", () => {
-    const { container } = render(<BookingHead title="물레 원데이" facts={all.slice(0, 4)} />);
-    expect(container.querySelector("dl")?.getAttribute("class")).toBe("ez:m-0 ez:grid ez:grid-cols-2 ez:border-0 ez:border-y ez:border-solid ez:border-site-line ez:md:grid-cols-4");
+  it("draws facts as label → value rows with a top rule, no columns", () => {
+    const { container } = render(<BookingHead title="물레 원데이" facts={all.slice(0, 2)} />);
+    expect(container.querySelector("dl")).toBeNull();
+    const rows = [...container.querySelectorAll("[data-slot=booking-rows] tr")];
+    expect(rows.map((r) => [r.querySelector("th")?.textContent, r.querySelector("td")?.textContent])).toEqual([
+      ["소요", "2시간"],
+      ["정원", "6명"],
+    ]);
+    expect(rows[0].className).toContain("ez:first:border-t");
+    expect(rows[0].querySelector("th")?.className).toContain("ez:w-[32%]");
   });
 });

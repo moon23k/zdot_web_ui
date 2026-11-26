@@ -22,7 +22,7 @@ export function PriceTiers({ data }: SectionProps<"price_tiers">) {
             <li key={i} className="ez:grid ez:grid-cols-[40px_1fr_auto] ez:items-baseline ez:gap-6 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:py-7 ez:lg:grid-cols-[56px_1fr_200px]">
               <span className={cn(numeralStep, "ez:text-site-heading ez:text-primary")}>{it ? String(i + 1).padStart(2, "0") : null}</span>
               <span className="ez:text-site-heading ez:lg:text-site-logo">{it ? it.label : <Bar />}</span>
-              <span className="ez:text-right ez:font-normal ez:tabular-nums">{it ? it.value : <BlankPrice />}</span>
+              <span className="ez:text-right ez:font-normal">{it ? it.value : <BlankPrice />}</span>
             </li>
           ))}
         </ol>
@@ -60,7 +60,7 @@ export function PackageCards({ data }: SectionProps<"package_cards">) {
             <div className="ez:flex ez:flex-1 ez:flex-col ez:gap-6 ez:p-6 ez:lg:p-8">
               <span data-script={scriptOf(p ? p.name : null)} className="ez:text-site-heading">{p ? p.name : <Bar />}</span>
               {p ? (
-                <strong className="ez:text-site-figure-lg ez:tabular-nums"><Won value={p.price} /></strong>
+                <strong className="ez:text-site-figure-lg"><Won value={p.price} /></strong>
               ) : (
                 <BlankPrice className="ez:text-site-figure-lg" />
               )}

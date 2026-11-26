@@ -91,7 +91,7 @@ export function Header({ name, logoUrl, phone, nav, links }: CareHeaderProps) {
           phone && (
             <a
               href={telHref(phone)}
-              className={cn("ez:ml-auto ez:shrink-0 ez:py-1.5 ez:text-site-small ez:text-fg ez:no-underline ez:tabular-nums ez:hover:text-muted ez:lg:ml-4", focusRing)}
+              className={cn("ez:ml-auto ez:shrink-0 ez:py-1.5 ez:text-site-small ez:text-fg ez:no-underline ez:hover:text-muted ez:lg:ml-4", focusRing)}
             >
               {phone}
             </a>
@@ -153,7 +153,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
         {(phone || book) && (
           <div className="ez:grid ez:justify-items-start ez:gap-4 ez:pt-10">
             {phone && (
-              <a href={telHref(phone)} aria-label={`${CARE_TITLE.phone} ${phone}`} className={cn("ez:font-display ez:text-site-name ez:text-fg ez:no-underline ez:tabular-nums ez:hover:text-muted", focusRing)}>
+              <a href={telHref(phone)} aria-label={`${CARE_TITLE.phone} ${phone}`} className={cn("ez:font-display ez:text-site-name ez:text-fg ez:no-underline ez:hover:text-muted", focusRing)}>
                 {phone}
               </a>
             )}
@@ -219,7 +219,7 @@ function MenuCard({ group }: { group: MenuGroup | null }) {
           ? group.items.map((item) => (
               <div key={item.id} className={row}>
                 <dt className="ez:min-w-0 ez:leading-relaxed ez:text-fg">{item.name}</dt>
-                <dd className="ez:m-0 ez:shrink-0 ez:text-muted ez:tabular-nums"><Won value={item.price} /></dd>
+                <dd className="ez:m-0 ez:shrink-0 ez:text-muted"><Won value={item.price} /></dd>
               </div>
             ))
           : [0, 1, 2].map((i) => (
@@ -290,7 +290,7 @@ export function Store({ data, context }: SectionProps<"store_info">) {
               <dt className={label}>{CARE_TITLE.phone}</dt>
               <dd className="ez:m-0 ez:text-site-figure-lg ez:leading-tight">
                 {data.phone ? (
-                  <a href={telHref(data.phone)} className={cn("ez:text-fg ez:no-underline ez:tabular-nums ez:hover:text-muted", focusRing)}>
+                  <a href={telHref(data.phone)} className={cn("ez:text-fg ez:no-underline ez:hover:text-muted", focusRing)}>
                     {data.phone}
                   </a>
                 ) : (
@@ -374,7 +374,7 @@ export function Footer({ storeName, phone, hours, address, legal, nav, links, te
           {(phone || contact.length > 0) && (
             <div className="ez:grid ez:content-start ez:gap-1 ez:text-muted ez:md:col-span-3 ez:md:col-start-10">
               {phone && (
-                <a href={telHref(phone)} className={cn(quiet, "ez:justify-self-start ez:tabular-nums")}>
+                <a href={telHref(phone)} className={cn(quiet, "ez:justify-self-start")}>
                   {phone}
                 </a>
               )}

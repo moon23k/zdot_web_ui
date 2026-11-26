@@ -58,3 +58,32 @@ describe("site type steps own tracking and light weights", () => {
     expect(legacy).not.toMatch(/font-weight: (?:200|300);/);
   });
 });
+
+describe("proportional figures", () => {
+  const TABULAR: Record<string, string> = {
+    "src/components/quantity/quantity.tsx": "수량 조절기 수량",
+    "src/blocks/product-gallery/product-gallery.tsx": "사진을 넘길 때 바뀌는 순번",
+    "src/blocks/review-form/review-form.tsx": "글자 수 카운터",
+    "src/sections/shop/b.tsx": "더 보기 진행률",
+    "src/sections/shop/c.tsx": "더 보기 진행률",
+    "src/sections/shop/d.tsx": "더 보기 진행률",
+    "src/sections/shop/e.tsx": "더 보기 진행률",
+    "src/sections/shop/f.tsx": "더 보기 진행률",
+  };
+  const files = ["src/sections", "src/blocks", "src/components", "src/details", "src/utils"].flatMap((dir) =>
+    readdirSync(dir, { recursive: true, encoding: "utf8" })
+      .filter((file) => /\.tsx?$/.test(file) && !file.includes(".stories."))
+      .map((file) => join(dir, file)),
+  );
+
+  it("keeps the gallery root free of tabular figures", () => {
+    const legacy = readFileSync("src/styles/legacy.css", "utf8");
+    expect(legacy).not.toMatch(/tnum/);
+    for (const sheet of ["base", "future", "kit", "night-screens", "script"]) expect(readFileSync(`src/styles/${sheet}.css`, "utf8")).not.toMatch(/tnum|tabular/);
+  });
+
+  it.each(files)("%s uses tabular figures only where a live value must not shift", (file) => {
+    const found = readFileSync(file, "utf8").match(/ez:(?:[a-z0-9-]+:)*tabular-nums/g)?.length ?? 0;
+    expect(found).toBe(TABULAR[file] ? 1 : 0);
+  });
+});

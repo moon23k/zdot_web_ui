@@ -104,7 +104,7 @@ export function Footer({ storeName, phone, hours, legal, stay, guide, account, t
         <div className="ez:col-span-2 ez:flex ez:flex-col ez:md:col-span-4 ez:lg:col-span-1">
           <span className="ez:mb-3.5 ez:text-site-note ez:font-normal ez:text-fg">{STAY_TITLE.center}</span>
           {phone && (
-            <a href={`tel:${phone}`} className={cn("ez:mb-2 ez:self-start ez:text-site-rank ez:font-normal ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
+            <a href={`tel:${phone}`} className={cn("ez:mb-2 ez:self-start ez:text-site-rank ez:font-normal ez:text-fg ez:no-underline", focusRing)}>
               {phone}
             </a>
           )}
@@ -357,7 +357,7 @@ function RoomCard({ room, tone, few }: { room: Room; tone: number; few?: boolean
           {tag && <span className="ez:shrink-0">{tag}</span>}
         </span>
         <span data-script={scriptOf(v.name)} className="ez:truncate ez:text-site-body ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
-        <span className="ez:mt-1.5 ez:flex ez:items-baseline ez:gap-1.5 ez:tabular-nums">
+        <span className="ez:mt-1.5 ez:flex ez:items-baseline ez:gap-1.5">
           {unit && <span className="ez:text-site-small ez:text-muted">{unit}</span>}
           <span className={cn("ez:min-w-0 ez:truncate ez:text-site-figure ez:font-normal", v.today ? "ez:text-muted" : "ez:text-fg")}>{amount}</span>
           <span className="ez:ml-auto ez:inline-flex ez:shrink-0 ez:items-center ez:gap-0.5 ez:text-site-note ez:text-muted ez:max-md:hidden">
@@ -456,7 +456,7 @@ export function AddOns({ data }: SectionProps<"add_ons">) {
           ? items.map((a, i) => (
               <li key={`${a.name}-${i}`} className={cn(line, "ez:grid ez:content-center ez:gap-1 ez:px-6 ez:py-6 ez:md:min-h-30 ez:md:px-8", addOnEdge(i, cols))}>
                 <span data-script={scriptOf(a.name)} className="ez:text-site-body ez:font-normal ez:text-fg">{a.name}</span>
-                <span className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-1 ez:tabular-nums">
+                <span className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-1">
                   <span className="ez:text-site-body ez:text-fg"><Won value={a.price} /></span>
                   <span className="ez:text-site-small ez:text-muted">/ {a.unit}</span>
                 </span>
@@ -496,7 +496,7 @@ export function Info({ data }: SectionProps<"house_rules">) {
         <th scope="row" className="ez:w-auto ez:border-0 ez:py-2.5 ez:pr-4 ez:text-left ez:font-normal ez:text-muted">
           {r.label}
         </th>
-        <td className="ez:border-0 ez:py-2.5 ez:text-right ez:text-fg ez:tabular-nums">{r.value}</td>
+        <td className="ez:border-0 ez:py-2.5 ez:text-right ez:text-fg">{r.value}</td>
       </tr>
     ));
   return (
@@ -510,7 +510,7 @@ export function Info({ data }: SectionProps<"house_rules">) {
               {times.map((t) => (
                 <div key={t.label} className="ez:grid ez:gap-1">
                   <dt className="ez:text-site-small ez:text-muted">{t.label}</dt>
-                  <dd className="ez:m-0 ez:text-site-rank ez:font-normal ez:text-fg ez:tabular-nums"><Won value={t.value} /></dd>
+                  <dd className="ez:m-0 ez:text-site-rank ez:font-normal ez:text-fg"><Won value={t.value} /></dd>
                 </div>
               ))}
             </dl>
@@ -600,7 +600,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
   const average = items.length && data.average != null ? data.average : null;
   const aside =
     average != null ? (
-      <span className="ez:inline-flex ez:items-center ez:gap-1 ez:tabular-nums">
+      <span className="ez:inline-flex ez:items-center ez:gap-1">
         <Icon name="star" size="sm" className="ez:fill-current ez:text-muted" />
         <span className="ez:text-site-item ez:font-normal ez:text-fg">{average.toFixed(1)}</span>
         {data.count != null && <span className="ez:ml-1 ez:text-site-body ez:text-muted">{data.count}</span>}
@@ -653,7 +653,7 @@ export function Location({ data }: SectionProps<"location">) {
             <div className={cn(line, "ez:grid ez:gap-1 ez:border-b ez:py-5")}>
               <dt className="ez:text-site-small ez:text-muted">{STAY_TITLE.phone}</dt>
               <dd className="ez:m-0">
-                <a href={`tel:${data.phone}`} className={cn("ez:text-site-body ez:text-fg ez:tabular-nums ez:no-underline ez:hover:underline", focusRing)}>
+                <a href={`tel:${data.phone}`} className={cn("ez:text-site-body ez:text-fg ez:no-underline ez:hover:underline", focusRing)}>
                   {data.phone}
                 </a>
               </dd>
@@ -703,7 +703,7 @@ function RoomRow({ room, search, tone }: { room: Room; search: StaySearch; tone:
       </div>
       <div className={cn(line, "ez:flex ez:min-w-0 ez:flex-col ez:border-t ez:pt-5 ez:md:col-span-2 ez:lg:col-span-1 ez:lg:border-t-0 ez:lg:border-l ez:lg:pt-0 ez:lg:pl-10")}>
         {v.rates && (
-          <dl className="ez:m-0 ez:grid ez:text-site-note ez:leading-relaxed ez:tabular-nums">
+          <dl className="ez:m-0 ez:grid ez:text-site-note ez:leading-relaxed">
             {[
               { label: STAY_TITLE.weekday, value: v.rates.weekday },
               { label: STAY_TITLE.weekend, value: v.rates.weekend },
@@ -717,11 +717,11 @@ function RoomRow({ room, search, tone }: { room: Room; search: StaySearch; tone:
         )}
         <div className={cn("ez:grid ez:justify-items-end ez:text-right", v.rates && cn(line, "ez:mt-3.5 ez:border-t ez:pt-3.5"))}>
           {q && search.check_in && (
-            <p className="ez:m-0 ez:text-site-small ez:text-muted ez:tabular-nums">
+            <p className="ez:m-0 ez:text-site-small ez:text-muted">
               {[stayDates(search.check_in, search.check_out), q.nights].filter(Boolean).join(" · ")}
             </p>
           )}
-          <p className="ez:m-0 ez:flex ez:items-baseline ez:gap-1.5 ez:tabular-nums">
+          <p className="ez:m-0 ez:flex ez:items-baseline ez:gap-1.5">
             {!q && unit && <span className="ez:text-site-small ez:text-muted">{unit}</span>}
             <span className={cn("ez:text-site-rank", q ? "ez:font-medium" : "ez:font-normal", full ? "ez:text-muted" : "ez:text-fg")}><Won value={q ? q.price : amount} /></span>
           </p>
@@ -762,7 +762,7 @@ function RateTable({ rooms, peak }: { rooms: Room[]; peak: boolean }) {
                 ))}
               </tr>
             </thead>
-            <tbody className="ez:tabular-nums">
+            <tbody>
               {views.map((r) => (
                 <tr key={r.id} className={cn(line, "ez:border-t")}>
                   <th scope="row" className="ez:h-13 ez:w-auto ez:px-6 ez:text-left ez:font-normal ez:whitespace-nowrap ez:text-fg">
@@ -779,7 +779,7 @@ function RateTable({ rooms, peak }: { rooms: Room[]; peak: boolean }) {
           </table>
         </div>
         {extra && first && (
-          <p className={cn(line, "ez:m-0 ez:flex ez:flex-wrap ez:items-center ez:gap-x-8 ez:gap-y-1 ez:border-t ez:px-6 ez:py-3.5 ez:text-site-body ez:text-muted ez:tabular-nums")}>
+          <p className={cn(line, "ez:m-0 ez:flex ez:flex-wrap ez:items-center ez:gap-x-8 ez:gap-y-1 ez:border-t ez:px-6 ez:py-3.5 ez:text-site-body ez:text-muted")}>
             <span className="ez:mr-auto ez:text-site-note">{STAY_TITLE.extra}</span>
             <span>
               {STAY_TITLE.adults} <span className="ez:ml-1.5 ez:text-fg"><Won amount={first.extra_adult_fee ?? 0} /></span>
@@ -813,7 +813,7 @@ export function List({ title, count, crumbs, search, rooms, peak }: StayListProp
       </nav>
       <div className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2.5 ez:gap-y-1 ez:pt-3">
         <h1 data-script={scriptOf(title)} className="ez:m-0 ez:font-body ez:text-site-heading ez:text-fg ez:md:text-site-title">{title}</h1>
-        <span className="ez:text-site-body ez:text-muted ez:tabular-nums">{count}</span>
+        <span className="ez:text-site-body ez:text-muted">{count}</span>
       </div>
       <div data-slot="stay-search" className="ez:pt-6">
         <BarForm max={search.max} initial={search} action={ROOMS_HREF} />

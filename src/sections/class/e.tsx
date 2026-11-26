@@ -39,7 +39,7 @@ const lineButton = "ez:rounded-full ez:border-site-line ez:font-normal";
 
 const topLink = cn("ez:relative ez:inline-flex ez:h-10 ez:min-w-10 ez:items-center ez:justify-center ez:gap-1.5 ez:text-site-body ez:text-muted ez:no-underline ez:hover:text-fg ez:lg:min-w-0", focusRing);
 
-const price = "ez:text-site-body ez:tabular-nums ez:whitespace-nowrap ez:text-fg";
+const price = "ez:text-site-body ez:whitespace-nowrap ez:text-fg";
 
 function Head({ text, aside }: { text: string; aside?: ReactNode }) {
   return (
@@ -121,7 +121,7 @@ export function Footer({ storeName, phone, hours, legal, classes, guide, account
               <div className="ez:grid ez:gap-1">
                 <span className="ez:text-site-small ez:text-muted">{CLASS_TITLE.center}</span>
                 {phone && (
-                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-heading ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
+                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-heading ez:text-fg ez:no-underline", focusRing)}>
                     {phone}
                   </a>
                 )}
@@ -162,7 +162,7 @@ function HeroFloat({ session }: { session: Session }) {
         {rows.map(([label, value]) => (
           <span key={label} className={floatRow}>
             <span className="ez:text-site-off">{label}</span>
-            <span className="ez:tabular-nums">{value}</span>
+            <span>{value}</span>
           </span>
         ))}
       </span>
@@ -327,7 +327,7 @@ function ClassItem({ item, tone, preload }: { item: ClassCard; tone: number; pre
         {next && (
           <span className="ez:col-span-2 ez:mt-2 ez:flex ez:min-w-0 ez:gap-2 ez:border-0 ez:border-t ez:border-solid ez:border-hairline ez:pt-2.5 ez:text-site-small">
             <span className="ez:shrink-0 ez:text-site-off">{CLASS_TITLE.next}</span>
-            <span className="ez:whitespace-nowrap ez:text-muted ez:tabular-nums">{next}</span>
+            <span className="ez:whitespace-nowrap ez:text-muted">{next}</span>
           </span>
         )}
       </span>
@@ -375,7 +375,7 @@ const reviewCol = "ez:grid ez:min-w-0 ez:content-start ez:border-0 ez:border-t e
 function Review({ item, cls }: { item: ReviewItem; cls?: string }) {
   return (
     <article className={reviewCol}>
-      <span className="ez:inline-flex ez:items-center ez:gap-1.5 ez:text-site-small ez:text-muted ez:tabular-nums">
+      <span className="ez:inline-flex ez:items-center ez:gap-1.5 ez:text-site-small ez:text-muted">
         <svg viewBox="0 0 24 24" aria-hidden="true" className="ez:size-3.5 ez:fill-star">
           <path d={STAR_PATH} />
         </svg>
@@ -407,7 +407,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
   const parts = items.length ? [data.average != null ? data.average.toFixed(1) : null, data.count != null ? `${CLASS_TITLE.reviews} ${data.count}` : null].filter(Boolean) : [];
   return (
     <section data-slot="reviews" id="reviews" data-variant="night" data-blank={items.length ? undefined : ""} className="ez:scroll-mt-24 ez:text-fg">
-      <Head text={CLASS_TITLE.reviews} aside={parts.length ? <span data-script={scriptOf(parts.join(" · "))} className="ez:text-site-small ez:text-site-off ez:tabular-nums">{parts.join(" · ")}</span> : undefined} />
+      <Head text={CLASS_TITLE.reviews} aside={parts.length ? <span data-script={scriptOf(parts.join(" · "))} className="ez:text-site-small ez:text-site-off">{parts.join(" · ")}</span> : undefined} />
       <div className="ez:grid ez:gap-x-6 ez:gap-y-10 ez:md:grid-cols-3">
         {items.length
           ? items.map((r, i) => <Review key={`${r.name}-${r.date ?? ""}-${i}`} item={r} cls={r.product ? context.products.find((p) => p.id === r.product)?.name : undefined} />)
@@ -446,7 +446,7 @@ export function Location({ data }: SectionProps<"location">) {
             {address && data.hours && <InfoRow label={CLASS_TITLE.hours}>{data.hours}</InfoRow>}
             {phone && (
               <InfoRow label={CLASS_TITLE.phone}>
-                <span className="ez:tabular-nums">{phone}</span>
+                <span>{phone}</span>
               </InfoRow>
             )}
           </dl>
@@ -520,7 +520,7 @@ export function List({ view, title: heading, count, crumbs, tabs, sorts, classes
       </nav>
       <div className="ez:mt-4 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3 ez:gap-y-1">
         <h1 data-script={scriptOf(heading)} className="ez:m-0 ez:text-site-section ez:text-fg ez:md:text-site-page">{heading}</h1>
-        {count != null && <span className="ez:text-site-body ez:text-site-off ez:tabular-nums">{count}</span>}
+        {count != null && <span className="ez:text-site-body ez:text-site-off">{count}</span>}
       </div>
       {search && <div className="ez:mt-6">{search}</div>}
       <div className="ez:mt-8 ez:flex ez:flex-wrap ez:items-center ez:justify-between ez:gap-x-6 ez:border-0 ez:border-b ez:border-solid ez:border-site-line">
@@ -528,7 +528,7 @@ export function List({ view, title: heading, count, crumbs, tabs, sorts, classes
           {tabs.map((t) => (
             <NextLink key={t.href} href={t.href} aria-current={t.on ? "page" : undefined} className={cn(listTab, t.on ? "ez:fx-tab ez:text-fg" : "ez:text-site-off")}>
               {t.label}
-              {t.count != null && <span className="ez:text-site-small ez:text-site-off ez:tabular-nums">{t.count}</span>}
+              {t.count != null && <span className="ez:text-site-small ez:text-site-off">{t.count}</span>}
             </NextLink>
           ))}
         </nav>

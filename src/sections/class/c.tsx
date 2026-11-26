@@ -96,7 +96,7 @@ export function Footer({ storeName, phone, hours, legal, classes, guide, account
               <span className="ez:text-site-small ez:font-normal ez:text-muted">{CLASS_TITLE.center}</span>
               <div className="ez:grid ez:gap-1.5">
                 {phone ? (
-                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-section ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
+                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-section ez:text-fg ez:no-underline", focusRing)}>
                     {phone}
                   </a>
                 ) : (
@@ -138,11 +138,11 @@ function NextTile({ session }: { session: Session }) {
       <Photo src={v.image} alt={v.name} sizes="(max-width: 1024px) 60vw, 280px" className="ez:aspect-square ez:self-start ez:rounded-sm ez:bg-surface" />
       <span className="ez:flex ez:min-w-0 ez:flex-col ez:pt-1.5">
         <span className="ez:text-site-small ez:text-muted">{CLASS_TITLE.nextCohort}</span>
-        <span className="ez:mt-2.5 ez:text-site-heading ez:tabular-nums">
+        <span className="ez:mt-2.5 ez:text-site-heading">
           {when(v)} {v.time}
         </span>
         <span data-script={scriptOf(v.name)} className="ez:mt-2 ez:line-clamp-2 ez:text-site-item ez:font-normal">{v.name}</span>
-        {v.seats && <span className={cn("ez:mt-1 ez:text-site-lead ez:tabular-nums", v.few ? "ez:font-medium ez:text-fg" : "ez:text-muted")}>{v.seats}</span>}
+        {v.seats && <span className={cn("ez:mt-1 ez:text-site-lead", v.few ? "ez:font-medium ez:text-fg" : "ez:text-muted")}>{v.seats}</span>}
         <span className="ez:mt-auto ez:inline-flex ez:items-center ez:gap-2 ez:pt-4 ez:text-site-lead ez:font-normal ez:group-hover:underline ez:underline-offset-4">
           {CLASS_TITLE.book}
           <Icon name="right" size="sm" />
@@ -250,9 +250,9 @@ function ClassTile({ item, eager }: { item: ClassCard; eager?: boolean }) {
       <div className="ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:items-baseline ez:gap-x-3 ez:gap-y-0.5 ez:px-1 ez:pt-3.5">
         <span data-script={scriptOf(item.name)} className="ez:truncate ez:text-site-lead ez:font-normal ez:group-hover:underline ez:underline-offset-4">{item.name}</span>
         {label ? <span className="ez:justify-self-end ez:text-site-small ez:text-muted">{label}</span> : <span />}
-        {spec && <span data-script={scriptOf(spec)} className="ez:col-span-2 ez:text-site-lead ez:text-muted ez:tabular-nums">{spec}</span>}
-        {item.price ? <span className="ez:mt-1.5 ez:text-site-lead ez:tabular-nums"><Won value={item.price} /></span> : <span />}
-        {next && <span className="ez:mt-1.5 ez:min-w-0 ez:justify-self-end ez:truncate ez:text-site-small ez:text-muted ez:tabular-nums">{next}</span>}
+        {spec && <span data-script={scriptOf(spec)} className="ez:col-span-2 ez:text-site-lead ez:text-muted">{spec}</span>}
+        {item.price ? <span className="ez:mt-1.5 ez:text-site-lead"><Won value={item.price} /></span> : <span />}
+        {next && <span className="ez:mt-1.5 ez:min-w-0 ez:justify-self-end ez:truncate ez:text-site-small ez:text-muted">{next}</span>}
       </div>
     </NextLink>
   );
@@ -320,15 +320,15 @@ function SessionRow({ session }: { session: Session }) {
   return (
     <li data-slot="session-row" data-full={v.full ? "" : undefined} className={cn(rowBase, v.full ? "ez:border ez:border-solid ez:border-site-line ez:bg-transparent" : "ez:bg-surface")}>
       <span className={cn(colLeft, "ez:grid ez:gap-0.5")}>
-        <span data-script={scriptOf(when(v))} className={cn("ez:text-site-lead ez:font-normal ez:tabular-nums", tone)}>{when(v)}</span>
-        <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{v.time}</span>
+        <span data-script={scriptOf(when(v))} className={cn("ez:text-site-lead ez:font-normal", tone)}>{when(v)}</span>
+        <span className="ez:text-site-small ez:text-muted">{v.time}</span>
       </span>
       <span className={cn(colLeft, "ez:grid ez:min-w-0 ez:gap-0.5")}>
         <span data-script={scriptOf(v.name)} className={cn("ez:truncate ez:text-site-lead ez:font-normal", tone)}>{v.name}</span>
         {(v.kind || v.length || v.count) && <span className="ez:truncate ez:text-site-small ez:text-muted">{[v.kind, v.length && `${CLASS_TITLE.length} ${v.length}`, v.count].filter(Boolean).join(" · ")}</span>}
       </span>
-      <span className={cn(colLeft, "ez:text-site-lead ez:tabular-nums", v.few ? "ez:font-medium ez:text-fg" : "ez:text-muted")}>{v.seats}</span>
-      <span className={cn(colRight, "ez:row-start-1 ez:text-site-lead ez:tabular-nums ez:lg:row-start-auto", tone)}><Won value={v.price} /></span>
+      <span className={cn(colLeft, "ez:text-site-lead", v.few ? "ez:font-medium ez:text-fg" : "ez:text-muted")}>{v.seats}</span>
+      <span className={cn(colRight, "ez:row-start-1 ez:text-site-lead ez:lg:row-start-auto", tone)}><Won value={v.price} /></span>
       {v.full ? (
         <span className={cn(colRight, "ez:row-start-3 ez:lg:row-start-auto")} />
       ) : (
@@ -436,7 +436,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
               {name && <span data-script={scriptOf(name)} className="ez:mt-1 ez:truncate ez:text-site-lead ez:text-muted">{name}</span>}
               <div className="ez:mt-auto ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:pt-6 ez:text-site-small ez:text-muted">
                 <span className="ez:truncate">{item.name}</span>
-                {item.date && <span className="ez:shrink-0 ez:tabular-nums">{item.date}</span>}
+                {item.date && <span className="ez:shrink-0">{item.date}</span>}
               </div>
             </article>
           );
@@ -527,7 +527,7 @@ export function Location({ data }: SectionProps<"location">) {
               {rows.map(([label, value]) => (
                 <div key={label} className="ez:contents">
                   <dt className="ez:text-muted">{label}</dt>
-                  <dd className="ez:m-0 ez:text-fg ez:tabular-nums">{value || <Bar />}</dd>
+                  <dd className="ez:m-0 ez:text-fg">{value || <Bar />}</dd>
                 </div>
               ))}
             </dl>
@@ -604,7 +604,7 @@ export function List({ view, title, count, crumbs, tabs, sorts, classes, session
       <Crumbs items={crumbs} />
       <div className="ez:mt-4 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3 ez:gap-y-1">
         <h1 data-script={scriptOf(title)} className="ez:m-0 ez:text-site-page-sm ez:text-fg ez:md:text-site-figure-lg">{title}</h1>
-        {count ? <span className="ez:text-site-item ez:font-normal ez:text-muted ez:tabular-nums">{count}</span> : null}
+        {count ? <span className="ez:text-site-item ez:font-normal ez:text-muted">{count}</span> : null}
       </div>
       {search && <div className="ez:mt-6">{search}</div>}
       <div className="ez:mt-8 ez:flex ez:items-center ez:justify-between ez:gap-6">
@@ -617,7 +617,7 @@ export function List({ view, title, count, crumbs, tabs, sorts, classes, session
               className={cn("ez:inline-flex ez:shrink-0 ez:items-baseline ez:gap-1.5 ez:py-2 ez:text-site-lead ez:no-underline ez:hover:text-fg", t.on ? "ez:font-medium ez:text-fg" : "ez:text-muted", focusRing)}
             >
               {t.label}
-              {t.count != null && <span className="ez:text-site-small ez:font-normal ez:text-muted ez:tabular-nums">{t.count}</span>}
+              {t.count != null && <span className="ez:text-site-small ez:font-normal ez:text-muted">{t.count}</span>}
             </NextLink>
           ))}
         </nav>

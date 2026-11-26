@@ -23,7 +23,7 @@ const caption = "ez:grid ez:grid-cols-[minmax(0,2.5rem)_minmax(0,1fr)_auto] ez:i
 const row = "ez:grid ez:grid-cols-6 ez:gap-x-4 ez:md:grid-cols-12 ez:md:gap-x-gutter";
 
 const cell = {
-  no: "ez:min-w-0 ez:truncate ez:tabular-nums ez:md:col-span-2",
+  no: "ez:min-w-0 ez:truncate ez:md:col-span-2",
   name: "ez:col-span-3 ez:min-w-0 ez:truncate ez:md:col-span-4",
   category: "ez:col-span-2 ez:min-w-0 ez:truncate ez:md:col-span-2",
   area: "ez:min-w-0 ez:truncate ez:max-md:hidden ez:md:col-span-4",
@@ -88,7 +88,7 @@ function WorkItem({ item, index }: { item: Case | null; index: number }) {
       <NextLink href={caseHref(item.id)} className={cn("ez:group ez:grid ez:content-start ez:no-underline", focusRing)}>
         <Pic src={item.image} ratio={1.5} tone={index} />
         <span className={line}>
-          <span className="ez:tabular-nums ez:text-muted">{serial(index)}</span>
+          <span className="ez:text-muted">{serial(index)}</span>
           <span className="ez:min-w-0 ez:break-keep ez:text-fg ez:group-hover:text-muted">{item.title}</span>
           <span className="ez:whitespace-nowrap ez:text-muted">{item.category}</span>
         </span>
@@ -140,7 +140,7 @@ export function Work({ data, context }: SectionProps<"case_grid">) {
         <div id={PORTFOLIO_ID.work} className="ez:grid ez:min-w-0 ez:content-start ez:gap-8">
           <h2 className={cn(heading, "ez:flex ez:items-baseline ez:gap-1 ez:text-site-item ez:font-normal")}>
             {PORTFOLIO_TITLE.work}
-            {cases.length > 0 && <span className="ez:font-body ez:text-site-small ez:font-normal ez:tabular-nums ez:text-muted">{cases.length}</span>}
+            {cases.length > 0 && <span className="ez:font-body ez:text-site-small ez:font-normal ez:text-muted">{cases.length}</span>}
           </h2>
           <ul className="ez:m-0 ez:grid ez:list-none ez:gap-x-gutter ez:gap-y-12 ez:p-0 ez:md:grid-cols-2">
             {cards.map((c, i) => (
@@ -235,7 +235,7 @@ export function Footer({ storeName, phone, hours, address, legal, links, terms }
               <div className="ez:grid ez:min-w-0 ez:content-start ez:lg:col-span-3 ez:lg:col-start-6">
                 {address && <p className="ez:m-0 ez:text-muted">{address}</p>}
                 {phone && (
-                  <a href={telHref(phone)} className={cn(plain, "ez:justify-self-start ez:tabular-nums")}>
+                  <a href={telHref(phone)} className={cn(plain, "ez:justify-self-start")}>
                     {phone}
                   </a>
                 )}

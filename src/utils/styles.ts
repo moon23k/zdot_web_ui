@@ -15,9 +15,9 @@ export const countSup = "ez:ml-1.5 ez:align-top ez:text-site-small ez:font-norma
 
 export const figure = "ez:font-figure ez:font-normal";
 
-export const numeral = "ez:font-body ez:not-italic ez:tabular-nums";
+export const numeral = "ez:font-body ez:not-italic";
 
-export const numeralStep = "ez:font-body ez:not-italic ez:font-normal ez:tabular-nums";
+export const numeralStep = "ez:font-body ez:not-italic ez:font-normal";
 
 export const summaryBox = "ez:rounded-lg ez:bg-surface-alt ez:p-8";
 
@@ -27,7 +27,7 @@ export const infoRows = {
   table: "ez:w-full ez:border-collapse",
   row: "ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:last:border-b-0",
   label: "ez:w-[32%] ez:border-0 ez:py-2.5 ez:pr-3 ez:text-left ez:align-baseline ez:text-site-small ez:font-normal ez:text-muted",
-  value: "ez:border-0 ez:py-2.5 ez:text-left ez:align-baseline ez:text-site-body ez:text-fg ez:tabular-nums",
+  value: "ez:border-0 ez:py-2.5 ez:text-left ez:align-baseline ez:text-site-body ez:text-fg",
 } as const;
 
 const latinMark = "ez:font-body ez:not-italic";

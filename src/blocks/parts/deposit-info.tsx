@@ -53,7 +53,7 @@ export function DepositInfo({ deposit }: { deposit: Schemas["DepositOut"] }) {
       className="ez:grid ez:gap-2 ez:rounded-md ez:border ez:border-solid ez:border-primary-border ez:p-4 ez:text-site-small"
     >
       <strong className="ez:text-site-small">{kstDueTime(deposit.due_at)}까지 입금해 주세요</strong>
-      <dl className="ez:m-0 ez:grid ez:grid-cols-[auto_1fr] ez:gap-x-4 ez:gap-y-1.5 ez:tabular-nums">
+      <dl className="ez:m-0 ez:grid ez:grid-cols-[auto_1fr] ez:gap-x-4 ez:gap-y-1.5">
         <dt className="ez:text-muted">은행</dt>
         <dd className="ez:m-0">{deposit.bank_name}</dd>
         <dt className="ez:text-muted">계좌번호</dt>

@@ -36,7 +36,7 @@ function IconLink({ href, icon, label, count }: { href: string; icon: IconName; 
     >
       <Icon name={icon} />
       {count ? (
-        <span className="ez:absolute ez:top-1.5 ez:right-0.5 ez:flex ez:h-4 ez:min-w-4 ez:items-center ez:justify-center ez:rounded-full ez:bg-point-soft ez:px-1 ez:text-site-badge ez:leading-none ez:text-primary ez:tabular-nums">
+        <span className="ez:absolute ez:top-1.5 ez:right-0.5 ez:flex ez:h-4 ez:min-w-4 ez:items-center ez:justify-center ez:rounded-full ez:bg-point-soft ez:px-1 ez:text-site-badge ez:leading-none ez:text-primary">
           {count}
         </span>
       ) : null}

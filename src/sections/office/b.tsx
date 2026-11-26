@@ -84,7 +84,7 @@ export function Header({ name, logoUrl, phone, address, nav, links }: OfficeHead
           <div className="ez:ml-auto ez:flex ez:shrink-0 ez:items-center ez:gap-6 ez:text-site-body">
             <LinkRow links={links} className="ez:gap-x-6 ez:max-md:hidden" />
             {phone && (
-              <a href={telHref(phone)} className={cn("ez:whitespace-nowrap ez:tabular-nums", quiet)}>
+              <a href={telHref(phone)} className={cn("ez:whitespace-nowrap", quiet)}>
                 {phone}
               </a>
             )}
@@ -119,7 +119,7 @@ export function Header({ name, logoUrl, phone, address, nav, links }: OfficeHead
             <div className="ez:mt-auto ez:grid ez:gap-1 ez:pt-8 ez:text-site-small">
               {address && <p className="ez:m-0 ez:text-muted">{address}</p>}
               {phone && (
-                <a href={telHref(phone)} className={cn("ez:justify-self-start ez:tabular-nums", quiet)}>
+                <a href={telHref(phone)} className={cn("ez:justify-self-start", quiet)}>
                   {phone}
                 </a>
               )}
@@ -142,7 +142,7 @@ export function Footer({ phone, hours, address, business, links, terms }: Office
           {contact.length > 0 && (
             <ul className={line}>
               {contact.map((c) => (
-                <li key={c} className="ez:tabular-nums">
+                <li key={c}>
                   {c}
                 </li>
               ))}
@@ -222,11 +222,11 @@ export function Intro({ data }: SectionProps<"intro">) {
 
 const serviceRow = cn(row, "ez:grid ez:grid-cols-4 ez:items-start ez:gap-x-gutter ez:gap-y-2 ez:border-b ez:py-8 ez:first:pt-0 ez:md:grid-cols-8 ez:lg:py-12");
 
-const serviceNo = "ez:text-site-page-sm ez:tabular-nums ez:md:text-site-page";
+const serviceNo = "ez:text-site-page-sm ez:md:text-site-page";
 
 const serviceName = "ez:col-span-3 ez:m-0 ez:text-site-heading";
 
-const servicePrice = "ez:col-span-3 ez:col-start-2 ez:m-0 ez:tabular-nums ez:md:col-span-4 ez:md:col-start-5 ez:md:row-start-1";
+const servicePrice = "ez:col-span-3 ez:col-start-2 ez:m-0 ez:md:col-span-4 ez:md:col-start-5 ez:md:row-start-1";
 
 export function Services({ data }: SectionProps<"menu">) {
   const items = menuItems((data.groups ?? []).filter((g) => g.items.length));

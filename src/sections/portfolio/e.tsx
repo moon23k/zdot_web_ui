@@ -56,7 +56,7 @@ function Item({ item, index }: { item: Case; index: number }) {
   return (
     <li className={cn(nightRule, "ez:border-t", first && "ez:bg-[linear-gradient(90deg,transparent,color-mix(in_oklab,var(--ezd-select)_22%,transparent)_30%,transparent)]")}>
       <NextLink href={caseHref(item.id)} className={cn(row, "ez:group ez:text-site-off ez:no-underline", focusRing)}>
-        <span className="ez:text-site-note ez:tabular-nums">{String(index + 1).padStart(2, "0")}</span>
+        <span className="ez:text-site-note">{String(index + 1).padStart(2, "0")}</span>
         <span className="ez:grid ez:min-w-0 ez:gap-1">
           <span className={cn("ez:flex ez:min-w-0 ez:items-center ez:gap-4 ez:font-display ez:text-site-heading ez:md:text-site-title", first ? "ez:text-fg" : "ez:text-fg/55 ez:group-hover:text-fg")}>
             {first && <span aria-hidden="true" className="ez:fx-glow ez:size-2 ez:shrink-0 ez:rounded-full ez:bg-primary" />}
@@ -65,7 +65,7 @@ function Item({ item, index }: { item: Case; index: number }) {
           {line && <span data-script={scriptOf(line)} className="ez:text-site-small ez:md:hidden">{line}</span>}
         </span>
         <span data-script={scriptOf(item.category)} className="ez:min-w-0 ez:truncate ez:text-site-small ez:max-md:hidden">{item.category}</span>
-        <span data-script={scriptOf(item.meta)} className="ez:min-w-0 ez:truncate ez:text-site-small ez:tabular-nums ez:max-md:hidden">{item.meta}</span>
+        <span data-script={scriptOf(item.meta)} className="ez:min-w-0 ez:truncate ez:text-site-small ez:max-md:hidden">{item.meta}</span>
         <div className={cn(thumb, !first && "ez:opacity-60 ez:group-hover:opacity-100")}>
           <Pic src={item.image} ratio={200 / 116} tone={index} />
         </div>
@@ -77,7 +77,7 @@ function Item({ item, index }: { item: Case; index: number }) {
 function Blank({ index }: { index: number }) {
   return (
     <li className={cn(nightRule, row, "ez:border-t")}>
-      <span className="ez:text-site-note ez:text-site-off ez:tabular-nums">{String(index + 1).padStart(2, "0")}</span>
+      <span className="ez:text-site-note ez:text-site-off">{String(index + 1).padStart(2, "0")}</span>
       <span className="ez:text-site-heading ez:md:text-site-title">
         <Bar size="long" />
       </span>

@@ -59,7 +59,7 @@ export function visitRows(data: Visit): { label: string; value: ReactNode }[] {
           {
             label: LANDING_LABEL.phone,
             value: data.phone ? (
-              <a href={telHref(data.phone)} className={cn("ez:text-fg ez:no-underline ez:tabular-nums", focusRing)}>
+              <a href={telHref(data.phone)} className={cn("ez:text-fg ez:no-underline", focusRing)}>
                 {data.phone}
               </a>
             ) : (
@@ -99,7 +99,7 @@ export function StandInHeader({ name, logoUrl, phone, nav, links }: LandingHeade
         <div className="ez:ml-auto ez:flex ez:shrink-0 ez:items-center ez:gap-6 ez:text-site-body">
           <OutLinks links={links} className="ez:max-md:hidden" />
           {phone && (
-            <a href={telHref(phone)} className={cn("ez:text-fg ez:no-underline ez:tabular-nums", focusRing)}>
+            <a href={telHref(phone)} className={cn("ez:text-fg ez:no-underline", focusRing)}>
               {phone}
             </a>
           )}
@@ -116,7 +116,7 @@ export function StandInFooter({ storeName, phone, hours, address, business, link
         <p data-script={scriptOf(storeName)} className="ez:m-0 ez:text-site-counter ez:font-normal">{storeName}</p>
         <div className="ez:grid ez:gap-1 ez:text-muted">
           {address && <span>{address}</span>}
-          {phone && <span className="ez:tabular-nums">{phone}</span>}
+          {phone && <span>{phone}</span>}
           {hours && <span>{`${LANDING_LABEL.hours} ${hours}`}</span>}
         </div>
         <OutLinks links={links} />
@@ -203,7 +203,7 @@ export function MenuBlock({ data, title, id }: SectionProps<"menu"> & { title: s
                 {g.items.map((item) => (
                   <div key={item.id} className={cn(rule, "ez:flex ez:items-baseline ez:justify-between ez:gap-6 ez:border-b ez:py-3")}>
                     <dt className="ez:min-w-0">{item.name}</dt>
-                    <dd className="ez:m-0 ez:shrink-0 ez:tabular-nums"><Won value={item.price} /></dd>
+                    <dd className="ez:m-0 ez:shrink-0"><Won value={item.price} /></dd>
                   </div>
                 ))}
               </dl>

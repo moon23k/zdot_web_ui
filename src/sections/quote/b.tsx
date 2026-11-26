@@ -50,7 +50,7 @@ function Doc({ slot, id, title, blank, children }: { slot: string; id: string; t
       className={cn(edge, "ez:grid ez:gap-8 ez:border-t ez:pt-7 ez:text-fg ez:[counter-increment:quote-doc] ez:lg:grid-cols-4 ez:lg:gap-0")}
     >
       <div className="ez:grid ez:content-start ez:gap-2.5 ez:lg:pr-10">
-        <span aria-hidden="true" className="ez:text-site-small ez:text-muted ez:tabular-nums ez:before:content-[counter(quote-doc,decimal-leading-zero)]" />
+        <span aria-hidden="true" className="ez:text-site-small ez:text-muted ez:before:content-[counter(quote-doc,decimal-leading-zero)]" />
         <h2 data-script={scriptOf(title)} className="ez:m-0 ez:font-display ez:text-site-section ez:text-fg">{title}</h2>
       </div>
       <div className="ez:min-w-0 ez:lg:col-span-3">{children}</div>
@@ -70,7 +70,7 @@ export function Header({ name, logoUrl, phone, nav, links }: QuoteHeaderProps) {
         </nav>
         <div className="ez:ml-auto ez:flex ez:shrink-0 ez:items-center ez:gap-4 ez:text-site-body ez:lg:gap-7">
           {phone && (
-            <a href={tel(phone)} className={cn("ez:inline-flex ez:items-center ez:text-fg ez:no-underline ez:tabular-nums", focusRing)}>
+            <a href={tel(phone)} className={cn("ez:inline-flex ez:items-center ez:text-fg ez:no-underline", focusRing)}>
               <Icon name="phone" size="sm" className="ez:text-muted ez:sm:hidden" />
               <span className="ez:max-sm:sr-only">{phone}</span>
             </a>
@@ -96,7 +96,7 @@ function Contacts({ phone, hours, className }: { phone?: string | null; hours?: 
         <div className="ez:grid ez:gap-1">
           <dt className="ez:text-site-small ez:text-muted">{QUOTE_TITLE.center}</dt>
           <dd className="ez:m-0">
-            <a href={tel(phone)} className={cn("ez:text-site-item ez:text-fg ez:no-underline ez:tabular-nums", focusRing)}>
+            <a href={tel(phone)} className={cn("ez:text-site-item ez:text-fg ez:no-underline", focusRing)}>
               {phone}
             </a>
           </dd>
@@ -105,7 +105,7 @@ function Contacts({ phone, hours, className }: { phone?: string | null; hours?: 
       {hours && (
         <div className="ez:grid ez:gap-1">
           <dt className="ez:text-site-small ez:text-muted">{QUOTE_TITLE.hours}</dt>
-          <dd data-script={scriptOf(hours)} className="ez:m-0 ez:text-site-item ez:text-fg ez:tabular-nums">{hours}</dd>
+          <dd data-script={scriptOf(hours)} className="ez:m-0 ez:text-site-item ez:text-fg">{hours}</dd>
         </div>
       )}
     </dl>
@@ -132,7 +132,7 @@ function PriceSheet({ rows, storeName, blank }: { rows: { label: ReactNode; valu
                 <th scope="row" className={cn(cell, "ez:py-4 ez:text-site-body ez:text-muted")}>
                   {r.label}
                 </th>
-                <td className={cn(cell, "ez:py-4 ez:text-right ez:text-site-heading ez:text-fg ez:tabular-nums")}>{r.value ?? null}</td>
+                <td className={cn(cell, "ez:py-4 ez:text-right ez:text-site-heading ez:text-fg")}>{r.value ?? null}</td>
               </tr>
             ))
           : [0, 1, 2, 3].map((i) => (
@@ -249,7 +249,7 @@ export function Trust({ data }: SectionProps<"trust_line">) {
     >
       {figures.map((f, i) => (
         <div key={f.label} className={cell(i)}>
-          <span className={cn(mark, "ez:text-site-display-md ez:tabular-nums")}><Won value={f.value} /></span>
+          <span className={cn(mark, "ez:text-site-display-md")}><Won value={f.value} /></span>
           <span className="ez:mt-3.5 ez:text-site-body ez:text-muted">{f.label}</span>
         </div>
       ))}
@@ -305,7 +305,7 @@ function PackageColumns({ items }: { items: (PackageItem | null)[] }) {
       {items.map((p, i) => (
         <li key={p ? `${p.name}-${i}` : i} className={cn(ruled(i, cols), "ez:flex ez:flex-col ez:items-start ez:border-b ez:py-7 ez:pr-4")}>
           <span data-script={scriptOf(p ? p.name : null)} className="ez:min-h-[2lh] ez:text-site-item ez:font-normal ez:break-keep ez:text-fg">{p ? p.name : <Bar />}</span>
-          <span className="ez:mt-2.5 ez:text-site-rank ez:font-normal ez:text-fg ez:tabular-nums ez:break-words">{p ? <Won value={p.price} /> : <BlankPrice />}</span>
+          <span className="ez:mt-2.5 ez:text-site-rank ez:font-normal ez:text-fg ez:break-words">{p ? <Won value={p.price} /> : <BlankPrice />}</span>
           <Includes lines={includesOf(p)} keep={Boolean(p)} className={cn(line, "ez:mt-5 ez:w-full ez:border-t ez:pt-4")} />
           {p && (
             <div className="ez:mt-auto ez:pt-5">
@@ -326,7 +326,7 @@ function PackageRows({ items }: { items: PackageItem[] }) {
       {items.map((p, i) => (
         <li key={`${p.name}-${i}`} className={cn(line, "ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-10 ez:gap-y-2 ez:border-b ez:py-6")}>
           <span data-script={scriptOf(p.name)} className="ez:min-w-0 ez:flex-1 ez:text-site-item ez:font-normal ez:text-fg">{p.name}</span>
-          <span className="ez:text-site-rank ez:font-normal ez:text-fg ez:tabular-nums"><Won value={p.price} /></span>
+          <span className="ez:text-site-rank ez:font-normal ez:text-fg"><Won value={p.price} /></span>
           <NextLink href={QUOTE_HREF} aria-label={`${p.name} ${QUOTE_TITLE.request}`} className={cn(textLink, "ez:text-site-note", focusRing)}>
             {QUOTE_TITLE.request}
           </NextLink>
@@ -354,7 +354,7 @@ export function Process({ data }: SectionProps<"process_steps">) {
       <ol className={cn(line, "ez:m-0 ez:list-none ez:border-t ez:p-0")}>
         {shown.map((s, i) => (
           <li key={i} className={cn(line, "ez:flex ez:min-h-19 ez:items-center ez:border-b ez:py-3")}>
-            <span className="ez:w-18 ez:shrink-0 ez:text-site-small ez:text-muted ez:tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+            <span className="ez:w-18 ez:shrink-0 ez:text-site-small ez:text-muted">{String(i + 1).padStart(2, "0")}</span>
             <span data-script={scriptOf(s)} className="ez:min-w-0 ez:font-display ez:text-site-heading ez:text-fg">{s ?? <Bar />}</span>
           </li>
         ))}
@@ -445,7 +445,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
       <div className={cn(edge, "ez:flex ez:flex-wrap ez:items-end ez:gap-x-6 ez:gap-y-3 ez:border-b ez:pb-7")}>
         {items.length && data.average != null ? (
           <>
-            <span className="ez:text-site-display-md ez:text-fg ez:tabular-nums">{average(data.average)}</span>
+            <span className="ez:text-site-display-md ez:text-fg">{average(data.average)}</span>
             <StarRow rating={data.average} className="ez:pb-1.5 ez:text-muted" />
             <span className="ez:pb-1 ez:text-site-body ez:text-muted">{reviewCount(count)}</span>
           </>
@@ -467,7 +467,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
                     <p data-script={scriptOf(r.body)} className="ez:m-0 ez:text-site-item ez:text-fg ez:whitespace-pre-line">{r.body}</p>
                     {product && <span data-script={scriptOf(product.name)} className="ez:text-site-note ez:text-muted">{product.name}</span>}
                   </div>
-                  <div className="ez:grid ez:content-start ez:gap-0.5 ez:text-site-note ez:tabular-nums ez:md:text-right">
+                  <div className="ez:grid ez:content-start ez:gap-0.5 ez:text-site-note ez:md:text-right">
                     <span className="ez:text-fg">{r.name}</span>
                     {r.date && <span className="ez:text-muted">{r.date}</span>}
                   </div>
@@ -607,7 +607,7 @@ function ContactColumn({ phone, hours, blank }: { phone?: string | null; hours?:
           <dt className="ez:text-site-small ez:text-muted">{QUOTE_TITLE.center}</dt>
           <dd className="ez:m-0">
             {phone ? (
-              <a href={tel(phone)} className={cn("ez:text-site-rank ez:font-normal ez:text-fg ez:no-underline ez:tabular-nums", focusRing)}>
+              <a href={tel(phone)} className={cn("ez:text-site-rank ez:font-normal ez:text-fg ez:no-underline", focusRing)}>
                 {phone}
               </a>
             ) : (
@@ -619,7 +619,7 @@ function ContactColumn({ phone, hours, blank }: { phone?: string | null; hours?:
       {(hours || blank) && (
         <div className={cn(phone || blank ? cn(line, "ez:mt-5 ez:border-t ez:pt-4") : "", "ez:grid ez:gap-1.5")}>
           <dt className="ez:text-site-small ez:text-muted">{QUOTE_TITLE.hours}</dt>
-          <dd data-script={scriptOf(hours)} className="ez:m-0 ez:text-site-body ez:text-fg ez:tabular-nums">{hours ?? <Bar />}</dd>
+          <dd data-script={scriptOf(hours)} className="ez:m-0 ez:text-site-body ez:text-fg">{hours ?? <Bar />}</dd>
         </div>
       )}
     </dl>
@@ -649,14 +649,14 @@ export function Footer({ storeName, phone, hours, business, nav, guide, account,
             {business.map((r) => (
               <div key={r.label} className="ez:contents">
                 <dt className="ez:text-muted">{r.label}</dt>
-                <dd className="ez:m-0 ez:min-w-0 ez:break-words ez:text-fg ez:tabular-nums"><Won value={r.value} /></dd>
+                <dd className="ez:m-0 ez:min-w-0 ez:break-words ez:text-fg"><Won value={r.value} /></dd>
               </div>
             ))}
           </dl>
           <div className="ez:grid ez:content-start ez:gap-1.5 ez:lg:col-span-2 ez:lg:pr-6">
             <span className="ez:text-site-small ez:text-muted">{QUOTE_TITLE.center}</span>
             {phone && (
-              <a href={tel(phone)} className={cn("ez:text-site-heading ez:text-fg ez:no-underline ez:tabular-nums", focusRing)}>
+              <a href={tel(phone)} className={cn("ez:text-site-heading ez:text-fg ez:no-underline", focusRing)}>
                 {phone}
               </a>
             )}
@@ -703,7 +703,7 @@ function ListRow({ c, tone }: { c: Case; tone: number }) {
         {view.category && label(QUOTE_TITLE.category)}
         {view.category}
       </td>
-      <td className={cn(cell, "ez:w-60 ez:text-fg ez:tabular-nums")}>
+      <td className={cn(cell, "ez:w-60 ez:text-fg")}>
         {view.area && label(QUOTE_TITLE.area)}
         {view.area}
       </td>
@@ -737,7 +737,7 @@ function ListRequest({ data, storeName }: { data: QuoteStarter; storeName?: stri
         {data.phone && (
           <span className="ez:grid ez:gap-0.5">
             <span className="ez:text-site-small ez:text-muted">{QUOTE_TITLE.center}</span>
-            <a href={tel(data.phone)} className={cn("ez:text-site-heading ez:text-fg ez:no-underline ez:tabular-nums", focusRing)}>
+            <a href={tel(data.phone)} className={cn("ez:text-site-heading ez:text-fg ez:no-underline", focusRing)}>
               {data.phone}
             </a>
           </span>
@@ -752,7 +752,7 @@ export function List({ title, count, tabs, cases, request, storeName }: QuoteLis
     <div data-slot="quote-cases" className="ez:pt-12 ez:text-fg ez:lg:pt-18">
       <div className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-4">
         <h1 data-script={scriptOf(title)} className="ez:m-0 ez:font-display ez:text-site-page ez:text-fg">{title}</h1>
-        <span className="ez:text-site-heading ez:text-muted ez:tabular-nums">{count}</span>
+        <span className="ez:text-site-heading ez:text-muted">{count}</span>
       </div>
       {tabs.length > 1 && (
         <nav aria-label={QUOTE_TITLE.category} className={cn(edge, "ez:mt-10 ez:flex ez:flex-wrap ez:gap-x-8 ez:gap-y-2 ez:border-b")}>
@@ -768,7 +768,7 @@ export function List({ title, count, tabs, cases, request, storeName }: QuoteLis
               )}
             >
               {t.label}
-              {t.count != null && t.count > 0 && <span className="ez:ml-1.5 ez:text-site-small ez:font-normal ez:text-muted ez:tabular-nums">{t.count}</span>}
+              {t.count != null && t.count > 0 && <span className="ez:ml-1.5 ez:text-site-small ez:font-normal ez:text-muted">{t.count}</span>}
             </NextLink>
           ))}
         </nav>

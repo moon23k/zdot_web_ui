@@ -76,7 +76,8 @@ describe("OrderNumber", () => {
     clipboard(writeText);
     const { container } = render(<OrderNumber number="20261125-00015" />);
     expect(screen.getByText("주문번호")).toHaveClass("ez:text-site-small", "ez:text-muted");
-    expect(container.querySelector("dd")).toHaveClass("ez:text-site-heading", "ez:tabular-nums");
+    expect(container.querySelector("dd")).toHaveClass("ez:text-site-heading");
+    expect(container.querySelector("dd")).not.toHaveClass("ez:tabular-nums");
     expect(screen.getByRole("status")).toHaveTextContent("");
     screen.getByRole("button", { name: "주문번호 복사" }).click();
     await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("복사됨"));

@@ -78,7 +78,7 @@ export function Footer({ storeName, phone, hours, address, legal, business, nav,
               <div className="ez:flex ez:flex-wrap ez:gap-x-6 ez:gap-y-1 ez:text-muted">
                 {address && <span>{address}</span>}
                 {phone && (
-                  <a href={telHref(phone)} className={cn(quiet, "ez:tabular-nums")}>
+                  <a href={telHref(phone)} className={quiet}>
                     {phone}
                   </a>
                 )}

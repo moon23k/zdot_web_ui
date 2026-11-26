@@ -132,7 +132,7 @@ export function InquiryList({
                 {STATUS[q.status]}
               </span>
             </span>
-            <span className="ez:text-site-small ez:tabular-nums ez:text-muted">
+            <span className="ez:text-site-small ez:text-muted">
               {[
                 q.product_name,
                 q.order_number && `주문 ${q.order_number}`,
@@ -183,7 +183,7 @@ export function InquiryThread({
               <span className="ez:font-normal ez:text-fg">
                 {m.author === "customer" ? "나" : store}
               </span>
-              <span className="ez:tabular-nums">{kstMonthDayTime(m.created_at)}</span>
+              <span>{kstMonthDayTime(m.created_at)}</span>
             </span>
             <p className="ez:m-0 ez:whitespace-pre-wrap">{m.body}</p>
             {m.photos && m.photos.length > 0 && (

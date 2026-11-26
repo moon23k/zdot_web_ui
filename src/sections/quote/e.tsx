@@ -27,7 +27,7 @@ const hair = "ez:border-0 ez:border-solid ez:border-hairline";
 
 const display = "ez:m-0 ez:font-body ez:text-site-section ez:text-fg ez:md:text-site-display-sm";
 
-const figure = "ez:font-figure ez:tabular-nums";
+const figure = "ez:font-figure";
 
 const muteLink = cn("ez:text-muted ez:no-underline ez:hover:text-fg", focusRing);
 
@@ -134,7 +134,7 @@ export function Footer({ storeName, phone, hours, business, nav, guide, account,
               {business.map((r) => (
                 <div key={r.label} className="ez:contents">
                   <dt>{r.label}</dt>
-                  <dd className="ez:m-0 ez:min-w-0 ez:break-words ez:text-muted ez:tabular-nums"><Won value={r.value} /></dd>
+                  <dd className="ez:m-0 ez:min-w-0 ez:break-words ez:text-muted"><Won value={r.value} /></dd>
                 </div>
               ))}
             </dl>
@@ -356,7 +356,7 @@ function PackageCell({ p, index, cols }: { p: PackageItem | null; index: number;
     <li className={cn(line, "ez:flex ez:flex-col ez:items-start ez:py-7 ez:pr-7 ez:lg:min-h-95", ruled(index, cols))}>
       <span className={cn("ez:h-5 ez:text-site-small ez:text-site-off", figure)}>{p ? pad(index) : null}</span>
       <h3 data-script={scriptOf(p ? p.name : null)} className="ez:m-0 ez:mt-6 ez:font-body ez:text-site-heading ez:break-keep ez:text-fg ez:lg:mt-10">{p ? p.name : <Bar />}</h3>
-      <p className="ez:m-0 ez:mt-2.5 ez:max-w-full ez:text-site-section ez:break-words ez:text-fg ez:tabular-nums ez:lg:text-site-display-sm">
+      <p className="ez:m-0 ez:mt-2.5 ez:max-w-full ez:text-site-section ez:break-words ez:text-fg ez:lg:text-site-display-sm">
         {p ? (
           <>
             {amount}

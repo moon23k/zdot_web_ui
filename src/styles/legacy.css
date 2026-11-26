@@ -35,7 +35,7 @@
   :where(.ez-root) [class*="text-site-item"] {
     font-style: var(--ezd-subtitle-style);
   }
-  :where(.ez-root) :is([class*="text-site-figure"], [class*="tabular-nums"]) {
+  :where(.ez-root) :is([class*="text-site-figure"], [data-slot="won"]) {
     font-style: normal;
   }
   :where(.ez-root) :is([class*="text-site-display"], [class*="text-site-hero"], [class*="text-site-page"], [class*="text-site-section"], [class*="text-site-title"], [class*="text-site-name"]):not([class*="line-clamp"]) {
@@ -88,7 +88,6 @@
   font-size: var(--ez-text-site-body);
   line-height: 1.6;
   letter-spacing: -0.004em;
-  font-feature-settings: "tnum" 1;
 }
 .ez-root .ez-root[data-frame="gallery"] {
   overflow-x: visible;

@@ -66,14 +66,14 @@ export function ClaimStatus({ claims, action }: { claims: ClaimView[]; action?: 
             <li key={c.id} className="ez:grid ez:gap-1 ez:border-0 ez:border-b ez:border-solid ez:border-primary-border ez:py-3.5">
               <span className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
                 <strong className={cn("ez:font-medium", closed ? "ez:text-fg" : "ez:text-primary")}>{STATUS[c.kind][c.status]}</strong>
-                <span className="ez:text-site-small ez:tabular-nums ez:text-muted">
+                <span className="ez:text-site-small ez:text-muted">
                   {KIND[c.kind]} · {kstMonthDay(c.created_at)}
                 </span>
               </span>
               <span className="ez:text-muted">{c.reason}</span>
               {note && <span>{note}</span>}
               {c.status === "completed" && c.refund_amount > 0 && (
-                <span className="ez:tabular-nums">환불 {won(c.refund_amount)}</span>
+                <span>환불 {won(c.refund_amount)}</span>
               )}
               {action?.(c)}
             </li>

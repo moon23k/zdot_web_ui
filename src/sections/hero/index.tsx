@@ -70,7 +70,7 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
             <dl className="ez:m-0 ez:mt-4 ez:flex ez:gap-10 ez:self-stretch ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-7">
               {facts.map((f) => (
                 <div key={f.label} className="ez:flex ez:flex-col">
-                  <dd className="ez:order-1 ez:m-0 ez:font-body ez:text-site-figure-lg ez:tabular-nums"><Won value={f.value} /></dd>
+                  <dd className="ez:order-1 ez:m-0 ez:font-body ez:text-site-figure-lg"><Won value={f.value} /></dd>
                   <dt className="ez:order-2 ez:text-site-small ez:text-muted">{f.label}</dt>
                 </div>
               ))}
@@ -116,7 +116,7 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
             <Photo src={pick.cover_url} alt="" sizes="56px" tone={1} className="ez:size-14 ez:rounded-sm" />
             <span className="ez:flex ez:flex-col ez:text-site-small">
               <span>{pick.name}</span>
-              {pick.sale_price != null && <span className="ez:font-normal ez:tabular-nums"><Won amount={pick.sale_price} /></span>}
+              {pick.sale_price != null && <span className="ez:font-normal"><Won amount={pick.sale_price} /></span>}
             </span>
           </NextLink>
         )}
@@ -186,7 +186,7 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
               <NextLink key={p.id} href={productHref(p)} className="ez:grid ez:grid-cols-[1fr_auto] ez:items-end ez:gap-4 ez:rounded-md ez:bg-surface-alt ez:p-5 ez:text-fg ez:no-underline">
                 <span className="ez:grid ez:gap-1">
                   <span data-script={scriptOf(p.name)} className="ez:text-site-item ez:font-normal">{p.name}</span>
-                  {p.sale_price != null && <span className="ez:text-site-small ez:text-muted ez:tabular-nums"><Won amount={p.sale_price} /></span>}
+                  {p.sale_price != null && <span className="ez:text-site-small ez:text-muted"><Won amount={p.sale_price} /></span>}
                 </span>
                 <Photo src={p.cover_url} alt="" sizes="160px" tone={i + 1} className="ez:size-24 ez:lg:size-36" />
               </NextLink>

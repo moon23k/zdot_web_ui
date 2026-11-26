@@ -124,7 +124,7 @@ export function Header({ name, logoUrl, phone, nav, links }: PlaceHeaderProps) {
                 <a
                   href={telHref(phone)}
                   className={cn(
-                    "ez:py-1.5 ez:text-fg ez:no-underline ez:tabular-nums ez:hover:text-muted",
+                    "ez:py-1.5 ez:text-fg ez:no-underline ez:hover:text-muted",
                     focusRing
                   )}
                 >
@@ -298,7 +298,7 @@ function MenuColumn({
           ? group.items.map((item) => (
               <div key={item.id} className={row}>
                 <dt className="ez:min-w-0 ez:text-fg">{item.name}</dt>
-                <dd className="ez:m-0 ez:shrink-0 ez:text-muted ez:tabular-nums">
+                <dd className="ez:m-0 ez:shrink-0 ez:text-muted">
                   <Won value={item.price} />
                 </dd>
               </div>
@@ -350,7 +350,7 @@ export function Store({ data, context }: SectionProps<"store_info">) {
           {
             label: PLACE_TITLE.phone,
             value: data.phone ? (
-              <span className="ez:tabular-nums">{data.phone}</span>
+              <span>{data.phone}</span>
             ) : (
               <Bar size="short" />
             ),
@@ -472,7 +472,7 @@ export function Footer({
               {phone && (
                 <a
                   href={telHref(phone)}
-                  className={cn(quiet, "ez:justify-self-start ez:tabular-nums")}
+                  className={cn(quiet, "ez:justify-self-start")}
                 >
                   {phone}
                 </a>

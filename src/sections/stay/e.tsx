@@ -28,7 +28,7 @@ const hair = "ez:border-0 ez:border-solid ez:border-hairline";
 
 const display = "ez:m-0 ez:font-body ez:text-site-section ez:text-fg ez:md:text-site-display-sm";
 
-const figure = "ez:font-figure ez:tabular-nums";
+const figure = "ez:font-figure";
 
 const muteLink = cn("ez:text-muted ez:no-underline ez:hover:text-fg", focusRing);
 

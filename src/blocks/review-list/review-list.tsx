@@ -26,7 +26,7 @@ function Spread({ items }: { items: ReviewItem[] }) {
             <dd className="ez:relative ez:m-0 ez:h-0.5 ez:flex-1 ez:bg-site-line">
               <span className="ez:absolute ez:inset-y-0 ez:left-0 ez:bg-primary" style={{ width: `${(c / max) * 100}%` }} />
             </dd>
-            <dd className="ez:m-0 ez:w-5 ez:text-right ez:text-muted ez:tabular-nums">{c}</dd>
+            <dd className="ez:m-0 ez:w-5 ez:text-right ez:text-muted">{c}</dd>
           </div>
         );
       })}
@@ -72,7 +72,7 @@ export function ReviewList({
               <li key={r.id} className="ez:grid ez:gap-2.5 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:py-7">
                 <div className="ez:flex ez:flex-wrap ez:items-center ez:gap-x-3 ez:text-site-small">
                   <StarRow rating={r.rating} />
-                  <span className="ez:tabular-nums">{r.rating.toFixed(1)}</span>
+                  <span>{r.rating.toFixed(1)}</span>
                   <span className="ez:text-muted">{[r.author, kstDate(r.created_at)].filter(Boolean).join(" · ")}</span>
                   {r.option && <span className="ez:text-muted">{r.option}</span>}
                 </div>

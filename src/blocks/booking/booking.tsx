@@ -45,7 +45,7 @@ export function PhotoCollage({ images, name, kind = "stay" }: { images: (string 
   return (
     <div className="ez:grid ez:gap-3">
       {collage}
-      <p data-slot="photo-count" aria-hidden="true" className="ez:m-0 ez:text-right ez:text-site-small ez:text-muted ez:tabular-nums">
+      <p data-slot="photo-count" aria-hidden="true" className="ez:m-0 ez:text-right ez:text-site-small ez:text-muted">
         1 / {filled.length}
       </p>
     </div>
@@ -86,7 +86,7 @@ export function BookingHead({ tag, title, rating, facts }: { tag?: string | null
               <svg viewBox="0 0 24 24" aria-hidden="true" data-star="on" className="ez:size-3.25 ez:text-primary">
                 <path fill="currentColor" d={STAR_PATH} />
               </svg>
-              <span className="ez:font-normal ez:tabular-nums">{rating.average.toFixed(1)}</span>
+              <span className="ez:font-normal">{rating.average.toFixed(1)}</span>
               <span className="ez:text-muted">
                 {rating.label ?? "후기"} {rating.count}
               </span>
@@ -141,17 +141,17 @@ export function CardTotal({ label, value, rows, after }: { label: string; value:
       {rows?.map((r, i) => (
         <div key={`${i}-${r.label}`} data-slot="card-total-row" className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
           <span className="ez:text-site-small ez:text-muted">{r.label}</span>
-          <span className={cn("ez:text-site-body ez:tabular-nums", r.minus && "ez:text-primary")}><Won value={r.value} /></span>
+          <span className={cn("ez:text-site-body", r.minus && "ez:text-primary")}><Won value={r.value} /></span>
         </div>
       ))}
       <div className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
         <span>{label}</span>
-        <span className="ez:text-site-section ez:tabular-nums">{value}</span>
+        <span className="ez:text-site-section">{value}</span>
       </div>
       {after?.map((r, i) => (
         <div key={`${i}-${r.label}`} data-slot="card-total-after" className="ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:text-site-small ez:text-muted">
           <span>{r.label}</span>
-          <span className="ez:tabular-nums"><Won value={r.value} /></span>
+          <span><Won value={r.value} /></span>
         </div>
       ))}
     </div>
@@ -172,7 +172,7 @@ export function TimeTiles({ items, value, onChange, name }: { items: { id: strin
           )}
         >
           <input type="radio" name={name} value={t.id} checked={value === t.id} disabled={t.off} onChange={() => onChange(t.id)} className="ez:sr-only" />
-          <span className={cn("ez:text-site-lead ez:tabular-nums", t.off && "ez:line-through")}>{t.time}</span>
+          <span className={cn("ez:text-site-lead", t.off && "ez:line-through")}>{t.time}</span>
           <span data-script={scriptOf(t.note)} className="ez:text-site-caption">{t.note}</span>
         </label>
       ))}
@@ -201,7 +201,7 @@ export function RoomShelf({ title, rooms }: { title: string; rooms: { id: string
               <Photo src={r.image} alt={r.name} tone={i} sizes="(max-width: 768px) 100vw, 640px" className="ez:aspect-[16/9]" />
               <span className="ez:flex ez:items-baseline ez:justify-between ez:gap-4">
                 <span data-script={scriptOf(r.name)} className="ez:text-site-heading">{r.name}</span>
-                <span className="ez:font-normal ez:tabular-nums">
+                <span className="ez:font-normal">
                   <Won value={r.price} />
                   <span className="ez:text-site-small ez:font-normal ez:text-muted"> / {r.unit}</span>
                 </span>

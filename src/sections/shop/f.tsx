@@ -88,7 +88,7 @@ function Card({ product, rank, shelf, preload, sizes = CARD_SIZES }: { product: 
         <span data-cutout={v.cutout ? "" : undefined} className={cn(stagePanel, "ez:p-5 ez:md:p-10", v.soldOut && "ez:opacity-45")}>
           <Photo src={v.cutout ?? v.cover} alt={v.name} preload={preload} sizes={sizes} className={cn(SHELF_RATIO[shelf.ratio], "ez:rounded-none ez:bg-transparent")} />
         </span>
-        {rank != null && <span className="ez:absolute ez:top-4 ez:left-5 ez:text-site-small ez:text-site-off ez:tabular-nums">{String(rank).padStart(2, "0")}</span>}
+        {rank != null && <span className="ez:absolute ez:top-4 ez:left-5 ez:text-site-small ez:text-site-off">{String(rank).padStart(2, "0")}</span>}
         <span aria-hidden="true" className="ez:absolute ez:right-3 ez:bottom-3 ez:grid ez:size-11 ez:place-items-center ez:rounded-full ez:bg-surface ez:text-fg ez:md:right-4 ez:md:bottom-4">
           <Icon name="bag" size="sm" />
         </span>
@@ -102,7 +102,7 @@ function Card({ product, rank, shelf, preload, sizes = CARD_SIZES }: { product: 
             </span>
           ))}
         </span>
-        <span className="ez:flex ez:shrink-0 ez:flex-wrap ez:items-baseline ez:justify-end ez:gap-x-1.5 ez:text-site-lead ez:text-muted ez:tabular-nums">
+        <span className="ez:flex ez:shrink-0 ez:flex-wrap ez:items-baseline ez:justify-end ez:gap-x-1.5 ez:text-site-lead ez:text-muted">
           {v.rate > 0 && <span className="ez:font-medium ez:text-fg">{v.rate}%</span>}
           <span><Won value={v.price} /></span>
           {v.list && (
@@ -195,7 +195,7 @@ export function Header({ name, logoUrl, cartCount, nav, links }: ShopHeaderProps
             <Icon name="bag" size="lg" className="ez:lg:hidden" />
             <span className="ez:max-lg:hidden">장바구니</span>
             {cartCount ? (
-              <span aria-hidden="true" className="ez:text-site-small ez:text-muted ez:tabular-nums">
+              <span aria-hidden="true" className="ez:text-site-small ez:text-muted">
                 {cartCount}
               </span>
             ) : null}
@@ -234,7 +234,7 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
               <div className="ez:grid ez:gap-1">
                 <span className="ez:text-site-note ez:text-muted">고객센터</span>
                 {phone && (
-                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-heading ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
+                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-heading ez:text-fg ez:no-underline", focusRing)}>
                     {phone}
                   </a>
                 )}
@@ -275,7 +275,7 @@ const productHref = (p: HeroProduct) => p.href ?? `/products/${p.id}`;
 
 function Pager({ shown, next }: { shown: HeroProduct[]; next: HeroProduct }) {
   return (
-    <div className="ez:mt-8 ez:flex ez:items-center ez:gap-4 ez:self-end ez:text-site-small ez:text-muted ez:tabular-nums ez:lg:absolute ez:lg:right-12 ez:lg:bottom-12 ez:lg:mt-0">
+    <div className="ez:mt-8 ez:flex ez:items-center ez:gap-4 ez:self-end ez:text-site-small ez:text-muted ez:lg:absolute ez:lg:right-12 ez:lg:bottom-12 ez:lg:mt-0">
       <span>01</span>
       <span aria-hidden="true" className="ez:relative ez:block ez:h-0.5 ez:w-30 ez:bg-site-line">
         <span className="ez:absolute ez:inset-y-0 ez:left-0 ez:bg-muted" style={{ width: `${100 / shown.length}%` }} />
@@ -348,7 +348,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
               </p>
             )}
             {pick && sale != null && (
-              <p className="ez:m-0 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2 ez:text-site-item ez:font-normal ez:tabular-nums">
+              <p className="ez:m-0 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2 ez:text-site-item ez:font-normal">
                 {rate > 0 && <span className="ez:font-medium">{rate}%</span>}
                 <Won amount={sale} />
                 {pick.sold_out && <span className="ez:text-site-small ez:text-muted">품절</span>}
@@ -473,7 +473,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
   const summary = items.length && data.average != null && data.count ? `${data.average.toFixed(1)} · ${SHOP_TITLE.reviews} ${data.count}` : null;
   return (
     <section data-slot="reviews" data-variant="stage" data-blank={items.length ? undefined : ""} className="ez:text-fg">
-      <Head title={SHOP_TITLE.reviews} aside={summary ? <span data-script={scriptOf(summary)} className="ez:text-site-lead ez:text-muted ez:tabular-nums">{summary}</span> : undefined} />
+      <Head title={SHOP_TITLE.reviews} aside={summary ? <span data-script={scriptOf(summary)} className="ez:text-site-lead ez:text-muted">{summary}</span> : undefined} />
       <div className={cn("ez:grid ez:gap-x-6 ez:gap-y-10", fillCols(items.length || 3))}>
         {items.length
           ? items.map((r, i) => <ReviewCard key={`${r.name}-${r.date ?? ""}-${i}`} item={r} product={r.product ? context.products.find((p) => p.id === r.product) : undefined} />)
@@ -490,13 +490,13 @@ function GuideBody({ cell }: { cell: GuideCell }) {
     <>
       <span className="ez:text-site-small ez:text-muted">{cell.label}</span>
       {cell.value ? (
-        <span className="ez:mt-2 ez:text-site-heading ez:tabular-nums"><Won value={cell.value} /></span>
+        <span className="ez:mt-2 ez:text-site-heading"><Won value={cell.value} /></span>
       ) : (
         <span className="ez:mt-2 ez:text-site-heading">
           <Bar />
         </span>
       )}
-      {cell.note && <span data-script={scriptOf(cell.note)} className="ez:mt-1 ez:text-site-small ez:text-muted ez:tabular-nums">{cell.note}</span>}
+      {cell.note && <span data-script={scriptOf(cell.note)} className="ez:mt-1 ez:text-site-small ez:text-muted">{cell.note}</span>}
     </>
   );
 }
@@ -561,7 +561,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
       <Crumbs items={crumbs} />
       <div className="ez:mt-4 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3 ez:gap-y-1">
         <h1 data-script={scriptOf(title)} className="ez:m-0 ez:text-site-page-sm ez:text-fg ez:lg:text-site-display-md">{title}</h1>
-        {count != null && <span className="ez:text-site-item ez:font-normal ez:text-muted ez:tabular-nums">{count}</span>}
+        {count != null && <span className="ez:text-site-item ez:font-normal ez:text-muted">{count}</span>}
       </div>
       {search && <div className="ez:mt-6">{search}</div>}
       <div className="ez:mt-8 ez:flex ez:flex-col ez:gap-x-6 ez:gap-y-2 ez:md:flex-row ez:md:items-center ez:md:justify-between ez:lg:mt-10">
@@ -574,7 +574,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
               className={cn("ez:inline-flex ez:min-h-11 ez:shrink-0 ez:items-baseline ez:gap-1.5 ez:py-2.5 ez:text-site-lead ez:no-underline ez:hover:text-fg", t.on ? "ez:font-medium ez:text-fg" : "ez:text-site-off", focusRing)}
             >
               {t.label}
-              {t.count != null && <span className="ez:text-site-small ez:font-normal ez:text-site-off ez:tabular-nums">{t.count}</span>}
+              {t.count != null && <span className="ez:text-site-small ez:font-normal ez:text-site-off">{t.count}</span>}
             </NextLink>
           ))}
         </nav>

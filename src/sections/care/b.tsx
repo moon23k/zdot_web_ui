@@ -26,7 +26,7 @@ const label = "ez:m-0 ez:whitespace-nowrap ez:font-display ez:text-site-note ez:
 
 const name = "ez:m-0 ez:font-display ez:text-site-heading ez:text-fg";
 
-const price = "ez:m-0 ez:font-display ez:text-site-item ez:font-normal ez:text-fg ez:tabular-nums";
+const price = "ez:m-0 ez:font-display ez:text-site-item ez:font-normal ez:text-fg";
 
 const lead = "ez:m-0 ez:font-display ez:text-site-item ez:font-normal ez:leading-loose ez:text-fg";
 
@@ -91,7 +91,7 @@ export function Header({ name: storeName, logoUrl, phone, nav, links }: CareHead
             </a>
           ) : (
             phone && (
-              <a href={telHref(phone)} className={cn("ez:inline-flex ez:items-center ez:whitespace-nowrap ez:text-site-small ez:tabular-nums", quiet)}>
+              <a href={telHref(phone)} className={cn("ez:inline-flex ez:items-center ez:whitespace-nowrap ez:text-site-small", quiet)}>
                 <Icon name="phone" size="sm" className="ez:text-muted ez:sm:hidden" />
                 <span className="ez:max-sm:sr-only">{phone}</span>
               </a>
@@ -114,7 +114,7 @@ export function Footer({ storeName, phone, hours, address, business, links, term
           {contact.length > 0 && (
             <ul className={list}>
               {contact.map((c) => (
-                <li key={c} className="ez:tabular-nums">
+                <li key={c}>
                   {c}
                 </li>
               ))}
@@ -196,7 +196,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
                 <div className={cn(dotted, "ez:grid ez:grid-cols-[minmax(0,5rem)_minmax(0,1fr)] ez:gap-3 ez:border-b ez:py-3")}>
                   <dt className={small}>{CARE_TITLE.phone}</dt>
                   <dd className={body}>
-                    <a href={telHref(phone)} className={cn(quiet, "ez:tabular-nums")}>
+                    <a href={telHref(phone)} className={quiet}>
                       {phone}
                     </a>
                   </dd>

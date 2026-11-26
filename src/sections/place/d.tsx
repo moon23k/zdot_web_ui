@@ -28,7 +28,7 @@ export function Menu({ data }: SectionProps<"menu">) {
                 <Pic src={item.image} ratio={1} tone={i} className={card} />
                 <div className="ez:flex ez:flex-wrap ez:items-baseline ez:justify-between ez:gap-x-3 ez:px-1.5 ez:pt-4 ez:text-site-item ez:font-normal">
                   <span className="ez:min-w-0">{item.name}</span>
-                  <span className="ez:shrink-0 ez:tabular-nums"><Won value={item.price} /></span>
+                  <span className="ez:shrink-0"><Won value={item.price} /></span>
                 </div>
               </li>
             ))}

@@ -190,7 +190,7 @@ function Table({ layers }: { layers: DetailLayer[] }) {
       {rows.map(([label, value]) => (
         <div key={label.id} data-row="" className="ez:grid ez:grid-cols-[32%_minmax(0,1fr)] ez:items-baseline ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-2.5 ez:first:border-t">
           <RowCell layer={label} className="ez:pr-3 ez:text-site-small ez:text-muted" />
-          <RowCell layer={value} className="ez:text-site-body ez:text-fg ez:tabular-nums" />
+          <RowCell layer={value} className="ez:text-site-body ez:text-fg" />
         </div>
       ))}
     </div>

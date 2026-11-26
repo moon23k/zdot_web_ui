@@ -61,7 +61,7 @@ describe("store font", () => {
     const css = readFileSync("src/styles/legacy.css", "utf8");
     const upright = css.slice(0, css.indexOf("font-style: normal;"));
     for (const slot of ["site-header", "site-footer", "button"]) expect(upright).toContain(`[data-slot="${slot}"]`);
-    expect(css).toMatch(/text-site-figure"\], \[class\*="tabular-nums"\]\) \{\s+font-style: normal;/);
+    expect(css).toMatch(/text-site-figure"\], \[data-slot="won"\]\) \{\s+font-style: normal;/);
   });
 
   it("defaults to the fixed hierarchy", () => {

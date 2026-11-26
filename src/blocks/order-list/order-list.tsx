@@ -107,8 +107,8 @@ export function OrderList({
               <article className="ez:grid ez:gap-6 ez:rounded-md ez:border ez:border-solid ez:border-site-line ez:p-5 ez:md:px-8 ez:md:py-7">
                 <header className="ez:flex ez:items-center ez:justify-between ez:gap-4">
                   <span className="ez:flex ez:min-w-0 ez:flex-wrap ez:items-baseline ez:gap-x-4 ez:gap-y-1">
-                    <span className="ez:text-site-item ez:font-normal ez:tabular-nums">{kstDotDate(o.created_at)}</span>
-                    <span className="ez:text-site-small ez:tabular-nums ez:text-muted">주문번호 {o.number}</span>
+                    <span className="ez:text-site-item ez:font-normal">{kstDotDate(o.created_at)}</span>
+                    <span className="ez:text-site-small ez:text-muted">주문번호 {o.number}</span>
                     <span
                       data-slot="order-state"
                       className={cn("ez:inline-flex ez:items-center ez:gap-2 ez:self-center ez:text-site-small", settled(o.status) ? "ez:text-muted" : "ez:text-fg")}
@@ -141,9 +141,9 @@ export function OrderList({
                       <span className="ez:text-site-small ez:text-muted">{more > 0 ? `외 ${more}건` : `${o.quantity}개`}</span>
                     )}
                     {canceled ? (
-                      <s className="ez:mt-1.5 ez:tabular-nums ez:text-muted">{won(o.total)}</s>
+                      <s className="ez:mt-1.5 ez:text-muted">{won(o.total)}</s>
                     ) : (
-                      <span className="ez:mt-1.5 ez:font-normal ez:tabular-nums"><Won amount={o.total} /></span>
+                      <span className="ez:mt-1.5 ez:font-normal"><Won amount={o.total} /></span>
                     )}
                   </span>
                   {o.status === "completed" && (

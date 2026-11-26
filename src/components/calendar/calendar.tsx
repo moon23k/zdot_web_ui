@@ -140,7 +140,7 @@ export function Calendar({
                         aria-pressed={look === "edge"}
                         aria-label={[dayText(day.date), `${WEEKDAYS[weekday(day.date)]}요일`, day.label, availability && full ? "마감" : null].filter(Boolean).join(" ")}
                         className={cn(
-                          "ez:relative ez:mx-auto ez:grid ez:size-11 ez:content-center ez:gap-0.5 ez:rounded-button ez:border-0 ez:bg-transparent ez:p-0 ez:font-body ez:text-site-note ez:tabular-nums ez:text-fg ez:cursor-pointer",
+                          "ez:relative ez:mx-auto ez:grid ez:size-11 ez:content-center ez:gap-0.5 ez:rounded-button ez:border-0 ez:bg-transparent ez:p-0 ez:font-body ez:text-site-note ez:text-fg ez:cursor-pointer",
                           availability && !blocked && "ez:font-medium",
                           look === "edge" && (mode === "range" ? "ez:bg-point-soft ez:font-medium ez:text-primary" : "ez:font-medium"),
                           look === "edge" && "ez:shadow-[inset_0_0_0_1px_var(--ezd-primary)]",

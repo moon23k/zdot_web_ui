@@ -90,7 +90,7 @@ export function Header({ name, logoUrl, cartCount, nav, links }: ShopHeaderProps
               <NextLink href={links.cart} aria-label={cart} className={textLink}>
                 장바구니
                 {cartCount ? (
-                  <span aria-hidden="true" className="ez:tabular-nums">
+                  <span aria-hidden="true">
                     {cartCount}
                   </span>
                 ) : null}
@@ -147,7 +147,7 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
               <div className="ez:grid ez:gap-0.5 ez:text-site-note ez:text-muted">
                 <span>고객센터</span>
                 {phone && (
-                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-fg ez:tabular-nums ez:no-underline ez:hover:underline", focusRing)}>
+                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-fg ez:no-underline ez:hover:underline", focusRing)}>
                     {phone}
                   </a>
                 )}
@@ -182,7 +182,7 @@ function HeroFloat({ product, shipping }: { product: HeroProduct; shipping: Sect
   return (
     <NextLink href={product.href ?? `/products/${product.id}`} data-slot="hero-product" className={cn("ez:fx-glass ez:group", floatBox, focusRing)}>
       <span data-script={scriptOf(product.name)} className="ez:block ez:truncate ez:text-site-heading ez:underline-offset-4 ez:group-hover:underline">{product.name}</span>
-      <span className="ez:mt-1 ez:mb-3.5 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2 ez:text-site-body ez:tabular-nums">
+      <span className="ez:mt-1 ez:mb-3.5 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2 ez:text-site-body">
         {rate > 0 && <span className="ez:font-medium">{rate}%</span>}
         {sale != null && <span><Won amount={sale} /></span>}
         {product.sold_out && <span className="ez:text-muted">품절</span>}
@@ -191,7 +191,7 @@ function HeroFloat({ product, shipping }: { product: HeroProduct; shipping: Sect
         <dl className="ez:m-0 ez:text-site-note">
           <div className={floatRow}>
             <dt className="ez:text-muted">배송비</dt>
-            <dd className="ez:m-0 ez:tabular-nums"><Won value={fee} /></dd>
+            <dd className="ez:m-0"><Won value={fee} /></dd>
           </div>
         </dl>
       )}
@@ -307,7 +307,7 @@ function Card({ product, shelf, sizes = CARD_SIZES, eager }: { product: ProductS
       </span>
       <span className="ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:items-baseline ez:gap-x-3 ez:gap-y-0.5 ez:px-1.5 ez:pt-4">
         <span data-script={scriptOf(v.name)} className={cn("ez:truncate ez:text-site-item ez:font-normal ez:underline-offset-4 ez:group-hover:underline", v.soldOut ? "ez:text-muted" : "ez:text-fg")}>{v.name}</span>
-        <span className={cn("ez:flex ez:items-baseline ez:gap-x-1.5 ez:text-site-item ez:font-normal ez:whitespace-nowrap ez:tabular-nums", v.soldOut ? "ez:text-muted" : "ez:text-fg")}>
+        <span className={cn("ez:flex ez:items-baseline ez:gap-x-1.5 ez:text-site-item ez:font-normal ez:whitespace-nowrap", v.soldOut ? "ez:text-muted" : "ez:text-fg")}>
           {v.rate > 0 && <span className="ez:font-medium ez:text-fg">{v.rate}%</span>}
           <Won value={v.price} />
         </span>
@@ -315,7 +315,7 @@ function Card({ product, shelf, sizes = CARD_SIZES, eager }: { product: ProductS
           <>
             <span className="ez:text-site-small ez:text-muted">{label}</span>
             {v.list ? (
-              <s className="ez:justify-self-end ez:text-site-small ez:text-muted ez:tabular-nums">
+              <s className="ez:justify-self-end ez:text-site-small ez:text-muted">
                 <span className="ez:sr-only">정가 </span>
                 {v.list}
               </s>
@@ -431,7 +431,7 @@ const reviewCard = "ez:flex ez:min-h-60 ez:min-w-0 ez:flex-col ez:fx-round-lg ez
 function ReviewCard({ item, product }: { item: ReviewItem; product?: ProductSummary }) {
   return (
     <article className={reviewCard}>
-      <span role="img" aria-label={`별점 ${item.rating}점`} className="ez:inline-flex ez:items-center ez:gap-1.5 ez:text-site-note ez:text-muted ez:tabular-nums">
+      <span role="img" aria-label={`별점 ${item.rating}점`} className="ez:inline-flex ez:items-center ez:gap-1.5 ez:text-site-note ez:text-muted">
         <svg viewBox="0 0 24 24" aria-hidden="true" className="ez:size-3.5 ez:text-primary">
           <path fill="currentColor" d={STAR_PATH} />
         </svg>
@@ -459,7 +459,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
   const items = (data.items ?? []).filter((r, i, all) => !r.product || all.findIndex((x) => x.product === r.product) === i).slice(0, 3);
   const summary =
     items.length && data.average != null && data.count ? (
-      <span className="ez:text-site-body ez:text-muted ez:tabular-nums">
+      <span className="ez:text-site-body ez:text-muted">
         {data.average.toFixed(1)} · {SHOP_TITLE.reviews} {data.count}
       </span>
     ) : undefined;
@@ -487,7 +487,7 @@ function GuideBody({ cell }: { cell: GuideCell }) {
     <>
       <span className="ez:text-site-note ez:text-muted">{cell.label}</span>
       {cell.value ? (
-        <span className="ez:text-site-heading ez:tabular-nums"><Won value={cell.value} /></span>
+        <span className="ez:text-site-heading"><Won value={cell.value} /></span>
       ) : (
         <span className="ez:text-site-heading">
           <Bar />
@@ -609,7 +609,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
       <Crumbs items={crumbs} />
       <div className="ez:mt-4 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3 ez:gap-y-1">
         <h1 data-script={scriptOf(title)} className={sectionTitle}>{title}</h1>
-        {count ? <span className="ez:text-site-item ez:font-normal ez:text-muted ez:tabular-nums">{count}</span> : null}
+        {count ? <span className="ez:text-site-item ez:font-normal ez:text-muted">{count}</span> : null}
       </div>
       {search && <div className="ez:mt-6">{search}</div>}
       <div className="ez:mt-8 ez:flex ez:items-center ez:justify-between ez:gap-6 ez:lg:mt-10">
@@ -622,7 +622,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
               className={cn("ez:inline-flex ez:shrink-0 ez:items-baseline ez:gap-1.5 ez:py-2 ez:text-site-body ez:no-underline ez:hover:text-fg", t.on ? "ez:fx-tab ez:font-medium ez:text-fg" : "ez:text-site-off", focusRing)}
             >
               {t.label}
-              {t.count != null && <span className="ez:text-site-small ez:font-normal ez:text-muted ez:tabular-nums">{t.count}</span>}
+              {t.count != null && <span className="ez:text-site-small ez:font-normal ez:text-muted">{t.count}</span>}
             </NextLink>
           ))}
         </nav>

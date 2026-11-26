@@ -82,7 +82,7 @@ export function BookingBox({ data }: DetailBlockProps) {
             <label className={cn("ez:flex ez:min-h-11 ez:cursor-pointer ez:items-center ez:justify-between ez:gap-3 ez:border-0 ez:border-b ez:border-solid ez:border-site-line", s.status === "full" && "ez:opacity-60")}>
               <span className="ez:flex ez:items-center ez:gap-2">
                 <input type="radio" name="session" value={s.id} checked={pick === s.id} disabled={s.status === "full"} onChange={() => setPick(s.id)} />
-                <span className="ez:tabular-nums">{`${s.date} ${s.time}`}</span>
+                <span>{`${s.date} ${s.time}`}</span>
               </span>
               <span className="ez:text-site-small">{s.status === "few" && s.seats_left ? `남은 자리 ${s.seats_left}` : statusText[s.status]}</span>
             </label>
@@ -140,7 +140,7 @@ export function QuoteForm({ data, variant }: DetailBlockProps) {
         {f.total && (
           <span className="ez:flex ez:items-baseline ez:justify-between">
             <span className="ez:text-site-small ez:text-muted">예상 금액</span>
-            <strong className="ez:text-site-heading ez:tabular-nums"><Won value={f.total} /></strong>
+            <strong className="ez:text-site-heading"><Won value={f.total} /></strong>
           </span>
         )}
         <Button type="submit">{f.button}</Button>

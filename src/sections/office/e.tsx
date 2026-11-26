@@ -22,11 +22,11 @@ const plan = cn(
   "ez:flex ez:min-w-0 ez:flex-col ez:py-7 ez:max-lg:border-t ez:max-lg:first:border-t-0 ez:lg:min-h-70 ez:lg:border-l ez:lg:px-7 ez:lg:pb-8 ez:lg:nth-[4n+1]:border-l-0 ez:lg:nth-[4n+1]:pl-0 ez:lg:nth-[n+5]:border-t",
 );
 
-const planNo = "ez:text-site-note ez:text-site-off ez:tabular-nums";
+const planNo = "ez:text-site-note ez:text-site-off";
 
 const planName = "ez:m-0 ez:mt-6 ez:font-display ez:text-site-heading ez:text-fg ez:lg:mt-10";
 
-const planPrice = "ez:m-0 ez:mt-2.5 ez:font-display ez:text-site-name ez:text-fg ez:tabular-nums ez:lg:text-site-display-md";
+const planPrice = "ez:m-0 ez:mt-2.5 ez:font-display ez:text-site-name ez:text-fg ez:lg:text-site-display-md";
 
 export function Menu({ data }: SectionProps<"menu">) {
   const items = menuItems((data.groups ?? []).filter((g) => g.items.length));

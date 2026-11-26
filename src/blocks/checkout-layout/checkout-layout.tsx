@@ -86,7 +86,7 @@ export function CheckoutLines({ lines }: { lines: { id: string; name: string; op
             <span>{l.name}</span>
             <span className="ez:text-site-small ez:text-muted">{[l.option, `${l.quantity}개`].filter(Boolean).join(" · ")}</span>
           </span>
-          <span className="ez:font-normal ez:tabular-nums ez:whitespace-nowrap"><Won value={l.amount} /></span>
+          <span className="ez:font-normal ez:whitespace-nowrap"><Won value={l.amount} /></span>
         </li>
       ))}
     </ul>

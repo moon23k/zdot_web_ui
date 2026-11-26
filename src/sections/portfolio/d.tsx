@@ -40,7 +40,7 @@ export function Cases({ data }: SectionProps<"case_grid">) {
                     {(c.category || c.meta) && (
                       <span className="ez:ml-auto ez:flex ez:shrink-0 ez:gap-3 ez:text-site-small ez:text-muted">
                         {c.category && <span>{c.category}</span>}
-                        {c.meta && <span className="ez:tabular-nums">{c.meta}</span>}
+                        {c.meta && <span>{c.meta}</span>}
                       </span>
                     )}
                   </span>

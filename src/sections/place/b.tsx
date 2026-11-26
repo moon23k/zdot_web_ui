@@ -152,7 +152,7 @@ export function Header({
             <a
               href={telHref(phone)}
               className={cn(
-                "ez:inline-flex ez:items-center ez:whitespace-nowrap ez:tabular-nums",
+                "ez:inline-flex ez:items-center ez:whitespace-nowrap",
                 quiet
               )}
             >
@@ -203,7 +203,7 @@ export function Footer({
           {contact.length > 0 && (
             <ul className={small}>
               {contact.map((c) => (
-                <li key={c} className="ez:tabular-nums">
+                <li key={c}>
                   {c}
                 </li>
               ))}
@@ -342,7 +342,7 @@ function Signature({ items }: { items: MenuItem[] }) {
             />
           )}
           <h3 data-script={scriptOf(m.name)} className={item}>{m.name}</h3>
-          <p className={cn(body, "ez:mt-4 ez:tabular-nums")}><Won value={m.price} /></p>
+          <p className={cn(body, "ez:mt-4")}><Won value={m.price} /></p>
         </li>
       ))}
     </ul>
@@ -365,7 +365,7 @@ function FullMenu({ groups }: { groups: MenuGroup[] }) {
                 className="ez:flex ez:items-baseline ez:justify-between ez:gap-4"
               >
                 <dt data-script={scriptOf(m.name)} className={cn(body, "ez:min-w-0")}>{m.name}</dt>
-                <dd className={cn(body, "ez:shrink-0 ez:tabular-nums")}>
+                <dd className={cn(body, "ez:shrink-0")}>
                   <Won value={m.price} />
                 </dd>
               </div>
@@ -499,7 +499,7 @@ export function Location({ data }: SectionProps<"location">) {
           {(data.phone || blank) && (
             <VisitRow term={PLACE_TITLE.phone}>
               {data.phone ? (
-                <span className="ez:tabular-nums">{data.phone}</span>
+                <span>{data.phone}</span>
               ) : (
                 <Bar size="short" />
               )}

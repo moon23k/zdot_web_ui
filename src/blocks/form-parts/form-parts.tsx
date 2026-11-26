@@ -170,7 +170,7 @@ export function PhotoAttach({
         />
         <Icon name="plus" size="sm" />
         {label}
-        <span className="ez:tabular-nums">
+        <span>
           {count}/{max}
         </span>
       </label>

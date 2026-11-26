@@ -67,7 +67,7 @@ function Card({ c, preload, tags }: { c: ClassCard; preload?: boolean; tags: boo
         {tags && <span className="ez:mb-3 ez:block ez:h-4 ez:text-site-small ez:leading-none ez:text-muted">{labels}</span>}
         <span data-script={scriptOf(c.name)} className="ez:line-clamp-2 ez:text-site-item ez:font-normal ez:underline-offset-4 ez:group-hover:underline">{c.name}</span>
         {detail && <span data-script={scriptOf(detail)} className="ez:mt-1.5 ez:text-site-body ez:text-muted">{detail}</span>}
-        {c.price && <span className="ez:mt-1 ez:text-site-body ez:tabular-nums"><Won value={c.price} /></span>}
+        {c.price && <span className="ez:mt-1 ez:text-site-body"><Won value={c.price} /></span>}
         {c.next && <span data-script={scriptOf(c.next)} className="ez:mt-2.5 ez:text-site-body ez:text-muted">{c.next}</span>}
       </span>
     </NextLink>
@@ -108,11 +108,11 @@ function SessionRow({ s }: { s: Session }) {
       )}
     >
       <span className="ez:col-span-2 ez:flex ez:items-baseline ez:gap-2.5 ez:lg:col-span-1">
-        <span className="ez:text-site-item ez:font-normal ez:leading-none ez:tabular-nums ez:lg:text-site-rank">{v.date}</span>
+        <span className="ez:text-site-item ez:font-normal ez:leading-none ez:lg:text-site-rank">{v.date}</span>
         {v.day && <span className="ez:text-site-body ez:text-muted">{v.day}</span>}
-        <span className="ez:tabular-nums ez:lg:hidden">{v.time}</span>
+        <span className="ez:lg:hidden">{v.time}</span>
       </span>
-      <span className="ez:tabular-nums ez:max-lg:hidden">{v.time}</span>
+      <span className="ez:max-lg:hidden">{v.time}</span>
       <span className="ez:grid ez:min-w-0 ez:gap-1">
         <span data-script={scriptOf(v.name)} className="ez:text-site-item ez:font-normal">{v.name}</span>
         {meta && <span data-script={scriptOf(meta)} className="ez:text-site-note ez:text-muted">{meta}</span>}
@@ -120,7 +120,7 @@ function SessionRow({ s }: { s: Session }) {
       </span>
       <span className="ez:max-lg:hidden">{seats}</span>
       <span className="ez:flex ez:flex-col ez:items-end ez:gap-1.5 ez:lg:contents">
-        <span className="ez:text-right ez:tabular-nums"><Won value={v.price} /></span>
+        <span className="ez:text-right"><Won value={v.price} /></span>
         <span className="ez:text-right">
           {!v.full && (
             <NextLink href={v.href} aria-label={`${v.name} ${v.date} ${v.time} ${CLASS_TITLE.book}`} className={cn(link, focusRing)}>
@@ -351,7 +351,7 @@ export function Location({ data }: SectionProps<"location">) {
           ? [
               [
                 CLASS_TITLE.phone,
-                <a key="tel" href={`tel:${data.phone}`} className={cn("ez:text-fg ez:no-underline ez:tabular-nums ez:underline-offset-4 ez:hover:underline", focusRing)}>
+                <a key="tel" href={`tel:${data.phone}`} className={cn("ez:text-fg ez:no-underline ez:underline-offset-4 ez:hover:underline", focusRing)}>
                   {data.phone}
                 </a>,
               ] as [string, ReactNode],
@@ -423,7 +423,7 @@ export function Footer({ storeName, phone, hours, legal, classes, guide, account
             {(phone || hours) && (
               <div className="ez:grid ez:gap-2.5">
                 {phone && (
-                  <a href={`tel:${phone}`} className={cn("ez:font-display ez:text-site-counter ez:text-fg ez:no-underline ez:tabular-nums ez:lg:text-site-name", focusRing)}>
+                  <a href={`tel:${phone}`} className={cn("ez:font-display ez:text-site-counter ez:text-fg ez:no-underline ez:lg:text-site-name", focusRing)}>
                     {phone}
                   </a>
                 )}
@@ -494,7 +494,7 @@ export function List({ view, title, count, crumbs, tabs, sorts, classes, session
                 className={cn("ez:inline-flex ez:min-h-11 ez:items-center ez:gap-1.5 ez:no-underline ez:hover:text-fg", t.on ? "ez:font-medium ez:text-fg" : "ez:text-muted", focusRing)}
               >
                 {t.label}
-                {t.count != null && <span className="ez:text-site-small ez:font-normal ez:text-muted ez:tabular-nums">{t.count}</span>}
+                {t.count != null && <span className="ez:text-site-small ez:font-normal ez:text-muted">{t.count}</span>}
               </NextLink>
             ))}
           </nav>
@@ -503,11 +503,11 @@ export function List({ view, title, count, crumbs, tabs, sorts, classes, session
       <div className={cn(line, "ez:mt-10 ez:flex ez:flex-wrap ez:items-center ez:justify-between ez:gap-x-6 ez:gap-y-2 ez:border-y ez:py-3 ez:text-site-body ez:lg:mt-16")}>
         {schedule ? (
           <span className="ez:text-muted">
-            {CLASS_TITLE.scheduleShort} <b className="ez:font-medium ez:text-fg ez:tabular-nums">{sessions.length}</b>개
+            {CLASS_TITLE.scheduleShort} <b className="ez:font-medium ez:text-fg">{sessions.length}</b>개
           </span>
         ) : count != null ? (
           <span className="ez:text-muted">
-            {CLASS_TITLE.classes} <b className="ez:font-medium ez:text-fg ez:tabular-nums">{count}</b>개
+            {CLASS_TITLE.classes} <b className="ez:font-medium ez:text-fg">{count}</b>개
           </span>
         ) : (
           <span />

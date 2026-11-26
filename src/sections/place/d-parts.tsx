@@ -88,7 +88,7 @@ export function AuroraHeader({ name, logoUrl, phone, nav, links }: LandingHeader
               </a>
             ))}
             {phone && (
-              <a href={telHref(phone)} className={cn(quiet, "ez:tabular-nums ez:max-md:hidden")}>
+              <a href={telHref(phone)} className={cn(quiet, "ez:max-md:hidden")}>
                 {phone}
               </a>
             )}
@@ -145,7 +145,7 @@ export function AuroraHero({ data, context, more }: SectionProps<"hero"> & { mor
             {rows.map((r) => (
               <div key={r.label} className={cn(hair, "ez:flex ez:items-baseline ez:justify-between ez:gap-6 ez:border-t ez:py-3 ez:first:border-t-0")}>
                 <dt className="ez:shrink-0 ez:text-muted">{r.label}</dt>
-                <dd className="ez:m-0 ez:min-w-0 ez:text-right ez:tabular-nums"><Won value={r.value} /></dd>
+                <dd className="ez:m-0 ez:min-w-0 ez:text-right"><Won value={r.value} /></dd>
               </div>
             ))}
           </dl>
@@ -173,7 +173,7 @@ export function MenuPanel({ groups }: { groups: (MenuGroup | null)[] }) {
                 ? g.items.map((item) => (
                     <li key={item.id} className={cn(hair, "ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:border-t ez:py-4 ez:text-site-item ez:font-normal")}>
                       <span className="ez:min-w-0">{item.name}</span>
-                      <span className="ez:shrink-0 ez:tabular-nums"><Won value={item.price} /></span>
+                      <span className="ez:shrink-0"><Won value={item.price} /></span>
                     </li>
                   ))
                 : [0, 1, 2].map((n) => (
@@ -284,7 +284,7 @@ export function AuroraFooter({ storeName, phone, hours, address, legal, business
               <div className="ez:grid ez:content-start ez:text-muted">
                 {address && <span>{address}</span>}
                 {phone && (
-                  <a href={telHref(phone)} className={cn(quiet, "ez:justify-self-start ez:tabular-nums")}>
+                  <a href={telHref(phone)} className={cn(quiet, "ez:justify-self-start")}>
                     {phone}
                   </a>
                 )}

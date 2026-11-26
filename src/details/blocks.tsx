@@ -21,7 +21,7 @@ function Summary({ data, variant }: DetailBlockProps) {
   return (
     <div data-slot="detail-summary" className="ez:grid ez:gap-2 ez:text-fg">
       <h1 data-script={scriptOf(data.title)} className="ez:m-0 ez:text-site-page-sm ez:lg:text-site-page">{data.title}</h1>
-      {data.price && <strong className="ez:text-site-heading ez:tabular-nums"><Won value={data.price} /></strong>}
+      {data.price && <strong className="ez:text-site-heading"><Won value={data.price} /></strong>}
       {variant === "status" && data.status && <span data-script={scriptOf(data.status)} className="ez:text-site-small ez:text-primary">{data.status}</span>}
       {data.chips && <Chips items={data.chips} current={-1} />}
     </div>
@@ -94,11 +94,11 @@ function ClassSummary({ data, variant }: DetailBlockProps) {
         {(data.rows ?? []).map((r, i) => (
           <li key={i} className="ez:grid ez:gap-0.5 ez:rounded-md ez:bg-surface ez:p-3">
             <span className="ez:text-site-small ez:text-muted">{r.label}</span>
-            <strong className="ez:tabular-nums">{r.value}</strong>
+            <strong>{r.value}</strong>
           </li>
         ))}
       </ul>
-      {data.price && <strong className="ez:text-site-heading ez:tabular-nums"><Won value={data.price} /></strong>}
+      {data.price && <strong className="ez:text-site-heading"><Won value={data.price} /></strong>}
     </section>
   );
 }
@@ -159,12 +159,12 @@ function Cohorts({ data }: DetailBlockProps) {
       <Cols m={1} pc={3}>
         {cohorts.map((c) => (
           <div key={c.title} className="ez:grid ez:content-start ez:gap-1.5 ez:rounded-md ez:border ez:border-solid ez:border-primary-border ez:p-4">
-            <strong className="ez:font-normal ez:tabular-nums">{c.title}</strong>
-            <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{`${c.period} · ${c.count}`}</span>
+            <strong className="ez:font-normal">{c.title}</strong>
+            <span className="ez:text-site-small ez:text-muted">{`${c.period} · ${c.count}`}</span>
             <SessionStatus session={{ id: c.title, date: "", time: "", name: "", status: c.status, seats_left: c.seats_left }} />
             {c.dates && (
               <Fold title={`수업 날짜 ${c.dates.length}개`}>
-                <span className="ez:text-site-small ez:tabular-nums">{c.dates.join(" · ")}</span>
+                <span className="ez:text-site-small">{c.dates.join(" · ")}</span>
               </Fold>
             )}
           </div>
@@ -196,7 +196,7 @@ function Timetable({ data }: DetailBlockProps) {
         <tbody>
           {t.rows.map((r) => (
             <tr key={r.time} className="ez:border-0 ez:border-t ez:border-solid ez:border-primary-border">
-              <th scope="row" className="ez:p-2 ez:font-normal ez:text-muted ez:tabular-nums">
+              <th scope="row" className="ez:p-2 ez:font-normal ez:text-muted">
                 {r.time}
               </th>
               {r.open.map((o, i) => (
@@ -233,7 +233,7 @@ function Availability({ data }: DetailBlockProps) {
           <li
             key={d.day}
             className={cn(
-              "ez:grid ez:gap-0.5 ez:rounded-sm ez:py-1.5 ez:tabular-nums",
+              "ez:grid ez:gap-0.5 ez:rounded-sm ez:py-1.5",
               d.state === "picked" ? "ez:bg-point-soft ez:font-medium ez:text-primary ez:shadow-[inset_0_0_0_1px_var(--ezd-primary)]" : "ez:bg-transparent",
               d.state === "closed" && "ez:text-muted ez:line-through",
             )}

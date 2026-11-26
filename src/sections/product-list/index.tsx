@@ -77,13 +77,13 @@ function ShowcaseCard({ product, ratio, index }: { product: ProductSummary; rati
           <NextLink data-script={scriptOf(product.name)} href={href} className="ez:line-clamp-2 ez:text-site-item ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4">
             {product.name}
           </NextLink>
-          <span className={cn("ez:shrink-0 ez:text-site-lead ez:font-normal ez:tabular-nums", product.sold_out && "ez:text-muted")}><Won amount={product.sale_price} /></span>
+          <span className={cn("ez:shrink-0 ez:text-site-lead ez:font-normal", product.sold_out && "ez:text-muted")}><Won amount={product.sale_price} /></span>
         </div>
         <div className="ez:flex ez:min-h-6 ez:items-center ez:justify-between ez:gap-3 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-3.5 ez:text-site-small">
           {product.sold_out ? (
             <span className="ez:text-muted">품절</span>
           ) : sale > 0 ? (
-            <span className="ez:font-normal ez:text-primary ez:tabular-nums">{`${sale}%`}</span>
+            <span className="ez:font-normal ez:text-primary">{`${sale}%`}</span>
           ) : (
             <span />
           )}
@@ -111,7 +111,7 @@ function StoreCard({ product, ratio, index }: { product: ProductSummary; ratio: 
       <Shot product={product} ratio={ratio} index={index} />
       <span className="ez:flex ez:flex-col ez:gap-0.5">
         <span data-script={scriptOf(product.name)} className="ez:line-clamp-2 ez:text-site-lead ez:group-hover:underline ez:underline-offset-4">{product.name}</span>
-        <span className="ez:flex ez:items-baseline ez:gap-2 ez:tabular-nums ez:whitespace-nowrap">
+        <span className="ez:flex ez:items-baseline ez:gap-2 ez:whitespace-nowrap">
           {product.sold_out ? <span className="ez:text-site-small ez:text-muted">품절</span> : sale > 0 && <span className="ez:font-normal ez:text-primary">{`${sale}%`}</span>}
           <strong className={cn("ez:text-site-lead ez:font-medium", product.sold_out && "ez:text-muted")}><Won amount={product.sale_price} /></strong>
         </span>

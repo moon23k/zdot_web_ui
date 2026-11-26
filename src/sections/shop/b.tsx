@@ -84,7 +84,7 @@ export function Header({ name, logoUrl, cartCount, nav, links }: ShopHeaderProps
               {cartCount ? <span aria-hidden="true" className="ez:absolute ez:-top-0.5 ez:-right-0.5 ez:size-1.75 ez:rounded-full ez:bg-primary" /> : null}
             </span>
             {cartCount ? (
-              <span aria-hidden="true" className="ez:text-site-small ez:text-muted ez:tabular-nums">
+              <span aria-hidden="true" className="ez:text-site-small ez:text-muted">
                 {cartCount}
               </span>
             ) : null}
@@ -130,7 +130,7 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
         <div className="ez:col-span-2 ez:flex ez:flex-col ez:md:col-span-4 ez:lg:col-span-1">
           <span className="ez:mb-3.5 ez:text-site-note ez:font-normal ez:text-fg">고객센터</span>
           {phone && (
-            <a href={`tel:${phone}`} className={cn("ez:mb-2 ez:self-start ez:text-site-rank ez:font-normal ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
+            <a href={`tel:${phone}`} className={cn("ez:mb-2 ez:self-start ez:text-site-rank ez:font-normal ez:text-fg ez:no-underline", focusRing)}>
               {phone}
             </a>
           )}
@@ -154,7 +154,7 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
 
 function Price({ rate, price, list, soldOut }: { rate: number; price: string; list: string | null; soldOut: boolean }) {
   return (
-    <span className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-1.5 ez:tabular-nums">
+    <span className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-1.5">
       {rate > 0 && <span className="ez:text-site-figure ez:font-medium ez:text-fg">{rate}%</span>}
       <span className={cn("ez:text-site-figure ez:font-normal", soldOut ? "ez:text-muted" : "ez:text-fg")}><Won value={price} /></span>
       {list && (
@@ -187,7 +187,7 @@ function Card({ product, rank, tone, preload, shelf, sizes = CARD_SIZES }: { pro
         className={cn(SHELF_RATIO[shelf.ratio], "ez:rounded-sm", v.soldOut && "ez:opacity-45")}
       />
       <span className="ez:flex ez:gap-3.5">
-        {rank != null && <span className="ez:w-6 ez:shrink-0 ez:text-site-name ez:leading-none ez:text-muted ez:tabular-nums">{rank}</span>}
+        {rank != null && <span className="ez:w-6 ez:shrink-0 ez:text-site-name ez:leading-none ez:text-muted">{rank}</span>}
         <span className="ez:grid ez:min-w-0 ez:flex-1 ez:content-start ez:gap-1.5">
           <span className="ez:flex ez:items-baseline ez:gap-2">
             <span data-script={scriptOf(v.name)} className="ez:min-w-0 ez:flex-1 ez:truncate ez:text-site-body ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
@@ -309,7 +309,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
       </nav>
       <div className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2.5 ez:gap-y-1 ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:pt-3 ez:pb-7">
         <h1 data-script={scriptOf(title)} className="ez:m-0 ez:font-body ez:text-site-heading ez:text-fg ez:md:text-site-title">{title}</h1>
-        {count != null && <span className="ez:text-site-body ez:text-muted ez:tabular-nums">{count}</span>}
+        {count != null && <span className="ez:text-site-body ez:text-muted">{count}</span>}
       </div>
       {search && <div className="ez:pt-6">{search}</div>}
       <div className="ez:grid ez:grid-cols-1 ez:gap-x-10 ez:lg:grid-cols-[13.75rem_minmax(0,1fr)]">
@@ -325,7 +325,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
                 >
                   <Icon name="check" size="sm" className={cn("ez:text-primary", !t.on && "ez:invisible ez:max-lg:hidden")} />
                   <span className="ez:lg:flex-1">{t.label}</span>
-                  {t.count != null && <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{t.count}</span>}
+                  {t.count != null && <span className="ez:text-site-small ez:text-muted">{t.count}</span>}
                 </NextLink>
               </li>
             ))}

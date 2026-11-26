@@ -76,12 +76,12 @@ export function BuyBox({
         {rating && rating.count > 0 && (
           <NextLink href="#reviews" className="ez:flex ez:items-center ez:gap-2 ez:text-site-small ez:text-fg ez:no-underline">
             <StarRow rating={rating.average} />
-            <span className="ez:tabular-nums">{rating.average.toFixed(1)}</span>
+            <span>{rating.average.toFixed(1)}</span>
             <span className="ez:text-muted">리뷰 {rating.count}</span>
           </NextLink>
         )}
       </div>
-      <p className="ez:m-0 ez:flex ez:flex-wrap ez:items-baseline ez:gap-2 ez:text-site-heading ez:tabular-nums">
+      <p className="ez:m-0 ez:flex ez:flex-wrap ez:items-baseline ez:gap-2 ez:text-site-heading">
         {sale > 0 && !soldOut && <span className="ez:text-primary">{sale}%</span>}
         <span className={soldOut ? "ez:text-muted" : undefined}>
           <Won amount={from ?? unit} />
@@ -131,7 +131,7 @@ export function BuyBox({
                   className="ez:sr-only"
                 />
                 {v.label ?? "기본"}
-                {v.price > base && <span className="ez:tabular-nums">+{won(v.price - base)}</span>}
+                {v.price > base && <span>+{won(v.price - base)}</span>}
               </label>
             ))}
           </div>
@@ -165,7 +165,7 @@ export function BuyBox({
               {quantity > 1 && (
                 <p className="ez:m-0 ez:flex ez:items-baseline ez:gap-3.5">
                   <span className="ez:text-site-small ez:text-muted">총 상품 금액</span>
-                  <strong className="ez:text-site-heading ez:font-medium ez:tabular-nums ez:whitespace-nowrap"><Won amount={unit * quantity} /></strong>
+                  <strong className="ez:text-site-heading ez:font-medium ez:whitespace-nowrap"><Won amount={unit * quantity} /></strong>
                 </p>
               )}
             </div>
@@ -197,7 +197,7 @@ export function BuyBox({
             <span className="ez:text-site-small ez:text-muted">
               {[options ? variant?.label : null, `${quantity}개`].filter(Boolean).join(" · ")}
             </span>
-            <strong className="ez:font-medium ez:tabular-nums"><Won amount={unit * quantity} /></strong>
+            <strong className="ez:font-medium"><Won amount={unit * quantity} /></strong>
           </div>
         </div>
         <div className="ez:grid ez:grid-cols-2 ez:gap-2">

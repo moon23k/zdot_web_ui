@@ -219,7 +219,7 @@ export function Footer({ phone, hours, address, legal, links, terms }: Portfolio
         <div className="ez:grid ez:gap-x-gutter ez:gap-y-6 ez:text-site-small ez:md:grid-cols-2 ez:lg:grid-cols-12">
           {phone && (
             <FooterItem head={LANDING_LABEL.phone} className="ez:lg:col-span-2">
-              <a href={telHref(phone)} className={cn(plain, "ez:justify-self-start ez:tabular-nums")}>
+              <a href={telHref(phone)} className={cn(plain, "ez:justify-self-start")}>
                 {phone}
               </a>
             </FooterItem>

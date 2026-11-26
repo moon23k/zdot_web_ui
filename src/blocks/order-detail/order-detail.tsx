@@ -135,7 +135,7 @@ function ShipRow({ label, end, children }: { label: string; end?: ReactNode; chi
   return (
     <div className={row}>
       <dt className="ez:text-site-small ez:text-muted">{label}</dt>
-      <dd className="ez:m-0 ez:flex ez:min-w-0 ez:items-center ez:justify-between ez:gap-3 ez:py-3 ez:text-site-body ez:tabular-nums ez:text-fg">
+      <dd className="ez:m-0 ez:flex ez:min-w-0 ez:items-center ez:justify-between ez:gap-3 ez:py-3 ez:text-site-body ez:text-fg">
         <span className="ez:min-w-0">{children}</span>
         {end}
       </dd>
@@ -187,7 +187,7 @@ export function OrderDetail({
               {partial ? "부분 환불" : order.deposit ? "입금 대기" : orderLabel(order, labels)}
             </span>
           </div>
-          <span className="ez:text-site-small ez:tabular-nums ez:text-muted">주문번호 {order.number}</span>
+          <span className="ez:text-site-small ez:text-muted">주문번호 {order.number}</span>
         </header>
         {order.deposit && <DepositInfo deposit={order.deposit} />}
         {step >= 0 && order.fulfillment !== "none" && order.fulfillment !== "visit" && (

@@ -223,7 +223,7 @@ export function Footer({ storeName, phone, hours, address, business, nav, links,
             {(phone || contact.length > 0) && (
               <div className="ez:grid ez:gap-2">
                 {phone && (
-                  <a href={telHref(phone)} className={cn("ez:justify-self-start ez:text-fg ez:no-underline ez:tabular-nums ez:hover:text-muted", focusRing)}>
+                  <a href={telHref(phone)} className={cn("ez:justify-self-start ez:text-fg ez:no-underline ez:hover:text-muted", focusRing)}>
                     {phone}
                   </a>
                 )}

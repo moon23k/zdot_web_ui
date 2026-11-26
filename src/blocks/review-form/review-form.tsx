@@ -70,7 +70,7 @@ export function ReviewForm({
           ))}
         </div>
       </fieldset>
-      <Field label={word} hint={`5자 이상 · ${body.length.toLocaleString("ko-KR")} / 2,000`}>
+      <Field label={word} hint={<>5자 이상 · <span className="ez:tabular-nums">{`${body.length.toLocaleString("ko-KR")} / 2,000`}</span></>}>
         <TextArea name="body" required minLength={5} maxLength={2000} value={body} onChange={(e) => setBody(e.target.value)} />
       </Field>
       {state.error && <Notice tone="error">{state.error}</Notice>}

@@ -35,7 +35,7 @@ export function Pairs({ rows, cols = 1, accent }: { rows: Row[]; cols?: 1 | 2 | 
       {rows.map((r, i) => (
         <div key={i} className="ez:flex ez:items-baseline ez:justify-between ez:gap-6 ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-3.5">
           <dt className={r.value === undefined ? "ez:text-fg" : "ez:text-muted"}>{r.label}</dt>
-          {r.value !== undefined && <dd className={cn("ez:m-0 ez:text-right ez:tabular-nums", accent?.(r.value) && "ez:font-medium ez:text-primary")}>{r.value}</dd>}
+          {r.value !== undefined && <dd className={cn("ez:m-0 ez:text-right", accent?.(r.value) && "ez:font-medium ez:text-primary")}>{r.value}</dd>}
         </div>
       ))}
     </dl>
@@ -109,7 +109,7 @@ export function Steps({ steps }: { steps: ReactNode[] }) {
     <ol className="ez:m-0 ez:grid ez:list-none ez:grid-cols-2 ez:gap-2 ez:p-0 ez:md:auto-cols-fr ez:md:grid-flow-col ez:md:grid-cols-none">
       {steps.map((s, i) => (
         <li key={i} className="ez:grid ez:gap-1 ez:rounded-md ez:bg-surface-alt ez:p-3 ez:text-site-note">
-          <strong className="ez:text-primary ez:tabular-nums">{i + 1}</strong>
+          <strong className="ez:text-primary">{i + 1}</strong>
           {s}
         </li>
       ))}

@@ -40,7 +40,7 @@ const navOn = "ez:font-medium ez:text-fg";
 
 const textLink = cn("ez:inline-flex ez:h-10 ez:items-center ez:px-2.5 ez:text-site-note ez:text-muted ez:no-underline ez:hover:text-fg", focusRing);
 
-const price = "ez:text-site-figure ez:font-normal ez:tabular-nums ez:text-fg";
+const price = "ez:text-site-figure ez:font-normal ez:text-fg";
 
 const classRow = "ez:grid ez:grid-cols-2 ez:gap-x-4 ez:gap-y-10 ez:md:gap-x-5";
 
@@ -136,7 +136,7 @@ export function Footer({ storeName, phone, hours, legal, classes, guide, account
         <div className="ez:col-span-2 ez:flex ez:flex-col ez:md:col-span-4 ez:lg:col-span-1">
           <span className="ez:mb-3.5 ez:text-site-note ez:font-normal ez:text-fg">{CLASS_TITLE.center}</span>
           {phone && (
-            <a href={`tel:${phone}`} className={cn("ez:mb-2 ez:self-start ez:text-site-rank ez:font-normal ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
+            <a href={`tel:${phone}`} className={cn("ez:mb-2 ez:self-start ez:text-site-rank ez:font-normal ez:text-fg ez:no-underline", focusRing)}>
               {phone}
             </a>
           )}
@@ -182,7 +182,7 @@ function Near({ session }: { session: Session }) {
   const t = when(session);
   return (
     <NextLink href={v.href} className={cn("ez:group ez:flex ez:flex-1 ez:flex-col ez:justify-center ez:gap-1.5 ez:py-5 ez:text-fg ez:no-underline", line, "ez:border-t ez:first-of-type:border-t-0", focusRing)}>
-      <span className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2 ez:text-site-body ez:text-muted ez:tabular-nums">
+      <span className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2 ez:text-site-body ez:text-muted">
         <span className="ez:text-site-rank ez:font-normal ez:text-fg">{t.day}</span>
         {t.week && <span>{t.week}</span>}
         <span>{v.time}</span>
@@ -332,7 +332,7 @@ function ClassItem({ item, tone, preload }: { item: ClassCard; tone: number; pre
         {next && (
           <span className={cn(line, "ez:mt-2 ez:flex ez:min-w-0 ez:gap-1.5 ez:border-t ez:pt-2 ez:text-site-small")}>
             <span className="ez:shrink-0 ez:text-muted">{CLASS_TITLE.next}</span>
-            <span className="ez:whitespace-nowrap ez:text-fg ez:tabular-nums">{next}</span>
+            <span className="ez:whitespace-nowrap ez:text-fg">{next}</span>
           </span>
         )}
       </span>
@@ -495,7 +495,7 @@ export function Location({ data }: SectionProps<"location">) {
             {address && data.hours && <Fact label={CLASS_TITLE.hours}>{data.hours}</Fact>}
             {address && data.phone && (
               <Fact label={CLASS_TITLE.phone}>
-                <a href={`tel:${data.phone}`} className={cn("ez:text-fg ez:tabular-nums ez:no-underline ez:hover:underline", focusRing)}>
+                <a href={`tel:${data.phone}`} className={cn("ez:text-fg ez:no-underline ez:hover:underline", focusRing)}>
                   {data.phone}
                 </a>
               </Fact>
@@ -526,7 +526,7 @@ function Upcoming({ sessions, href }: { sessions: Session[]; href: string }) {
                 href={v.href}
                 className={cn(line, "ez:group ez:grid ez:grid-cols-[4.375rem_minmax(0,1fr)] ez:gap-2.5 ez:border-b ez:py-2.5 ez:text-fg ez:no-underline", v.full && "ez:opacity-50", focusRing)}
               >
-                <span className="ez:grid ez:text-site-small ez:text-muted ez:tabular-nums">
+                <span className="ez:grid ez:text-site-small ez:text-muted">
                   <span>{[t.day, t.week].filter(Boolean).join(" ")}</span>
                   <span>{v.time}</span>
                 </span>
@@ -568,7 +568,7 @@ export function List({ view, title, count, crumbs, tabs, sorts, classes, session
       </nav>
       <div className={cn(line, "ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2.5 ez:gap-y-1 ez:border-b ez:pt-3 ez:pb-7")}>
         <h1 data-script={scriptOf(title)} className="ez:m-0 ez:font-body ez:text-site-heading ez:text-fg ez:md:text-site-title">{title}</h1>
-        {count != null && <span className="ez:text-site-body ez:text-muted ez:tabular-nums">{count}</span>}
+        {count != null && <span className="ez:text-site-body ez:text-muted">{count}</span>}
       </div>
       {search && <div className="ez:pt-6">{search}</div>}
       <div className="ez:grid ez:grid-cols-1 ez:gap-x-10 ez:lg:grid-cols-[13.75rem_minmax(0,1fr)]">
@@ -585,7 +585,7 @@ export function List({ view, title, count, crumbs, tabs, sorts, classes, session
                   >
                     <Icon name="check" size="sm" className={cn("ez:text-primary", !t.on && "ez:invisible ez:max-lg:hidden")} />
                     <span className="ez:lg:flex-1">{t.label}</span>
-                    {t.count != null && <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{t.count}</span>}
+                    {t.count != null && <span className="ez:text-site-small ez:text-muted">{t.count}</span>}
                   </NextLink>
                 </li>
               ))}

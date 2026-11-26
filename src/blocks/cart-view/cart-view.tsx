@@ -147,7 +147,7 @@ export function CartView({
                 label="전체 선택"
               />
               전체 선택
-              <span className="ez:tabular-nums ez:text-muted">
+              <span className="ez:text-muted">
                 {picked.length}/{buyable.length}
               </span>
             </label>
@@ -175,7 +175,7 @@ export function CartView({
                   무료 배송
                 </span>
                 <span>
-                  <span className="ez:font-normal ez:text-primary ez:tabular-nums">{won(left)}</span> 남음
+                  <span className="ez:font-normal ez:text-primary">{won(left)}</span> 남음
                 </span>
               </div>
               <span aria-hidden="true" className="ez:relative ez:block ez:h-0.5 ez:bg-site-line">

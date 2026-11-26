@@ -107,7 +107,7 @@ export function ClaimForm({
                   {off ? (
                     <Status icon="ban">교환·반품 불가</Status>
                   ) : (
-                    <span className="ez:text-site-small ez:tabular-nums ez:text-muted">
+                    <span className="ez:text-site-small ez:text-muted">
                       {won(unit(item))} · {label} 가능 {left}개
                     </span>
                   )}

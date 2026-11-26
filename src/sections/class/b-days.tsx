@@ -21,7 +21,7 @@ const soft = cn(
   focusRing,
 );
 
-const price = "ez:text-site-figure ez:font-normal ez:tabular-nums ez:text-fg";
+const price = "ez:text-site-figure ez:font-normal ez:text-fg";
 
 function dayText(s: Session): string {
   if (!s.ymd) return s.day ?? s.date;
@@ -53,7 +53,7 @@ function Row({ session }: { session: Session }) {
       data-full={v.full || undefined}
       className="ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-x-4 ez:gap-y-2 ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-3.5 ez:lg:grid-cols-[5.5rem_minmax(0,1fr)_8.75rem_7.5rem_7.5rem] ez:lg:gap-x-5"
     >
-      <span className={cn("ez:col-span-2 ez:text-site-item ez:font-normal ez:tabular-nums ez:text-fg ez:lg:col-span-1", dim)}>{v.time}</span>
+      <span className={cn("ez:col-span-2 ez:text-site-item ez:font-normal ez:text-fg ez:lg:col-span-1", dim)}>{v.time}</span>
       <span className="ez:grid ez:min-w-0 ez:gap-0.5">
         <span data-script={scriptOf(v.name)} className={cn("ez:truncate ez:text-site-item ez:text-fg", dim)}>{v.name}</span>
         {spec && <span data-script={scriptOf(spec)} className={cn("ez:truncate ez:text-site-small ez:text-muted", dim)}>{spec}</span>}
@@ -134,11 +134,11 @@ export function DayStrip({ sessions }: { sessions: Session[] }) {
                 </span>
                 <span
                   aria-hidden="true"
-                  className={cn("ez:text-site-item ez:tabular-nums ez:md:text-site-heading", on ? "ez:font-medium ez:text-fg" : d.count ? "ez:font-normal ez:text-fg" : "ez:font-normal ez:text-muted")}
+                  className={cn("ez:text-site-item ez:md:text-site-heading", on ? "ez:font-medium ez:text-fg" : d.count ? "ez:font-normal ez:text-fg" : "ez:font-normal ez:text-muted")}
                 >
                   {d.date}
                 </span>
-                <span aria-hidden="true" className="ez:text-site-small ez:text-muted ez:tabular-nums">
+                <span aria-hidden="true" className="ez:text-site-small ez:text-muted">
                   {d.count || "–"}
                 </span>
               </button>

@@ -8,7 +8,7 @@ const amount = (row: SummaryRow) => (typeof row.value === "string" ? row.value :
 
 export function SummaryRows({ rows, total, after }: { rows: SummaryRow[]; total?: { label: string; value: number }; after?: SummaryRow[] }) {
   return (
-    <dl data-slot="summary" className="ez:m-0 ez:grid ez:gap-3 ez:tabular-nums ez:text-fg">
+    <dl data-slot="summary" className="ez:m-0 ez:grid ez:gap-3 ez:text-fg">
       {rows.map((row, i) => (
         <div key={`${i}-${row.label}`} className="ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:text-site-lead">
           <dt className={row.strong ? undefined : "ez:text-muted"}>{row.label}</dt>

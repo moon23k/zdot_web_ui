@@ -97,7 +97,7 @@ export function Footer({ storeName, phone, hours, address, legal, business, nav,
             <div className="ez:grid ez:min-w-0 ez:content-start ez:justify-items-start ez:gap-2 ez:leading-relaxed ez:lg:col-span-3 ez:lg:col-start-7">
               {address && <span className="ez:break-words">{address}</span>}
               {phone && (
-                <a href={telHref(phone)} className={cn(muted, "ez:tabular-nums")}>
+                <a href={telHref(phone)} className={muted}>
                   {phone}
                 </a>
               )}
@@ -179,7 +179,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
           <Row term={CARE_TITLE.hours}>{hours ?? <Bar />}</Row>
           <Row term={CARE_TITLE.phone}>
             {phone ? (
-              <a href={telHref(phone)} className={cn(quiet, "ez:tabular-nums")}>
+              <a href={telHref(phone)} className={quiet}>
                 {phone}
               </a>
             ) : (
@@ -232,7 +232,7 @@ const priceRow = cn(rule, "ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:items-ba
 
 const note = "ez:m-0 ez:min-w-0 ez:text-site-small ez:text-muted ez:max-md:col-span-2 ez:max-md:row-start-2 ez:md:col-span-3";
 
-const price = "ez:m-0 ez:text-right ez:text-site-item ez:tabular-nums ez:text-fg ez:md:col-span-3";
+const price = "ez:m-0 ez:text-right ez:text-site-item ez:text-fg ez:md:col-span-3";
 
 export function Menu({ data }: SectionProps<"menu">) {
   const items = menuItems((data.groups ?? []).filter((g) => g.items.length));

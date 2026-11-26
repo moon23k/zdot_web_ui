@@ -27,7 +27,7 @@ export function SessionRow({ session, tone }: { session: Session; tone?: number 
     <NextLink href={session.href ?? "#"} className={cn(rowGrid, "ez:text-fg ez:no-underline", focusRing)}>
       <Pic src={session.image} ratio={4 / 3} tone={tone} />
       <span className="ez:grid ez:gap-0.5">
-        <span className="ez:text-site-item ez:tabular-nums">{`${session.date} · ${session.time}`}</span>
+        <span className="ez:text-site-item">{`${session.date} · ${session.time}`}</span>
         <span className="ez:text-site-small ez:text-muted">{[session.name, session.length].filter(Boolean).join(" · ")}</span>
       </span>
       <span className="ez:col-span-2 ez:md:col-span-1">
@@ -61,8 +61,8 @@ function GalleryRow({ s, i }: { s: Session | null; i: number }) {
   return (
     <li className={cn("ez:grid ez:grid-cols-[1fr_auto] ez:items-center ez:gap-x-6 ez:gap-y-2 ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-5 ez:lg:grid-cols-[140px_96px_minmax(0,1fr)_140px_120px_120px]", full && "ez:text-muted")}>
       <span className="ez:flex ez:flex-col">
-        <span className="ez:text-site-heading ez:tabular-nums">{s ? (s.day ?? s.date) : <Bar size="short" />}</span>
-        {s && <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{s.time}</span>}
+        <span className="ez:text-site-heading">{s ? (s.day ?? s.date) : <Bar size="short" />}</span>
+        {s && <span className="ez:text-site-small ez:text-muted">{s.time}</span>}
       </span>
       <Pic src={s?.image} tone={i} className={cn("ez:aspect-[4/3] ez:w-24 ez:max-lg:hidden", full && "ez:opacity-45")} />
       <span className="ez:col-span-2 ez:flex ez:flex-col ez:lg:col-span-1">
@@ -70,7 +70,7 @@ function GalleryRow({ s, i }: { s: Session | null; i: number }) {
         <span className="ez:text-site-small ez:text-muted">{s ? s.length : <Bar size="short" />}</span>
       </span>
       <span className={cn("ez:text-site-small", s?.status === "few" && "ez:font-medium ez:text-primary")}>{s ? (full ? "마감" : `${s.seats_left ?? 0}자리 남음`) : null}</span>
-      <span className="ez:font-medium ez:tabular-nums ez:lg:text-right"><Won value={s?.price} /></span>
+      <span className="ez:font-medium ez:lg:text-right"><Won value={s?.price} /></span>
       <span className="ez:flex ez:justify-end">
         {s && !full ? (
           <ButtonLink href={s.href ?? "#"} size="sm">
@@ -95,7 +95,7 @@ function CohortRow({ s }: { s: Session | null }) {
   return (
     <li className={cn(cohortGrid, "ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-6", full && "ez:text-muted")}>
       <span className="ez:flex ez:flex-col">
-        <span className={cn(numeral, "ez:text-site-section ez:tabular-nums")}>{s ? (md || s.date) : <Bar size="short" />}</span>
+        <span className={cn(numeral, "ez:text-site-section")}>{s ? (md || s.date) : <Bar size="short" />}</span>
         {wd && <span className="ez:text-site-small ez:text-muted">{`${wd}요일 개강`}</span>}
       </span>
       <span className="ez:flex ez:min-w-0 ez:flex-col ez:gap-0.5">
@@ -104,10 +104,10 @@ function CohortRow({ s }: { s: Session | null }) {
           <span className="ez:text-site-small ez:text-muted ez:lg:hidden">{[wd ? `${wd} · ${s.time}` : s.time, span, seats, s.price].filter(Boolean).join(" · ")}</span>
         )}
       </span>
-      <span className="ez:tabular-nums ez:max-lg:hidden">{s ? (wd ? `${wd} · ${s.time}` : s.time) : <Bar size="short" />}</span>
+      <span className="ez:max-lg:hidden">{s ? (wd ? `${wd} · ${s.time}` : s.time) : <Bar size="short" />}</span>
       <span className="ez:max-lg:hidden">{s ? span : <Bar size="short" />}</span>
       <span className={cn("ez:text-site-small ez:max-lg:hidden", s && !full && "ez:font-medium ez:text-primary")}>{seats ?? <Bar size="short" />}</span>
-      <span className="ez:text-right ez:font-medium ez:tabular-nums ez:max-lg:hidden">{s ? <Won value={s.price} /> : <BlankPrice />}</span>
+      <span className="ez:text-right ez:font-medium ez:max-lg:hidden">{s ? <Won value={s.price} /> : <BlankPrice />}</span>
       <span className="ez:flex ez:justify-end">
         {s && !full ? (
           <ButtonLink href={s.href ?? "#"} size="sm">
@@ -184,7 +184,7 @@ function ClassBox({ c, i }: { c: ClassCard | null; i: number }) {
           )}
         </span>
         <span className="ez:mt-auto ez:flex ez:items-center ez:justify-between ez:gap-3 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-4">
-          <span className="ez:text-site-item ez:font-medium ez:tabular-nums">{c ? <Won value={c.price} /> : <BlankPrice />}</span>
+          <span className="ez:text-site-item ez:font-medium">{c ? <Won value={c.price} /> : <BlankPrice />}</span>
           {c && (
             <span className="ez:inline-flex ez:items-center ez:gap-1.5 ez:text-site-small ez:font-medium ez:text-primary">
               예약
@@ -223,7 +223,7 @@ export function ClassList({ data, variant }: SectionProps<"class_list">) {
                   <span data-script={scriptOf(c ? c.name : null)} className="ez:text-site-heading">{c ? c.name : <Bar />}</span>
                   <span className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
                     <span data-script={scriptOf(c?.next)} className="ez:text-site-small ez:text-muted">{c?.next}</span>
-                    <span className="ez:font-medium ez:tabular-nums">{c ? <Won value={c.price} /> : <BlankPrice />}</span>
+                    <span className="ez:font-medium">{c ? <Won value={c.price} /> : <BlankPrice />}</span>
                   </span>
                 </span>
               </>
@@ -265,7 +265,7 @@ function GateBox({ g, i }: { g: Gate | null; i: number }) {
       </span>
       <span data-script={scriptOf(g ? g.title : null)} className="ez:text-site-section">{g ? g.title : <Bar size="long" />}</span>
       {(g?.price || !g) && (
-        <span className="ez:mt-auto ez:flex ez:justify-end ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-4 ez:font-medium ez:tabular-nums">{g ? <Won value={g.price} /> : <Bar size="short" />}</span>
+        <span className="ez:mt-auto ez:flex ez:justify-end ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-4 ez:font-medium">{g ? <Won value={g.price} /> : <Bar size="short" />}</span>
       )}
     </>
   );

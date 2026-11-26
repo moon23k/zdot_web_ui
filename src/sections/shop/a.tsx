@@ -44,7 +44,7 @@ function Foot({ href }: { href: string }) {
 
 function Price({ v }: { v: ProductView }) {
   return (
-    <span className="ez:mt-1.5 ez:flex ez:flex-wrap ez:items-baseline ez:justify-center ez:gap-x-2 ez:text-site-body ez:tabular-nums">
+    <span className="ez:mt-1.5 ez:flex ez:flex-wrap ez:items-baseline ez:justify-center ez:gap-x-2 ez:text-site-body">
       {v.rate > 0 && <span className="ez:font-medium ez:text-fg">{v.rate}%</span>}
       <span><Won value={v.price} /></span>
       {v.list && (
@@ -176,7 +176,7 @@ export function Header({ name, logoUrl, cartCount, nav, links }: ShopHeaderProps
                 {cartCount ? <span aria-hidden="true" className="ez:absolute ez:-top-0.5 ez:-right-0.5 ez:size-1.75 ez:rounded-full ez:bg-primary" /> : null}
               </span>
               {cartCount ? (
-                <span aria-hidden="true" className="ez:text-site-body ez:text-muted ez:tabular-nums">
+                <span aria-hidden="true" className="ez:text-site-body ez:text-muted">
                   {cartCount}
                 </span>
               ) : null}
@@ -306,7 +306,7 @@ export function Categories({ data, context }: SectionProps<"category_tiles">) {
     <span className="ez:flex ez:items-center ez:justify-between ez:gap-3 ez:pt-4 ez:lg:pt-5">
       <span className="ez:flex ez:min-w-0 ez:items-baseline ez:gap-2.5">
         <span data-script={scriptOf(name)} className="ez:truncate ez:font-display ez:text-site-item ez:font-normal ez:lg:text-site-heading">{name}</span>
-        {count != null && <span className="ez:text-site-note ez:text-muted ez:tabular-nums">{count}</span>}
+        {count != null && <span className="ez:text-site-note ez:text-muted">{count}</span>}
       </span>
       <Icon name="right" size="sm" className="ez:shrink-0 ez:text-muted" />
     </span>
@@ -372,7 +372,7 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
             {(phone || hours) && (
               <div className="ez:grid ez:gap-2.5">
                 {phone && (
-                  <a href={`tel:${phone}`} className={cn("ez:font-display ez:text-site-counter ez:text-fg ez:no-underline ez:tabular-nums ez:lg:text-site-name", focusRing)}>
+                  <a href={`tel:${phone}`} className={cn("ez:font-display ez:text-site-counter ez:text-fg ez:no-underline ez:lg:text-site-name", focusRing)}>
                     {phone}
                   </a>
                 )}
@@ -442,7 +442,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
                 className={cn("ez:inline-flex ez:min-h-11 ez:items-center ez:gap-1.5 ez:no-underline ez:hover:text-fg", t.on ? "ez:font-medium ez:text-fg" : "ez:text-muted", focusRing)}
               >
                 {t.label}
-                {t.count != null && <span className="ez:text-site-small ez:font-normal ez:text-muted ez:tabular-nums">{t.count}</span>}
+                {t.count != null && <span className="ez:text-site-small ez:font-normal ez:text-muted">{t.count}</span>}
               </NextLink>
             ))}
           </nav>
@@ -451,7 +451,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
       <div className="ez:mt-10 ez:flex ez:flex-wrap ez:items-center ez:justify-between ez:gap-x-6 ez:gap-y-2 ez:border-0 ez:border-y ez:border-solid ez:border-site-line ez:py-3 ez:text-site-body ez:lg:mt-16">
         {count != null ? (
           <span className="ez:text-muted">
-            상품 <b className="ez:font-medium ez:text-fg ez:tabular-nums">{count}</b>개
+            상품 <b className="ez:font-medium ez:text-fg">{count}</b>개
           </span>
         ) : (
           <span />

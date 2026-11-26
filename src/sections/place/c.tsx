@@ -59,7 +59,7 @@ export function Header({ name, logoUrl, phone, nav, links }: PlaceHeaderProps) {
             <External key={l.key} link={l} className={cn(small, "ez:max-md:hidden", focusRing)} />
           ))}
           {phone && (
-            <a href={telHref(phone)} className={cn(small, "ez:tabular-nums", focusRing)}>
+            <a href={telHref(phone)} className={cn(small, focusRing)}>
               {phone}
             </a>
           )}
@@ -80,7 +80,7 @@ export function Footer({ storeName, phone, hours, address, legal, business, link
             <div className="ez:grid ez:gap-1 ez:leading-relaxed">
               {address && <span>{address}</span>}
               {phone && (
-                <a href={telHref(phone)} className={cn("ez:justify-self-start ez:text-muted ez:no-underline ez:tabular-nums ez:hover:text-fg", focusRing)}>
+                <a href={telHref(phone)} className={cn("ez:justify-self-start ez:text-muted ez:no-underline ez:hover:text-fg", focusRing)}>
                   {phone}
                 </a>
               )}
@@ -198,7 +198,7 @@ export function Store({ data }: SectionProps<"store_info">) {
           {(phone || blank) && (
             <Pair term={PLACE_TITLE.phone}>
               {phone ? (
-                <a href={telHref(phone)} className={cn("ez:text-fg ez:no-underline ez:tabular-nums ez:hover:underline ez:underline-offset-4", focusRing)}>
+                <a href={telHref(phone)} className={cn("ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4", focusRing)}>
                   {phone}
                 </a>
               ) : (
@@ -256,7 +256,7 @@ export function Menu({ data }: SectionProps<"menu">) {
                 {g.items.map((item) => (
                   <div key={item.id} className="ez:flex ez:items-baseline ez:justify-between ez:gap-6 ez:text-site-note ez:leading-relaxed">
                     <dt className="ez:min-w-0 ez:text-fg">{item.name}</dt>
-                    <dd className="ez:m-0 ez:shrink-0 ez:text-fg ez:tabular-nums"><Won value={item.price} /></dd>
+                    <dd className="ez:m-0 ez:shrink-0 ez:text-fg"><Won value={item.price} /></dd>
                   </div>
                 ))}
               </dl>

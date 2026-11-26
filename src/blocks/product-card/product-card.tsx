@@ -47,10 +47,10 @@ export function ProductCard({
           </span>
         )}
         <span className="ez:flex ez:items-baseline ez:gap-2.5">
-          {rank != null && <span className="ez:font-body ez:text-site-rank ez:font-normal ez:tabular-nums ez:text-primary">{rank}</span>}
+          {rank != null && <span className="ez:font-body ez:text-site-rank ez:font-normal ez:text-primary">{rank}</span>}
           <span data-script={scriptOf(product.name)} className="ez:line-clamp-2 ez:text-site-lead ez:group-hover:underline ez:underline-offset-4">{product.name}</span>
         </span>
-        <span className="ez:flex ez:items-baseline ez:tabular-nums ez:whitespace-nowrap">
+        <span className="ez:flex ez:items-baseline ez:whitespace-nowrap">
           <strong className={cn("ez:text-site-lead ez:font-medium", product.sold_out ? "ez:text-muted" : "ez:text-fg")}><Won amount={product.sale_price} /></strong>
           {sale > 0 && !product.sold_out && (
             <s className="ez:ml-2 ez:text-site-small ez:text-muted">

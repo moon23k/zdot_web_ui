@@ -169,7 +169,7 @@ export function Header({
               <a
                 href={telHref(phone)}
                 className={cn(
-                  "ez:py-1.5 ez:text-muted ez:no-underline ez:tabular-nums ez:hover:text-fg",
+                  "ez:py-1.5 ez:text-muted ez:no-underline ez:hover:text-fg",
                   book && "ez:max-sm:hidden",
                   focusRing
                 )}
@@ -247,7 +247,7 @@ export function NightBox({
               <dt className="ez:shrink-0 ez:whitespace-nowrap ez:text-site-off">
                 {r.label}
               </dt>
-              <dd className="ez:m-0 ez:min-w-0 ez:text-right ez:text-fg ez:tabular-nums">
+              <dd className="ez:m-0 ez:min-w-0 ez:text-right ez:text-fg">
                 {r.value}
               </dd>
             </div>
@@ -583,7 +583,7 @@ export function NightTable({ groups }: { groups: MenuGroup[] }) {
                       </span>
                       <Leader />
                     </dt>
-                    <dd className="ez:m-0 ez:shrink-0 ez:text-site-body ez:text-muted ez:tabular-nums">
+                    <dd className="ez:m-0 ez:shrink-0 ez:text-site-body ez:text-muted">
                       <Won value={item.price} />
                     </dd>
                   </div>
@@ -622,7 +622,7 @@ function MenuCard({ item, index }: { item: MenuItem; index: number }) {
           {item.name}
         </span>
         {item.price && (
-          <span className="ez:shrink-0 ez:text-site-body ez:text-fg ez:tabular-nums">
+          <span className="ez:shrink-0 ez:text-site-body ez:text-fg">
             <Won value={item.price} />
           </span>
         )}
@@ -723,7 +723,7 @@ export function Footer({
                     href={telHref(phone)}
                     className={cn(
                       quiet,
-                      "ez:justify-self-start ez:tabular-nums"
+                      "ez:justify-self-start"
                     )}
                   >
                     {phone}

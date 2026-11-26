@@ -86,14 +86,14 @@ export function CartLine({
           {discount > 0 && available && (
             <span className="ez:flex ez:items-baseline ez:gap-1.5">
               <span className="ez:font-normal ez:text-primary">{discount}%</span>
-              <s className="ez:tabular-nums ez:text-muted">
+              <s className="ez:text-muted">
                 <span className="ez:sr-only">정가 </span>
                 {won(listTotal)}
               </s>
             </span>
           )}
         </div>
-        <strong className={cn("ez:mt-1 ez:block ez:text-site-body ez:font-medium ez:tabular-nums", available ? "ez:text-fg" : "ez:text-muted")}>
+        <strong className={cn("ez:mt-1 ez:block ez:text-site-body ez:font-medium", available ? "ez:text-fg" : "ez:text-muted")}>
           {discount > 0 && available && <span className="ez:sr-only">할인가 </span>}
           <Won amount={line.line_total} />
         </strong>
@@ -106,7 +106,7 @@ export function CartLine({
               </button>
               <span
                 aria-label={`수량 ${line.quantity}개`}
-                className={cn("ez:w-7 ez:text-center ez:font-normal ez:tabular-nums", line.enough_stock ? "ez:text-fg" : "ez:text-danger")}
+                className={cn("ez:w-7 ez:text-center ez:font-normal", line.enough_stock ? "ez:text-fg" : "ez:text-danger")}
               >
                 {line.quantity}
               </span>
@@ -115,7 +115,7 @@ export function CartLine({
               </button>
             </form>
           ) : (
-            <span className="ez:text-site-small ez:tabular-nums ez:text-muted">{line.quantity}개</span>
+            <span className="ez:text-site-small ez:text-muted">{line.quantity}개</span>
           )}
         </div>
       </div>

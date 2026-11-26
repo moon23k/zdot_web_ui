@@ -111,6 +111,27 @@ function headWeight(weight: number | undefined): string {
   return String(Math.min(weight ?? HEAD_WEIGHT.base, HEAD_WEIGHT.max));
 }
 
+const TITLE_RANGE = {
+  scale: { min: 0.94, max: 1.08, base: 1 },
+  weight: { min: 400, max: 500, base: 400 },
+  tracking: { min: -0.01, max: 0.01, base: 0 },
+} as const;
+
+type Range = (typeof TITLE_RANGE)[keyof typeof TITLE_RANGE];
+
+function within(value: unknown, range: Range): number | null {
+  return typeof value === "number" && Number.isFinite(value) ? Math.min(Math.max(value, range.min), range.max) : null;
+}
+
+function titleVars(font: Design["font"]): Record<string, string> {
+  const weight = within(font?.title_weight, TITLE_RANGE.weight);
+  return {
+    "--ezd-title-scale": String(within(font?.title_scale, TITLE_RANGE.scale) ?? TITLE_RANGE.scale.base),
+    "--ezd-title-tracking": `${within(font?.title_tracking_em, TITLE_RANGE.tracking) ?? TITLE_RANGE.tracking.base}em`,
+    "--ezd-title-weight": weight === null ? headWeight(font?.styles?.title?.weight) : String(weight),
+  };
+}
+
 export function inkOf(text: string, surface: string): string {
   const t = rgbOf(text);
   const s = rgbOf(surface);
@@ -290,7 +311,7 @@ export function designVars(design: Design | null | undefined, site?: boolean | S
     "--ezd-font-body": family(d.font?.body),
     "--ezd-font-figure": SYSTEM_FONT,
     "--ezd-display-weight": headWeight(styles?.title?.weight ?? d.font?.display_weight),
-    "--ezd-title-weight": headWeight(styles?.title?.weight),
+    ...titleVars(d.font),
     "--ezd-title-style": styles?.title?.style ?? "normal",
     "--ezd-subtitle-weight": headWeight(styles?.subtitle?.weight),
     "--ezd-subtitle-style": styles?.subtitle?.style ?? "normal",

@@ -113,3 +113,31 @@ describe("브랜드 분위기 값", () => {
     expect(applyTemplate({}, shop).shape?.button_shape).toBe("square");
   });
 });
+
+describe("분위기 제목 글자", () => {
+  const shop = resolveTemplate("shop", "a");
+  const title = (font: Record<string, unknown>) => {
+    const vars = designVars(applyTemplate({ font } as Parameters<typeof applyTemplate>[0], shop), shop?.look);
+    return [vars["--ezd-title-scale"], vars["--ezd-title-tracking"], vars["--ezd-title-weight"]];
+  };
+
+  it("은은한 · 클래식 끝 값", () => {
+    expect(title({ title_scale: 0.94, title_weight: 400, title_tracking_em: 0.01 })).toEqual(["0.94", "0.01em", "400"]);
+  });
+
+  it("강한 · 모던 끝 값은 템플릿을 거쳐도 남는다", () => {
+    expect(title({ title_scale: 1.08, title_weight: 500, title_tracking_em: -0.01 })).toEqual(["1.08", "-0.01em", "500"]);
+  });
+
+  it("범위를 벗어나면 끝 값으로 자른다", () => {
+    expect(title({ title_scale: 1.5, title_weight: 900, title_tracking_em: -0.2 })).toEqual(["1.08", "-0.01em", "500"]);
+    expect(title({ title_scale: 0.5, title_weight: 100, title_tracking_em: 0.3 })).toEqual(["0.94", "0.01em", "400"]);
+  });
+
+  it("값이 없거나 숫자가 아니면 기본", () => {
+    expect(title({})).toEqual(["1", "0em", "400"]);
+    expect(title({ title_scale: "big", title_weight: null, title_tracking_em: Number.NaN })).toEqual(["1", "0em", "400"]);
+    const vars = designVars({});
+    expect([vars["--ezd-title-scale"], vars["--ezd-title-tracking"], vars["--ezd-title-weight"]]).toEqual(["1", "0em", "400"]);
+  });
+});

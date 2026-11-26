@@ -10,6 +10,9 @@ export type Design = {
     display_weight?: number;
     load?: { family: string; weights: number[] }[];
     styles?: Partial<Record<"title" | "subtitle" | "body", { weight: number; style: "normal" | "italic" }>>;
+    title_scale?: number;
+    title_weight?: number;
+    title_tracking_em?: number;
   };
   shape?: { radius_sm?: number; radius_md?: number; radius_lg?: number; button_shape?: "rounded" | "pill" | "square"; line?: number };
   density?: { section_gap?: number; grid_gutter?: number };

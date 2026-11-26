@@ -41,6 +41,7 @@ export type ProductView = {
   soldOut: boolean;
   sample: boolean;
   cover: string | null;
+  cutout: string | null;
 };
 
 export function productView(p: ProductSummary): ProductView {
@@ -54,6 +55,7 @@ export function productView(p: ProductSummary): ProductView {
     soldOut: p.sold_out,
     sample: p.sample,
     cover: p.cover_url,
+    cutout: p.cover_cutout_url ?? null,
   };
 }
 

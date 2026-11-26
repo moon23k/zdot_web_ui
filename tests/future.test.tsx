@@ -108,6 +108,31 @@ describe("future designs", () => {
     }
   });
 
+  it("puts the cutout on the stage instead of the photo when there is one", () => {
+    const t = resolveTemplate("shop", "f");
+    const items = [
+      { id: "p1", name: "자몽청", list_price: 18000, sale_price: 18000, cover_url: "https://img.test/p1.jpg", cover_cutout_url: "https://img.test/p1-cut.png", sold_out: false, sample: false, slot_scope: "none" },
+      { id: "p2", name: "유자청", list_price: 18000, sale_price: 18000, cover_url: "https://img.test/p2.jpg", cover_cutout_url: null, sold_out: false, sample: false, slot_scope: "none" },
+    ];
+    const { container } = render(
+      <ThemeRoot template={t}>
+        <SiteRenderer
+          page={{ sections: [{ kind: "hero", data: { products: items } }, { kind: "product_grid", data: {} }] }}
+          context={{ ...context, products: items }}
+          template={t}
+        />
+      </ThemeRoot>,
+    );
+    const src = (el: Element | null) => decodeURIComponent(el?.querySelector("img")?.getAttribute("src") ?? "");
+    const hero = container.querySelector('[data-slot="hero"] [data-cutout]');
+    expect(src(hero)).toContain("p1-cut.png");
+    const cards = [...container.querySelectorAll('[data-slot="product-card"]')];
+    expect(cards).toHaveLength(2);
+    expect(src(cards[0]!.querySelector("[data-cutout]"))).toContain("p1-cut.png");
+    expect(cards[1]!.querySelector("[data-cutout]")).toBeNull();
+    expect(src(cards[1]!)).toContain("p2.jpg");
+  });
+
   it.each([
     [["shop", "e"], ["shop", "a"]],
     [["shop", "e"], ["shop", "f"]],

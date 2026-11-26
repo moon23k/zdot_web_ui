@@ -30,7 +30,7 @@ export type SectionData = {
     href?: string | null;
     image?: string | null;
     images?: string[];
-    products?: { id: string; name: string; list_price?: number; sale_price?: number; cover_url?: string | null; sold_out?: boolean; href?: string }[];
+    products?: { id: string; name: string; list_price?: number; sale_price?: number; cover_url?: string | null; cover_cutout_url?: string | null; sold_out?: boolean; href?: string }[];
     facts?: { label: string; value: string }[];
     rooms?: Room[];
     sessions?: Session[];

@@ -83,8 +83,8 @@ function Card({ product, rank, shelf, preload, sizes = CARD_SIZES }: { product: 
       className={cn("ez:group ez:grid ez:min-w-0 ez:grid-cols-1 ez:content-start ez:text-fg ez:no-underline", focusRing)}
     >
       <span className="ez:relative ez:block">
-        <span className={cn(stagePanel, "ez:p-5 ez:md:p-10", v.soldOut && "ez:opacity-45")}>
-          <Photo src={v.cover} alt={v.name} preload={preload} sizes={sizes} className={cn(SHELF_RATIO[shelf.ratio], "ez:rounded-none ez:bg-transparent")} />
+        <span data-cutout={v.cutout ? "" : undefined} className={cn(stagePanel, "ez:p-5 ez:md:p-10", v.soldOut && "ez:opacity-45")}>
+          <Photo src={v.cutout ?? v.cover} alt={v.name} preload={preload} sizes={sizes} className={cn(SHELF_RATIO[shelf.ratio], "ez:rounded-none ez:bg-transparent")} />
         </span>
         {rank != null && <span className="ez:absolute ez:top-4 ez:left-5 ez:text-site-small ez:text-site-off ez:tabular-nums">{String(rank).padStart(2, "0")}</span>}
         <span aria-hidden="true" className="ez:absolute ez:right-3 ez:bottom-3 ez:grid ez:size-11 ez:place-items-center ez:rounded-full ez:bg-surface ez:text-fg ez:md:right-4 ez:md:bottom-4">
@@ -295,7 +295,8 @@ export function Hero({ data, context }: SectionProps<"hero">) {
   const shown = (data.products ?? []).filter((p) => p.cover_url);
   const pick = shown[0] ?? data.products?.[0] ?? null;
   const blank = !title && !image && !pick;
-  const photo = pick?.cover_url ?? image;
+  const cutout = pick?.cover_url ? (pick.cover_cutout_url ?? null) : null;
+  const photo = cutout ?? pick?.cover_url ?? image;
   const sale = pick ? (pick.sale_price ?? pick.list_price) : undefined;
   const rate = pick && !pick.sold_out && pick.list_price != null && pick.sale_price != null ? discountRate(pick.list_price, pick.sale_price) : 0;
   const heading = pick?.name ?? title;
@@ -320,7 +321,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
           </span>
         )}
         {(photo || blank) && (
-          <div className="ez:fx-wordmark-under ez:relative ez:aspect-square ez:w-4/5 ez:max-w-96 ez:lg:size-120 ez:lg:max-w-none">
+          <div data-cutout={cutout ? "" : undefined} className="ez:fx-wordmark-under ez:relative ez:aspect-square ez:w-4/5 ez:max-w-96 ez:lg:size-120 ez:lg:max-w-none">
             <Photo src={photo} alt={heading ?? ""} preload sizes="(max-width: 1024px) 80vw, 480px" className={cn("ez:absolute ez:inset-0 ez:aspect-auto ez:h-full ez:bg-transparent", pick?.sold_out && "ez:opacity-45")} />
           </div>
         )}

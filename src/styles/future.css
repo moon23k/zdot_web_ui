@@ -89,6 +89,11 @@
   & img {
     mix-blend-mode: multiply;
   }
+  &[data-cutout] img,
+  & [data-cutout] img {
+    mix-blend-mode: normal;
+    object-fit: contain;
+  }
 }
 @utility fx-title {
   font-size: clamp(2.75rem, 6.4vw, 5.75rem);

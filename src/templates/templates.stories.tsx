@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { business, productDetail } from "../__stories__/fixtures/commerce";
+import { CUTOUT_PNG } from "../__stories__/fixtures/cutout";
 import products from "../__stories__/fixtures/products.json";
 import { classCards, classSessions, detailData, homeSections, paletteDesign, placeInfo, placeStoreLinks, quoteCases, quoteStarter, stayAddOns, stayRooms, staySearched } from "../__stories__/fixtures/templates";
 import { BuyBox } from "../blocks/buy-box";
@@ -391,6 +392,26 @@ export const O2Blank = blank("office", "b", "공란 · O2");
 export const S4 = story("shop", "d", "쇼핑몰 · S4 오로라 글래스");
 export const S5 = story("shop", "e", "쇼핑몰 · S5 나이트 글로우");
 export const S6 = story("shop", "f", "쇼핑몰 · S6 오브젝트 스테이지");
+export const S6Cutout: StoryObj = {
+  name: "쇼핑몰 · S6 오브젝트 스테이지 · 누끼",
+  render: () => {
+    const t = resolveTemplate("shop", "f");
+    const cut = context.products.slice(0, 4).map((p, i) => ({ ...p, cover_url: "/sample/p1.jpg", cover_cutout_url: i % 2 ? null : CUTOUT_PNG }));
+    const sections = [
+      { kind: "hero", data: { products: cut.slice(0, 2).map((p) => ({ id: p.id, name: p.name, list_price: p.list_price, sale_price: p.sale_price, cover_url: p.cover_url, cover_cutout_url: p.cover_cutout_url })) } },
+      { kind: "product_grid", data: {} },
+    ];
+    return (
+      <ThemeRoot template={t}>
+        <div style={{ background: "var(--ezd-surface)", color: "var(--ezd-text)", fontFamily: "var(--ezd-font-body)" }}>
+          <main className="ez:mx-auto ez:grid ez:w-full ez:max-w-wrap ez:gap-section ez:px-page ez:py-8">
+            <SiteRenderer page={{ sections }} context={{ ...context, products: cut }} template={t} />
+          </main>
+        </div>
+      </ThemeRoot>
+    );
+  },
+};
 export const C4 = story("class", "d", "클래스 · C4 오로라 글래스");
 export const C5 = story("class", "e", "클래스 · C5 나이트 글로우");
 export const T4 = story("stay", "d", "숙박 · T4 오로라 글래스");

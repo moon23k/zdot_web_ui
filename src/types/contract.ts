@@ -94,6 +94,7 @@ export interface Schemas {
     list_price: number;
     sale_price: number;
     cover_url: string | null;
+    cover_cutout_url?: string | null;
     sold_out: boolean;
     sample: boolean;
     external?: Schemas["ExternalLink"] | null;
@@ -125,6 +126,7 @@ export interface Schemas {
     list_price: number;
     sale_price: number;
     cover_url: string | null;
+    cover_cutout_url?: string | null;
     sold_out: boolean;
     sample: boolean;
     external?: Schemas["ExternalLink"] | null;

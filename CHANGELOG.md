@@ -1,5 +1,12 @@
 # @ezpg/web-ui
 
+## 0.7.0
+
+### Minor Changes
+
+- 1ba81d1: 손님 사이트 글자 체계: 글꼴을 Wanted Sans 로 통일하고, 크기 토큰이 줄 높이 · 자간 · 굵기를 함께 쥠(한글 기준 글자 표). 섹션의 자간 · 가는 굵기 직접 지정 삭제, 제목 줄바꿈 균형, 제목 · 본문 배율 변수 자리 추가
+- 07c5eac: 오브젝트 스테이지(shop f): 상품 카드 · 히어로가 대표 사진 누끼본(cover_cutout_url)이 있으면 그것을 multiply 없이 object-contain 으로 쓰고, 없으면 지금처럼 사진 + multiply. ProductSummary · 히어로 상품에 cover_cutout_url 추가.
+
 ## 0.6.0
 
 ### Minor Changes

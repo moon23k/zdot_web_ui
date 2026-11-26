@@ -21,7 +21,7 @@ const edge = "ez:border-0 ez:border-solid ez:border-site-edge";
 
 const grid = "ez:grid ez:text-fg ez:lg:grid-cols-12 ez:lg:gap-x-gutter";
 
-const h2 = "ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:tracking-wide ez:text-fg";
+const h2 = "ez:m-0 ez:font-display ez:text-site-heading ez:text-fg";
 
 const head = "ez:lg:col-span-2 ez:lg:col-start-1";
 
@@ -29,7 +29,7 @@ const body = "ez:min-w-0 ez:lg:col-span-9 ez:lg:col-start-3";
 
 const button = cn(
   edge,
-  "ez:inline-flex ez:h-10 ez:items-center ez:justify-center ez:rounded-button ez:border ez:px-5 ez:text-site-small ez:font-medium ez:tracking-wider ez:whitespace-nowrap ez:text-fg ez:no-underline ez:hover:bg-surface-alt",
+  "ez:inline-flex ez:h-10 ez:items-center ez:justify-center ez:rounded-button ez:border ez:px-5 ez:text-site-small ez:font-medium ez:whitespace-nowrap ez:text-fg ez:no-underline ez:hover:bg-surface-alt",
   focusRing,
 );
 
@@ -37,9 +37,9 @@ const soft = button;
 
 const quiet = cn("ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4", focusRing);
 
-const label = "ez:text-site-small ez:font-normal ez:tracking-wider ez:text-fg";
+const label = "ez:text-site-small ez:font-normal ez:text-fg";
 
-const value = "ez:m-0 ez:min-w-0 ez:text-site-body ez:tracking-wide ez:break-words ez:text-fg";
+const value = "ez:m-0 ez:min-w-0 ez:text-site-body ez:break-words ez:text-fg";
 
 type Visit = { hours?: string | null; phone?: string | null; links?: PlaceLink[] };
 
@@ -66,10 +66,10 @@ export function Header({ name, logoUrl, phone, nav, links }: CareHeaderProps) {
   return (
     <header data-slot="site-header" data-variant="showroom" className="ez:bg-transparent">
       <div className="ez:mx-auto ez:flex ez:min-h-16 ez:max-w-wrap ez:items-center ez:gap-6 ez:px-page ez:lg:min-h-24">
-        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-counter ez:font-normal ez:tracking-wide ez:text-fg ez:no-underline", focusRing)}>
+        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-counter ez:font-normal ez:text-fg ez:no-underline", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
-        <nav aria-label="주요 메뉴" className="ez:ml-auto ez:flex ez:min-w-0 ez:gap-7 ez:overflow-hidden ez:whitespace-nowrap ez:text-site-body ez:tracking-wider ez:max-lg:hidden">
+        <nav aria-label="주요 메뉴" className="ez:ml-auto ez:flex ez:min-w-0 ez:gap-7 ez:overflow-hidden ez:whitespace-nowrap ez:text-site-body ez:max-lg:hidden">
           <CareNavLinks items={nav} className={quiet} />
         </nav>
         <Actions phone={phone} links={links} className="ez:ml-auto ez:shrink-0 ez:flex-nowrap ez:lg:ml-4" />
@@ -85,10 +85,10 @@ export function Footer({ storeName, phone, hours, address, legal, business, nav,
     <footer data-slot="site-footer" data-variant="showroom" className="ez:text-site-small ez:text-muted">
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-16 ez:pb-12">
         <div className={cn(rule, grid, "ez:gap-y-8 ez:border-t ez:pt-12")}>
-          <p className="ez:m-0 ez:min-w-0 ez:text-site-counter ez:font-normal ez:tracking-wide ez:text-fg ez:lg:col-span-4">{storeName}</p>
+          <p className="ez:m-0 ez:min-w-0 ez:text-site-counter ez:font-normal ez:text-fg ez:lg:col-span-4">{storeName}</p>
           {nav.length > 0 && (
             <nav aria-label="사이트 메뉴" className="ez:grid ez:content-start ez:justify-items-start ez:gap-2 ez:lg:col-span-2 ez:lg:col-start-5">
-              <CareNavLinks items={nav} className={cn("ez:tracking-wide", quiet)} />
+              <CareNavLinks items={nav} className={quiet} />
             </nav>
           )}
           {(address || phone || hours || links.length > 0) && (
@@ -123,7 +123,7 @@ export function Footer({ storeName, phone, hours, address, legal, business, nav,
         </div>
         <div className="ez:mt-12 ez:flex ez:flex-col ez:gap-3 ez:text-site-small ez:leading-relaxed ez:md:flex-row ez:md:justify-between ez:md:gap-10">
           <p className="ez:m-0 ez:min-w-0 ez:break-words">{line}</p>
-          <p className="ez:m-0 ez:shrink-0 ez:tracking-wider">© {storeName}</p>
+          <p className="ez:m-0 ez:shrink-0">© {storeName}</p>
         </div>
       </div>
     </footer>
@@ -162,12 +162,12 @@ export function Hero({ data, context }: SectionProps<"hero">) {
         {(title || name) && (
           <div className="ez:grid ez:gap-1">
             {title ? (
-              <h1 className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:tracking-wide ez:text-balance ez:text-fg">{title}</h1>
+              <h1 className="ez:m-0 ez:font-display ez:text-site-heading ez:text-balance ez:text-fg">{title}</h1>
             ) : (
-              <p className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:tracking-wide ez:text-fg">{name}</p>
+              <p className="ez:m-0 ez:font-display ez:text-site-heading ez:text-fg">{name}</p>
             )}
             {sub && (
-              <p data-slot="hero-sub" className="ez:m-0 ez:tracking-wide ez:text-muted">
+              <p data-slot="hero-sub" className="ez:m-0 ez:text-muted">
                 {sub}
               </p>
             )}
@@ -209,7 +209,7 @@ export function Intro({ data }: SectionProps<"intro">) {
         <div className="ez:grid ez:w-full ez:max-w-prose ez:justify-items-center ez:gap-6">
           {text.length ? (
             text.map((p, i) => (
-              <p key={i} className="ez:m-0 ez:whitespace-pre-line ez:text-site-body ez:leading-loose ez:tracking-wide ez:text-fg">
+              <p key={i} className="ez:m-0 ez:whitespace-pre-line ez:text-site-body ez:leading-loose ez:text-fg">
                 {p}
               </p>
             ))
@@ -228,14 +228,14 @@ export function Intro({ data }: SectionProps<"intro">) {
 
 const priceRow = cn(rule, "ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:items-baseline ez:gap-x-gutter ez:gap-y-1 ez:border-b ez:py-5 ez:md:grid-cols-9");
 
-const note = "ez:m-0 ez:min-w-0 ez:text-site-small ez:tracking-wider ez:text-muted ez:max-md:col-span-2 ez:max-md:row-start-2 ez:md:col-span-3";
+const note = "ez:m-0 ez:min-w-0 ez:text-site-small ez:text-muted ez:max-md:col-span-2 ez:max-md:row-start-2 ez:md:col-span-3";
 
-const price = "ez:m-0 ez:text-right ez:text-site-item ez:tracking-wide ez:tabular-nums ez:text-fg ez:md:col-span-3";
+const price = "ez:m-0 ez:text-right ez:text-site-item ez:tabular-nums ez:text-fg ez:md:col-span-3";
 
 export function Menu({ data }: SectionProps<"menu">) {
   const items = menuItems((data.groups ?? []).filter((g) => g.items.length));
   const withNote = items.some((item) => item.category?.trim());
-  const name = (wide: boolean) => cn("ez:min-w-0 ez:text-site-item ez:tracking-wide ez:text-fg", wide ? "ez:md:col-span-6" : "ez:md:col-span-3");
+  const name = (wide: boolean) => cn("ez:min-w-0 ez:text-site-item ez:text-fg", wide ? "ez:md:col-span-6" : "ez:md:col-span-3");
   return (
     <section data-slot="menu" data-variant="showroom" id={CARE_ID.menu} data-blank={items.length ? undefined : ""} className={cn(grid, "ez:gap-y-8")}>
       <h2 className={cn(h2, head)}>{CARE_TITLE.prices}</h2>
@@ -305,7 +305,7 @@ export function Location({ data }: SectionProps<"location">) {
 const fold = cn(rule, "ez:border-b");
 
 const summary = cn(
-  "ez:flex ez:min-h-14 ez:cursor-pointer ez:list-none ez:items-center ez:justify-between ez:gap-6 ez:py-4 ez:text-site-body ez:font-normal ez:tracking-wide ez:text-fg ez:[&::-webkit-details-marker]:hidden",
+  "ez:flex ez:min-h-14 ez:cursor-pointer ez:list-none ez:items-center ez:justify-between ez:gap-6 ez:py-4 ez:text-site-body ez:font-normal ez:text-fg ez:[&::-webkit-details-marker]:hidden",
   focusRing,
 );
 
@@ -322,7 +322,7 @@ export function Faq({ context }: SectionProps<"faq">) {
                   <span className="ez:min-w-0 ez:break-words">{f.question}</span>
                   <Icon name="down" size="sm" className="ez:shrink-0 ez:text-muted ez:transition-transform ez:group-open:rotate-180" />
                 </summary>
-                <p className="ez:m-0 ez:pb-6 ez:whitespace-pre-line ez:text-site-body ez:leading-loose ez:tracking-wide ez:break-words ez:text-fg">{f.answer}</p>
+                <p className="ez:m-0 ez:pb-6 ez:whitespace-pre-line ez:text-site-body ez:leading-loose ez:break-words ez:text-fg">{f.answer}</p>
               </details>
             ))
           : [0, 1, 2].map((i) => (

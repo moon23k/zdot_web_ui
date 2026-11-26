@@ -84,7 +84,7 @@ export function SiteFooter({
             {business?.cs_phone && (
               <>
                 <span className="ez:text-site-small ez:text-muted">고객센터</span>
-                <a href={`tel:${business.cs_phone}`} className="ez:text-site-name ez:tracking-[-0.035em] ez:text-fg ez:no-underline">
+                <a href={`tel:${business.cs_phone}`} className="ez:text-site-name ez:text-fg ez:no-underline">
                   {business.cs_phone}
                 </a>
               </>

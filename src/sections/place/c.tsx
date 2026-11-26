@@ -16,17 +16,17 @@ const rule = "ez:border-0 ez:border-solid ez:border-site-line";
 
 const edge = "ez:border-0 ez:border-solid ez:border-site-edge";
 
-const h2 = "ez:m-0 ez:shrink-0 ez:font-display ez:text-site-note ez:font-normal ez:tracking-widest ez:text-fg";
+const h2 = "ez:m-0 ez:shrink-0 ez:font-display ez:text-site-note ez:font-normal ez:text-fg";
 
-const small = "ez:text-site-small ez:font-normal ez:tracking-wider ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4";
+const small = "ez:text-site-small ez:font-normal ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4";
 
 const boxed = cn(
   edge,
-  "ez:inline-flex ez:h-12 ez:items-center ez:rounded-button ez:border ez:px-6 ez:text-site-note ez:font-medium ez:tracking-wider ez:text-fg ez:no-underline ez:hover:bg-surface-alt",
+  "ez:inline-flex ez:h-12 ez:items-center ez:rounded-button ez:border ez:px-6 ez:text-site-note ez:font-medium ez:text-fg ez:no-underline ez:hover:bg-surface-alt",
   focusRing,
 );
 
-const label = "ez:text-site-note ez:font-normal ez:tracking-wider ez:text-fg ez:underline ez:decoration-1 ez:underline-offset-4";
+const label = "ez:text-site-note ez:font-normal ez:text-fg ez:underline ez:decoration-1 ez:underline-offset-4";
 
 const grid = "ez:grid ez:text-fg ez:lg:grid-cols-12 ez:lg:gap-x-gutter";
 
@@ -47,7 +47,7 @@ export function Header({ name, logoUrl, phone, nav, links }: PlaceHeaderProps) {
         </nav>
         <NextLink
           href="/"
-          className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-counter ez:font-normal ez:tracking-widest ez:text-fg ez:no-underline ez:lg:justify-self-center", focusRing)}
+          className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-counter ez:font-normal ez:text-fg ez:no-underline ez:lg:justify-self-center", focusRing)}
         >
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
@@ -103,7 +103,7 @@ export function Footer({ storeName, phone, hours, address, legal, business, link
         </div>
         <div className="ez:flex ez:flex-col ez:gap-3 ez:leading-relaxed ez:md:flex-row ez:md:justify-between ez:md:gap-10">
           <p className="ez:m-0 ez:min-w-0 ez:break-words">{line}</p>
-          <p className="ez:m-0 ez:shrink-0 ez:tracking-wider">© {storeName}</p>
+          <p className="ez:m-0 ez:shrink-0">© {storeName}</p>
         </div>
       </div>
     </footer>
@@ -119,7 +119,7 @@ export function Hero({ data }: SectionProps<"hero">) {
       <Photo src={image} alt={title ?? ""} preload tone={0} sizes="(max-width: 1024px) 100vw, 1120px" className="ez:aspect-video ez:lg:col-span-10 ez:lg:col-start-2" />
       {title && (
         <div className="ez:grid ez:gap-2 ez:text-center ez:lg:col-span-10 ez:lg:col-start-2">
-          <h1 className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:tracking-wide ez:text-balance ez:text-fg">{title}</h1>
+          <h1 className="ez:m-0 ez:font-display ez:text-site-heading ez:text-balance ez:text-fg">{title}</h1>
           {sub && (
             <p data-slot="hero-sub" className="ez:m-0 ez:text-muted">
               {sub}
@@ -144,7 +144,7 @@ export function Intro({ data }: SectionProps<"intro">) {
       <div className="ez:grid ez:max-w-prose ez:content-start ez:gap-8 ez:lg:col-span-5 ez:lg:col-start-8 ez:lg:row-start-2 ez:lg:pt-2">
         {body.length ? (
           body.map((p, i) => (
-            <p key={i} className="ez:m-0 ez:whitespace-pre-line ez:leading-loose ez:tracking-wide ez:text-fg">
+            <p key={i} className="ez:m-0 ez:whitespace-pre-line ez:leading-loose ez:text-fg">
               {p}
             </p>
           ))
@@ -173,7 +173,7 @@ function Pair({ term, children }: { term: string; children: ReactNode }) {
   return (
     <div className="ez:grid ez:gap-1">
       <dt className={label}>{term}</dt>
-      <dd className="ez:m-0 ez:min-w-0 ez:whitespace-pre-line ez:text-site-note ez:leading-relaxed ez:tracking-wide ez:break-words ez:text-fg">{children}</dd>
+      <dd className="ez:m-0 ez:min-w-0 ez:whitespace-pre-line ez:text-site-note ez:leading-relaxed ez:break-words ez:text-fg">{children}</dd>
     </div>
   );
 }
@@ -251,7 +251,7 @@ export function Menu({ data }: SectionProps<"menu">) {
               {g.name && <h3 className={cn(label, "ez:m-0")}>{g.name}</h3>}
               <dl className="ez:m-0 ez:grid ez:gap-1.5">
                 {g.items.map((item) => (
-                  <div key={item.id} className="ez:flex ez:items-baseline ez:justify-between ez:gap-6 ez:text-site-note ez:leading-relaxed ez:tracking-wide">
+                  <div key={item.id} className="ez:flex ez:items-baseline ez:justify-between ez:gap-6 ez:text-site-note ez:leading-relaxed">
                     <dt className="ez:min-w-0 ez:text-fg">{item.name}</dt>
                     <dd className="ez:m-0 ez:shrink-0 ez:text-fg ez:tabular-nums">{item.price}</dd>
                   </div>
@@ -276,13 +276,13 @@ export function Faq({ context }: SectionProps<"faq">) {
         {faqs.length
           ? faqs.map((f) => (
               <div key={f.id} className={qaRow}>
-                <dt className="ez:flex ez:min-w-0 ez:gap-2 ez:font-normal ez:leading-relaxed ez:tracking-wide ez:text-fg">
+                <dt className="ez:flex ez:min-w-0 ez:gap-2 ez:font-normal ez:leading-relaxed ez:text-fg">
                   <span aria-hidden="true" className="ez:shrink-0 ez:text-muted">
                     Q.
                   </span>
                   <span className="ez:min-w-0 ez:break-words">{f.question}</span>
                 </dt>
-                <dd className="ez:m-0 ez:min-w-0 ez:whitespace-pre-line ez:leading-relaxed ez:tracking-wide ez:break-words ez:text-fg">{f.answer}</dd>
+                <dd className="ez:m-0 ez:min-w-0 ez:whitespace-pre-line ez:leading-relaxed ez:break-words ez:text-fg">{f.answer}</dd>
               </div>
             ))
           : [0, 1, 2].map((i) => (

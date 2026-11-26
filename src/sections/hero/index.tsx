@@ -26,7 +26,7 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
   const mark = (name: string, empty = blank) => ({ "data-slot": "hero", "data-variant": name, "data-blank": empty ? "" : undefined });
   const sub = title ? data.sub?.trim() || null : null;
   const heading = (size: string, inverse?: boolean) => {
-    const h1 = <h1 className={cn("ez:m-0 ez:font-light ez:tracking-[-0.04em] ez:text-balance", size)}>{title}</h1>;
+    const h1 = <h1 className={cn("ez:m-0 ez:text-balance", size)}>{title}</h1>;
     if (!sub) return h1;
     return (
       <div className="ez:grid ez:gap-5">
@@ -69,7 +69,7 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
             <dl className="ez:m-0 ez:mt-4 ez:flex ez:gap-10 ez:self-stretch ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-7">
               {facts.map((f) => (
                 <div key={f.label} className="ez:flex ez:flex-col">
-                  <dd className="ez:order-1 ez:m-0 ez:font-body ez:text-site-figure-lg ez:font-light ez:tabular-nums">{f.value}</dd>
+                  <dd className="ez:order-1 ez:m-0 ez:font-body ez:text-site-figure-lg ez:tabular-nums">{f.value}</dd>
                   <dt className="ez:order-2 ez:text-site-small ez:text-muted">{f.label}</dt>
                 </div>
               ))}

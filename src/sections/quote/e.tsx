@@ -23,9 +23,9 @@ const line = "ez:border-0 ez:border-solid ez:border-site-line";
 
 const hair = "ez:border-0 ez:border-solid ez:border-hairline";
 
-const display = "ez:m-0 ez:font-body ez:text-site-section ez:font-light ez:tracking-tight ez:text-fg ez:md:text-site-display-sm ez:md:font-light";
+const display = "ez:m-0 ez:font-body ez:text-site-section ez:text-fg ez:md:text-site-display-sm";
 
-const figure = "ez:font-figure ez:font-light ez:tabular-nums";
+const figure = "ez:font-figure ez:tabular-nums";
 
 const muteLink = cn("ez:text-muted ez:no-underline ez:hover:text-fg", focusRing);
 
@@ -63,7 +63,7 @@ export function Header({ name, logoUrl, phone, nav, links }: QuoteHeaderProps) {
   return (
     <header data-slot="site-header" data-variant="float" className="ez:bg-surface ez:text-fg">
       <div className={cn(wrap, "ez:flex ez:h-16 ez:items-center ez:gap-6 ez:lg:h-22")}>
-        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:font-light ez:text-fg ez:no-underline ez:lg:w-51 ez:lg:shrink-0", focusRing)}>
+        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:text-fg ez:no-underline ez:lg:w-51 ez:lg:shrink-0", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         <nav aria-label="주요 메뉴" className="ez:flex ez:min-w-0 ez:gap-9 ez:overflow-hidden ez:text-site-body ez:whitespace-nowrap ez:max-lg:hidden">
@@ -115,7 +115,7 @@ export function Footer({ storeName, phone, hours, business, nav, guide, account,
       <div className={wrap}>
         <div className={cn(line, "ez:grid ez:grid-cols-2 ez:gap-x-6 ez:gap-y-10 ez:border-t ez:pt-13 ez:pb-10 ez:md:grid-cols-4 ez:lg:grid-cols-12")}>
           <div className="ez:col-span-2 ez:grid ez:content-start ez:gap-2 ez:md:col-span-4">
-            <p className="ez:m-0 ez:text-site-heading ez:font-light ez:text-fg">{storeName}</p>
+            <p className="ez:m-0 ez:text-site-heading ez:text-fg">{storeName}</p>
             {phone && (
               <a href={tel(phone)} className={cn("ez:mt-2 ez:justify-self-start ez:text-site-body ez:text-fg ez:no-underline", figure, focusRing)}>
                 <span className="ez:mr-2 ez:font-body ez:text-site-small ez:text-site-off">{QUOTE_TITLE.center}</span>
@@ -151,7 +151,7 @@ function CaseInfo({ c }: { c: Case }) {
   return (
     <div data-slot="hero-case" className="ez:fx-glass ez:rounded-lg ez:px-5.5 ez:pt-5 ez:pb-2.5 ez:text-left ez:lg:absolute ez:lg:bottom-7 ez:lg:left-7 ez:lg:w-75">
       <p className="ez:m-0 ez:text-site-small ez:text-site-off">{QUOTE_TITLE.case}</p>
-      <NextLink href={view.href} className={cn("ez:mt-1 ez:block ez:text-site-heading ez:font-light ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4", focusRing)}>
+      <NextLink href={view.href} className={cn("ez:mt-1 ez:block ez:text-site-heading ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4", focusRing)}>
         {view.title}
       </NextLink>
       {view.facts.length > 0 && (
@@ -189,7 +189,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
               <Bar size="long" strong />
             </span>
           )}
-          {title && <h1 className="ez:m-0 ez:mt-5 ez:max-w-140 ez:text-site-item ez:font-light ez:whitespace-pre-line ez:text-muted">{title}</h1>}
+          {title && <h1 className="ez:m-0 ez:mt-5 ez:max-w-140 ez:text-site-item ez:whitespace-pre-line ez:text-muted">{title}</h1>}
           {sub && (
             <p data-slot="hero-sub" className="ez:m-0 ez:mt-2 ez:max-w-140 ez:text-site-body ez:text-site-off">
               {sub}
@@ -244,7 +244,7 @@ function CaseRow({ c, index, lit }: { c: Case; index: number; lit: boolean }) {
           <span className="ez:flex ez:min-w-0 ez:items-center ez:gap-4">
             {lit && <span aria-hidden="true" className="ez:fx-glow ez:size-2 ez:shrink-0 ez:rounded-full ez:bg-primary" />}
             <span
-              className={cn("ez:truncate ez:text-site-heading ez:font-light ez:tracking-tight ez:group-hover:text-fg ez:lg:text-site-section ez:lg:font-light", lit ? "ez:text-fg" : "ez:text-muted")}
+              className={cn("ez:truncate ez:text-site-heading ez:group-hover:text-fg ez:lg:text-site-section", lit ? "ez:text-fg" : "ez:text-muted")}
             >
               {view.title}
             </span>
@@ -352,12 +352,12 @@ function PackageCell({ p, index, cols }: { p: PackageItem | null; index: number;
   return (
     <li className={cn(line, "ez:flex ez:flex-col ez:items-start ez:py-7 ez:pr-7 ez:lg:min-h-95", ruled(index, cols))}>
       <span className={cn("ez:h-5 ez:text-site-small ez:text-site-off", figure)}>{p ? pad(index) : null}</span>
-      <h3 className="ez:m-0 ez:mt-6 ez:font-body ez:text-site-heading ez:font-light ez:break-keep ez:text-fg ez:lg:mt-10">{p ? p.name : <Bar />}</h3>
-      <p className="ez:m-0 ez:mt-2.5 ez:max-w-full ez:text-site-section ez:font-light ez:tracking-tight ez:break-words ez:text-fg ez:tabular-nums ez:lg:text-site-display-sm ez:lg:font-light">
+      <h3 className="ez:m-0 ez:mt-6 ez:font-body ez:text-site-heading ez:break-keep ez:text-fg ez:lg:mt-10">{p ? p.name : <Bar />}</h3>
+      <p className="ez:m-0 ez:mt-2.5 ez:max-w-full ez:text-site-section ez:break-words ez:text-fg ez:tabular-nums ez:lg:text-site-display-sm">
         {p ? (
           <>
             {amount}
-            {unit && <small className="ez:ml-1 ez:text-site-body ez:tracking-normal ez:text-site-off">{unit}</small>}
+            {unit && <small className="ez:ml-1 ez:text-site-body ez:text-site-off">{unit}</small>}
           </>
         ) : (
           <BlankPrice />
@@ -416,7 +416,7 @@ export function Process({ data }: SectionProps<"process_steps">) {
                     on ? "ez:fx-glow ez:border-primary ez:bg-primary" : "ez:border-site-off ez:bg-surface"
                   )}
                 />
-                <span className={cn("ez:block ez:font-body ez:text-site-heading ez:font-light ez:break-keep ez:lg:mt-6.5", on ? "ez:text-fg" : "ez:text-muted")}>{s ?? <Bar />}</span>
+                <span className={cn("ez:block ez:font-body ez:text-site-heading ez:break-keep ez:lg:mt-6.5", on ? "ez:text-fg" : "ez:text-muted")}>{s ?? <Bar />}</span>
               </li>
             );
           })}
@@ -439,7 +439,7 @@ function ReviewColumn({ item, product }: { item: ReviewItem; product?: ReviewPro
         <Icon name="star" size="sm" className="ez:size-3.5 ez:fill-star ez:text-star" />
         <span className={figure}>{average(item.rating)}</span>
       </span>
-      <p className="ez:m-0 ez:mt-4.5 ez:line-clamp-4 ez:text-site-item ez:leading-relaxed ez:font-light ez:whitespace-pre-line ez:text-fg">{item.body}</p>
+      <p className="ez:m-0 ez:mt-4.5 ez:line-clamp-4 ez:text-site-item ez:leading-relaxed ez:whitespace-pre-line ez:text-fg">{item.body}</p>
       <span className="ez:mt-8 ez:truncate ez:text-site-small ez:text-site-off">{[item.name, product?.name, item.date].filter(Boolean).join(" · ")}</span>
     </article>
   );
@@ -501,7 +501,7 @@ function RequestBox({ data }: { data: QuoteStarter }) {
   if (state === "closed") {
     return (
       <div className={formBox}>
-        <p className="ez:m-0 ez:text-site-item ez:font-light ez:text-fg">{QUOTE_TITLE.closed}</p>
+        <p className="ez:m-0 ez:text-site-item ez:text-fg">{QUOTE_TITLE.closed}</p>
       </div>
     );
   }
@@ -536,7 +536,7 @@ function RequestBox({ data }: { data: QuoteStarter }) {
     <StarterForm data={data} className={formBox}>
       {questions.map((q, i) => (
         <fieldset key={q.id} className="ez:relative ez:m-0 ez:min-w-0 ez:border-0 ez:p-0">
-          <legend className="ez:p-0 ez:pr-14 ez:text-site-heading ez:font-light ez:text-fg">{q.label}</legend>
+          <legend className="ez:p-0 ez:pr-14 ez:text-site-heading ez:text-fg">{q.label}</legend>
           <span aria-hidden="true" className={cn("ez:absolute ez:top-1.5 ez:right-0 ez:text-site-small ez:text-site-off", figure)}>{`${i + 1} / ${questions.length}`}</span>
           <div className={optionGrid}>
             {q.options.map((o) => (
@@ -568,7 +568,7 @@ function ContactRows({ phone, hours, blank }: { phone?: string | null; hours?: s
   const row = cn(line, "ez:flex ez:items-baseline ez:justify-between ez:gap-6 ez:border-t ez:py-3.5");
   if (!blank && !phone && !hours) return null;
   return (
-    <dl className="ez:m-0 ez:mt-10 ez:max-w-105 ez:text-site-item ez:font-light ez:lg:mt-12">
+    <dl className="ez:m-0 ez:mt-10 ez:max-w-105 ez:text-site-item ez:lg:mt-12">
       {(phone || blank) && (
         <div className={row}>
           <dt className="ez:shrink-0 ez:text-site-off">{QUOTE_TITLE.center}</dt>
@@ -632,7 +632,7 @@ function ListRequest({ data, storeName }: { data: QuoteStarter; storeName?: stri
               {QUOTE_TITLE.request}
             </ButtonLink>
           ) : state === "closed" ? (
-            <p className="ez:m-0 ez:text-site-item ez:font-light ez:text-fg">{QUOTE_TITLE.closed}</p>
+            <p className="ez:m-0 ez:text-site-item ez:text-fg">{QUOTE_TITLE.closed}</p>
           ) : (
             <BlankButton variant="outline" className="ez:rounded-full">
               {QUOTE_TITLE.request}

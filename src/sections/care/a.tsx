@@ -19,9 +19,9 @@ const grid = "ez:grid ez:gap-y-10 ez:lg:grid-cols-12 ez:lg:gap-x-gutter";
 
 const vertical = "ez:[writing-mode:vertical-rl]";
 
-const title = "ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:leading-relaxed ez:tracking-widest ez:text-fg ez:lg:text-site-title";
+const title = "ez:m-0 ez:font-display ez:text-site-heading ez:text-fg ez:lg:text-site-title";
 
-const label = "ez:text-site-small ez:tracking-widest ez:text-muted";
+const label = "ez:text-site-small ez:text-muted";
 
 const quiet = cn("ez:text-muted ez:no-underline ez:hover:text-fg", focusRing);
 
@@ -34,7 +34,7 @@ function Box({ href, external, more, children }: { href: string; external?: bool
       {...(external ? out : {})}
       className={cn(
         rule,
-        "ez:inline-flex ez:h-10 ez:shrink-0 ez:items-center ez:gap-3 ez:border ez:px-5 ez:text-site-small ez:tracking-widest ez:text-fg ez:no-underline ez:hover:text-muted",
+        "ez:inline-flex ez:h-10 ez:shrink-0 ez:items-center ez:gap-3 ez:border ez:px-5 ez:text-site-small ez:text-fg ez:no-underline ez:hover:text-muted",
         focusRing,
       )}
     >
@@ -71,11 +71,11 @@ export function Header({ name, logoUrl, phone, nav, links }: CareHeaderProps) {
       <div className="ez:mx-auto ez:flex ez:min-h-20 ez:max-w-wrap ez:items-center ez:gap-8 ez:px-page ez:lg:min-h-40">
         <NextLink
           href="/"
-          className={cn("ez:min-w-0 ez:font-display ez:text-site-heading ez:font-normal ez:leading-none ez:tracking-widest ez:text-fg ez:no-underline ez:lg:text-site-title", focusRing)}
+          className={cn("ez:min-w-0 ez:font-display ez:text-site-heading ez:leading-none ez:text-fg ez:no-underline ez:lg:text-site-title", focusRing)}
         >
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
-        <nav aria-label="주요 메뉴" className="ez:ml-auto ez:flex ez:min-w-0 ez:gap-8 ez:whitespace-nowrap ez:font-display ez:text-site-item ez:tracking-wider ez:max-lg:hidden">
+        <nav aria-label="주요 메뉴" className="ez:ml-auto ez:flex ez:min-w-0 ez:gap-8 ez:whitespace-nowrap ez:font-display ez:text-site-item ez:max-lg:hidden">
           <CareNavLinks items={nav} className={cn("ez:py-1.5 ez:text-fg ez:no-underline ez:hover:text-muted", focusRing)} />
         </nav>
         {book ? (
@@ -88,7 +88,7 @@ export function Header({ name, logoUrl, phone, nav, links }: CareHeaderProps) {
           phone && (
             <a
               href={telHref(phone)}
-              className={cn("ez:ml-auto ez:shrink-0 ez:py-1.5 ez:text-site-small ez:tracking-widest ez:text-fg ez:no-underline ez:tabular-nums ez:hover:text-muted ez:lg:ml-4", focusRing)}
+              className={cn("ez:ml-auto ez:shrink-0 ez:py-1.5 ez:text-site-small ez:text-fg ez:no-underline ez:tabular-nums ez:hover:text-muted ez:lg:ml-4", focusRing)}
             >
               {phone}
             </a>
@@ -120,9 +120,9 @@ export function Hero({ data, context }: SectionProps<"hero">) {
         <div className="ez:grid ez:min-w-0 ez:flex-1 ez:content-start ez:gap-6">
           {heading ? (
             <>
-              <h1 className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:leading-relaxed ez:tracking-widest ez:text-balance">{heading}</h1>
+              <h1 className="ez:m-0 ez:font-display ez:text-site-heading ez:text-balance">{heading}</h1>
               {sub && (
-                <p data-slot="hero-sub" className="ez:m-0 ez:whitespace-pre-line ez:leading-loose ez:tracking-wide">
+                <p data-slot="hero-sub" className="ez:m-0 ez:whitespace-pre-line ez:leading-loose">
                   {sub}
                 </p>
               )}
@@ -137,7 +137,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
           )}
         </div>
         {name ? (
-          <p className={cn(vertical, "ez:m-0 ez:shrink-0 ez:font-display ez:text-site-title ez:font-normal ez:leading-relaxed ez:tracking-widest")}>{name}</p>
+          <p className={cn(vertical, "ez:m-0 ez:shrink-0 ez:font-display ez:text-site-title")}>{name}</p>
         ) : (
           blank && <VerticalBlank />
         )}
@@ -150,7 +150,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
         {(phone || book) && (
           <div className="ez:grid ez:justify-items-start ez:gap-4 ez:pt-10">
             {phone && (
-              <a href={telHref(phone)} aria-label={`${CARE_TITLE.phone} ${phone}`} className={cn("ez:font-display ez:text-site-name ez:font-normal ez:tracking-wide ez:text-fg ez:no-underline ez:tabular-nums ez:hover:text-muted", focusRing)}>
+              <a href={telHref(phone)} aria-label={`${CARE_TITLE.phone} ${phone}`} className={cn("ez:font-display ez:text-site-name ez:text-fg ez:no-underline ez:tabular-nums ez:hover:text-muted", focusRing)}>
                 {phone}
               </a>
             )}
@@ -181,7 +181,7 @@ export function Intro({ data }: SectionProps<"intro">) {
       <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-6 ez:lg:col-span-4 ez:lg:col-start-8 ez:lg:pt-2">
         {body.length ? (
           body.map((p, i) => (
-            <p key={i} className="ez:m-0 ez:whitespace-pre-line ez:leading-loose ez:tracking-wide">
+            <p key={i} className="ez:m-0 ez:whitespace-pre-line ez:leading-loose">
               {p}
             </p>
           ))
@@ -203,7 +203,7 @@ function MenuCard({ group }: { group: MenuGroup | null }) {
   return (
     <div className={cn(rule, "ez:grid ez:min-w-0 ez:content-start ez:border ez:px-8 ez:pt-12 ez:pb-8")}>
       {group ? (
-        <h3 className={cn(rule, "ez:m-0 ez:justify-self-start ez:border-b ez:pb-1 ez:font-display ez:text-site-item ez:font-normal ez:tracking-widest ez:text-fg")}>
+        <h3 className={cn(rule, "ez:m-0 ez:justify-self-start ez:border-b ez:pb-1 ez:font-display ez:text-site-item ez:font-normal ez:text-fg")}>
           {group.name ?? CARE_TITLE.all}
         </h3>
       ) : (
@@ -215,7 +215,7 @@ function MenuCard({ group }: { group: MenuGroup | null }) {
         {group
           ? group.items.map((item) => (
               <div key={item.id} className={row}>
-                <dt className="ez:min-w-0 ez:leading-relaxed ez:tracking-wide ez:text-fg">{item.name}</dt>
+                <dt className="ez:min-w-0 ez:leading-relaxed ez:text-fg">{item.name}</dt>
                 <dd className="ez:m-0 ez:shrink-0 ez:text-muted ez:tabular-nums">{item.price}</dd>
               </div>
             ))
@@ -285,7 +285,7 @@ export function Store({ data, context }: SectionProps<"store_info">) {
           {(data.phone || blank) && (
             <div className="ez:grid ez:gap-1">
               <dt className={label}>{CARE_TITLE.phone}</dt>
-              <dd className="ez:m-0 ez:text-site-figure-lg ez:leading-tight ez:tracking-wider">
+              <dd className="ez:m-0 ez:text-site-figure-lg ez:leading-tight">
                 {data.phone ? (
                   <a href={telHref(data.phone)} className={cn("ez:text-fg ez:no-underline ez:tabular-nums ez:hover:text-muted", focusRing)}>
                     {data.phone}
@@ -298,17 +298,17 @@ export function Store({ data, context }: SectionProps<"store_info">) {
           )}
           <div className="ez:grid ez:gap-1">
             <dt className={label}>{CARE_TITLE.address}</dt>
-            <dd className="ez:m-0 ez:leading-relaxed ez:tracking-wide">{data.address ?? <Bar size="long" />}</dd>
+            <dd className="ez:m-0 ez:leading-relaxed">{data.address ?? <Bar size="long" />}</dd>
           </div>
           {(data.hours || blank) && (
             <div className="ez:grid ez:gap-1">
               <dt className={label}>{CARE_TITLE.hours}</dt>
-              <dd className="ez:m-0 ez:leading-relaxed ez:tracking-wide">{data.hours ?? <Bar />}</dd>
+              <dd className="ez:m-0 ez:leading-relaxed">{data.hours ?? <Bar />}</dd>
             </div>
           )}
         </dl>
         {rest.length > 0 && (
-          <ul className="ez:m-0 ez:mt-8 ez:flex ez:list-none ez:flex-wrap ez:gap-x-6 ez:gap-y-2 ez:p-0 ez:text-site-small ez:tracking-widest">
+          <ul className="ez:m-0 ez:mt-8 ez:flex ez:list-none ez:flex-wrap ez:gap-x-6 ez:gap-y-2 ez:p-0 ez:text-site-small">
             {rest.map((l) => (
               <li key={l.key}>
                 <a href={l.href} {...out} className={quiet}>
@@ -340,8 +340,8 @@ export function Footer({ storeName, phone, hours, address, legal, nav, links, te
   return (
     <footer data-slot="site-footer" className={cn(rule, "ez:border-t ez:text-fg")}>
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-18 ez:pb-12 ez:lg:pt-24 ez:lg:pb-16">
-        <div className="ez:grid ez:gap-10 ez:text-site-small ez:tracking-wide ez:md:grid-cols-12 ez:md:gap-x-gutter">
-          <p className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:tracking-widest ez:text-fg ez:md:col-span-5 ez:lg:text-site-title">{storeName}</p>
+        <div className="ez:grid ez:gap-10 ez:text-site-small ez:md:grid-cols-12 ez:md:gap-x-gutter">
+          <p className="ez:m-0 ez:font-display ez:text-site-heading ez:text-fg ez:md:col-span-5 ez:lg:text-site-title">{storeName}</p>
           {(nav.length > 0 || links.length > 0) && (
             <nav aria-label={CARE_TITLE.links} className="ez:grid ez:content-start ez:gap-6 ez:md:col-span-3 ez:md:col-start-7">
               {nav.length > 0 && (

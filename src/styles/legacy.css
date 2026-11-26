@@ -38,6 +38,9 @@
   :where(.ez-root) :is([class*="text-site-figure"], [class*="tabular-nums"]) {
     font-style: normal;
   }
+  :where(.ez-root) :is([class*="text-site-display"], [class*="text-site-hero"], [class*="text-site-page"], [class*="text-site-section"], [class*="text-site-title"], [class*="text-site-name"]):not([class*="line-clamp"]) {
+    text-wrap: balance;
+  }
 }
 :where(.ez-root) :focus-visible {
   outline: 2px solid var(--ezd-primary);
@@ -84,7 +87,7 @@
   overflow-x: clip;
   font-size: var(--ez-text-site-body);
   line-height: 1.6;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.004em;
   font-feature-settings: "tnum" 1;
 }
 .ez-root .ez-root[data-frame="gallery"] {
@@ -102,16 +105,16 @@
 }
 :where(.ez-root[data-frame="gallery"]) h1 {
   font-size: clamp(1.75rem, 4vw, var(--ez-text-site-page));
-  line-height: 1.2;
-  font-weight: 300;
-  letter-spacing: -0.035em;
+  line-height: 1.22;
+  font-weight: var(--ezd-title-weight, 400);
+  letter-spacing: -0.028em;
   margin: 0 0 40px;
 }
 :where(.ez-root[data-frame="gallery"]) h2 {
   font-size: clamp(1.25rem, 3vw, var(--ez-text-site-heading));
   line-height: 1.4;
   font-weight: 400;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.016em;
 }
 :where(.ez-root[data-frame="gallery"]) .ez-muted {
   font-size: var(--ez-text-site-small);

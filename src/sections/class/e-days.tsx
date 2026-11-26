@@ -15,7 +15,7 @@ const WEEK = "일월화수목금토";
 
 const insetRing = "ez:outline-none ez:focus-visible:outline-2 ez:focus-visible:-outline-offset-2 ez:focus-visible:outline-primary";
 
-const price = "ez:text-site-body ez:font-light ez:tabular-nums ez:whitespace-nowrap ez:text-fg";
+const price = "ez:text-site-body ez:tabular-nums ez:whitespace-nowrap ez:text-fg";
 
 const pick = cn(buttonVariants({ variant: "outline", size: "sm" }), "ez:rounded-full ez:border-site-line ez:font-normal ez:lg:w-full");
 
@@ -59,9 +59,9 @@ function Row({ session }: { session: Session }) {
       data-full={v.full || undefined}
       className="ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-x-4 ez:gap-y-1.5 ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-4 ez:lg:min-h-24 ez:lg:grid-cols-[6.875rem_minmax(0,1fr)_11.25rem_11.25rem_8.75rem_6.25rem] ez:lg:gap-x-0 ez:lg:py-0"
     >
-      <span className="ez:col-span-2 ez:text-site-item ez:font-light ez:tabular-nums ez:text-muted ez:lg:col-span-1">{v.time}</span>
+      <span className="ez:col-span-2 ez:text-site-item ez:tabular-nums ez:text-muted ez:lg:col-span-1">{v.time}</span>
       <span className="ez:grid ez:min-w-0 ez:gap-1.5 ez:lg:pr-6">
-        <span className={cn("ez:truncate ez:text-site-heading ez:font-light", v.full ? "ez:text-muted" : "ez:text-fg")}>{v.name}</span>
+        <span className={cn("ez:truncate ez:text-site-heading", v.full ? "ez:text-muted" : "ez:text-fg")}>{v.name}</span>
         <span className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3 ez:gap-y-1 ez:lg:hidden">
           {spec && <span className="ez:text-site-small ez:text-site-off">{spec}</span>}
           <Seats v={v} />
@@ -150,7 +150,7 @@ export function DayStrip({ sessions, heading, more }: { sessions: Session[]; hea
               <span aria-hidden="true" className={cn("ez:text-site-small", on ? "ez:text-muted" : "ez:text-site-off")}>
                 {d.weekday}
               </span>
-              <span aria-hidden="true" className={cn("ez:text-site-heading ez:font-extralight ez:tabular-nums", on ? "ez:text-fg" : d.count ? "ez:text-muted" : "ez:text-site-off")}>
+              <span aria-hidden="true" className={cn("ez:text-site-heading ez:tabular-nums", on ? "ez:text-fg" : d.count ? "ez:text-muted" : "ez:text-site-off")}>
                 {d.date}
               </span>
             </button>

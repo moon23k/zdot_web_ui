@@ -14,7 +14,7 @@ export type BookingBar = { title: string; label: string; amount?: string | null;
 
 function Amount({ amount, unit }: { amount: string; unit?: string }) {
   return (
-    <p className="ez:m-0 ez:text-site-heading ez:font-normal ez:tabular-nums">
+    <p className="ez:m-0 ez:text-site-heading ez:tabular-nums">
       {amount}
       {unit && <span className="ez:text-site-small ez:font-normal ez:text-muted"> / {unit}</span>}
     </p>

@@ -18,8 +18,8 @@ function Summary({ data, variant }: DetailBlockProps) {
   if (!data.title) return null;
   return (
     <div data-slot="detail-summary" className="ez:grid ez:gap-2 ez:text-fg">
-      <h1 className="ez:m-0 ez:text-site-page-sm ez:font-light ez:tracking-[-0.035em] ez:lg:text-site-page">{data.title}</h1>
-      {data.price && <strong className="ez:text-site-heading ez:font-normal ez:tabular-nums">{data.price}</strong>}
+      <h1 className="ez:m-0 ez:text-site-page-sm ez:lg:text-site-page">{data.title}</h1>
+      {data.price && <strong className="ez:text-site-heading ez:tabular-nums">{data.price}</strong>}
       {variant === "status" && data.status && <span className="ez:text-site-small ez:text-primary">{data.status}</span>}
       {data.chips && <Chips items={data.chips} current={-1} />}
     </div>
@@ -87,7 +87,7 @@ function ClassSummary({ data, variant }: DetailBlockProps) {
       data-slot="class-summary"
       className={cn("ez:grid ez:gap-3 ez:rounded-lg ez:p-6 ez:text-fg", variant === "banner" ? "ez:bg-surface-alt ez:md:p-10" : "ez:bg-surface-alt")}
     >
-      <h1 className="ez:m-0 ez:font-display ez:font-title ez:text-site-section ez:tracking-brand">{data.title}</h1>
+      <h1 className="ez:m-0 ez:font-display ez:font-title ez:text-site-section">{data.title}</h1>
       <ul className={cn("ez:m-0 ez:grid ez:list-none ez:gap-2 ez:p-0", variant === "cells" ? "ez:grid-cols-2 ez:md:grid-cols-5" : "ez:grid-cols-2 ez:md:grid-cols-4")}>
         {(data.rows ?? []).map((r, i) => (
           <li key={i} className="ez:grid ez:gap-0.5 ez:rounded-md ez:bg-surface ez:p-3">
@@ -270,7 +270,7 @@ function CaseInfo({ data }: DetailBlockProps) {
   if (!data.title) return null;
   return (
     <div data-slot="case-info" className="ez:grid ez:gap-7 ez:text-fg">
-      <h1 className="ez:m-0 ez:font-display ez:font-title ez:text-site-section ez:tracking-brand">{data.title}</h1>
+      <h1 className="ez:m-0 ez:font-display ez:font-title ez:text-site-section">{data.title}</h1>
       {data.status && <span className="ez:text-site-small ez:text-muted">{data.status}</span>}
       <Rows rows={data.rows ?? []} />
       {data.body && <p className="ez:m-0 ez:whitespace-pre-line ez:text-site-body">{data.body}</p>}

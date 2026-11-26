@@ -24,10 +24,10 @@ const bleed = "ez:mx-[calc(50%-50vw)]";
 const grid = "ez:grid ez:gap-y-10 ez:lg:grid-cols-12 ez:lg:gap-x-gutter";
 
 const display =
-  "ez:m-0 ez:font-display ez:text-site-name ez:font-medium ez:tracking-tight ez:text-fg ez:lg:text-site-display-md";
+  "ez:m-0 ez:font-display ez:text-site-name ez:font-medium ez:text-fg ez:lg:text-site-display-md";
 
 const title =
-  "ez:m-0 ez:font-display ez:text-site-heading ez:font-medium ez:tracking-tight ez:text-fg ez:lg:text-site-title";
+  "ez:m-0 ez:font-display ez:text-site-heading ez:font-medium ez:text-fg ez:lg:text-site-title";
 
 const quiet = cn("ez:text-muted ez:no-underline ez:hover:text-fg", focusRing);
 
@@ -144,7 +144,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
   const blank = !heading && !image;
   const over = Boolean(image);
   const logo =
-    "ez:m-0 ez:max-w-4xl ez:font-display ez:text-site-page ez:font-normal ez:leading-none ez:text-balance ez:text-fg ez:lg:text-site-hero";
+    "ez:m-0 ez:max-w-4xl ez:font-display ez:text-site-page ez:text-balance ez:text-fg ez:lg:text-site-hero";
   return (
     <section
       data-slot="hero"
@@ -182,7 +182,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
           {heading ? (
             <>
               {name && (
-                <p className="ez:m-0 ez:mb-6 ez:text-site-small ez:font-normal ez:tracking-widest ez:text-muted">
+                <p className="ez:m-0 ez:mb-6 ez:text-site-small ez:font-normal ez:text-muted">
                   {name}
                 </p>
               )}
@@ -442,7 +442,7 @@ export function Footer({
     >
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-18 ez:pb-12 ez:lg:pt-24 ez:lg:pb-16">
         <div className="ez:grid ez:gap-10 ez:text-site-small ez:md:grid-cols-12 ez:md:gap-x-gutter">
-          <p className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:text-fg ez:md:col-span-5 ez:lg:text-site-title">
+          <p className="ez:m-0 ez:font-display ez:text-site-heading ez:text-fg ez:md:col-span-5 ez:lg:text-site-title">
             {storeName}
           </p>
           {(nav.length > 0 || links.length > 0) && (

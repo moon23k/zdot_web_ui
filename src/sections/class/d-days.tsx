@@ -155,7 +155,7 @@ export function DayBoard({ sessions }: { sessions: Session[] }) {
                 <span className={cn("ez:text-site-small", on ? "ez:text-fg" : "ez:text-muted")}>{d.weekday}</span>
                 <span
                   aria-hidden="true"
-                  className={cn("ez:text-site-item ez:tabular-nums ez:md:text-site-heading", on ? "ez:font-medium ez:text-fg" : d.count ? "ez:font-light ez:text-muted" : "ez:font-light ez:text-site-off")}
+                  className={cn("ez:text-site-item ez:tabular-nums ez:md:text-site-heading", on ? "ez:font-medium ez:text-fg" : d.count ? "ez:text-muted" : "ez:text-site-off")}
                 >
                   {d.date}
                 </span>

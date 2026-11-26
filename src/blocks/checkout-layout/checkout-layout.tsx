@@ -6,7 +6,7 @@ export function CheckoutLayout({ title, main, aside }: { title?: string; main: R
   return (
     <div data-slot="checkout-layout" className="ez:grid ez:gap-10 ez:pt-4 ez:lg:grid-cols-[minmax(0,1fr)_440px] ez:lg:items-start ez:lg:gap-24 ez:lg:pt-10">
       <div className="ez:grid ez:min-w-0 ez:gap-10 ez:lg:gap-16">
-        {title && <h1 className="ez:m-0 ez:text-site-page ez:font-light ez:tracking-[-0.035em]">{title}</h1>}
+        {title && <h1 className="ez:m-0 ez:text-site-page">{title}</h1>}
         {main}
       </div>
       <aside className="ez:grid ez:gap-6 ez:rounded-md ez:bg-deep ez:p-6 ez:lg:sticky ez:lg:top-8 ez:lg:p-8">{aside}</aside>

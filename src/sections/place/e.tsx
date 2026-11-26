@@ -27,7 +27,7 @@ export const nightHair = "ez:border-0 ez:border-solid ez:border-hairline";
 export const nightWrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:px-page";
 
 export const nightHeading =
-  "ez:m-0 ez:font-display ez:text-site-name ez:font-extralight ez:leading-tight ez:tracking-tight ez:text-fg ez:lg:text-site-display-md";
+  "ez:m-0 ez:font-display ez:text-site-name ez:text-fg ez:lg:text-site-display-md";
 
 export const nightOut = {
   target: "_blank",
@@ -221,7 +221,7 @@ export function NightBox({
   const body = (
     <>
       {title && (
-        <b className="ez:block ez:font-display ez:text-site-heading ez:font-light ez:text-fg">
+        <b className="ez:block ez:font-display ez:text-site-heading ez:text-fg">
           {title}
         </b>
       )}
@@ -390,7 +390,7 @@ export function NightAbout({
         <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-6 ez:lg:col-span-5 ez:lg:pr-18">
           {first ? (
             <>
-              <p className="ez:m-0 ez:whitespace-pre-line ez:font-display ez:text-site-heading ez:font-extralight ez:leading-normal ez:tracking-tight ez:text-fg ez:lg:text-site-title ez:lg:leading-normal">
+              <p className="ez:m-0 ez:whitespace-pre-line ez:font-display ez:text-site-heading ez:text-fg ez:lg:text-site-title">
                 {first}
               </p>
               {rest.map((p, i) => (
@@ -500,7 +500,7 @@ export function NightVisit({
                 key={r.label}
                 className={cn(
                   nightRule,
-                  "ez:flex ez:items-baseline ez:justify-between ez:gap-6 ez:border-b ez:py-4.5 ez:text-site-item ez:font-light"
+                  "ez:flex ez:items-baseline ez:justify-between ez:gap-6 ez:border-b ez:py-4.5 ez:text-site-item"
                 )}
               >
                 <dt className="ez:shrink-0 ez:whitespace-nowrap ez:text-site-off">
@@ -574,7 +574,7 @@ export function NightTable({ groups }: { groups: MenuGroup[] }) {
               ? g.items.map((item) => (
                   <div key={item.id} className={leaderRow}>
                     <dt className="ez:flex ez:min-w-0 ez:flex-1 ez:items-baseline ez:gap-3">
-                      <span className="ez:min-w-0 ez:font-light ez:text-fg">
+                      <span className="ez:min-w-0 ez:text-fg">
                         {item.name}
                       </span>
                       <Leader />
@@ -614,7 +614,7 @@ function MenuCard({ item, index }: { item: MenuItem; index: number }) {
         <Pic src={item.image} ratio={1} tone={index} />
       </div>
       <div className="ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:px-0.5 ez:pt-4">
-        <span className="ez:min-w-0 ez:text-site-item ez:font-light ez:text-fg">
+        <span className="ez:min-w-0 ez:text-site-item ez:text-fg">
           {item.name}
         </span>
         {item.price && (

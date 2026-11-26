@@ -2,7 +2,7 @@ import type { ShopSkin, TemplateDesign } from "../templates/types";
 import type { Design } from "../types";
 import { kitVars } from "./kit";
 import { NIGHT_PALETTE, nightTheme, nightVars, type NightTheme } from "./night";
-import { SYSTEM_COLOR, SYSTEM_DURATION, SYSTEM_FIGURE_FONT, SYSTEM_FONT, SYSTEM_RADIUS, SYSTEM_SITE, SYSTEM_TONE } from "./system";
+import { SYSTEM_COLOR, SYSTEM_DURATION, SYSTEM_FONT, SYSTEM_RADIUS, SYSTEM_SITE, SYSTEM_TONE } from "./system";
 
 const FALLBACK: typeof SYSTEM_COLOR = SYSTEM_COLOR;
 
@@ -288,7 +288,7 @@ export function designVars(design: Design | null | undefined, site?: boolean | S
     "--ezd-gutter": `${d.density?.grid_gutter ?? 20}px`,
     "--ezd-font-display": family(d.font?.display),
     "--ezd-font-body": family(d.font?.body),
-    "--ezd-font-figure": `var(--zdot-font-figure, ${SYSTEM_FIGURE_FONT})`,
+    "--ezd-font-figure": SYSTEM_FONT,
     "--ezd-display-weight": headWeight(styles?.title?.weight ?? d.font?.display_weight),
     "--ezd-title-weight": headWeight(styles?.title?.weight),
     "--ezd-title-style": styles?.title?.style ?? "normal",
@@ -320,20 +320,14 @@ export function fontHref(design: Design | null | undefined): string | null {
   return `https://fonts.googleapis.com/css2?${families.join("&")}&display=swap`;
 }
 
-const LIGHT = new Set(["Noto Sans KR", "Gothic A1", "IBM Plex Sans KR", "Noto Serif KR"]);
-
-function plainTitles(font: Design["font"]): Design["font"] {
-  const body = font?.body;
-  const plain = { weight: 400, style: "normal" as const };
-  const load = font?.load
-    ?.filter((f) => f.family === body)
-    .map((f) => (LIGHT.has(f.family) ? { ...f, weights: [...new Set([300, ...f.weights, 500])].sort((x, y) => x - y) } : f));
+function siteFont(font: Design["font"]): Design["font"] {
   return {
     ...font,
-    display: body,
+    display: undefined,
+    body: undefined,
     display_weight: 400,
-    load: load?.length ? load : undefined,
-    styles: { ...font?.styles, title: plain, subtitle: { weight: 500, style: "normal" } },
+    load: [],
+    styles: { ...font?.styles, title: { weight: 400, style: "normal" }, subtitle: { weight: 500, style: "normal" } },
   };
 }
 
@@ -350,21 +344,6 @@ const KIT_FACES = ["secondary", "accent", "on_accent"] as const;
 function plainKit(color: Design["color"]): Design["color"] {
   if (!color) return color;
   return Object.fromEntries(Object.entries(color).filter(([key]) => !(KIT_FACES as readonly string[]).includes(key)));
-}
-
-const SERIF = new Set(["Noto Serif KR", "Nanum Myeongjo", "Gowun Batang", "Hahmlet", "Song Myung"]);
-
-function lookTitles(font: Design["font"], look: TemplateDesign["look"]): Design["font"] {
-  if (look.frame === "gallery") return plainTitles(font);
-  const picked: Design["font"] = font ?? (look.font === "serif" ? { display: "Noto Serif KR", load: [{ family: "Noto Serif KR", weights: [400, 600] }] } : undefined);
-  if (!picked?.display || !SERIF.has(picked.display)) return plainTitles(picked);
-  const light = { weight: 300, style: "normal" as const };
-  return {
-    ...picked,
-    display_weight: 300,
-    load: picked.load?.map((f) => (LIGHT.has(f.family) ? { ...f, weights: [...new Set([300, ...f.weights])].sort((x, y) => x - y) } : f)),
-    styles: { ...picked.styles, title: light, subtitle: { weight: 500, style: "normal" } },
-  };
 }
 
 function toneOf(look: TemplateDesign["look"]): { surface: string; "surface-alt": string } {
@@ -385,7 +364,7 @@ export function applyTemplate(design: Design | null | undefined, template: Templ
   const color = glow ? glowColor(base ?? {}, night) : dark ? nightColor(base ?? {}) : base;
   return {
     ...d,
-    font: lookTitles(d.font, look),
+    font: siteFont(d.font),
     shape: d.shape?.button_shape ? { ...d.shape, line: 0 } : look.shape ? SHAPES[look.shape] : { radius_sm: 8, radius_md: 14, radius_lg: PHOTO_CORNER[String(look.radius)] ?? 0, button_shape: "pill", line: 0 },
     color: look.kit === "off" ? plainKit(color) : color,
   };

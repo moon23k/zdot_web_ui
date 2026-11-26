@@ -24,7 +24,7 @@ const wide = "ez:min-h-13.5 ez:w-full ez:px-5 ez:text-site-item ez:font-medium";
 
 const lk = "ez:inline-flex ez:items-center ez:gap-1.5 ez:text-site-body ez:font-normal ez:text-fg ez:no-underline";
 
-const h2 = "ez:m-0 ez:text-site-section ez:font-normal ez:text-fg ez:md:text-site-figure-lg";
+const h2 = "ez:m-0 ez:text-site-section ez:text-fg ez:md:text-site-figure-lg";
 
 const MD_COLS: Record<number, string> = {
   1: "ez:md:grid-cols-1",
@@ -280,17 +280,17 @@ export function Hero({ data, context }: SectionProps<"hero">) {
         {rated && figures?.average != null ? <Rating value={figures.average} count={figures.reviews} /> : blank ? <BlankRating /> : null}
         <div className="ez:mt-5.5 ez:mb-7.5 ez:grid ez:gap-3">
           {title ? (
-            <h1 className="ez:m-0 ez:text-site-page ez:font-normal ez:text-fg ez:md:text-site-display-md">{title}</h1>
+            <h1 className="ez:m-0 ez:text-site-page ez:text-fg ez:md:text-site-display-md">{title}</h1>
           ) : blank ? (
             <span aria-hidden="true" className="ez:grid ez:gap-2 ez:text-site-page ez:md:text-site-display-md">
               <Bar size="long" block className="ez:h-[1.1em]" />
               <Bar size="mid" block className="ez:h-[1.1em]" />
             </span>
           ) : (
-            <p className="ez:m-0 ez:text-site-page ez:font-normal ez:text-fg ez:md:text-site-display-md">{context.storeName}</p>
+            <p className="ez:m-0 ez:text-site-page ez:text-fg ez:md:text-site-display-md">{context.storeName}</p>
           )}
           {title && data.sub && (
-            <p data-slot="hero-sub" className="ez:m-0 ez:text-site-heading ez:font-normal ez:text-muted">
+            <p data-slot="hero-sub" className="ez:m-0 ez:text-site-heading ez:text-muted">
               {data.sub}
             </p>
           )}
@@ -309,7 +309,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
         </figure>
       </div>
       <div className={cn(rule, "ez:self-start ez:rounded-lg ez:border ez:bg-surface ez:px-5 ez:pt-7 ez:pb-6 ez:sm:px-7.5")}>
-        <h2 className="ez:m-0 ez:mb-5.5 ez:text-site-heading ez:font-normal ez:text-fg">{QUOTE_TITLE.request}</h2>
+        <h2 className="ez:m-0 ez:mb-5.5 ez:text-site-heading ez:text-fg">{QUOTE_TITLE.request}</h2>
         <StarterBody data={blank ? {} : (data.request ?? {})} contact={!blank} />
       </div>
     </section>
@@ -338,7 +338,7 @@ function BigReview({ review, product }: { review: Review; product?: ProductSumma
       {review.date && <span className="ez:tabular-nums">{review.date}</span>}
     </div>
   );
-  const text = <p className="ez:m-0 ez:text-site-heading ez:font-light ez:text-pretty ez:text-fg ez:md:text-site-logo/snug">{review.body}</p>;
+  const text = <p className="ez:m-0 ez:text-site-heading ez:text-pretty ez:text-fg ez:md:text-site-logo/snug">{review.body}</p>;
   const item = (
     <div className={cn(rule, "ez:grid ez:justify-items-start ez:gap-4.5 ez:border-t ez:pt-5")}>
       {product && <span className="ez:text-site-item ez:font-normal ez:text-fg">{product.name}</span>}
@@ -544,7 +544,7 @@ export function Packages({ data }: SectionProps<"package_cards">) {
             )}
           >
             <span className="ez:text-site-item ez:font-normal ez:text-fg">{p ? p.name : <Bar />}</span>
-            <span className="ez:mt-1.5 ez:text-site-section ez:font-normal ez:text-fg ez:tabular-nums">{p ? p.price : <BlankPrice className="ez:font-normal" />}</span>
+            <span className="ez:mt-1.5 ez:text-site-section ez:text-fg ez:tabular-nums">{p ? p.price : <BlankPrice className="ez:font-normal" />}</span>
             <Includes lines={includesOf(p)} />
             {p && (
               <div className="ez:mt-auto ez:pt-5">
@@ -654,7 +654,7 @@ export function Request({ data, context }: SectionProps<"quote_starter">) {
         <h2 className="ez:sr-only">{QUOTE_TITLE.request}</h2>
         {data.rating && data.rating.count > 0 ? <Rating value={data.rating.average} count={data.rating.count} /> : blank ? <BlankRating /> : null}
         {context.storeName ? (
-          <p className="ez:m-0 ez:text-site-section ez:font-normal ez:text-fg ez:md:text-site-page">{context.storeName}</p>
+          <p className="ez:m-0 ez:text-site-section ez:text-fg ez:md:text-site-page">{context.storeName}</p>
         ) : (
           <Bar size="long" className="ez:text-site-page" />
         )}
@@ -691,7 +691,7 @@ export function Footer({ storeName, phone, hours, business, nav, guide, account,
             <div className="ez:grid ez:content-start ez:gap-1 ez:md:w-60">
               <span className="ez:mb-2 ez:text-muted">{QUOTE_TITLE.center}</span>
               {phone && (
-                <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-heading ez:font-normal ez:text-fg ez:no-underline ez:tabular-nums", focusRing)}>
+                <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-heading ez:text-fg ez:no-underline ez:tabular-nums", focusRing)}>
                   {phone}
                 </a>
               )}
@@ -743,7 +743,7 @@ export function List({ title, count, tabs, cases, rating, request, storeName }: 
   return (
     <div data-slot="quote-cases" className="ez:grid ez:pt-8 ez:text-fg">
       <div className="ez:flex ez:flex-wrap ez:items-end ez:justify-between ez:gap-4">
-        <h1 className="ez:m-0 ez:flex ez:items-baseline ez:gap-5 ez:text-site-section ez:font-normal ez:text-fg ez:md:text-site-page">
+        <h1 className="ez:m-0 ez:flex ez:items-baseline ez:gap-5 ez:text-site-section ez:text-fg ez:md:text-site-page">
           {title}
           <span className="ez:text-site-counter ez:font-normal ez:text-muted ez:tabular-nums">{count}</span>
         </h1>
@@ -773,7 +773,7 @@ export function List({ title, count, tabs, cases, rating, request, storeName }: 
           data-blank={blank ? "" : undefined}
           className={cn(rule, "ez:col-span-2 ez:flex ez:flex-col ez:gap-8 ez:rounded-lg ez:border ez:bg-surface-alt ez:px-8 ez:py-9", MD_SPAN[span])}
         >
-          <p className="ez:m-0 ez:text-site-section ez:font-normal ez:text-fg">{storeName || QUOTE_TITLE.request}</p>
+          <p className="ez:m-0 ez:text-site-section ez:text-fg">{storeName || QUOTE_TITLE.request}</p>
           <div className="ez:mt-auto ez:grid ez:gap-4">
             <RequestAction data={request} />
             {!blank && <Contact phone={request.phone} hours={request.hours} stack />}

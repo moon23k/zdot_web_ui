@@ -6,7 +6,7 @@ export const shop: TemplateDesign[] = [
     main: "shop",
     letter: "a",
     name: "에디토리얼형",
-    look: { tone: "warm", radius: 0, font: "serif", shape: "square", kit: "off", section: 128, pad: 60 },
+    look: { tone: "warm", radius: 0, shape: "square", kit: "off", section: 128, pad: 60 },
     header: "editorial",
     skin: "editorial",
     home: [
@@ -32,7 +32,7 @@ export const shop: TemplateDesign[] = [
     main: "shop",
     letter: "b",
     name: "카탈로그형",
-    look: { tone: "white", radius: 6, font: "sans", shape: "soft", kit: "off", section: 80 },
+    look: { tone: "white", radius: 6, shape: "soft", kit: "off", section: 80 },
     header: "catalog",
     skin: "catalog",
     home: [
@@ -57,7 +57,7 @@ export const shop: TemplateDesign[] = [
     main: "shop",
     letter: "c",
     name: "쇼룸형",
-    look: { tone: "mist", radius: 16, font: "sans", shape: "round", kit: "off", section: 112 },
+    look: { tone: "mist", radius: 16, shape: "round", kit: "off", section: 112 },
     header: "showroom",
     skin: "showroom",
     home: [
@@ -82,7 +82,7 @@ export const shop: TemplateDesign[] = [
     main: "shop",
     letter: "d",
     name: "오로라 글래스",
-    look: { tone: "aurora", radius: 16, font: "sans", shape: "round", kit: "off", section: 128, pad: 48 },
+    look: { tone: "aurora", radius: 16, shape: "round", kit: "off", section: 128, pad: 48 },
     header: "aurora",
     skin: "aurora",
     home: [
@@ -107,7 +107,7 @@ export const shop: TemplateDesign[] = [
     main: "shop",
     letter: "e",
     name: "나이트 글로우",
-    look: { tone: "night", radius: 6, font: "sans", shape: "soft", kit: "off", section: 128, pad: 48 },
+    look: { tone: "night", radius: 6, shape: "soft", kit: "off", section: 128, pad: 48 },
     header: "night",
     skin: "night",
     home: [
@@ -132,7 +132,7 @@ export const shop: TemplateDesign[] = [
     main: "shop",
     letter: "f",
     name: "오브젝트 스테이지",
-    look: { tone: "white", radius: 16, font: "sans", shape: "round", kit: "off", section: 128, pad: 48 },
+    look: { tone: "white", radius: 16, shape: "round", kit: "off", section: 128, pad: 48 },
     header: "stage",
     skin: "stage",
     home: [

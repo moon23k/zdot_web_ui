@@ -96,16 +96,18 @@
   }
 }
 @utility fx-title {
-  font-size: clamp(2.75rem, 6.4vw, 5.75rem);
-  line-height: 1.14;
-  letter-spacing: -0.035em;
-  font-weight: 300;
+  font-size: calc(clamp(2.75rem, 6.4vw, 5.75rem) * var(--ezd-title-scale, 1));
+  line-height: 1.18;
+  letter-spacing: calc(-0.03em + var(--ezd-title-tracking, 0em));
+  font-weight: var(--ezd-title-weight, 400);
+  text-wrap: balance;
 }
 @utility fx-title-xl {
-  font-size: clamp(3rem, 7.2vw, 6.5rem);
-  line-height: 1.12;
-  letter-spacing: -0.035em;
-  font-weight: 200;
+  font-size: calc(clamp(3rem, 7.2vw, 6.5rem) * var(--ezd-title-scale, 1));
+  line-height: 1.18;
+  letter-spacing: calc(-0.03em + var(--ezd-title-tracking, 0em));
+  font-weight: var(--ezd-title-weight, 400);
+  text-wrap: balance;
 }
 @utility fx-round-md {
   border-radius: clamp(16px, 1.7vw, 24px);

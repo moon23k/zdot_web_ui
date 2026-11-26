@@ -32,7 +32,7 @@ const select = cn("ez:m-0 ez:cursor-pointer ez:appearance-none ez:border-0 ez:bg
 function Head({ title }: { title: string }) {
   return (
     <div className="ez:grid ez:justify-items-center ez:text-center">
-      <h2 className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:leading-snug ez:lg:text-site-title">{title}</h2>
+      <h2 className="ez:m-0 ez:font-display ez:text-site-heading ez:lg:text-site-title">{title}</h2>
     </div>
   );
 }
@@ -60,7 +60,7 @@ export function Header({ name, logoUrl, nav, links }: StayHeaderProps) {
           <NextLink
             href="/"
             className={cn(
-              "ez:min-w-0 ez:font-display ez:text-site-heading ez:font-normal ez:leading-none ez:tracking-wide ez:text-fg ez:no-underline ez:lg:justify-self-center ez:lg:text-center ez:lg:text-site-logo",
+              "ez:min-w-0 ez:font-display ez:text-site-heading ez:leading-none ez:text-fg ez:no-underline ez:lg:justify-self-center ez:lg:text-center ez:lg:text-site-logo",
               focusRing,
             )}
           >
@@ -100,7 +100,7 @@ export function Hero({ data }: SectionProps<"hero">) {
       {title && (
         <div className="ez:absolute ez:inset-x-0 ez:bottom-12 ez:mx-auto ez:max-w-wrap ez:px-page ez:lg:bottom-28">
           <div className="ez:flex ez:flex-col ez:items-start ez:gap-5 ez:text-fg">
-            <h1 className="ez:m-0 ez:max-w-4xl ez:font-display ez:text-site-page ez:font-normal ez:leading-none ez:text-balance ez:lg:text-site-display-lg">{title}</h1>
+            <h1 className="ez:m-0 ez:max-w-4xl ez:font-display ez:text-site-page ez:text-balance ez:lg:text-site-display-lg">{title}</h1>
             {sub && (
               <p data-slot="hero-sub" className="ez:m-0 ez:max-w-xl ez:text-site-body">
                 {sub}
@@ -212,7 +212,7 @@ export function Story({ data }: SectionProps<"testimonial">) {
         {review ? (
           <figure className="ez:m-0 ez:grid ez:max-w-130 ez:gap-6 ez:lg:gap-7">
             {review.rating != null && <StarRow rating={review.rating} className="ez:text-muted" />}
-            <blockquote className="ez:m-0 ez:line-clamp-6 ez:font-display ez:text-site-heading ez:font-normal ez:leading-snug ez:lg:text-site-name">{review.body}</blockquote>
+            <blockquote className="ez:m-0 ez:line-clamp-6 ez:font-display ez:text-site-heading ez:lg:text-site-name">{review.body}</blockquote>
             {(review.name || review.date) && (
               <figcaption className="ez:flex ez:flex-wrap ez:gap-x-3 ez:text-site-body ez:text-muted">
                 {review.name && <span>{review.name}</span>}
@@ -262,7 +262,7 @@ function rowText(flip: boolean) {
   return cn("ez:min-w-0 ez:max-w-130", flip ? "ez:lg:pr-24" : "ez:lg:pl-24");
 }
 
-const rowName = "ez:m-0 ez:mb-6 ez:font-display ez:text-site-counter ez:font-normal ez:leading-tight ez:md:text-site-name";
+const rowName = "ez:m-0 ez:mb-6 ez:font-display ez:text-site-counter ez:md:text-site-name";
 
 function Small({ items, className }: { items: (string | null | undefined)[]; className?: string }) {
   const shown = items.filter((t): t is string => Boolean(t));
@@ -290,7 +290,7 @@ function RoomRow({ v, index, list, dates }: { v: RoomView; index: number; list?:
         <Photo src={v.image} alt={v.name} tone={index} sizes="(max-width: 1024px) 100vw, 800px" className={cn("ez:aspect-[3/2]", full && "ez:opacity-45")} />
       </NextLink>
       <div className={rowText(flip)}>
-        {v.sample && <span className="ez:mb-3 ez:block ez:text-site-small ez:tracking-widest ez:text-muted">{STAY_TITLE.sample}</span>}
+        {v.sample && <span className="ez:mb-3 ez:block ez:text-site-small ez:text-muted">{STAY_TITLE.sample}</span>}
         <Name className={cn(rowName, full ? "ez:text-muted" : "ez:text-fg")}>{v.name}</Name>
         {list ? (
           <>
@@ -450,7 +450,7 @@ function Clock({ label, value }: { label: string; value?: string | null }) {
   return (
     <div className="ez:grid ez:gap-1.5">
       <span className="ez:text-site-note ez:text-muted">{label}</span>
-      <span className="ez:font-body ez:text-site-figure-lg ez:font-normal ez:leading-none ez:tabular-nums ez:lg:text-site-page">{value || <Bar size="short" />}</span>
+      <span className="ez:font-body ez:text-site-figure-lg ez:tabular-nums ez:lg:text-site-page">{value || <Bar size="short" />}</span>
     </div>
   );
 }
@@ -579,7 +579,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
       <div className="ez:mt-6 ez:flex ez:flex-wrap ez:items-center ez:justify-center ez:gap-x-4.5 ez:gap-y-2 ez:lg:mt-10">
         {items.length ? (
           <>
-            {data.average != null && <span className="ez:font-body ez:text-site-figure-lg ez:font-normal ez:leading-none ez:tabular-nums ez:lg:text-site-page">{data.average.toFixed(1)}</span>}
+            {data.average != null && <span className="ez:font-body ez:text-site-figure-lg ez:tabular-nums ez:lg:text-site-page">{data.average.toFixed(1)}</span>}
             {data.average != null && <StarRow rating={data.average} className="ez:text-muted" />}
             {data.count != null && <span className="ez:text-site-body ez:text-muted ez:tabular-nums">{`${STAY_TITLE.reviews} ${data.count}`}</span>}
           </>
@@ -643,14 +643,14 @@ export function Footer({ storeName, phone, hours, legal, stay, guide, account, t
   return (
     <footer data-slot="site-footer" data-variant="editorial" className={cn(line, "ez:border-t ez:text-fg")}>
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-16 ez:pb-10 ez:lg:pt-28 ez:lg:pb-14">
-        <p className="ez:m-0 ez:mb-12 ez:font-display ez:text-site-name ez:font-normal ez:leading-none ez:wrap-break-word ez:md:text-site-display ez:lg:mb-22 ez:lg:text-site-hero">{storeName}</p>
+        <p className="ez:m-0 ez:mb-12 ez:font-display ez:text-site-name ez:wrap-break-word ez:md:text-site-display ez:lg:mb-22 ez:lg:text-site-hero">{storeName}</p>
         <div className="ez:grid ez:grid-cols-2 ez:gap-x-gutter ez:gap-y-10 ez:pb-12 ez:md:grid-cols-[7fr_5fr_5fr_5fr] ez:lg:pb-18">
           <div className="ez:col-span-2 ez:grid ez:content-start ez:gap-4 ez:md:col-span-1 ez:lg:gap-5">
             <span className="ez:text-site-note ez:text-muted">{STAY_TITLE.center}</span>
             {(phone || hours) && (
               <div className="ez:grid ez:gap-2.5">
                 {phone && (
-                  <a href={`tel:${phone}`} className={cn("ez:font-body ez:text-site-counter ez:font-normal ez:leading-tight ez:text-fg ez:no-underline ez:tabular-nums ez:lg:text-site-name", focusRing)}>
+                  <a href={`tel:${phone}`} className={cn("ez:font-body ez:text-site-counter ez:text-fg ez:no-underline ez:tabular-nums ez:lg:text-site-name", focusRing)}>
                     {phone}
                   </a>
                 )}
@@ -684,7 +684,7 @@ export function Footer({ storeName, phone, hours, legal, stay, guide, account, t
 
 function Crumbs({ items }: { items: StayListProps["crumbs"] }) {
   return (
-    <nav aria-label="현재 위치" className="ez:flex ez:flex-wrap ez:items-center ez:justify-center ez:gap-x-2.5 ez:text-site-note ez:tracking-wide ez:text-muted">
+    <nav aria-label="현재 위치" className="ez:flex ez:flex-wrap ez:items-center ez:justify-center ez:gap-x-2.5 ez:text-site-note ez:text-muted">
       {items.map((c, i) => (
         <span key={c.href} className="ez:flex ez:items-center ez:gap-x-2.5">
           {i > 0 && <span aria-hidden="true">/</span>}
@@ -800,7 +800,7 @@ export function List({ title, count, crumbs, search, rooms, peak }: StayListProp
     <div data-slot="stay-rooms" className="ez:grid ez:grid-cols-1 ez:pb-8 ez:text-fg ez:lg:pb-16">
       <div className="ez:grid ez:justify-items-center ez:pt-8 ez:text-center ez:lg:pt-18">
         <Crumbs items={crumbs} />
-        <h1 className="ez:m-0 ez:mt-5 ez:font-display ez:text-site-page-sm ez:font-normal ez:leading-tight ez:lg:mt-7 ez:lg:text-site-display-md">
+        <h1 className="ez:m-0 ez:mt-5 ez:font-display ez:text-site-page-sm ez:lg:mt-7 ez:lg:text-site-display-md">
           {title}
           <span className="ez:ml-3 ez:align-super ez:font-body ez:text-site-body ez:font-normal ez:text-muted ez:tabular-nums">{count}</span>
         </h1>

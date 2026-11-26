@@ -19,7 +19,7 @@ import type { ClassFooterProps, ClassHeaderProps, ClassListProps, SessionView } 
 
 const CARD_SIZES = "(max-width: 1024px) 50vw, 420px";
 
-const sectionTitle = "ez:m-0 ez:text-site-section ez:font-normal ez:tracking-tight ez:text-fg";
+const sectionTitle = "ez:m-0 ez:text-site-section ez:text-fg";
 
 const moreLink = cn("ez:inline-flex ez:items-center ez:gap-2 ez:text-site-lead ez:font-normal ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4", focusRing);
 
@@ -46,7 +46,7 @@ export function Header({ name, logoUrl, nav, links }: ClassHeaderProps) {
   return (
     <header data-slot="site-header" data-variant="showroom" className="ez:bg-transparent">
       <div className="ez:mx-auto ez:grid ez:min-h-16 ez:max-w-wrap ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-6 ez:px-page ez:lg:min-h-19 ez:lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
-        <NextLink href="/" className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-heading ez:font-normal ez:tracking-tight ez:text-fg ez:no-underline", focusRing)}>
+        <NextLink href="/" className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-heading ez:text-fg ez:no-underline", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         <nav aria-label="주요 메뉴" className="ez:flex ez:min-w-0 ez:justify-center ez:gap-6.5 ez:overflow-hidden ez:whitespace-nowrap ez:max-lg:hidden">
@@ -94,7 +94,7 @@ export function Footer({ storeName, phone, hours, legal, classes, guide, account
               <span className="ez:text-site-small ez:font-normal ez:text-muted">{CLASS_TITLE.center}</span>
               <div className="ez:grid ez:gap-1.5">
                 {phone ? (
-                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-section ez:font-normal ez:tracking-tight ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
+                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-section ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
                     {phone}
                   </a>
                 ) : (
@@ -116,7 +116,7 @@ export function Footer({ storeName, phone, hours, legal, classes, guide, account
           </div>
           <p
             aria-hidden="true"
-            className="ez:m-0 ez:mt-10 ez:truncate ez:text-center ez:text-site-name ez:leading-none ez:font-normal ez:tracking-tighter ez:text-site-faint ez:md:mt-12 ez:md:text-site-display-lg ez:lg:text-site-hero"
+            className="ez:m-0 ez:mt-10 ez:truncate ez:text-center ez:text-site-name ez:text-site-faint ez:md:mt-12 ez:md:text-site-display-lg ez:lg:text-site-hero"
           >
             {storeName}
           </p>
@@ -135,7 +135,7 @@ function NextTile({ session }: { session: Session }) {
       <Photo src={v.image} alt={v.name} sizes="(max-width: 1024px) 60vw, 280px" className="ez:aspect-square ez:self-start ez:rounded-sm ez:bg-surface" />
       <span className="ez:flex ez:min-w-0 ez:flex-col ez:pt-1.5">
         <span className="ez:text-site-small ez:text-muted">{CLASS_TITLE.nextCohort}</span>
-        <span className="ez:mt-2.5 ez:text-site-heading ez:font-normal ez:tracking-tight ez:tabular-nums">
+        <span className="ez:mt-2.5 ez:text-site-heading ez:tabular-nums">
           {when(v)} {v.time}
         </span>
         <span className="ez:mt-2 ez:line-clamp-2 ez:text-site-item ez:font-normal">{v.name}</span>
@@ -194,7 +194,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
       <div className={cn("ez:flex ez:min-h-0 ez:min-w-0 ez:flex-col ez:gap-6 ez:rounded-lg ez:bg-surface-alt ez:p-7 ez:md:px-10 ez:md:pt-9 ez:md:pb-8", !side && "ez:md:col-span-2 ez:lg:col-span-1 ez:lg:row-span-2")}>
         <div className="ez:grid ez:gap-3.5">
           {context.storeName ? (
-            <p className="ez:m-0 ez:text-site-name ez:leading-none ez:font-normal ez:tracking-tight ez:break-keep ez:text-fg ez:lg:text-site-display-md">{context.storeName}</p>
+            <p className="ez:m-0 ez:text-site-name ez:break-keep ez:text-fg ez:lg:text-site-display-md">{context.storeName}</p>
           ) : (
             <span className="ez:text-site-name ez:lg:text-site-display-md">
               <Bar size="long" strong />
@@ -600,7 +600,7 @@ export function List({ view, title, count, crumbs, tabs, sorts, classes, session
     <div data-slot="class-catalog" data-view={view} className="ez:grid ez:grid-cols-1 ez:text-fg">
       <Crumbs items={crumbs} />
       <div className="ez:mt-4 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3 ez:gap-y-1">
-        <h1 className="ez:m-0 ez:text-site-page-sm ez:font-normal ez:tracking-tight ez:text-fg ez:md:text-site-figure-lg">{title}</h1>
+        <h1 className="ez:m-0 ez:text-site-page-sm ez:text-fg ez:md:text-site-figure-lg">{title}</h1>
         {count ? <span className="ez:text-site-item ez:font-normal ez:text-muted ez:tabular-nums">{count}</span> : null}
       </div>
       {search && <div className="ez:mt-6">{search}</div>}

@@ -37,3 +37,24 @@ describe("home type steps", () => {
     expect(classes.filter((name) => name.includes("font-display") && /tabular-nums|text-site-figure/.test(name))).toEqual([]);
   });
 });
+
+describe("site type steps own tracking and light weights", () => {
+  const files = ["src/sections", "src/blocks", "src/components", "src/details", "src/utils"].flatMap((dir) =>
+    readdirSync(dir, { recursive: true, encoding: "utf8" })
+      .filter((file) => /\.tsx?$/.test(file) && !file.includes(".stories."))
+      .map((file) => join(dir, file)),
+  );
+
+  it.each(files)("%s sets no tracking or light weight over the steps", (file) => {
+    expect(readFileSync(file, "utf8").match(/ez:(?:[a-z0-9-]+:)*(?:tracking-\S+|font-(?:extra)?light)\b/g) ?? []).toEqual([]);
+  });
+
+  it("keeps large titles balanced and in the title weight", () => {
+    const future = readFileSync("src/styles/future.css", "utf8");
+    const legacy = readFileSync("src/styles/legacy.css", "utf8");
+    expect(future).not.toMatch(/font-weight: (?:200|300);/);
+    expect(future.match(/text-wrap: balance;/g)).toHaveLength(2);
+    expect(legacy).toMatch(/\[class\*="text-site-display"\][^{]*\[class\*="text-site-name"\]\):not\(\[class\*="line-clamp"\]\) \{\s+text-wrap: balance;/);
+    expect(legacy).not.toMatch(/font-weight: (?:200|300);/);
+  });
+});

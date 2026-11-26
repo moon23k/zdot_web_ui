@@ -31,7 +31,7 @@ const panel = "ez:fx-round-md ez:overflow-hidden ez:border ez:border-solid";
 
 const pill = "ez:rounded-full";
 
-const title = "ez:m-0 ez:text-site-section ez:font-extralight ez:tracking-tight ez:text-fg ez:lg:text-site-page";
+const title = "ez:m-0 ez:text-site-section ez:text-fg ez:lg:text-site-page";
 
 const more = cn("ez:inline-flex ez:shrink-0 ez:items-center ez:gap-1.5 ez:text-site-small ez:text-site-off ez:no-underline ez:hover:text-fg", focusRing);
 
@@ -80,8 +80,8 @@ function Card({ product, shelf, eager, sizes = CARD_SIZES }: { product: ProductS
         )}
       </span>
       <span className="ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:items-baseline ez:gap-x-3 ez:gap-y-1 ez:px-0.5 ez:pt-4">
-        <span className={cn("ez:truncate ez:text-site-item ez:font-light ez:underline-offset-4 ez:group-hover:underline", ink)}>{v.name}</span>
-        <span className={cn("ez:text-site-body ez:font-light ez:tabular-nums ez:whitespace-nowrap", ink)}>{v.price}</span>
+        <span className={cn("ez:truncate ez:text-site-item ez:underline-offset-4 ez:group-hover:underline", ink)}>{v.name}</span>
+        <span className={cn("ez:text-site-body ez:tabular-nums ez:whitespace-nowrap", ink)}>{v.price}</span>
         {(v.rate > 0 || v.list || label) && (
           <span className="ez:col-span-2 ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:text-site-small ez:tabular-nums">
             <span className="ez:flex ez:items-baseline ez:gap-2">
@@ -109,7 +109,7 @@ function BlankCard({ ratio }: { ratio: string }) {
       </span>
       <span className="ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:items-baseline ez:gap-x-3 ez:px-0.5 ez:pt-4 ez:text-site-item">
         <Bar />
-        <BlankPrice className="ez:text-site-body ez:font-light ez:text-muted" />
+        <BlankPrice className="ez:text-site-body ez:text-muted" />
       </span>
     </div>
   );
@@ -142,7 +142,7 @@ export function Header({ name, logoUrl, cartCount, nav, links }: ShopHeaderProps
   return (
     <header data-slot="site-header" data-variant="float" className="ez:bg-surface ez:text-fg">
       <div className={cn(wrap, "ez:flex ez:h-16 ez:items-center ez:gap-6 ez:lg:h-22 ez:lg:gap-0")}>
-        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:font-normal ez:text-fg ez:no-underline ez:lg:w-51 ez:lg:shrink-0", focusRing)}>
+        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:text-fg ez:no-underline ez:lg:w-51 ez:lg:shrink-0", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         <nav aria-label="주요 메뉴" className="ez:flex ez:min-w-0 ez:gap-9 ez:overflow-hidden ez:whitespace-nowrap ez:max-lg:hidden">
@@ -209,7 +209,7 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
               <div className="ez:grid ez:gap-1">
                 <span className="ez:text-site-small ez:text-muted">고객센터</span>
                 {phone && (
-                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-heading ez:font-light ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
+                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-heading ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
                     {phone}
                   </a>
                 )}
@@ -242,7 +242,7 @@ function HeroFloat({ product, delivery }: { product: HeroProduct; delivery: stri
   const rate = !product.sold_out && product.list_price != null && product.sale_price != null ? discountRate(product.list_price, product.sale_price) : 0;
   return (
     <NextLink href={product.href ?? `/products/${product.id}`} className={cn(floatBox, "ez:group", focusRing)}>
-      <span className="ez:block ez:truncate ez:text-site-heading ez:font-light ez:underline-offset-4 ez:group-hover:underline">{product.name}</span>
+      <span className="ez:block ez:truncate ez:text-site-heading ez:underline-offset-4 ez:group-hover:underline">{product.name}</span>
       <span className="ez:mt-3 ez:grid">
         {sale != null && (
           <span className={floatRow}>
@@ -454,7 +454,7 @@ function Review({ item, product }: { item: ReviewItem; product?: string }) {
         <span className="ez:sr-only">별점 </span>
         {item.rating.toFixed(1)}
       </span>
-      <p className="ez:m-0 ez:mt-4 ez:line-clamp-4 ez:min-h-[4lh] ez:text-site-item ez:leading-relaxed ez:font-light ez:text-pretty ez:text-fg">{item.body}</p>
+      <p className="ez:m-0 ez:mt-4 ez:line-clamp-4 ez:min-h-[4lh] ez:text-site-item ez:leading-relaxed ez:text-pretty ez:text-fg">{item.body}</p>
       <span className="ez:mt-5 ez:truncate ez:text-site-small ez:text-site-off">{[item.name, product].filter(Boolean).join(" · ")}</span>
     </article>
   );
@@ -508,7 +508,7 @@ function GuideBody({ cell }: { cell: GuideCell }) {
     <>
       <span className="ez:block ez:text-site-small ez:text-site-off">{cell.label}</span>
       {cell.value ? (
-        <span className="ez:mt-3 ez:block ez:text-site-heading ez:font-light ez:tabular-nums ez:text-fg">{cell.value}</span>
+        <span className="ez:mt-3 ez:block ez:text-site-heading ez:tabular-nums ez:text-fg">{cell.value}</span>
       ) : (
         <span className="ez:mt-3 ez:block ez:text-site-heading">
           <Bar />
@@ -563,7 +563,7 @@ function Promo({ promo, single }: { promo: CatalogPromo; single: boolean }) {
           <Photo src={promo.image} alt="" sizes="(max-width: 1024px) 100vw, 860px" tone={2} className="ez:absolute ez:inset-0 ez:aspect-auto ez:h-full ez:rounded-none" />
         </span>
         <span className="ez:fx-glass ez:mt-3 ez:grid ez:gap-5 ez:rounded-lg ez:p-6 ez:sm:absolute ez:sm:bottom-6 ez:sm:left-6 ez:sm:mt-0 ez:sm:max-w-90 ez:md:p-7">
-          <span className="ez:text-site-heading ez:leading-tight ez:font-light ez:text-balance">{promo.title}</span>
+          <span className="ez:text-site-heading ez:text-balance">{promo.title}</span>
           <span className="ez:inline-flex ez:items-center ez:gap-1.5 ez:text-site-body ez:group-hover:underline ez:underline-offset-4">
             {SHOP_TITLE.more}
             <Icon name="right" size="sm" />
@@ -631,7 +631,7 @@ export function List({ title: heading, count, crumbs, tabs, sorts, products, mor
     <div data-slot="catalog-view" data-variant="night" className="ez:grid ez:grid-cols-1 ez:text-fg">
       <Crumbs items={crumbs} />
       <div className="ez:mt-4 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3 ez:gap-y-1">
-        <h1 className="ez:m-0 ez:text-site-section ez:font-extralight ez:tracking-tight ez:text-fg ez:md:text-site-page">{heading}</h1>
+        <h1 className="ez:m-0 ez:text-site-section ez:text-fg ez:md:text-site-page">{heading}</h1>
         {count ? <span className="ez:text-site-body ez:text-site-off ez:tabular-nums">{count}</span> : null}
       </div>
       {search && <div className="ez:mt-6">{search}</div>}

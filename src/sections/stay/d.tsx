@@ -19,7 +19,7 @@ import type { StayFooterProps, StayHeaderProps, StayListProps, StaySearch } from
 
 const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:box-border ez:px-page";
 
-const h2 = "ez:m-0 ez:text-site-section ez:font-light ez:tracking-tight ez:text-fg ez:md:text-site-page";
+const h2 = "ez:m-0 ez:text-site-section ez:text-fg ez:md:text-site-page";
 
 const hair = "ez:border-0 ez:border-solid ez:border-hairline";
 
@@ -104,7 +104,7 @@ export function Footer({ storeName, phone, hours, legal, stay, guide, account, t
               <div className="ez:grid ez:gap-1">
                 <span className="ez:text-site-note ez:text-muted">{STAY_TITLE.center}</span>
                 {phone && (
-                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-heading ez:font-light ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
+                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-heading ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
                     {phone}
                   </a>
                 )}
@@ -211,7 +211,7 @@ function StayBox({ room, storeName }: { room: Room; storeName?: string }) {
   return (
     <div data-slot="hero-stay" className="ez:fx-glass ez:fx-round-md ez:relative ez:mt-3 ez:px-6 ez:pt-5.5 ez:pb-3 ez:text-fg ez:lg:absolute ez:lg:bottom-12 ez:lg:-left-18 ez:lg:mt-0 ez:lg:w-75">
       <span className="ez:text-site-small ez:text-muted">{STAY_TITLE.info}</span>
-      {storeName && <p className="ez:m-0 ez:mt-1 ez:truncate ez:text-site-heading ez:font-normal ez:text-fg">{storeName}</p>}
+      {storeName && <p className="ez:m-0 ez:mt-1 ez:truncate ez:text-site-heading ez:text-fg">{storeName}</p>}
       <dl className="ez:m-0 ez:mt-3.5 ez:text-site-body">
         {rows.map((r) => (
           <div key={r.label} className={cn(hair, "ez:flex ez:justify-between ez:gap-4 ez:border-t ez:py-2.5")}>
@@ -385,7 +385,7 @@ function ReviewCard({ item, room }: { item: ReviewItem; room?: string }) {
         <Icon name="star" size="sm" className="ez:fill-current ez:text-star" />
         {item.rating.toFixed(1)}
       </span>
-      <p className="ez:m-0 ez:mt-4.5 ez:line-clamp-4 ez:text-site-item ez:leading-relaxed ez:font-light ez:whitespace-pre-line ez:text-fg">{item.body}</p>
+      <p className="ez:m-0 ez:mt-4.5 ez:line-clamp-4 ez:text-site-item ez:leading-relaxed ez:whitespace-pre-line ez:text-fg">{item.body}</p>
       <span className="ez:mt-auto ez:truncate ez:pt-5.5 ez:text-site-small ez:text-site-off">{[item.name, room, item.date].filter(Boolean).join(" · ")}</span>
     </article>
   );
@@ -518,7 +518,7 @@ function RoomRow({ room, search, tone }: { room: Room; search: StaySearch; tone:
             {v.sample && <span>{STAY_TITLE.sample}</span>}
           </p>
         )}
-        <h2 className={cn("ez:m-0 ez:mb-2 ez:text-site-section ez:font-light ez:tracking-tight", full ? "ez:text-muted" : "ez:text-fg")}>{v.name}</h2>
+        <h2 className={cn("ez:m-0 ez:mb-2 ez:text-site-section", full ? "ez:text-muted" : "ez:text-fg")}>{v.name}</h2>
         {times && (
           <p className="ez:m-0 ez:flex ez:items-center ez:gap-2 ez:text-site-body ez:text-muted ez:tabular-nums">
             <Icon name="clock" size="sm" />
@@ -548,7 +548,7 @@ function RoomRow({ room, search, tone }: { room: Room; search: StaySearch; tone:
           {q && search.check_in && <p className="ez:m-0 ez:text-site-small ez:text-muted ez:tabular-nums">{[stayDates(search.check_in, search.check_out), q.nights].filter(Boolean).join(" · ")}</p>}
           <p className="ez:m-0 ez:flex ez:items-baseline ez:gap-1.5 ez:tabular-nums">
             {!q && unit && <span className="ez:text-site-small ez:text-muted">{unit}</span>}
-            <span className={cn("ez:text-site-heading ez:font-normal", full ? "ez:text-muted" : "ez:text-fg")}>{q ? q.price : amount}</span>
+            <span className={cn("ez:text-site-heading", full ? "ez:text-muted" : "ez:text-fg")}>{q ? q.price : amount}</span>
           </p>
           {note && <p className="ez:m-0 ez:text-site-small ez:text-muted">{note}</p>}
         </div>
@@ -653,7 +653,7 @@ export function List({ title, count, crumbs, search, rooms, peak, addOns, photo 
     <div data-slot="stay-rooms" data-variant="aurora" className="ez:grid ez:grid-cols-1 ez:pt-6 ez:text-fg">
       <Crumbs items={crumbs} />
       <div className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3 ez:gap-y-1 ez:pt-4">
-        <h1 className="ez:m-0 ez:text-site-section ez:font-light ez:tracking-tight ez:text-fg ez:md:text-site-page">{title}</h1>
+        <h1 className="ez:m-0 ez:text-site-section ez:text-fg ez:md:text-site-page">{title}</h1>
         {count ? <span className="ez:text-site-item ez:font-normal ez:text-muted ez:tabular-nums">{count}</span> : null}
       </div>
       <div data-slot="stay-search" className="ez:pt-8">

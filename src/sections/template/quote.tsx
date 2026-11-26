@@ -19,7 +19,7 @@ export function PriceTiers({ data }: SectionProps<"price_tiers">) {
           {(items.length ? items : [null, null, null]).map((it, i) => (
             <li key={i} className="ez:grid ez:grid-cols-[40px_1fr_auto] ez:items-baseline ez:gap-6 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:py-7 ez:lg:grid-cols-[56px_1fr_200px]">
               <span className={cn(numeralStep, "ez:text-site-heading ez:text-primary")}>{it ? String(i + 1).padStart(2, "0") : null}</span>
-              <span className="ez:text-site-heading ez:font-light ez:tracking-[-0.03em] ez:lg:text-site-logo">{it ? it.label : <Bar />}</span>
+              <span className="ez:text-site-heading ez:lg:text-site-logo">{it ? it.label : <Bar />}</span>
               <span className="ez:text-right ez:font-normal ez:tabular-nums">{it ? it.value : <BlankPrice />}</span>
             </li>
           ))}
@@ -58,9 +58,9 @@ export function PackageCards({ data }: SectionProps<"package_cards">) {
             <div className="ez:flex ez:flex-1 ez:flex-col ez:gap-6 ez:p-6 ez:lg:p-8">
               <span className="ez:text-site-heading">{p ? p.name : <Bar />}</span>
               {p ? (
-                <strong className="ez:text-site-figure-lg ez:font-light ez:tracking-[-0.03em] ez:tabular-nums">{p.price}</strong>
+                <strong className="ez:text-site-figure-lg ez:tabular-nums">{p.price}</strong>
               ) : (
-                <BlankPrice className="ez:text-site-figure-lg ez:font-light" />
+                <BlankPrice className="ez:text-site-figure-lg" />
               )}
               {p?.includes?.length ? (
                 <ul className="ez:m-0 ez:flex-1 ez:list-none ez:p-0">

@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { cn } from "../../utils/cn";
 
-const markName = "ez:font-body ez:text-site-heading ez:font-normal ez:normal-case ez:tracking-normal";
+const markName = "ez:font-body ez:text-site-heading ez:normal-case";
 
 function FitName({ name, className }: { name: string; className?: string }) {
   const ref = useRef<HTMLSpanElement>(null);

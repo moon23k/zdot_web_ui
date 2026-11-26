@@ -80,7 +80,7 @@ export function OAuthButtons({
   if (!title && !guestHref && !children) return buttons;
   const panel = (
     <section data-slot="login-panel" className="ez:mx-auto ez:grid ez:w-full ez:max-w-95 ez:gap-10 ez:pt-6 ez:text-fg ez:lg:pt-18">
-      {title && <h1 className="ez:m-0 ez:text-site-page ez:font-light ez:tracking-[-0.035em]">{title}</h1>}
+      {title && <h1 className="ez:m-0 ez:text-site-page">{title}</h1>}
       {buttons}
       {children}
       {guestHref && (

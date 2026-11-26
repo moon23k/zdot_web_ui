@@ -28,7 +28,7 @@ const cell = {
   area: "ez:min-w-0 ez:truncate ez:max-md:hidden ez:md:col-span-4",
 };
 
-const heading = "ez:m-0 ez:font-display ez:font-normal ez:text-fg";
+const heading = "ez:m-0 ez:font-display ez:text-fg";
 
 const plain = cn("ez:text-fg ez:no-underline ez:hover:text-muted", focusRing);
 
@@ -137,7 +137,7 @@ export function Work({ data, context }: SectionProps<"case_grid">) {
     <section data-slot="case-grid" data-blank={cases.length ? undefined : ""} className="ez:grid ez:gap-y-16 ez:text-fg ez:lg:grid-cols-12 ez:lg:gap-x-gutter">
       <div className={cn("ez:grid ez:min-w-0 ez:content-start ez:gap-16", aside ? "ez:lg:col-span-8" : "ez:lg:col-span-12")}>
         <div id={PORTFOLIO_ID.work} className="ez:grid ez:min-w-0 ez:content-start ez:gap-8">
-          <h2 className={cn(heading, "ez:flex ez:items-baseline ez:gap-1 ez:text-site-item")}>
+          <h2 className={cn(heading, "ez:flex ez:items-baseline ez:gap-1 ez:text-site-item ez:font-normal")}>
             {PORTFOLIO_TITLE.work}
             {cases.length > 0 && <span className="ez:font-body ez:text-site-small ez:font-normal ez:tabular-nums ez:text-muted">{cases.length}</span>}
           </h2>
@@ -148,7 +148,7 @@ export function Work({ data, context }: SectionProps<"case_grid">) {
           </ul>
         </div>
         <div className="ez:grid ez:min-w-0 ez:content-start">
-          <h3 className={cn(rule, heading, "ez:border-b ez:pb-4 ez:text-site-heading ez:leading-snug")}>{COLUMN.list}</h3>
+          <h3 className={cn(rule, heading, "ez:border-b ez:pb-4 ez:text-site-heading")}>{COLUMN.list}</h3>
           <div className={cn(rule, row, "ez:border-b ez:pt-4 ez:pb-3 ez:text-site-small ez:text-muted")}>
             <span className={cell.no}>{COLUMN.no}</span>
             <span className={cell.name}>{COLUMN.name}</span>

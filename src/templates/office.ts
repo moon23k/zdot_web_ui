@@ -6,7 +6,7 @@ export const office: TemplateDesign[] = [
     main: "office",
     letter: "a",
     name: "사례형",
-    look: { tone: "paper", radius: 0, font: "sans", shape: "square", kit: "off", section: 128, pad: 80 },
+    look: { tone: "paper", radius: 0, shape: "square", kit: "off", section: 128, pad: 80 },
     header: "editorial",
     skin: "editorial",
     home: [
@@ -21,7 +21,7 @@ export const office: TemplateDesign[] = [
     main: "office",
     letter: "b",
     name: "선언형",
-    look: { tone: "white", radius: 0, font: "sans", shape: "square", kit: "off", section: 128, pad: 80 },
+    look: { tone: "white", radius: 0, shape: "square", kit: "off", section: 128, pad: 80 },
     header: "catalog",
     skin: "catalog",
     home: [
@@ -37,7 +37,7 @@ export const office: TemplateDesign[] = [
     main: "office",
     letter: "d",
     name: "오로라 글래스",
-    look: { tone: "aurora", radius: 16, font: "sans", shape: "round", kit: "off", section: 128, pad: 48 },
+    look: { tone: "aurora", radius: 16, shape: "round", kit: "off", section: 128, pad: 48 },
     header: "aurora",
     skin: "aurora",
     home: [
@@ -54,7 +54,7 @@ export const office: TemplateDesign[] = [
     main: "office",
     letter: "e",
     name: "나이트 글로우",
-    look: { tone: "night", radius: 6, font: "sans", shape: "soft", kit: "off", section: 128, pad: 48 },
+    look: { tone: "night", radius: 6, shape: "soft", kit: "off", section: 128, pad: 48 },
     header: "night",
     skin: "night",
     home: [

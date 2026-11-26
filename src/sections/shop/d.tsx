@@ -20,7 +20,7 @@ const CARD_SIZES = "(max-width: 1024px) 50vw, 330px";
 
 const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:box-border ez:px-page";
 
-const sectionTitle = "ez:m-0 ez:text-site-section ez:font-light ez:tracking-tight ez:text-fg ez:lg:text-site-display-md ez:lg:font-light";
+const sectionTitle = "ez:m-0 ez:text-site-section ez:text-fg ez:lg:text-site-display-md";
 
 const button = "ez:inline-flex ez:shrink-0 ez:items-center ez:justify-center ez:gap-2 ez:rounded-full ez:text-site-body ez:font-medium ez:whitespace-nowrap ez:no-underline";
 
@@ -64,7 +64,7 @@ export function Header({ name, logoUrl, cartCount, nav, links }: ShopHeaderProps
     <header data-slot="site-header" data-variant="aurora" className="ez:relative ez:z-10 ez:bg-transparent ez:pt-3 ez:lg:pt-6">
       <div className={wrap}>
         <div className="ez:fx-glass ez:grid ez:h-14 ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-6 ez:rounded-full ez:pr-2 ez:pl-5 ez:lg:h-17 ez:lg:grid-cols-[auto_minmax(0,1fr)_auto] ez:lg:gap-9 ez:lg:pr-3 ez:lg:pl-8">
-          <NextLink href="/" className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-item ez:font-normal ez:tracking-tight ez:text-fg ez:no-underline", focusRing)}>
+          <NextLink href="/" className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-item ez:font-normal ez:text-fg ez:no-underline", focusRing)}>
             <SiteLogo name={name} src={logoUrl} />
           </NextLink>
           <nav aria-label="주요 메뉴" className="ez:flex ez:min-w-0 ez:justify-end ez:gap-9 ez:overflow-hidden ez:whitespace-nowrap ez:max-lg:hidden">
@@ -140,7 +140,7 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
       <div className={cn(wrap, "ez:pt-16 ez:pb-12 ez:lg:pt-18 ez:lg:pb-16")}>
         <div className="ez:grid ez:grid-cols-2 ez:gap-x-6 ez:gap-y-10 ez:md:grid-cols-4 ez:lg:grid-cols-[6fr_3fr_3fr_3fr_3fr]">
           <div className="ez:col-span-2 ez:grid ez:content-start ez:gap-3 ez:md:col-span-4 ez:lg:col-span-1">
-            <p className="ez:m-0 ez:text-site-item ez:font-normal ez:tracking-tight ez:text-fg">{storeName}</p>
+            <p className="ez:m-0 ez:text-site-item ez:font-normal ez:text-fg">{storeName}</p>
             {(phone || hours) && (
               <div className="ez:grid ez:gap-0.5 ez:text-site-note ez:text-muted">
                 <span>고객센터</span>
@@ -179,7 +179,7 @@ function HeroFloat({ product, shipping }: { product: HeroProduct; shipping: Sect
   const fee = shipping ? (shipping.base_fee ? won(shipping.base_fee) : "무료") : null;
   return (
     <NextLink href={product.href ?? `/products/${product.id}`} data-slot="hero-product" className={cn("ez:fx-glass ez:group", floatBox, focusRing)}>
-      <span className="ez:block ez:truncate ez:text-site-heading ez:font-normal ez:tracking-tight ez:underline-offset-4 ez:group-hover:underline">{product.name}</span>
+      <span className="ez:block ez:truncate ez:text-site-heading ez:underline-offset-4 ez:group-hover:underline">{product.name}</span>
       <span className="ez:mt-1 ez:mb-3.5 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2 ez:text-site-body ez:tabular-nums">
         {rate > 0 && <span className="ez:font-medium">{rate}%</span>}
         {sale != null && <span>{won(sale)}</span>}
@@ -435,7 +435,7 @@ function ReviewCard({ item, product }: { item: ReviewItem; product?: ProductSumm
         </svg>
         {item.rating.toFixed(1)}
       </span>
-      <p className="ez:m-0 ez:mt-4.5 ez:line-clamp-4 ez:text-site-item ez:leading-relaxed ez:font-light ez:text-pretty ez:text-fg">{item.body}</p>
+      <p className="ez:m-0 ez:mt-4.5 ez:line-clamp-4 ez:text-site-item ez:leading-relaxed ez:text-pretty ez:text-fg">{item.body}</p>
       <span className="ez:mt-auto ez:truncate ez:pt-5.5 ez:text-site-small ez:text-site-off">{[item.name, product?.name].filter(Boolean).join(" · ")}</span>
     </article>
   );
@@ -485,7 +485,7 @@ function GuideBody({ cell }: { cell: GuideCell }) {
     <>
       <span className="ez:text-site-note ez:text-muted">{cell.label}</span>
       {cell.value ? (
-        <span className="ez:text-site-heading ez:font-light ez:tabular-nums">{cell.value}</span>
+        <span className="ez:text-site-heading ez:tabular-nums">{cell.value}</span>
       ) : (
         <span className="ez:text-site-heading">
           <Bar />
@@ -541,7 +541,7 @@ function Promo({ promo, single }: { promo: CatalogPromo; single: boolean }) {
         <Photo src={promo.image} alt="" sizes="(max-width: 1024px) 100vw, 680px" tone={2} className="ez:absolute ez:inset-0 ez:aspect-auto ez:h-full ez:rounded-none" />
       </span>
       <span className="ez:fx-glass ez:mt-3 ez:grid ez:gap-4 ez:fx-round-md ez:p-6 ez:sm:absolute ez:sm:right-5 ez:sm:bottom-5 ez:sm:left-5 ez:sm:mt-0 ez:sm:max-w-90">
-        <span className="ez:text-site-heading ez:font-light ez:tracking-tight ez:text-balance">{promo.title}</span>
+        <span className="ez:text-site-heading ez:text-balance">{promo.title}</span>
         <span className="ez:inline-flex ez:items-center ez:gap-2 ez:text-site-body ez:underline-offset-4 ez:group-hover:underline">
           {SHOP_TITLE.more}
           <Icon name="right" size="sm" />

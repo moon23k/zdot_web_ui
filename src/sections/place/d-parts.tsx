@@ -16,7 +16,7 @@ export const glass = "ez:fx-glass";
 
 export const hair = "ez:border-0 ez:border-solid ez:border-hairline";
 
-export const heading = "ez:m-0 ez:font-display ez:text-site-page-sm ez:font-light ez:tracking-tight ez:text-fg ez:lg:text-site-display-md";
+export const heading = "ez:m-0 ez:font-display ez:text-site-page-sm ez:text-fg ez:lg:text-site-display-md";
 
 export const wash = "ez:fx-aurora-wash ez:fx-round-xl ez:p-4 ez:lg:p-10";
 
@@ -197,7 +197,7 @@ export function AuroraIntro({ data, title, id }: SectionProps<"intro"> & { title
       <div className="ez:grid ez:items-center ez:gap-10 ez:lg:grid-cols-12 ez:lg:gap-x-6">
         <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-6 ez:lg:col-span-5 ez:lg:pr-18">
           {first ? (
-            <p className="ez:m-0 ez:whitespace-pre-line ez:text-site-heading ez:font-light ez:leading-normal ez:lg:text-site-page-sm">{first}</p>
+            <p className="ez:m-0 ez:whitespace-pre-line ez:text-site-heading ez:lg:text-site-page-sm">{first}</p>
           ) : (
             <>
               <Lines />

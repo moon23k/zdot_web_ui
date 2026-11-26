@@ -31,7 +31,7 @@ const pill = cn(
 
 const moreLink = cn("ez:inline-flex ez:items-center ez:gap-2 ez:text-site-lead ez:font-normal ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4", focusRing);
 
-const sectionTitle = "ez:m-0 ez:text-site-section ez:font-normal ez:tracking-tight ez:text-fg";
+const sectionTitle = "ez:m-0 ez:text-site-section ez:text-fg";
 
 function Head({ title, aside, href }: { title: string; aside?: ReactNode; href?: string }) {
   return (
@@ -54,7 +54,7 @@ export function Header({ name, logoUrl, nav, links }: StayHeaderProps) {
   return (
     <header data-slot="site-header" data-variant="showroom" className="ez:bg-transparent">
       <div className="ez:mx-auto ez:grid ez:min-h-16 ez:max-w-wrap ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-6 ez:px-page ez:lg:min-h-19 ez:lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
-        <NextLink href="/" className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-heading ez:font-normal ez:tracking-tight ez:text-fg ez:no-underline", focusRing)}>
+        <NextLink href="/" className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-heading ez:text-fg ez:no-underline", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         <nav aria-label="주요 메뉴" className="ez:flex ez:min-w-0 ez:justify-center ez:gap-6.5 ez:overflow-hidden ez:whitespace-nowrap ez:max-lg:hidden">
@@ -101,7 +101,7 @@ export function Footer({ storeName, phone, hours, legal, stay, guide, account, t
               {(phone || hours) && (
                 <div className="ez:grid ez:gap-1.5">
                   {phone && (
-                    <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-section ez:font-normal ez:tracking-tight ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
+                    <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-section ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
                       {phone}
                     </a>
                   )}
@@ -120,7 +120,7 @@ export function Footer({ storeName, phone, hours, legal, stay, guide, account, t
           </div>
           <p
             aria-hidden="true"
-            className="ez:m-0 ez:mt-10 ez:truncate ez:text-center ez:text-site-name ez:leading-none ez:font-normal ez:tracking-tighter ez:text-site-faint ez:md:mt-12 ez:md:text-site-display-lg ez:lg:text-site-hero"
+            className="ez:m-0 ez:mt-10 ez:truncate ez:text-center ez:text-site-name ez:text-site-faint ez:md:mt-12 ez:md:text-site-display-lg ez:lg:text-site-hero"
           >
             {storeName}
           </p>
@@ -284,7 +284,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
       <div className={cn("ez:flex ez:min-h-0 ez:min-w-0 ez:flex-col ez:gap-6 ez:rounded-lg ez:bg-surface-alt ez:p-6 ez:md:px-8 ez:md:pt-8 ez:md:pb-7", !side && "ez:md:col-span-2 ez:lg:col-span-1 ez:lg:row-span-2")}>
         <div className="ez:grid ez:gap-3.5">
           {context.storeName ? (
-            <p className="ez:m-0 ez:text-site-name ez:leading-none ez:font-normal ez:tracking-tight ez:break-keep ez:text-fg ez:lg:text-site-display-md">{context.storeName}</p>
+            <p className="ez:m-0 ez:text-site-name ez:break-keep ez:text-fg ez:lg:text-site-display-md">{context.storeName}</p>
           ) : (
             <span className="ez:text-site-name ez:lg:text-site-display-md">
               <Bar size="long" strong />
@@ -525,7 +525,7 @@ function TimeTile({ label, value, className }: { label: string; value?: string |
     <div className={cn(infoTile, "ez:flex ez:min-h-35.5 ez:flex-col ez:justify-between ez:gap-6", className)}>
       <span className="ez:text-site-lead ez:text-muted">{label}</span>
       {value ? (
-        <span className="ez:text-site-figure-lg ez:leading-none ez:font-normal ez:tracking-tight ez:text-fg ez:tabular-nums">{value}</span>
+        <span className="ez:text-site-figure-lg ez:leading-none ez:font-normal ez:text-fg ez:tabular-nums">{value}</span>
       ) : (
         <span className="ez:text-site-item">
           <Bar size="short" />
@@ -751,7 +751,7 @@ function AddOnTile({ items, photo }: { items: AddOnView[]; photo?: string | null
     <section data-slot="stay-add-ons" className="ez:grid ez:gap-3 ez:text-fg ez:md:col-span-2 ez:lg:relative ez:lg:flex ez:lg:min-h-120 ez:lg:items-end ez:lg:p-6">
       <Photo src={photo} alt="" sizes="(max-width: 1024px) 100vw, 1280px" tone={2} className="ez:aspect-[16/9] ez:rounded-md ez:lg:absolute ez:lg:inset-0 ez:lg:aspect-auto ez:lg:h-full" />
       <div className="ez:relative ez:grid ez:gap-4.5 ez:rounded-md ez:bg-surface-alt ez:p-6 ez:md:p-7 ez:lg:w-110 ez:lg:bg-surface">
-        <h2 className="ez:m-0 ez:text-site-heading ez:font-normal ez:tracking-tight ez:text-fg">{STAY_TITLE.addOns}</h2>
+        <h2 className="ez:m-0 ez:text-site-heading ez:text-fg">{STAY_TITLE.addOns}</h2>
         <ul className="ez:m-0 ez:grid ez:list-none ez:gap-1.5 ez:p-0">
           {items.map((a, i) => (
             <li key={`${a.name}-${i}`} className="ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-4 ez:rounded-sm ez:bg-surface ez:px-4.5 ez:py-3 ez:lg:bg-surface-alt">
@@ -814,7 +814,7 @@ export function List({ title, count, crumbs, search, rooms, peak, addOns, photo 
     <div data-slot="stay-rooms" className="ez:grid ez:grid-cols-1 ez:text-fg">
       <Crumbs items={crumbs} />
       <div className="ez:mt-4 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3 ez:gap-y-1">
-        <h1 className="ez:m-0 ez:text-site-page-sm ez:font-normal ez:tracking-tight ez:text-fg ez:md:text-site-figure-lg">{title}</h1>
+        <h1 className="ez:m-0 ez:text-site-page-sm ez:text-fg ez:md:text-site-figure-lg">{title}</h1>
         {count ? <span className="ez:text-site-item ez:font-normal ez:text-muted ez:tabular-nums">{count}</span> : null}
       </div>
       <StayForm

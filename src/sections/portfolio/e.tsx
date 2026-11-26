@@ -57,7 +57,7 @@ function Item({ item, index }: { item: Case; index: number }) {
       <NextLink href={caseHref(item.id)} className={cn(row, "ez:group ez:text-site-off ez:no-underline", focusRing)}>
         <span className="ez:text-site-note ez:tabular-nums">{String(index + 1).padStart(2, "0")}</span>
         <span className="ez:grid ez:min-w-0 ez:gap-1">
-          <span className={cn("ez:flex ez:min-w-0 ez:items-center ez:gap-4 ez:font-display ez:text-site-heading ez:font-extralight ez:tracking-tight ez:md:text-site-title", first ? "ez:text-fg" : "ez:text-fg/55 ez:group-hover:text-fg")}>
+          <span className={cn("ez:flex ez:min-w-0 ez:items-center ez:gap-4 ez:font-display ez:text-site-heading ez:md:text-site-title", first ? "ez:text-fg" : "ez:text-fg/55 ez:group-hover:text-fg")}>
             {first && <span aria-hidden="true" className="ez:fx-glow ez:size-2 ez:shrink-0 ez:rounded-full ez:bg-primary" />}
             <span className="ez:min-w-0 ez:truncate">{item.title}</span>
           </span>

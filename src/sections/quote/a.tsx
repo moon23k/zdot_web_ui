@@ -18,7 +18,7 @@ const rule = "ez:border-0 ez:border-solid ez:border-site-line";
 
 const ruled = cn(rule, "ez:border-t ez:pt-section");
 
-const heading = "ez:m-0 ez:font-display ez:text-site-section ez:font-normal ez:text-fg ez:lg:text-site-figure-lg";
+const heading = "ez:m-0 ez:font-display ez:text-site-section ez:text-fg ez:lg:text-site-figure-lg";
 
 const split = "ez:grid ez:gap-8 ez:text-fg ez:lg:grid-cols-[minmax(0,5fr)_minmax(0,10.5fr)] ez:lg:gap-10";
 
@@ -171,9 +171,9 @@ export function Hero({ data, context }: SectionProps<"hero">) {
             {eyebrow && <p className="ez:m-0 ez:text-site-small ez:text-muted ez:tabular-nums">{eyebrow}</p>}
             {title ? (
               <div className="ez:grid">
-                <h1 className="ez:m-0 ez:font-display ez:text-site-name ez:font-normal ez:text-fg ez:md:text-site-display-sm ez:xl:text-site-display">{title}</h1>
+                <h1 className="ez:m-0 ez:font-display ez:text-site-name ez:text-fg ez:md:text-site-display-sm ez:xl:text-site-display">{title}</h1>
                 {data.sub && (
-                  <p data-slot="hero-sub" className="ez:m-0 ez:font-display ez:text-site-name ez:font-normal ez:text-muted ez:md:text-site-display-sm ez:xl:text-site-display">
+                  <p data-slot="hero-sub" className="ez:m-0 ez:font-display ez:text-site-name ez:text-muted ez:md:text-site-display-sm ez:xl:text-site-display">
                     {data.sub}
                   </p>
                 )}
@@ -181,7 +181,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
             ) : blank ? (
               <Bar size="long" className="ez:text-site-display" />
             ) : (
-              <p className="ez:m-0 ez:font-display ez:text-site-name ez:font-normal ez:text-fg ez:md:text-site-display-sm ez:xl:text-site-display">{context.storeName}</p>
+              <p className="ez:m-0 ez:font-display ez:text-site-name ez:text-fg ez:md:text-site-display-sm ez:xl:text-site-display">{context.storeName}</p>
             )}
           </div>
           {blank ? (
@@ -245,7 +245,7 @@ function Record({ c }: { c: Case | null }) {
         <Pic ratio={3 / 2} />
       )}
       <div className="ez:flex ez:min-w-0 ez:flex-col ez:items-start ez:gap-7">
-        {view ? <h3 className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:text-fg ez:md:text-site-title">{view.title}</h3> : <Bar size="long" className="ez:text-site-heading ez:md:text-site-title" />}
+        {view ? <h3 className="ez:m-0 ez:font-display ez:text-site-heading ez:text-fg ez:md:text-site-title">{view.title}</h3> : <Bar size="long" className="ez:text-site-heading ez:md:text-site-title" />}
         <FactTable facts={view?.facts ?? []} blank={!view} />
         {view && (
           <NextLink href={view.href} aria-label={`${view.title} ${QUOTE_TITLE.view}`} className={cn(textLink, "ez:mt-auto ez:text-site-body", focusRing)}>
@@ -602,7 +602,7 @@ function ListRow({ c }: { c: Case }) {
         <Pic src={view.image} ratio={3 / 2} />
       </NextLink>
       <div className="ez:flex ez:min-w-0 ez:flex-col ez:items-start ez:gap-6">
-        <h2 className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:text-fg ez:md:text-site-title">{view.title}</h2>
+        <h2 className="ez:m-0 ez:font-display ez:text-site-heading ez:text-fg ez:md:text-site-title">{view.title}</h2>
         <FactTable facts={view.facts} className="ez:max-w-130" />
         <NextLink href={view.href} aria-label={`${view.title} ${QUOTE_TITLE.view}`} className={cn(textLink, "ez:mt-auto ez:text-site-body", focusRing)}>
           {QUOTE_TITLE.view}
@@ -616,7 +616,7 @@ function ListRow({ c }: { c: Case }) {
 export function List({ title, count, tabs, cases, request, storeName }: QuoteListProps) {
   return (
     <div data-slot="quote-cases" className="ez:grid ez:pt-8 ez:text-fg ez:lg:pt-16">
-      <h1 className="ez:m-0 ez:font-display ez:text-site-name ez:font-normal ez:text-fg ez:md:text-site-display-md">
+      <h1 className="ez:m-0 ez:font-display ez:text-site-name ez:text-fg ez:md:text-site-display-md">
         {title}
         <span className="ez:ml-3.5 ez:font-body ez:text-site-heading ez:text-muted ez:tabular-nums">{count}</span>
       </h1>

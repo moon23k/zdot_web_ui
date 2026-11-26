@@ -38,11 +38,11 @@ export function LineItem({
       {media}
       <div className="ez:grid ez:gap-0.5 ez:min-w-0">
         {href ? (
-          <NextLink href={href} className="ez:text-site-body ez:tracking-[-0.01em] ez:text-fg ez:no-underline ez:hover:underline">
+          <NextLink href={href} className="ez:text-site-body ez:text-fg ez:no-underline ez:hover:underline">
             {name}
           </NextLink>
         ) : (
-          <span className="ez:text-site-body ez:tracking-[-0.01em] ez:text-fg">{name}</span>
+          <span className="ez:text-site-body ez:text-fg">{name}</span>
         )}
         {option && <span className="ez:text-site-small ez:text-muted">{option}</span>}
         {meta}

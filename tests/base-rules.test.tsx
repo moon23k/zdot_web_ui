@@ -107,14 +107,27 @@ describe("R2 · R3 type", () => {
 
   it("holds the site type ladder in the generated theme", () => {
     const system = css("../src/styles/system.css");
-    const size = (name: string) => system.match(new RegExp(`--text-site-${name}: ([\\d.]+)rem;`))?.[1];
+    const size = (name: string) => system.match(new RegExp(`--text-site-${name}: (?:calc\\()?([\\d.]+)rem[ ;]`))?.[1];
     const px = (name: string) => Number(size(name)) * 16;
     expect(["hero", "figure-xl", "display-lg", "display"].map(px)).toEqual([64, 64, 64, 64]);
     expect(["display-md", "figure-lg", "page"].map(px)).toEqual([44, 44, 44]);
     expect(["name", "logo", "section"].map(px)).toEqual([30, 30, 30]);
     expect(["rank", "counter", "heading"].map(px)).toEqual([22, 22, 22]);
-    expect(["note", "caption", "small"].map(px)).toEqual([13, 13, 13]);
-    expect(px("badge")).toBe(12);
+    expect(px("item")).toBe(18);
+    expect(["body", "lead", "figure"].map(px)).toEqual([16, 16, 16]);
+    expect(["note", "caption", "small"].map(px)).toEqual([14, 14, 14]);
+    expect(["label", "badge"].map(px)).toEqual([13, 13]);
+  });
+
+  it("ties tracking to each site step and leaves the scale slots on titles and body", () => {
+    const system = css("../src/styles/system.css");
+    expect(system).toContain("--text-site-display: calc(4rem * var(--ezd-title-scale, 1));");
+    expect(system).toContain("--text-site-display--letter-spacing: calc(-0.03em + var(--ezd-title-tracking, 0em));");
+    expect(system).toContain("--text-site-heading--font-weight: var(--ezd-title-weight, 400);");
+    expect(system).toContain("--text-site-body: calc(1rem * var(--ezd-body-scale, 1));");
+    expect(system).toContain("--text-site-body--letter-spacing: -0.004em;");
+    expect(system).toContain("--text-site-figure-xl: 4rem;");
+    expect(system).not.toMatch(/--font-weight: (?:200|300);/);
   });
 
   it("numbers checkout steps in the body face", () => {
@@ -190,8 +203,7 @@ describe("site logo", () => {
     render(<SiteLogo name="한컷 스튜디오" src="/mark.png" />);
     load(screen.getByRole("img", { name: "한컷 스튜디오" }), 64, 64);
     const label = screen.getByText("한컷 스튜디오");
-    expect(label.className).toContain("ez:tracking-normal");
-    expect(label.className).toContain("ez:font-normal");
+    expect(label.className).not.toMatch(/tracking-|font-light/);
     expect(label.className).toContain("ez:text-site-heading");
     expect(document.querySelector('[data-slot="site-logo"]')).toHaveAttribute("data-shape", "mark");
   });

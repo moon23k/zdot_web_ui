@@ -93,7 +93,7 @@ function CohortRow({ s }: { s: Session | null }) {
   return (
     <li className={cn(cohortGrid, "ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-6", full && "ez:text-muted")}>
       <span className="ez:flex ez:flex-col">
-        <span className={cn(numeral, "ez:text-site-section ez:leading-tight ez:tabular-nums")}>{s ? (md || s.date) : <Bar size="short" />}</span>
+        <span className={cn(numeral, "ez:text-site-section ez:tabular-nums")}>{s ? (md || s.date) : <Bar size="short" />}</span>
         {wd && <span className="ez:text-site-small ez:text-muted">{`${wd}요일 개강`}</span>}
       </span>
       <span className="ez:flex ez:min-w-0 ez:flex-col ez:gap-0.5">
@@ -258,10 +258,10 @@ function GateBox({ g, i }: { g: Gate | null; i: number }) {
   const body = (
     <>
       <span className="ez:flex ez:items-center ez:justify-between">
-        <span className={cn(numeral, "ez:text-site-page ez:leading-none ez:text-primary")}>{g ? i + 1 : <Bar size="short" />}</span>
+        <span className={cn(numeral, "ez:text-site-page ez:text-primary")}>{g ? i + 1 : <Bar size="short" />}</span>
         {g && <Icon name="right" />}
       </span>
-      <span className="ez:text-site-section ez:font-light">{g ? g.title : <Bar size="long" />}</span>
+      <span className="ez:text-site-section">{g ? g.title : <Bar size="long" />}</span>
       {(g?.price || !g) && (
         <span className="ez:mt-auto ez:flex ez:justify-end ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-4 ez:font-medium ez:tabular-nums">{g ? g.price : <Bar size="short" />}</span>
       )}

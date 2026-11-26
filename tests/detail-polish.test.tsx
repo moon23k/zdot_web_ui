@@ -35,7 +35,7 @@ describe("상세 본문 2열", () => {
     const head = root.querySelector<HTMLElement>('[data-slot="detail-split-head"]')!;
     expect(head).toHaveTextContent("관리 방법");
     expect(head.className).toContain("ez:text-site-heading");
-    expect(head.className).toContain("ez:font-normal");
+    expect(head.className).not.toMatch(/font-normal|font-light|tracking-/);
     expect(head.style.fontSize).toBe("");
     expect(head.nextElementSibling!.querySelector("p")!.style.fontSize).toBe("16px");
     expect(head.nextElementSibling).toHaveTextContent("중성 세제로 씻어 주세요");

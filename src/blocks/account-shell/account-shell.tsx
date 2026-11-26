@@ -48,7 +48,7 @@ export function AccountShell({
     >
       {head && (
         <div className="ez:grid ez:gap-1.5 ez:lg:col-start-1 ez:lg:row-start-1">
-          {name && <span className="ez:text-site-section ez:font-normal ez:leading-snug ez:tracking-[-0.03em]">{name} 님</span>}
+          {name && <span className="ez:text-site-section">{name} 님</span>}
           {summary.length > 0 && (
             <span className="ez:flex ez:flex-wrap ez:gap-x-3.5 ez:text-site-small">
               {summary.map((s) => (

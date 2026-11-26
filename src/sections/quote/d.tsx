@@ -18,7 +18,7 @@ import type { QuoteFooterProps, QuoteHeaderProps, QuoteListProps } from "./types
 
 const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:box-border ez:px-page";
 
-const h2 = "ez:m-0 ez:text-site-section ez:font-light ez:tracking-tight ez:text-fg ez:md:text-site-page";
+const h2 = "ez:m-0 ez:text-site-section ez:text-fg ez:md:text-site-page";
 
 const hair = "ez:border-0 ez:border-solid ez:border-hairline";
 
@@ -104,7 +104,7 @@ function CaseBox({ c }: { c: Case }) {
       className={cn("ez:fx-glass ez:fx-round-md ez:relative ez:mt-3 ez:block ez:px-6 ez:pt-5.5 ez:pb-3 ez:text-fg ez:no-underline ez:lg:absolute ez:lg:bottom-12 ez:lg:-left-18 ez:lg:mt-0 ez:lg:w-75", focusRing)}
     >
       <span className="ez:text-site-small ez:text-muted">{QUOTE_TITLE.cases}</span>
-      <span className="ez:mt-1 ez:block ez:truncate ez:text-site-heading ez:font-normal ez:text-fg">{view.title}</span>
+      <span className="ez:mt-1 ez:block ez:truncate ez:text-site-heading ez:text-fg">{view.title}</span>
       {view.facts.length > 0 && (
         <dl className="ez:m-0 ez:mt-3.5 ez:text-site-body">
           {view.facts.map((f) => (
@@ -256,7 +256,7 @@ function PlanCard({ p }: { p: PackageItem }) {
     <li className={planCard}>
       <span className="ez:text-site-item ez:font-normal ez:break-keep ez:text-fg">{p.name}</span>
       <span className="ez:mt-3 ez:flex ez:items-baseline ez:gap-1 ez:tabular-nums">
-        <span className="ez:text-site-section ez:font-light ez:tracking-tight ez:break-all ez:text-fg ez:lg:text-site-page">{amount}</span>
+        <span className="ez:text-site-section ez:break-all ez:text-fg ez:lg:text-site-page">{amount}</span>
         {unit && <span className="ez:text-site-body ez:text-muted">{unit}</span>}
       </span>
       {lines.length > 0 && (
@@ -332,7 +332,7 @@ export function Process({ data }: SectionProps<"process_steps">) {
             >
               {s ? i + 1 : null}
             </span>
-            <span className="ez:block ez:min-w-0 ez:text-site-heading ez:font-normal ez:break-keep ez:text-fg ez:md:mt-5.5 ez:md:pr-6">{s ?? <Bar />}</span>
+            <span className="ez:block ez:min-w-0 ez:text-site-heading ez:break-keep ez:text-fg ez:md:mt-5.5 ez:md:pr-6">{s ?? <Bar />}</span>
           </li>
         ))}
       </ol>
@@ -361,7 +361,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
                   <Icon name="star" size="sm" className="ez:fill-current ez:text-star" />
                   {r.rating.toFixed(1)}
                 </span>
-                <p className="ez:m-0 ez:mt-4.5 ez:line-clamp-4 ez:text-site-item ez:leading-relaxed ez:font-light ez:whitespace-pre-line ez:text-fg">{r.body}</p>
+                <p className="ez:m-0 ez:mt-4.5 ez:line-clamp-4 ez:text-site-item ez:leading-relaxed ez:whitespace-pre-line ez:text-fg">{r.body}</p>
                 <span className="ez:mt-auto ez:truncate ez:pt-5.5 ez:text-site-small ez:text-site-off">{[r.name, productOf(context.products, r), r.date].filter(Boolean).join(" · ")}</span>
               </article>
             ))
@@ -411,7 +411,7 @@ function StarterBody({ data }: { data: QuoteStarter }) {
     <StarterForm data={data} className="ez:grid">
       {questions.map((q, i) => (
         <fieldset key={q.id} className="ez:m-0 ez:mb-6 ez:min-w-0 ez:border-0 ez:p-0">
-          <legend className="ez:flex ez:w-full ez:items-baseline ez:justify-between ez:gap-4 ez:p-0 ez:text-site-heading ez:font-normal ez:text-fg">
+          <legend className="ez:flex ez:w-full ez:items-baseline ez:justify-between ez:gap-4 ez:p-0 ez:text-site-heading ez:text-fg">
             <span className="ez:min-w-0">{q.label}</span>
             {questions.length > 1 && (
               <span aria-hidden="true" className="ez:shrink-0 ez:text-site-small ez:text-site-off ez:tabular-nums">
@@ -488,7 +488,7 @@ export function Request({ data, context }: SectionProps<"quote_starter">) {
       <div className="ez:grid ez:min-w-0 ez:gap-12 ez:px-2 ez:md:px-0">
         <h2 className="ez:sr-only">{QUOTE_TITLE.request}</h2>
         {context.storeName ? (
-          <p className="ez:m-0 ez:text-site-section ez:font-light ez:tracking-tight ez:break-keep ez:text-fg ez:md:text-site-display-sm">{context.storeName}</p>
+          <p className="ez:m-0 ez:text-site-section ez:break-keep ez:text-fg ez:md:text-site-display-sm">{context.storeName}</p>
         ) : (
           <span className="ez:text-site-display-sm">
             <Bar size="long" strong />
@@ -532,7 +532,7 @@ export function Footer({ storeName, phone, hours, business, nav, guide, account,
               <div className="ez:grid ez:gap-1">
                 <span className="ez:text-site-note ez:text-muted">{QUOTE_TITLE.center}</span>
                 {phone && (
-                  <a href={tel(phone)} className={cn("ez:justify-self-start ez:text-site-heading ez:font-light ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
+                  <a href={tel(phone)} className={cn("ez:justify-self-start ez:text-site-heading ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
                     {phone}
                   </a>
                 )}
@@ -585,7 +585,7 @@ function ListRequest({ data, storeName }: { data: QuoteStarter; storeName?: stri
       data-blank={state === "blank" ? "" : undefined}
       className="ez:fx-aurora-wash ez:fx-round-xl ez:mt-24 ez:grid ez:items-center ez:gap-8 ez:px-6 ez:py-9 ez:md:px-12 ez:md:py-14 ez:lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] ez:lg:gap-18"
     >
-      <p className="ez:m-0 ez:text-site-section ez:font-light ez:tracking-tight ez:break-keep ez:text-fg ez:md:text-site-page">{storeName || QUOTE_TITLE.request}</p>
+      <p className="ez:m-0 ez:text-site-section ez:break-keep ez:text-fg ez:md:text-site-page">{storeName || QUOTE_TITLE.request}</p>
       <div className="ez:fx-glass ez:fx-round-md ez:grid ez:gap-5 ez:p-6 ez:md:p-8">
         {state === "open" ? (
           <ButtonLink href={data.href ?? QUOTE_HREF} block className={big}>
@@ -608,9 +608,9 @@ export function List({ title, count, tabs, cases, rating, request, storeName }: 
   return (
     <div data-slot="quote-cases" data-variant="aurora" className="ez:grid ez:pt-8 ez:text-fg">
       <div className="ez:flex ez:flex-wrap ez:items-end ez:justify-between ez:gap-4">
-        <h1 className="ez:m-0 ez:flex ez:items-baseline ez:gap-4 ez:text-site-section ez:font-light ez:tracking-tight ez:text-fg ez:md:text-site-page">
+        <h1 className="ez:m-0 ez:flex ez:items-baseline ez:gap-4 ez:text-site-section ez:text-fg ez:md:text-site-page">
           {title}
-          <span className="ez:text-site-item ez:font-normal ez:tracking-normal ez:text-muted ez:tabular-nums">{count}</span>
+          <span className="ez:text-site-item ez:font-normal ez:text-muted ez:tabular-nums">{count}</span>
         </h1>
         {rating && rating.count > 0 && <Rating value={rating.average} count={rating.count} className="ez:pb-1.5" />}
       </div>

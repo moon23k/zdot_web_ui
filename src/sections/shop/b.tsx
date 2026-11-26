@@ -18,7 +18,7 @@ import type { FooterLink, ShopFooterProps, ShopHeaderProps, ShopListProps } from
 
 const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:box-border ez:px-page";
 
-const heading = "ez:m-0 ez:font-body ez:text-site-heading ez:font-normal ez:text-fg";
+const heading = "ez:m-0 ez:font-body ez:text-site-heading ez:text-fg";
 
 const tlink = cn(
   "ez:inline-flex ez:self-start ez:border-0 ez:border-b ez:border-solid ez:border-site-edge ez:pb-0.5 ez:text-site-lead ez:text-muted ez:no-underline ez:hover:border-fg ez:hover:text-fg",
@@ -49,7 +49,7 @@ export function Header({ name, logoUrl, cartCount, nav, links }: ShopHeaderProps
   return (
     <header data-slot="site-header" data-variant="catalog" className="ez:bg-surface ez:text-fg">
       <div className={cn(wrap, "ez:grid ez:h-16 ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-4 ez:lg:h-21 ez:lg:grid-cols-[1fr_minmax(0,30rem)_1fr] ez:lg:gap-10")}>
-        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:font-normal ez:text-fg ez:no-underline", focusRing)}>
+        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:text-fg ez:no-underline", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         <form
@@ -306,7 +306,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
         ))}
       </nav>
       <div className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2.5 ez:gap-y-1 ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:pt-3 ez:pb-7">
-        <h1 className="ez:m-0 ez:font-body ez:text-site-heading ez:font-normal ez:text-fg ez:md:text-site-title">{title}</h1>
+        <h1 className="ez:m-0 ez:font-body ez:text-site-heading ez:text-fg ez:md:text-site-title">{title}</h1>
         {count != null && <span className="ez:text-site-body ez:text-muted ez:tabular-nums">{count}</span>}
       </div>
       {search && <div className="ez:pt-6">{search}</div>}
@@ -443,7 +443,7 @@ export function Hero({ data }: SectionProps<"hero">) {
         </div>
         {title && (
           <div className="ez:grid ez:content-end ez:gap-2 ez:p-6 ez:md:p-10">
-            <h1 className="ez:m-0 ez:font-body ez:text-site-heading ez:font-normal ez:text-fg ez:whitespace-pre-line ez:md:text-site-name ez:md:font-normal">{title}</h1>
+            <h1 className="ez:m-0 ez:font-body ez:text-site-heading ez:text-fg ez:whitespace-pre-line ez:md:text-site-name">{title}</h1>
             {data.sub && (
               <p data-slot="hero-sub" className="ez:m-0 ez:text-site-lead ez:text-muted">
                 {data.sub}
@@ -531,7 +531,7 @@ export function Strip({ data, context }: SectionProps<"photo_band">) {
   const name = context.storeName?.trim() || null;
   const copy: ReactNode = image ? (
     <>
-      {name ? <p className="ez:m-0 ez:text-site-heading ez:font-normal ez:text-fg">{name}</p> : null}
+      {name ? <p className="ez:m-0 ez:text-site-heading ez:text-fg">{name}</p> : null}
       <NextLink href={PRODUCTS_HREF} className={tlink}>
         {SHOP_TITLE.more}
       </NextLink>

@@ -11,7 +11,6 @@ export type CommonSkin = Exclude<ShopSkin, "stage">;
 export type Look = {
   tone: SurfaceTone;
   radius: 0 | 4 | 6 | 16 | "pill";
-  font: "sans" | "serif" | "light";
   frame?: "gallery";
   shape?: "square" | "soft" | "round";
   kit?: "off";

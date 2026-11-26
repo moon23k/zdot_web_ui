@@ -139,7 +139,7 @@ function SplitTexts({ layers, last = false }: { layers: DetailLayer[]; last?: bo
   return (
     <div data-slot="detail-split" className={cn(SPLIT, "ez:pt-6", !last && "ez:pb-6")}>
       {head ? (
-        <h2 data-slot="detail-split-head" className="ez:m-0 ez:whitespace-pre-line ez:text-site-heading ez:font-normal ez:text-fg">
+        <h2 data-slot="detail-split-head" className="ez:m-0 ez:whitespace-pre-line ez:text-site-heading ez:text-fg">
           {head.text}
         </h2>
       ) : (

@@ -21,22 +21,22 @@ const bleed = "ez:mx-[calc(50%-50vw)]";
 
 const grid = "ez:grid ez:gap-y-10 ez:lg:grid-cols-12 ez:lg:gap-x-gutter";
 
-const label = cn(rule, "ez:m-0 ez:border-b ez:pb-4 ez:text-site-small ez:font-normal ez:tracking-wide ez:text-muted");
+const label = cn(rule, "ez:m-0 ez:border-b ez:pb-4 ez:text-site-small ez:font-normal ez:text-muted");
 
-const lead = "ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:leading-snug ez:text-fg ez:lg:text-site-rank";
+const lead = "ez:m-0 ez:font-display ez:text-site-heading ez:leading-snug ez:text-fg ez:lg:text-site-rank";
 
 const name = "ez:m-0 ez:font-display ez:text-site-item ez:font-normal ez:leading-normal ez:text-fg";
 
 const desc = "ez:m-0 ez:text-site-small ez:font-normal ez:text-fg";
 
-const meta = "ez:m-0 ez:text-site-small ez:font-normal ez:tracking-wide ez:text-muted";
+const meta = "ez:m-0 ez:text-site-small ez:font-normal ez:text-muted";
 
 const quiet = cn("ez:text-muted ez:no-underline ez:hover:text-fg", focusRing);
 
 const plain = cn("ez:text-fg ez:no-underline ez:hover:text-muted", focusRing);
 
 const outline = cn(
-  "ez:inline-flex ez:h-12 ez:items-center ez:justify-center ez:whitespace-nowrap ez:border ez:border-solid ez:border-site-edge ez:px-6 ez:text-site-small ez:font-normal ez:tracking-wide ez:text-fg ez:no-underline ez:hover:border-site-off",
+  "ez:inline-flex ez:h-12 ez:items-center ez:justify-center ez:whitespace-nowrap ez:border ez:border-solid ez:border-site-edge ez:px-6 ez:text-site-small ez:font-normal ez:text-fg ez:no-underline ez:hover:border-site-off",
   focusRing,
 );
 
@@ -50,11 +50,11 @@ export function Header({ name: storeName, logoUrl, nav, links }: PortfolioHeader
   return (
     <header data-slot="site-header" className="ez:bg-surface">
       <div className={cn(wrap, "ez:flex ez:min-h-16 ez:items-center ez:gap-8 ez:lg:min-h-20")}>
-        <NextLink href="/" className={cn("ez:min-w-0 ez:font-display ez:text-site-item ez:font-normal ez:leading-none ez:tracking-[0.42em] ez:text-fg ez:no-underline", focusRing)}>
+        <NextLink href="/" className={cn("ez:min-w-0 ez:font-display ez:text-site-item ez:font-normal ez:leading-none ez:text-fg ez:no-underline", focusRing)}>
           <SiteLogo name={storeName} src={logoUrl} />
         </NextLink>
         {(nav.length > 0 || links.length > 0) && (
-          <nav aria-label="주요 메뉴" className="ez:ml-auto ez:flex ez:shrink-0 ez:items-center ez:gap-5 ez:whitespace-nowrap ez:text-site-small ez:font-normal ez:tracking-wide ez:md:gap-8">
+          <nav aria-label="주요 메뉴" className="ez:ml-auto ez:flex ez:shrink-0 ez:items-center ez:gap-5 ez:whitespace-nowrap ez:text-site-small ez:font-normal ez:md:gap-8">
             <PortfolioNavLinks items={nav} className={cn(plain, "ez:py-1.5")} />
             {links.map((l) => (
               <a key={l.key} href={l.href} {...out} className={cn(quiet, "ez:py-1.5 ez:max-md:hidden")}>
@@ -86,7 +86,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
             <Bar size="long" className="ez:text-site-heading ez:lg:text-site-rank" />
           )}
           {sub && (
-            <p data-slot="hero-sub" className="ez:m-0 ez:text-site-body ez:font-light ez:leading-relaxed ez:text-muted ez:lg:text-site-item">
+            <p data-slot="hero-sub" className="ez:m-0 ez:text-site-body ez:leading-relaxed ez:text-muted ez:lg:text-site-item">
               {sub}
             </p>
           )}
@@ -147,12 +147,12 @@ export function Intro({ data, context }: SectionProps<"intro">) {
       <h2 className={label}>{PORTFOLIO_TITLE.intro}</h2>
       <div className={grid}>
         <div className="ez:min-w-0 ez:lg:col-span-5">
-          {storeName ? <h3 className="ez:m-0 ez:font-display ez:text-site-title ez:font-light ez:leading-snug ez:text-fg">{storeName}</h3> : <Bar className="ez:text-site-title" />}
+          {storeName ? <h3 className="ez:m-0 ez:font-display ez:text-site-title ez:text-fg">{storeName}</h3> : <Bar className="ez:text-site-title" />}
         </div>
         <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-6 ez:lg:col-span-5 ez:lg:col-start-7">
           {body.length ? (
             body.map((p, i) => (
-              <p key={i} className="ez:m-0 ez:whitespace-pre-line ez:text-site-body ez:font-light ez:leading-loose ez:text-fg">
+              <p key={i} className="ez:m-0 ez:whitespace-pre-line ez:text-site-body ez:leading-loose ez:text-fg">
                 {p}
               </p>
             ))
@@ -193,7 +193,7 @@ export function Contact({ data }: SectionProps<"store_info">) {
           {visitRows(data).map((r) => (
             <div key={r.label} className={cn(rule, "ez:grid ez:grid-cols-[minmax(0,7rem)_minmax(0,1fr)] ez:items-baseline ez:gap-4 ez:border-b ez:py-4")}>
               <dt className="ez:text-site-small ez:font-normal ez:text-muted">{r.label}</dt>
-              <dd className="ez:m-0 ez:min-w-0 ez:text-site-body ez:font-light ez:text-fg">{r.value}</dd>
+              <dd className="ez:m-0 ez:min-w-0 ez:text-site-body ez:text-fg">{r.value}</dd>
             </div>
           ))}
         </dl>

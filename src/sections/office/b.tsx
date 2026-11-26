@@ -29,7 +29,7 @@ const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:px-page";
 
 const frame = "ez:grid ez:gap-8 ez:text-fg ez:lg:w-2/3 ez:lg:gap-12";
 
-const title = "ez:m-0 ez:font-display ez:text-site-page-sm ez:font-light ez:text-fg ez:lg:text-site-name";
+const title = "ez:m-0 ez:font-display ez:text-site-page-sm ez:text-fg ez:lg:text-site-name";
 
 const quiet = cn("ez:text-fg ez:no-underline ez:underline-offset-4 ez:hover:underline", focusRing);
 
@@ -95,7 +95,7 @@ export function Header({ name, logoUrl, phone, address, nav, links }: OfficeHead
             {logoUrl ? <SiteLogo name={name} src={logoUrl} /> : name}
           </NextLink>
           {nav.length > 0 && (
-            <nav aria-label="홈 메뉴" className={cn(rule, "ez:mt-24 ez:grid ez:justify-items-start ez:border-t ez:pt-4 ez:pb-16 ez:text-site-counter ez:font-light ez:leading-relaxed")}>
+            <nav aria-label="홈 메뉴" className={cn(rule, "ez:mt-24 ez:grid ez:justify-items-start ez:border-t ez:pt-4 ez:pb-16 ez:text-site-counter ez:leading-relaxed")}>
               <OfficeNavLinks items={nav} className={quiet} />
             </nav>
           )}
@@ -174,7 +174,7 @@ export function Footer({ phone, hours, address, business, links, terms }: Office
 export function Hero({ data, context }: SectionProps<"hero">) {
   const head = data.title?.trim();
   const sub = data.sub?.trim();
-  const line = "ez:m-0 ez:whitespace-pre-line ez:font-display ez:text-site-page-sm ez:font-normal ez:text-fg ez:lg:text-site-page";
+  const line = "ez:m-0 ez:whitespace-pre-line ez:font-display ez:text-site-page-sm ez:text-fg ez:lg:text-site-page";
   return (
     <section
       data-slot="hero"
@@ -220,9 +220,9 @@ export function Intro({ data }: SectionProps<"intro">) {
 
 const serviceRow = cn(row, "ez:grid ez:grid-cols-4 ez:items-start ez:gap-x-gutter ez:gap-y-2 ez:border-b ez:py-8 ez:first:pt-0 ez:md:grid-cols-8 ez:lg:py-12");
 
-const serviceNo = "ez:text-site-page-sm ez:font-light ez:leading-none ez:tabular-nums ez:md:text-site-page";
+const serviceNo = "ez:text-site-page-sm ez:tabular-nums ez:md:text-site-page";
 
-const serviceName = "ez:col-span-3 ez:m-0 ez:text-site-heading ez:font-normal ez:tracking-wide";
+const serviceName = "ez:col-span-3 ez:m-0 ez:text-site-heading";
 
 const servicePrice = "ez:col-span-3 ez:col-start-2 ez:m-0 ez:tabular-nums ez:md:col-span-4 ez:md:col-start-5 ez:md:row-start-1";
 

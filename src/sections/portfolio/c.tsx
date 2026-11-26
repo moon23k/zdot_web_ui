@@ -21,7 +21,7 @@ const main = "ez:min-w-0 ez:lg:col-span-7";
 
 const side = "ez:min-w-0 ez:lg:col-span-4 ez:lg:col-start-9";
 
-const title = "ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:text-fg";
+const title = "ez:m-0 ez:font-display ez:text-site-heading ez:text-fg";
 
 const top = "ez:border-0 ez:border-t ez:border-solid ez:border-site-off";
 
@@ -46,7 +46,7 @@ export function Header({ name, logoUrl, nav }: PortfolioHeaderProps) {
   return (
     <header data-slot="site-header" data-variant="showroom" className="ez:bg-transparent">
       <div className={cn(wrap, "ez:flex ez:min-h-16 ez:items-center ez:gap-8 ez:lg:min-h-24")}>
-        <NextLink href="/" className={cn("ez:min-w-0 ez:font-display ez:text-site-heading ez:font-normal ez:tracking-wider ez:text-fg ez:no-underline", focusRing)}>
+        <NextLink href="/" className={cn("ez:min-w-0 ez:font-display ez:text-site-heading ez:text-fg ez:no-underline", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         {nav.length > 0 && (

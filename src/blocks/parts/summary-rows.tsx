@@ -17,7 +17,7 @@ export function SummaryRows({ rows, total, after }: { rows: SummaryRow[]; total?
       {total && (
         <div className="ez:mt-4 ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:pt-7">
           <dt className="ez:text-site-lead">{total.label}</dt>
-          <dd className="ez:m-0 ez:text-site-title ez:font-normal ez:tracking-[-0.02em]">{won(total.value)}</dd>
+          <dd className="ez:m-0 ez:text-site-title">{won(total.value)}</dd>
         </div>
       )}
       {after?.map((row, i) => (

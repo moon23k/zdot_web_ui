@@ -13,7 +13,7 @@ export { AuroraFooter as Footer, AuroraHeader as Header } from "../place/d-parts
 
 const card = cn(glass, "ez:grid ez:min-w-0 ez:content-start ez:gap-3 ez:fx-round-md ez:px-7 ez:pt-7 ez:pb-8");
 
-const price = "ez:m-0 ez:text-site-page-sm ez:font-light ez:tracking-tight ez:tabular-nums";
+const price = "ez:m-0 ez:text-site-page-sm ez:tabular-nums";
 
 export function Hero(props: SectionProps<"hero">) {
   return <AuroraHero {...props} more={{ href: `/#${OFFICE_ID.services}`, label: OFFICE_TITLE.services }} />;

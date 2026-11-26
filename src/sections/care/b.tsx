@@ -18,24 +18,24 @@ const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:px-page";
 
 const dotted = "ez:border-0 ez:border-dotted ez:border-site-edge";
 
-const logo = "ez:m-0 ez:font-display ez:font-normal ez:tracking-[0.24em] ez:text-fg";
+const logo = "ez:m-0 ez:font-display ez:font-normal ez:text-fg";
 
-const label = "ez:m-0 ez:whitespace-nowrap ez:font-display ez:text-site-note ez:font-normal ez:tracking-[0.2em] ez:text-fg";
+const label = "ez:m-0 ez:whitespace-nowrap ez:font-display ez:text-site-note ez:font-normal ez:text-fg";
 
-const name = "ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:tracking-wider ez:text-fg";
+const name = "ez:m-0 ez:font-display ez:text-site-heading ez:text-fg";
 
-const price = "ez:m-0 ez:font-display ez:text-site-item ez:font-normal ez:tracking-wide ez:text-fg ez:tabular-nums";
+const price = "ez:m-0 ez:font-display ez:text-site-item ez:font-normal ez:text-fg ez:tabular-nums";
 
-const lead = "ez:m-0 ez:font-display ez:text-site-item ez:font-normal ez:leading-loose ez:tracking-wide ez:text-fg";
+const lead = "ez:m-0 ez:font-display ez:text-site-item ez:font-normal ez:leading-loose ez:text-fg";
 
-const body = "ez:m-0 ez:text-site-small ez:leading-loose ez:tracking-wide ez:text-fg";
+const body = "ez:m-0 ez:text-site-small ez:leading-loose ez:text-fg";
 
-const small = "ez:m-0 ez:text-site-small ez:tracking-wide ez:text-muted";
+const small = "ez:m-0 ez:text-site-small ez:text-muted";
 
 const quiet = cn("ez:text-fg ez:no-underline ez:underline-offset-4 ez:hover:underline", focusRing);
 
 const outline = cn(
-  "ez:inline-flex ez:h-11 ez:items-center ez:justify-center ez:whitespace-nowrap ez:border ez:border-solid ez:border-site-edge ez:px-6 ez:font-display ez:text-site-note ez:tracking-widest ez:text-fg ez:no-underline ez:hover:border-site-off",
+  "ez:inline-flex ez:h-11 ez:items-center ez:justify-center ez:whitespace-nowrap ez:border ez:border-solid ez:border-site-edge ez:px-6 ez:font-display ez:text-site-note ez:text-fg ez:no-underline ez:hover:border-site-off",
   focusRing,
 );
 
@@ -80,7 +80,7 @@ export function Header({ name: storeName, logoUrl, phone, nav, links }: CareHead
           <SiteLogo name={storeName} src={logoUrl} />
         </NextLink>
         <div className="ez:ml-auto ez:flex ez:min-w-0 ez:items-center ez:justify-end ez:gap-8 ez:lg:col-span-9 ez:lg:col-start-4 ez:lg:ml-0">
-          <nav aria-label="주요 메뉴" className="ez:flex ez:items-center ez:gap-8 ez:font-display ez:text-site-body ez:tracking-wide ez:max-lg:hidden">
+          <nav aria-label="주요 메뉴" className="ez:flex ez:items-center ez:gap-8 ez:font-display ez:text-site-body ez:max-lg:hidden">
             <CareNavLinks items={nav} className={cn("ez:whitespace-nowrap", quiet)} />
           </nav>
           {book ? (
@@ -89,7 +89,7 @@ export function Header({ name: storeName, logoUrl, phone, nav, links }: CareHead
             </a>
           ) : (
             phone && (
-              <a href={telHref(phone)} className={cn("ez:inline-flex ez:items-center ez:whitespace-nowrap ez:text-site-small ez:tracking-wide ez:tabular-nums", quiet)}>
+              <a href={telHref(phone)} className={cn("ez:inline-flex ez:items-center ez:whitespace-nowrap ez:text-site-small ez:tabular-nums", quiet)}>
                 <Icon name="phone" size="sm" className="ez:text-muted ez:sm:hidden" />
                 <span className="ez:max-sm:sr-only">{phone}</span>
               </a>
@@ -103,7 +103,7 @@ export function Header({ name: storeName, logoUrl, phone, nav, links }: CareHead
 
 export function Footer({ storeName, phone, hours, address, business, links, terms }: CareFooterProps) {
   const contact = [address, phone, hours && `${CARE_TITLE.hours} ${hours}`].filter((v): v is string => Boolean(v));
-  const list = "ez:m-0 ez:grid ez:list-none ez:gap-1 ez:p-0 ez:text-site-small ez:leading-relaxed ez:tracking-wide";
+  const list = "ez:m-0 ez:grid ez:list-none ez:gap-1 ez:p-0 ez:text-site-small ez:leading-relaxed";
   return (
     <footer data-slot="site-footer" data-variant="catalog" className="ez:text-fg">
       <div className={cn(wrap, "ez:grid ez:gap-y-10 ez:pt-24 ez:pb-12 ez:lg:grid-cols-12 ez:lg:gap-x-gutter")}>
@@ -139,7 +139,7 @@ export function Footer({ storeName, phone, hours, address, business, links, term
             </ul>
           )}
           {terms.length > 0 && (
-            <nav aria-label={CARE_TITLE.terms} className="ez:flex ez:flex-wrap ez:gap-x-4 ez:gap-y-1 ez:text-site-small ez:tracking-wide">
+            <nav aria-label={CARE_TITLE.terms} className="ez:flex ez:flex-wrap ez:gap-x-4 ez:gap-y-1 ez:text-site-small">
               {terms.map((t) => (
                 <NextLink key={t.href} href={t.href} className={cn("ez:text-muted ez:no-underline ez:hover:text-fg", t.strong && "ez:font-medium ez:text-fg", focusRing)}>
                   {t.label}

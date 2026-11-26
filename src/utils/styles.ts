@@ -11,13 +11,13 @@ export const chipOn = "ez:border-primary ez:text-primary ez:font-medium";
 
 export const pointTag = "ez:inline-flex ez:items-center ez:gap-1.5 ez:text-site-caption ez:font-normal ez:text-primary";
 
-export const countSup = "ez:ml-1.5 ez:align-top ez:text-site-small ez:font-normal ez:tracking-normal ez:text-primary";
+export const countSup = "ez:ml-1.5 ez:align-top ez:text-site-small ez:font-normal ez:text-primary";
 
-export const figure = "ez:font-figure ez:italic ez:font-normal ez:tracking-normal";
+export const figure = "ez:font-figure ez:italic ez:font-normal";
 
-export const numeral = "ez:font-body ez:not-italic ez:font-light ez:tracking-normal ez:tabular-nums";
+export const numeral = "ez:font-body ez:not-italic ez:tabular-nums";
 
-export const numeralStep = "ez:font-body ez:not-italic ez:font-normal ez:tracking-normal ez:tabular-nums";
+export const numeralStep = "ez:font-body ez:not-italic ez:font-normal ez:tabular-nums";
 
 export const summaryBox = "ez:rounded-lg ez:bg-surface-alt ez:p-8";
 
@@ -30,14 +30,14 @@ export const infoRows = {
   value: "ez:border-0 ez:py-2.5 ez:text-left ez:align-baseline ez:text-site-body ez:text-fg ez:tabular-nums",
 } as const;
 
-const latinMark = "ez:font-body ez:not-italic ez:font-light ez:tracking-normal";
+const latinMark = "ez:font-body ez:not-italic";
 
 export function wordmark(name: string): string {
-  return /[ㄱ-ㆎ가-힣]/.test(name) ? "ez:font-body ez:font-normal ez:tracking-[-0.03em]" : "ez:font-body ez:not-italic ez:font-normal ez:tracking-normal";
+  return /[ㄱ-ㆎ가-힣]/.test(name) ? "ez:font-body ez:font-normal" : "ez:font-body ez:not-italic ez:font-normal";
 }
 
 export function footerMark(name: string): string {
-  return /[ㄱ-ㆎ가-힣]/.test(name) ? "ez:font-body ez:font-light ez:text-site-figure-lg ez:tracking-[-0.03em]" : `${latinMark} ez:text-site-display-md`;
+  return /[ㄱ-ㆎ가-힣]/.test(name) ? "ez:font-body ez:text-site-figure-lg" : `${latinMark} ez:text-site-display-md`;
 }
 
 const PC_COLS: Record<number, string> = {

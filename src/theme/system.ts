@@ -58,9 +58,7 @@ export const SYSTEM_TONE = {
   }
 };
 
-export const SYSTEM_FONT = '"Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif';
-
-export const SYSTEM_FIGURE_FONT = '"Instrument Serif", "Times New Roman", serif';
+export const SYSTEM_FONT = '"Wanted Sans Variable", "Wanted Sans", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif';
 
 export const SYSTEM_DURATION = 200;
 

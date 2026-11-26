@@ -8,7 +8,7 @@ export function FormLayout({ title, aside, children }: { title: string; aside?: 
   return (
     <div data-slot="form-layout" className="ez:grid ez:gap-10 ez:pt-4 ez:text-fg ez:lg:grid-cols-[420px_minmax(0,1fr)] ez:lg:items-start ez:lg:gap-24 ez:lg:pt-10">
       <div className="ez:grid ez:gap-10 ez:lg:sticky ez:lg:top-8">
-        <h1 className="ez:m-0 ez:text-site-page ez:font-light ez:tracking-[-0.035em]">{title}</h1>
+        <h1 className="ez:m-0 ez:text-site-page">{title}</h1>
         {aside}
       </div>
       <div className="ez:grid ez:min-w-0 ez:gap-10 ez:lg:gap-14">{children}</div>

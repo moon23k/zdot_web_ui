@@ -22,18 +22,18 @@ const line = "ez:border-0 ez:border-solid ez:border-site-line";
 const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:px-page";
 
 const logo =
-  "ez:font-display ez:font-normal ez:uppercase ez:tracking-[0.42em] ez:text-fg";
+  "ez:font-display ez:font-normal ez:uppercase ez:text-fg";
 
 const name =
-  "ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:text-fg";
+  "ez:m-0 ez:font-display ez:text-site-heading ez:text-fg";
 
 const item = "ez:m-0 ez:text-site-item ez:font-normal ez:text-fg";
 
 const body =
-  "ez:m-0 ez:text-site-small ez:leading-relaxed ez:tracking-wide ez:text-fg";
+  "ez:m-0 ez:text-site-small ez:leading-relaxed ez:text-fg";
 
 const label =
-  "ez:m-0 ez:text-site-small ez:font-normal ez:tracking-wide ez:text-muted";
+  "ez:m-0 ez:text-site-small ez:font-normal ez:text-muted";
 
 const quiet = cn(
   "ez:text-fg ez:no-underline ez:underline-offset-4 ez:hover:underline",
@@ -41,7 +41,7 @@ const quiet = cn(
 );
 
 const outline = cn(
-  "ez:inline-flex ez:h-10 ez:items-center ez:justify-center ez:whitespace-nowrap ez:border ez:border-solid ez:border-site-edge ez:px-6 ez:text-site-small ez:tracking-wide ez:text-fg ez:no-underline ez:hover:border-site-off",
+  "ez:inline-flex ez:h-10 ez:items-center ez:justify-center ez:whitespace-nowrap ez:border ez:border-solid ez:border-site-edge ez:px-6 ez:text-site-small ez:text-fg ez:no-underline ez:hover:border-site-off",
   focusRing
 );
 
@@ -122,14 +122,14 @@ export function Header({
         </NextLink>
         <nav
           aria-label="주요 메뉴"
-          className="ez:flex ez:items-center ez:justify-center ez:gap-6 ez:text-site-small ez:tracking-wide ez:max-lg:hidden"
+          className="ez:flex ez:items-center ez:justify-center ez:gap-6 ez:text-site-small ez:max-lg:hidden"
         >
           <PlaceNavLinks
             items={nav}
             className={cn("ez:whitespace-nowrap", quiet)}
           />
         </nav>
-        <div className="ez:ml-auto ez:flex ez:min-w-0 ez:items-center ez:justify-end ez:gap-6 ez:text-site-small ez:tracking-wide ez:lg:ml-0">
+        <div className="ez:ml-auto ez:flex ez:min-w-0 ez:items-center ez:justify-end ez:gap-6 ez:text-site-small ez:lg:ml-0">
           {links.length > 0 && (
             <ul className="ez:m-0 ez:flex ez:list-none ez:gap-6 ez:p-0 ez:max-md:hidden">
               {links.map((l) => (
@@ -181,7 +181,7 @@ export function Footer({
     hours && `${PLACE_TITLE.hours} ${hours}`,
   ].filter((v): v is string => Boolean(v));
   const small =
-    "ez:m-0 ez:flex ez:list-none ez:flex-wrap ez:gap-x-4 ez:gap-y-1 ez:p-0 ez:text-site-small ez:leading-relaxed ez:tracking-wide";
+    "ez:m-0 ez:flex ez:list-none ez:flex-wrap ez:gap-x-4 ez:gap-y-1 ez:p-0 ez:text-site-small ez:leading-relaxed";
   return (
     <footer
       data-slot="site-footer"
@@ -216,7 +216,7 @@ export function Footer({
             </ul>
           )}
         </div>
-        <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-6 ez:text-site-small ez:leading-relaxed ez:tracking-wide ez:md:col-span-4 ez:md:col-start-9 ez:lg:col-span-3 ez:lg:col-start-10">
+        <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-6 ez:text-site-small ez:leading-relaxed ez:md:col-span-4 ez:md:col-start-9 ez:lg:col-span-3 ez:lg:col-start-10">
           {links.length > 0 && (
             <ul
               aria-label={PLACE_TITLE.links}

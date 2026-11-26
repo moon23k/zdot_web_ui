@@ -78,7 +78,7 @@ export function ClassicCatalog({
     <div data-slot="catalog-view" className="ez:grid ez:grid-cols-1 ez:text-fg">
       <div className="ez:grid ez:gap-8 ez:pb-10 ez:lg:gap-14 ez:lg:pb-14">
         <Crumbs items={crumbs} />
-        <h1 className="ez:m-0 ez:text-site-page ez:font-light ez:tracking-[-0.04em] ez:lg:text-site-display">
+        <h1 className="ez:m-0 ez:text-site-page ez:lg:text-site-display">
           {title}
           {count ? <span className={cn(countSup, "ez:text-site-item")}>{count}</span> : null}
         </h1>

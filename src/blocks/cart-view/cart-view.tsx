@@ -85,7 +85,7 @@ export function CartView({
   }, [lines]);
   const head = (
     <div className="ez:flex ez:flex-wrap ez:items-end ez:justify-between ez:gap-6 ez:pb-10 ez:lg:pb-14">
-      <h1 className="ez:m-0 ez:text-site-page ez:font-light ez:tracking-[-0.035em]">
+      <h1 className="ez:m-0 ez:text-site-page">
         장바구니
         {lines.length > 0 && <span className={countSup}>{lines.length}</span>}
       </h1>

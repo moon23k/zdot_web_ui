@@ -29,7 +29,7 @@ const panel = "ez:fx-round-md ez:overflow-hidden ez:border ez:border-solid";
 
 const pill = "ez:rounded-full";
 
-const title = "ez:m-0 ez:text-site-section ez:font-extralight ez:tracking-tight ez:text-fg ez:lg:text-site-page";
+const title = "ez:m-0 ez:text-site-section ez:text-fg ez:lg:text-site-page";
 
 const more = cn("ez:inline-flex ez:shrink-0 ez:items-center ez:gap-1.5 ez:text-site-small ez:text-site-off ez:no-underline ez:hover:text-fg", focusRing);
 
@@ -37,7 +37,7 @@ const lineButton = "ez:rounded-full ez:border-site-line ez:font-normal";
 
 const topLink = cn("ez:relative ez:inline-flex ez:h-10 ez:min-w-10 ez:items-center ez:justify-center ez:gap-1.5 ez:text-site-body ez:text-muted ez:no-underline ez:hover:text-fg ez:lg:min-w-0", focusRing);
 
-const price = "ez:text-site-body ez:font-light ez:tabular-nums ez:whitespace-nowrap ez:text-fg";
+const price = "ez:text-site-body ez:tabular-nums ez:whitespace-nowrap ez:text-fg";
 
 function Head({ text, aside }: { text: string; aside?: ReactNode }) {
   return (
@@ -61,7 +61,7 @@ export function Header({ name, logoUrl, nav, links }: ClassHeaderProps) {
   return (
     <header data-slot="site-header" data-variant="float" className="ez:bg-surface ez:text-fg">
       <div className={cn(wrap, "ez:flex ez:h-16 ez:items-center ez:gap-6 ez:lg:h-22 ez:lg:gap-0")}>
-        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:font-normal ez:text-fg ez:no-underline ez:lg:w-51 ez:lg:shrink-0", focusRing)}>
+        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:text-fg ez:no-underline ez:lg:w-51 ez:lg:shrink-0", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         <nav aria-label="주요 메뉴" className="ez:flex ez:min-w-0 ez:gap-9 ez:overflow-hidden ez:whitespace-nowrap ez:max-lg:hidden">
@@ -119,7 +119,7 @@ export function Footer({ storeName, phone, hours, legal, classes, guide, account
               <div className="ez:grid ez:gap-1">
                 <span className="ez:text-site-small ez:text-muted">{CLASS_TITLE.center}</span>
                 {phone && (
-                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-heading ez:font-light ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
+                  <a href={`tel:${phone}`} className={cn("ez:justify-self-start ez:text-site-heading ez:text-fg ez:tabular-nums ez:no-underline", focusRing)}>
                     {phone}
                   </a>
                 )}
@@ -155,7 +155,7 @@ function HeroFloat({ session }: { session: Session }) {
   return (
     <NextLink href={v.href} className={cn(floatBox, "ez:group", focusRing)}>
       <span className="ez:block ez:text-site-small ez:text-site-off">{CLASS_TITLE.next}</span>
-      <span className="ez:mt-1 ez:block ez:truncate ez:text-site-heading ez:font-light ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
+      <span className="ez:mt-1 ez:block ez:truncate ez:text-site-heading ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
       <span className="ez:mt-3 ez:grid">
         {rows.map(([label, value]) => (
           <span key={label} className={floatRow}>
@@ -260,7 +260,7 @@ function BlankRow() {
       <span className="ez:text-site-heading">
         <Bar />
       </span>
-      <BlankPrice className="ez:justify-end ez:text-site-body ez:font-light ez:text-muted" />
+      <BlankPrice className="ez:justify-end ez:text-site-body ez:text-muted" />
     </div>
   );
 }
@@ -314,7 +314,7 @@ function ClassItem({ item, tone, preload }: { item: ClassCard; tone: number; pre
         <Photo src={item.image} alt={item.name} tone={tone} preload={preload} sizes="(max-width: 768px) 100vw, 430px" className="ez:aspect-[4/3] ez:rounded-none" />
       </span>
       <span className="ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:items-baseline ez:gap-x-3 ez:gap-y-1 ez:px-0.5 ez:pt-4">
-        <span className="ez:truncate ez:text-site-item ez:font-light ez:underline-offset-4 ez:group-hover:underline">{item.name}</span>
+        <span className="ez:truncate ez:text-site-item ez:underline-offset-4 ez:group-hover:underline">{item.name}</span>
         {item.price ? <span className={price}>{item.price}</span> : <span />}
         {(detail || item.sample) && (
           <span className="ez:col-span-2 ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:text-site-small ez:text-site-off">
@@ -343,7 +343,7 @@ function BlankClass({ tone }: { tone: number }) {
         <span className="ez:text-site-item">
           <Bar />
         </span>
-        <BlankPrice className="ez:text-site-body ez:font-light ez:text-muted" />
+        <BlankPrice className="ez:text-site-body ez:text-muted" />
         <span className="ez:col-span-2 ez:text-site-small">
           <Bar size="short" />
         </span>
@@ -380,7 +380,7 @@ function Review({ item, cls }: { item: ReviewItem; cls?: string }) {
         <span className="ez:sr-only">별점 </span>
         {item.rating.toFixed(1)}
       </span>
-      <p className="ez:m-0 ez:mt-4 ez:line-clamp-4 ez:min-h-[4lh] ez:text-site-item ez:leading-relaxed ez:font-light ez:text-pretty ez:text-fg">{item.body}</p>
+      <p className="ez:m-0 ez:mt-4 ez:line-clamp-4 ez:min-h-[4lh] ez:text-site-item ez:leading-relaxed ez:text-pretty ez:text-fg">{item.body}</p>
       <span className="ez:mt-5 ez:truncate ez:text-site-small ez:text-site-off">{[item.name, cls, item.date].filter(Boolean).join(" · ")}</span>
     </article>
   );
@@ -419,7 +419,7 @@ function InfoRow({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="ez:flex ez:items-baseline ez:justify-between ez:gap-6 ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:py-4.5">
       <dt className="ez:shrink-0 ez:text-site-body ez:text-site-off">{label}</dt>
-      <dd className="ez:m-0 ez:min-w-0 ez:text-right ez:text-site-item ez:font-light ez:text-fg">{children}</dd>
+      <dd className="ez:m-0 ez:min-w-0 ez:text-right ez:text-site-item ez:text-fg">{children}</dd>
     </div>
   );
 }
@@ -483,7 +483,7 @@ function Upcoming({ sessions, href }: { sessions: Session[]; href: string }) {
   return (
     <section className="ez:mt-20">
       <div className="ez:mb-5 ez:flex ez:flex-wrap ez:items-baseline ez:justify-between ez:gap-x-8 ez:gap-y-3">
-        <h2 className="ez:m-0 ez:text-site-heading ez:font-light ez:text-fg">{CLASS_TITLE.schedule}</h2>
+        <h2 className="ez:m-0 ez:text-site-heading ez:text-fg">{CLASS_TITLE.schedule}</h2>
         <More href={href} label={CLASS_TITLE.scheduleAll} />
       </div>
       <div className="ez:border-0 ez:border-t ez:border-solid ez:border-site-line">
@@ -517,7 +517,7 @@ export function List({ view, title: heading, count, crumbs, tabs, sorts, classes
         ))}
       </nav>
       <div className="ez:mt-4 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3 ez:gap-y-1">
-        <h1 className="ez:m-0 ez:text-site-section ez:font-extralight ez:tracking-tight ez:text-fg ez:md:text-site-page">{heading}</h1>
+        <h1 className="ez:m-0 ez:text-site-section ez:text-fg ez:md:text-site-page">{heading}</h1>
         {count != null && <span className="ez:text-site-body ez:text-site-off ez:tabular-nums">{count}</span>}
       </div>
       {search && <div className="ez:mt-6">{search}</div>}

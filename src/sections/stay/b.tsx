@@ -22,7 +22,7 @@ import { MAP_LABEL, SampleMap } from "./map";
 
 const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:box-border ez:px-page";
 
-const heading = "ez:m-0 ez:font-body ez:text-site-heading ez:font-normal ez:text-fg";
+const heading = "ez:m-0 ez:font-body ez:text-site-heading ez:text-fg";
 
 const line = "ez:border-0 ez:border-solid ez:border-site-line";
 
@@ -54,7 +54,7 @@ export function Header({ name, logoUrl, nav, links }: StayHeaderProps) {
   return (
     <header data-slot="site-header" data-variant="catalog" className="ez:bg-surface ez:text-fg">
       <div className={cn(wrap, "ez:grid ez:h-16 ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-4 ez:lg:h-19 ez:lg:gap-10")}>
-        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:font-normal ez:text-fg ez:no-underline", focusRing)}>
+        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:text-fg ez:no-underline", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         <div className="ez:flex ez:items-center ez:justify-end ez:gap-2 ez:lg:gap-3">
@@ -204,7 +204,7 @@ export function Hero({ data }: SectionProps<"hero">) {
         </div>
         {title && (
           <div className="ez:grid ez:content-end ez:gap-2 ez:p-6 ez:md:p-10">
-            <h1 className="ez:m-0 ez:font-body ez:text-site-heading ez:font-normal ez:whitespace-pre-line ez:text-fg ez:md:text-site-name ez:md:font-normal">{title}</h1>
+            <h1 className="ez:m-0 ez:font-body ez:text-site-heading ez:whitespace-pre-line ez:text-fg ez:md:text-site-name">{title}</h1>
             {data.sub && (
               <p data-slot="hero-sub" className="ez:m-0 ez:text-site-lead ez:text-muted">
                 {data.sub}
@@ -688,7 +688,7 @@ function RoomRow({ room, search, tone }: { room: Room; search: StaySearch; tone:
             {v.sample && <span>{STAY_TITLE.sample}</span>}
           </p>
         )}
-        <h2 className={cn("ez:m-0 ez:mb-2.5 ez:font-body ez:text-site-heading ez:font-normal", full ? "ez:text-muted" : "ez:text-fg")}>{v.name}</h2>
+        <h2 className={cn("ez:m-0 ez:mb-2.5 ez:font-body ez:text-site-heading", full ? "ez:text-muted" : "ez:text-fg")}>{v.name}</h2>
         {stayTimes && (
           <p className="ez:m-0 ez:flex ez:items-center ez:gap-2 ez:text-site-body ez:text-muted">
             <Icon name="clock" size="sm" />
@@ -811,7 +811,7 @@ export function List({ title, count, crumbs, search, rooms, peak }: StayListProp
         ))}
       </nav>
       <div className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2.5 ez:gap-y-1 ez:pt-3">
-        <h1 className="ez:m-0 ez:font-body ez:text-site-heading ez:font-normal ez:text-fg ez:md:text-site-title">{title}</h1>
+        <h1 className="ez:m-0 ez:font-body ez:text-site-heading ez:text-fg ez:md:text-site-title">{title}</h1>
         <span className="ez:text-site-body ez:text-muted ez:tabular-nums">{count}</span>
       </div>
       <div data-slot="stay-search" className="ez:pt-6">

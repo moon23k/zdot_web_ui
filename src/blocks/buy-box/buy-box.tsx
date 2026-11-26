@@ -70,7 +70,7 @@ export function BuyBox({
             품절
           </span>
         )}
-        <h1 className="ez:m-0 ez:text-site-page-sm ez:font-light ez:tracking-[-0.035em] ez:lg:text-site-page">{product.name}</h1>
+        <h1 className="ez:m-0 ez:text-site-page-sm ez:lg:text-site-page">{product.name}</h1>
         {rating && rating.count > 0 && (
           <NextLink href="#reviews" className="ez:flex ez:items-center ez:gap-2 ez:text-site-small ez:text-fg ez:no-underline">
             <StarRow rating={rating.average} />
@@ -79,7 +79,7 @@ export function BuyBox({
           </NextLink>
         )}
       </div>
-      <p className="ez:m-0 ez:flex ez:flex-wrap ez:items-baseline ez:gap-2 ez:text-site-heading ez:font-normal ez:tabular-nums">
+      <p className="ez:m-0 ez:flex ez:flex-wrap ez:items-baseline ez:gap-2 ez:text-site-heading ez:tabular-nums">
         {sale > 0 && !soldOut && <span className="ez:text-primary">{sale}%</span>}
         <span className={soldOut ? "ez:text-muted" : undefined}>
           {won(from ?? unit)}

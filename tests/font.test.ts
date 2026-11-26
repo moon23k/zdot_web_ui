@@ -12,7 +12,8 @@ describe("store font", () => {
   });
 
   it("falls back to the system font", () => {
-    expect(designVars({})["--ezd-font-display"]).toContain("Pretendard");
+    expect(designVars({})["--ezd-font-display"]).toMatch(/^"Wanted Sans Variable", "Wanted Sans", "Pretendard Variable"/);
+    expect(designVars({})["--ezd-font-figure"]).toBe(designVars({})["--ezd-font-body"]);
   });
 
   it("loads each family once", () => {
@@ -73,13 +74,20 @@ describe("store font", () => {
     expect(fontHref({})).toBeNull();
   });
 
-  it("sets sans titles in the store body font and serif titles light", () => {
-    const serif = resolveTemplate("class", "a");
-    expect(serif?.look.font).toBe("serif");
-    expect(applyTemplate(design, serif).font?.display).toBe("Noto Sans KR");
-    const vars = designVars(applyTemplate({}, serif));
-    expect(vars["--ezd-font-display"]).toContain("Noto Serif KR");
-    expect(vars["--ezd-title-weight"]).toBe("300");
+  it("sets every template site in the site font without a font link", () => {
+    for (const template of [resolveTemplate("class", "a"), resolveTemplate("shop", "d")]) {
+      const applied = applyTemplate({ font: { display: "Noto Serif KR", body: "Noto Sans KR", load: [{ family: "Noto Serif KR", weights: [400, 600] }] } }, template);
+      const vars = designVars(applied);
+      expect(fontHref(applied)).toBeNull();
+      expect(vars["--ezd-font-display"]).toBe(designVars({})["--ezd-font-body"]);
+      expect(vars["--ezd-font-body"]).toBe(designVars({})["--ezd-font-body"]);
+      expect([vars["--ezd-title-weight"], vars["--ezd-subtitle-weight"], vars["--ezd-title-style"]]).toEqual(["400", "500", "normal"]);
+    }
+  });
+
+  it("keeps the brand font without a template", () => {
+    expect(applyTemplate(design, null).font?.display).toBe("Jua");
+    expect(fontHref(applyTemplate(design, null))).toContain("family=Jua");
   });
 });
 

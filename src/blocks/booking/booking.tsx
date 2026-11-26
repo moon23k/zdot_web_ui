@@ -78,7 +78,7 @@ export function BookingHead({ tag, title, rating, facts }: { tag?: string | null
           </span>
         )}
         <div className="ez:flex ez:flex-wrap ez:items-end ez:justify-between ez:gap-4">
-          <h1 className="ez:m-0 ez:text-site-page ez:font-light ez:tracking-[-0.04em] ez:lg:text-site-display-md">{title}</h1>
+          <h1 className="ez:m-0 ez:text-site-page ez:lg:text-site-display-md">{title}</h1>
           {rating && rating.count > 0 && (
             <a href="#reviews" className="ez:flex ez:items-center ez:gap-2 ez:pb-2 ez:text-site-small ez:text-fg ez:no-underline">
               <svg viewBox="0 0 24 24" aria-hidden="true" data-star="on" className="ez:size-3.25 ez:text-primary">
@@ -144,7 +144,7 @@ export function CardTotal({ label, value, rows, after }: { label: string; value:
       ))}
       <div className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
         <span>{label}</span>
-        <span className="ez:text-site-section ez:font-normal ez:tabular-nums">{value}</span>
+        <span className="ez:text-site-section ez:tabular-nums">{value}</span>
       </div>
       {after?.map((r, i) => (
         <div key={`${i}-${r.label}`} data-slot="card-total-after" className="ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:text-site-small ez:text-muted">

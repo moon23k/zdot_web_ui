@@ -13,7 +13,7 @@ import type { LandingFooterProps, LandingHeaderProps } from "./types";
 
 const rule = "ez:border-0 ez:border-solid ez:border-site-line";
 
-const heading = "ez:m-0 ez:font-display ez:text-site-section ez:font-normal ez:text-fg";
+const heading = "ez:m-0 ez:font-display ez:text-site-section ez:text-fg";
 
 const link = cn(textLink, focusRing);
 
@@ -137,7 +137,7 @@ export function StandInHero({ data, context }: SectionProps<"hero">) {
   return (
     <section data-slot="hero" data-blank={data.image || title ? undefined : ""} className="ez:grid ez:gap-6 ez:text-fg">
       <Pic src={data.image} ratio={1.5} />
-      {title ? <h1 className="ez:m-0 ez:font-display ez:text-site-section ez:font-normal">{title}</h1> : context.storeName && <p className="ez:m-0 ez:text-site-section ez:font-normal">{context.storeName}</p>}
+      {title ? <h1 className="ez:m-0 ez:font-display ez:text-site-section">{title}</h1> : context.storeName && <p className="ez:m-0 ez:text-site-section">{context.storeName}</p>}
       {title && sub && (
         <p data-slot="hero-sub" className="ez:m-0 ez:text-muted">
           {sub}

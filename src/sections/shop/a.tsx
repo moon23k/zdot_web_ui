@@ -25,7 +25,7 @@ const iconLink = cn("ez:relative ez:inline-flex ez:size-11 ez:items-center ez:ju
 function Head({ title }: { title: string }) {
   return (
     <div className="ez:grid ez:justify-items-center ez:text-center">
-      <h2 className="ez:m-0 ez:font-display ez:text-site-heading ez:font-normal ez:leading-snug ez:lg:text-site-title">{title}</h2>
+      <h2 className="ez:m-0 ez:font-display ez:text-site-heading ez:lg:text-site-title">{title}</h2>
     </div>
   );
 }
@@ -72,7 +72,7 @@ function Card({ product, sizes, preload, shelf, tags }: { product: ProductSummar
     >
       <Photo src={v.cover} alt={v.name} sizes={sizes} preload={preload} className={cn(SHELF_RATIO[shelf.ratio], v.soldOut && "ez:opacity-45")} />
       <span className="ez:grid ez:justify-items-center ez:pt-5 ez:text-center ez:lg:pt-6">
-        {tags && <span className="ez:mb-3 ez:block ez:h-4 ez:text-site-small ez:leading-none ez:tracking-widest ez:text-muted">{labels}</span>}
+        {tags && <span className="ez:mb-3 ez:block ez:h-4 ez:text-site-small ez:leading-none ez:text-muted">{labels}</span>}
         <span className="ez:line-clamp-2 ez:text-site-item ez:font-normal ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
         <Price v={v} />
       </span>
@@ -151,7 +151,7 @@ export function Header({ name, logoUrl, cartCount, nav, links }: ShopHeaderProps
           <NextLink
             href="/"
             className={cn(
-              "ez:min-w-0 ez:font-display ez:text-site-heading ez:font-normal ez:leading-none ez:tracking-wide ez:text-fg ez:no-underline ez:lg:justify-self-center ez:lg:text-center ez:lg:text-site-logo",
+              "ez:min-w-0 ez:font-display ez:text-site-heading ez:leading-none ez:text-fg ez:no-underline ez:lg:justify-self-center ez:lg:text-center ez:lg:text-site-logo",
               focusRing,
             )}
           >
@@ -205,7 +205,7 @@ export function Hero({ data }: SectionProps<"hero">) {
       {title && (
         <div className="ez:absolute ez:inset-x-0 ez:bottom-12 ez:mx-auto ez:max-w-wrap ez:px-page ez:lg:bottom-37.5">
           <div className="ez:flex ez:flex-col ez:items-start ez:gap-5 ez:text-fg ez:lg:gap-7">
-            <h1 className="ez:m-0 ez:max-w-4xl ez:font-display ez:text-site-page ez:font-normal ez:leading-none ez:text-balance ez:lg:text-site-display-lg">{title}</h1>
+            <h1 className="ez:m-0 ez:max-w-4xl ez:font-display ez:text-site-page ez:text-balance ez:lg:text-site-display-lg">{title}</h1>
             {sub && (
               <p data-slot="hero-sub" className="ez:m-0 ez:max-w-xl ez:text-site-body">
                 {sub}
@@ -263,11 +263,11 @@ export function Story({ data, context }: SectionProps<"testimonial">) {
     <section data-slot="testimonial" data-blank={review ? undefined : ""} data-bleed="" className={cn("ez:grid ez:bg-surface-alt ez:text-fg ez:lg:grid-cols-2", bleed)}>
       <Photo src={data.image} alt="" sizes="(max-width: 1024px) 100vw, 50vw" tone={1} className="ez:aspect-[4/5] ez:rounded-none ez:lg:aspect-auto ez:lg:h-225" />
       <div className="ez:flex ez:flex-col ez:items-start ez:justify-center ez:gap-6 ez:px-page ez:py-14 ez:lg:gap-7 ez:lg:px-30 ez:lg:py-20">
-        <h2 className="ez:m-0 ez:font-body ez:text-site-small ez:font-normal ez:tracking-widest ez:text-muted">{SHOP_TITLE.reviews}</h2>
+        <h2 className="ez:m-0 ez:font-body ez:text-site-small ez:font-normal ez:text-muted">{SHOP_TITLE.reviews}</h2>
         {review ? (
           <figure className="ez:m-0 ez:grid ez:max-w-100 ez:gap-6 ez:lg:gap-7">
             {review.rating != null && <StarRow rating={review.rating} className="ez:text-fg" />}
-            <blockquote className="ez:m-0 ez:line-clamp-6 ez:font-display ez:text-site-heading ez:font-normal ez:leading-snug ez:lg:text-site-name">{review.body}</blockquote>
+            <blockquote className="ez:m-0 ez:line-clamp-6 ez:font-display ez:text-site-heading ez:lg:text-site-name">{review.body}</blockquote>
             {(review.name || review.date) && (
               <figcaption className="ez:flex ez:flex-wrap ez:gap-x-3 ez:text-site-body ez:text-muted">
                 {review.name && <span>{review.name}</span>}
@@ -362,14 +362,14 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
   return (
     <footer data-slot="site-footer" data-variant="editorial" className="ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:text-fg">
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-16 ez:pb-10 ez:lg:pt-28 ez:lg:pb-14">
-        <p className="ez:m-0 ez:mb-12 ez:font-display ez:text-site-name ez:font-normal ez:leading-none ez:wrap-break-word ez:md:text-site-display ez:lg:mb-22 ez:lg:text-site-hero">{storeName}</p>
+        <p className="ez:m-0 ez:mb-12 ez:font-display ez:text-site-name ez:wrap-break-word ez:md:text-site-display ez:lg:mb-22 ez:lg:text-site-hero">{storeName}</p>
         <div className="ez:grid ez:grid-cols-2 ez:gap-x-gutter ez:gap-y-10 ez:pb-12 ez:md:grid-cols-[7fr_5fr_5fr_5fr] ez:lg:pb-18">
           <div className="ez:col-span-2 ez:grid ez:content-start ez:gap-4 ez:md:col-span-1 ez:lg:gap-5">
             <span className="ez:text-site-note ez:text-muted">고객센터</span>
             {(phone || hours) && (
               <div className="ez:grid ez:gap-2.5">
                 {phone && (
-                  <a href={`tel:${phone}`} className={cn("ez:font-display ez:text-site-counter ez:leading-tight ez:text-fg ez:no-underline ez:tabular-nums ez:lg:text-site-name", focusRing)}>
+                  <a href={`tel:${phone}`} className={cn("ez:font-display ez:text-site-counter ez:text-fg ez:no-underline ez:tabular-nums ez:lg:text-site-name", focusRing)}>
                     {phone}
                   </a>
                 )}
@@ -403,7 +403,7 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
 
 function Crumbs({ items }: { items: ShopListProps["crumbs"] }) {
   return (
-    <nav aria-label="현재 위치" className="ez:flex ez:flex-wrap ez:items-center ez:justify-center ez:gap-x-2.5 ez:text-site-note ez:tracking-wide ez:text-muted">
+    <nav aria-label="현재 위치" className="ez:flex ez:flex-wrap ez:items-center ez:justify-center ez:gap-x-2.5 ez:text-site-note ez:text-muted">
       {items.map((c, i) => (
         <span key={c.href} className="ez:flex ez:items-center ez:gap-x-2.5">
           {i > 0 && <span aria-hidden="true">/</span>}
@@ -427,7 +427,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
     <div data-slot="catalog-view" className="ez:grid ez:grid-cols-1 ez:text-fg">
       <div className="ez:grid ez:justify-items-center ez:pt-8 ez:text-center ez:lg:pt-18">
         <Crumbs items={crumbs} />
-        <h1 className="ez:m-0 ez:mt-5 ez:font-display ez:text-site-page-sm ez:font-normal ez:leading-tight ez:lg:mt-7 ez:lg:text-site-display-md">{title}</h1>
+        <h1 className="ez:m-0 ez:mt-5 ez:font-display ez:text-site-page-sm ez:lg:mt-7 ez:lg:text-site-display-md">{title}</h1>
         {search && <div className="ez:mt-8 ez:w-full ez:max-w-130 ez:text-left">{search}</div>}
         {tabs.length > 1 && (
           <nav aria-label="카테고리" className="ez:mt-8 ez:flex ez:flex-wrap ez:justify-center ez:gap-x-10 ez:gap-y-1 ez:text-site-body ez:lg:mt-11">

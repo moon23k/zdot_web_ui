@@ -14,6 +14,7 @@ import { wordmark } from "../../utils/styles";
 import { LiveNavLinks, NavLinks, type NavCategory } from "./header-nav";
 import { CheckoutSteps, PathSwitch } from "./path-switch";
 import { SiteLogo } from "./site-logo";
+import { scriptOf } from "../../utils/writing";
 
 const LINKS: Record<string, { label: string; signed: string; guest: string }> = {
   stay: { label: "예약 조회", signed: "/orders", guest: "/orders/lookup" },
@@ -45,7 +46,7 @@ function IconLink({ href, icon, label, count }: { href: string; icon: IconName; 
 
 function Logo({ name, logoUrl }: { name: string; logoUrl?: string | null }) {
   return (
-    <NextLink href="/" className={cn("ez:block ez:min-w-0 ez:text-site-logo ez:text-fg ez:no-underline", wordmark(name))}>
+    <NextLink data-script={scriptOf(name)} href="/" className={cn("ez:block ez:min-w-0 ez:text-site-logo ez:text-fg ez:no-underline", wordmark(name))}>
       <SiteLogo name={name} src={logoUrl} />
     </NextLink>
   );

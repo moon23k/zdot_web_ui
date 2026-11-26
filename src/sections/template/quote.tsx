@@ -8,6 +8,8 @@ import { countSup, focusRing, numeralStep, textLink } from "../../utils/styles";
 import type { Case, TemplateSectionData } from "./data";
 import { Bar, BlankButton, BlankPrice, Chips, Pic } from "../kit";
 import { pcCols } from "../../utils/styles";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 export function PriceTiers({ data }: SectionProps<"price_tiers">) {
   const items = data.items ?? [];
@@ -56,9 +58,9 @@ export function PackageCards({ data }: SectionProps<"package_cards">) {
           <article key={p ? p.name : i} className="ez:flex ez:flex-col ez:overflow-hidden ez:rounded-lg ez:border ez:border-solid ez:border-site-line">
             {(!p || p.image !== undefined) && <Pic src={p?.image} tone={i} className={cn("ez:aspect-[16/9] ez:lg:aspect-auto ez:lg:h-55", cover, "ez:[&>[data-slot=photo]]:rounded-none")} />}
             <div className="ez:flex ez:flex-1 ez:flex-col ez:gap-6 ez:p-6 ez:lg:p-8">
-              <span className="ez:text-site-heading">{p ? p.name : <Bar />}</span>
+              <span data-script={scriptOf(p ? p.name : null)} className="ez:text-site-heading">{p ? p.name : <Bar />}</span>
               {p ? (
-                <strong className="ez:text-site-figure-lg ez:tabular-nums">{p.price}</strong>
+                <strong className="ez:text-site-figure-lg ez:tabular-nums"><Won value={p.price} /></strong>
               ) : (
                 <BlankPrice className="ez:text-site-figure-lg" />
               )}
@@ -112,8 +114,8 @@ export function CaseGrid({ data, variant }: SectionProps<"case_grid">) {
               <>
                 <Pic src={c?.image} tone={i} className={cn("ez:aspect-[4/3] ez:lg:aspect-auto", tall[i], "ez:[&>[data-slot=photo]]:h-full ez:[&>[data-slot=photo]]:aspect-auto")} />
                 <span className="ez:grid ez:min-w-0 ez:gap-1">
-                  <span className="ez:text-site-heading">{c ? c.title : <Bar />}</span>
-                  {c?.meta && <span className="ez:truncate ez:text-site-small ez:text-muted">{c.meta}</span>}
+                  <span data-script={scriptOf(c ? c.title : null)} className="ez:text-site-heading">{c ? c.title : <Bar />}</span>
+                  {c?.meta && <span data-script={scriptOf(c.meta)} className="ez:truncate ez:text-site-small ez:text-muted">{c.meta}</span>}
                 </span>
               </>
             );
@@ -148,7 +150,7 @@ export function CaseGrid({ data, variant }: SectionProps<"case_grid">) {
               <>
                 <Pic src={c?.image} ratio={4 / 3} tone={i} />
                 <span className="ez:grid ez:min-w-0 ez:gap-2">
-                  <span className="ez:text-site-heading">{c ? c.title : <Bar />}</span>
+                  <span data-script={scriptOf(c ? c.title : null)} className="ez:text-site-heading">{c ? c.title : <Bar />}</span>
                   <span className="ez:flex ez:items-baseline ez:justify-between ez:gap-4 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:pt-2.5 ez:text-site-small">
                     <span className="ez:truncate ez:text-muted">{c ? c.meta : <Bar size="long" />}</span>
                     {c?.scope && <span className="ez:shrink-0">{c.scope}</span>}

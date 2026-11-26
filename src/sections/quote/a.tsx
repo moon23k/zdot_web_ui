@@ -13,6 +13,7 @@ import { QuoteNavLinks } from "./nav";
 import { average, businessLine, CASES_HREF, caseView, hasFigures, leadCase, QUOTE_CONSENT, QUOTE_HREF, QUOTE_TITLE, restCases, reviewCount } from "./shared";
 import { OPTION_GRID, OptionCell, StarterForm, starterState } from "./starter";
 import type { CaseFact, CaseView, QuoteFooterProps, QuoteHeaderProps, QuoteListProps } from "./types";
+import { scriptOf } from "../../utils/writing";
 
 const rule = "ez:border-0 ez:border-solid ez:border-site-line";
 
@@ -43,7 +44,7 @@ function Contact({ phone, hours }: { phone?: string | null; hours?: string | nul
       {hours && (
         <div className="ez:grid ez:gap-1">
           <dt className="ez:text-site-note ez:text-muted">{QUOTE_TITLE.hours}</dt>
-          <dd className="ez:m-0 ez:text-site-item ez:font-normal ez:text-fg">{hours}</dd>
+          <dd data-script={scriptOf(hours)} className="ez:m-0 ez:text-site-item ez:font-normal ez:text-fg">{hours}</dd>
         </div>
       )}
     </dl>
@@ -129,7 +130,7 @@ export function Header({ name, logoUrl, phone, nav, links }: QuoteHeaderProps) {
   return (
     <header data-slot="site-header" className={cn(rule, "ez:border-b ez:bg-surface")}>
       <div className="ez:mx-auto ez:flex ez:min-h-16 ez:max-w-wrap ez:items-center ez:gap-6 ez:px-page ez:lg:min-h-18">
-        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-counter ez:font-normal ez:text-fg ez:no-underline ez:lg:w-60 ez:lg:shrink-0", focusRing)}>
+        <NextLink data-script={scriptOf(name)} href="/" className={cn("ez:min-w-0 ez:text-site-counter ez:font-normal ez:text-fg ez:no-underline ez:lg:w-60 ez:lg:shrink-0", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         <nav aria-label="주요 메뉴" className="ez:flex ez:min-w-0 ez:flex-1 ez:flex-wrap ez:gap-x-8 ez:gap-y-1 ez:text-site-body ez:max-lg:hidden">
@@ -171,9 +172,9 @@ export function Hero({ data, context }: SectionProps<"hero">) {
             {eyebrow && <p className="ez:m-0 ez:text-site-small ez:text-muted ez:tabular-nums">{eyebrow}</p>}
             {title ? (
               <div className="ez:grid">
-                <h1 className="ez:m-0 ez:font-display ez:text-site-name ez:text-fg ez:md:text-site-display-sm ez:xl:text-site-display">{title}</h1>
+                <h1 data-script={scriptOf(title)} className="ez:m-0 ez:font-display ez:text-site-name ez:text-fg ez:md:text-site-display-sm ez:xl:text-site-display">{title}</h1>
                 {data.sub && (
-                  <p data-slot="hero-sub" className="ez:m-0 ez:font-display ez:text-site-name ez:text-muted ez:md:text-site-display-sm ez:xl:text-site-display">
+                  <p data-script={scriptOf(data.sub)} data-slot="hero-sub" className="ez:m-0 ez:font-display ez:text-site-name ez:text-muted ez:md:text-site-display-sm ez:xl:text-site-display">
                     {data.sub}
                   </p>
                 )}
@@ -181,7 +182,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
             ) : blank ? (
               <Bar size="long" className="ez:text-site-display" />
             ) : (
-              <p className="ez:m-0 ez:font-display ez:text-site-name ez:text-fg ez:md:text-site-display-sm ez:xl:text-site-display">{context.storeName}</p>
+              <p data-script={scriptOf(context.storeName)} className="ez:m-0 ez:font-display ez:text-site-name ez:text-fg ez:md:text-site-display-sm ez:xl:text-site-display">{context.storeName}</p>
             )}
           </div>
           {blank ? (
@@ -208,8 +209,8 @@ export function Hero({ data, context }: SectionProps<"hero">) {
             {photo}
             <span className="ez:grid ez:gap-1">
               <span className="ez:font-normal ez:text-fg">{view.title}</span>
-              {view.line && <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{view.line}</span>}
-              {view.scope && <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{view.scope}</span>}
+              {view.line && <span data-script={scriptOf(view.line)} className="ez:text-site-small ez:text-muted ez:tabular-nums">{view.line}</span>}
+              {view.scope && <span data-script={scriptOf(view.scope)} className="ez:text-site-small ez:text-muted ez:tabular-nums">{view.scope}</span>}
             </span>
           </NextLink>
         ) : (
@@ -245,7 +246,7 @@ function Record({ c }: { c: Case | null }) {
         <Pic ratio={3 / 2} />
       )}
       <div className="ez:flex ez:min-w-0 ez:flex-col ez:items-start ez:gap-7">
-        {view ? <h3 className="ez:m-0 ez:font-display ez:text-site-heading ez:text-fg ez:md:text-site-title">{view.title}</h3> : <Bar size="long" className="ez:text-site-heading ez:md:text-site-title" />}
+        {view ? <h3 data-script={scriptOf(view.title)} className="ez:m-0 ez:font-display ez:text-site-heading ez:text-fg ez:md:text-site-title">{view.title}</h3> : <Bar size="long" className="ez:text-site-heading ez:md:text-site-title" />}
         <FactTable facts={view?.facts ?? []} blank={!view} />
         {view && (
           <NextLink href={view.href} aria-label={`${view.title} ${QUOTE_TITLE.view}`} className={cn(textLink, "ez:mt-auto ez:text-site-body", focusRing)}>
@@ -264,8 +265,8 @@ function Work({ c }: { c: Case | null }) {
     <>
       <Pic src={view?.image} ratio={3 / 2} />
       <div className="ez:mt-5 ez:grid ez:gap-2">
-        {view ? <h3 className="ez:m-0 ez:text-site-item ez:font-normal ez:text-fg ez:md:text-site-heading">{view.title}</h3> : <Bar className="ez:text-site-item ez:md:text-site-heading" />}
-        <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{view ? factLine(view) : <Bar size="long" />}</span>
+        {view ? <h3 data-script={scriptOf(view.title)} className="ez:m-0 ez:text-site-item ez:font-normal ez:text-fg ez:md:text-site-heading">{view.title}</h3> : <Bar className="ez:text-site-item ez:md:text-site-heading" />}
+        <span data-script={scriptOf(view ? factLine(view) : null)} className="ez:text-site-small ez:text-muted ez:tabular-nums">{view ? factLine(view) : <Bar size="long" />}</span>
       </div>
     </>
   );
@@ -343,7 +344,7 @@ export function Process({ data }: SectionProps<"process_steps">) {
         {shown.map((s, i) => (
           <li key={i} className={cn(rule, "ez:flex ez:min-h-19 ez:items-center ez:border-b ez:py-4")}>
             <span className="ez:w-18 ez:shrink-0 ez:text-site-note ez:text-muted ez:tabular-nums">{String(i + 1).padStart(2, "0")}</span>
-            <span className="ez:min-w-0 ez:text-site-item ez:font-normal ez:text-fg ez:md:text-site-counter">{s ?? <Bar />}</span>
+            <span data-script={scriptOf(s)} className="ez:min-w-0 ez:text-site-item ez:font-normal ez:text-fg ez:md:text-site-counter">{s ?? <Bar />}</span>
           </li>
         ))}
       </ol>
@@ -386,7 +387,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
               {r ? <p className="ez:m-0 ez:min-h-[2lh] ez:text-pretty ez:text-fg">{r.body}</p> : <Lines />}
               {r && (
                 <span className="ez:mt-1 ez:grid ez:gap-1">
-                  {product?.name && <span className="ez:text-site-note ez:font-normal ez:text-fg">{product.name}</span>}
+                  {product?.name && <span data-script={scriptOf(product.name)} className="ez:text-site-note ez:font-normal ez:text-fg">{product.name}</span>}
                   <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{[r.name, r.date].filter(Boolean).join(" · ")}</span>
                 </span>
               )}
@@ -507,7 +508,7 @@ function RequestBox({ data, storeName, compact }: { data: QuoteStarter; storeNam
       <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-12 ez:lg:gap-14">
         <div className="ez:grid">
           <h2 className={cn("ez:m-0 ez:font-display ez:font-normal ez:text-fg", big)}>{QUOTE_TITLE.request}</h2>
-          {storeName && <p className={cn("ez:m-0 ez:font-display ez:font-normal ez:text-muted", big)}>{storeName}</p>}
+          {storeName && <p data-script={scriptOf(storeName)} className={cn("ez:m-0 ez:font-display ez:font-normal ez:text-muted", big)}>{storeName}</p>}
         </div>
         {!blank && <Contact phone={data.phone} hours={data.hours} />}
       </div>
@@ -534,7 +535,7 @@ export function Footer({ storeName, phone, hours, business, nav, guide, account,
     <footer data-slot="site-footer" className={cn(rule, "ez:border-t ez:text-fg")}>
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-18 ez:pb-12">
         <div className={cn(rule, "ez:grid ez:gap-10 ez:border-b ez:pb-12 ez:md:grid-cols-3")}>
-          <p className="ez:m-0 ez:text-site-counter ez:font-normal ez:text-fg">{storeName}</p>
+          <p data-script={scriptOf(storeName)} className="ez:m-0 ez:text-site-counter ez:font-normal ez:text-fg">{storeName}</p>
           <div className="ez:grid ez:content-start ez:gap-1">
             {(phone || hours) && <span className="ez:mb-2 ez:text-site-note ez:text-muted">{QUOTE_TITLE.center}</span>}
             {phone && (
@@ -602,7 +603,7 @@ function ListRow({ c }: { c: Case }) {
         <Pic src={view.image} ratio={3 / 2} />
       </NextLink>
       <div className="ez:flex ez:min-w-0 ez:flex-col ez:items-start ez:gap-6">
-        <h2 className="ez:m-0 ez:font-display ez:text-site-heading ez:text-fg ez:md:text-site-title">{view.title}</h2>
+        <h2 data-script={scriptOf(view.title)} className="ez:m-0 ez:font-display ez:text-site-heading ez:text-fg ez:md:text-site-title">{view.title}</h2>
         <FactTable facts={view.facts} className="ez:max-w-130" />
         <NextLink href={view.href} aria-label={`${view.title} ${QUOTE_TITLE.view}`} className={cn(textLink, "ez:mt-auto ez:text-site-body", focusRing)}>
           {QUOTE_TITLE.view}

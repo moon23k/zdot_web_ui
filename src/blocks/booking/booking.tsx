@@ -7,6 +7,8 @@ import { infoRows, pointTag } from "../../utils/styles";
 import { STAR_PATH } from "../../components/star-row";
 import type { StayBreakdown } from "../../types";
 import { won } from "../../utils/format";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 export function PhotoCollage({ images, name, kind = "stay" }: { images: (string | null)[]; name: string; kind?: "stay" | "class" }) {
   const full = kind === "stay" ? 5 : 3;
@@ -78,7 +80,7 @@ export function BookingHead({ tag, title, rating, facts }: { tag?: string | null
           </span>
         )}
         <div className="ez:flex ez:flex-wrap ez:items-end ez:justify-between ez:gap-4">
-          <h1 className="ez:m-0 ez:text-site-page ez:lg:text-site-display-md">{title}</h1>
+          <h1 data-script={scriptOf(title)} className="ez:m-0 ez:text-site-page ez:lg:text-site-display-md">{title}</h1>
           {rating && rating.count > 0 && (
             <a href="#reviews" className="ez:flex ez:items-center ez:gap-2 ez:pb-2 ez:text-site-small ez:text-fg ez:no-underline">
               <svg viewBox="0 0 24 24" aria-hidden="true" data-star="on" className="ez:size-3.25 ez:text-primary">
@@ -139,7 +141,7 @@ export function CardTotal({ label, value, rows, after }: { label: string; value:
       {rows?.map((r, i) => (
         <div key={`${i}-${r.label}`} data-slot="card-total-row" className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
           <span className="ez:text-site-small ez:text-muted">{r.label}</span>
-          <span className={cn("ez:text-site-body ez:tabular-nums", r.minus && "ez:text-primary")}>{r.value}</span>
+          <span className={cn("ez:text-site-body ez:tabular-nums", r.minus && "ez:text-primary")}><Won value={r.value} /></span>
         </div>
       ))}
       <div className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
@@ -149,7 +151,7 @@ export function CardTotal({ label, value, rows, after }: { label: string; value:
       {after?.map((r, i) => (
         <div key={`${i}-${r.label}`} data-slot="card-total-after" className="ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:text-site-small ez:text-muted">
           <span>{r.label}</span>
-          <span className="ez:tabular-nums">{r.value}</span>
+          <span className="ez:tabular-nums"><Won value={r.value} /></span>
         </div>
       ))}
     </div>
@@ -171,7 +173,7 @@ export function TimeTiles({ items, value, onChange, name }: { items: { id: strin
         >
           <input type="radio" name={name} value={t.id} checked={value === t.id} disabled={t.off} onChange={() => onChange(t.id)} className="ez:sr-only" />
           <span className={cn("ez:text-site-lead ez:tabular-nums", t.off && "ez:line-through")}>{t.time}</span>
-          <span className="ez:text-site-caption">{t.note}</span>
+          <span data-script={scriptOf(t.note)} className="ez:text-site-caption">{t.note}</span>
         </label>
       ))}
     </div>
@@ -181,7 +183,7 @@ export function TimeTiles({ items, value, onChange, name }: { items: { id: strin
 export function SectionSplit({ id, title, children }: { id?: string; title: string; children: ReactNode }) {
   return (
     <section id={id} className="ez:grid ez:gap-5 ez:text-fg">
-      <h2 className="ez:m-0 ez:text-site-heading">{title}</h2>
+      <h2 data-script={scriptOf(title)} className="ez:m-0 ez:text-site-heading">{title}</h2>
       <div className="ez:min-w-0">{children}</div>
     </section>
   );
@@ -192,15 +194,15 @@ export function RoomShelf({ title, rooms }: { title: string; rooms: { id: string
   return (
     <section data-slot="room-shelf" className="ez:mx-[calc(50%-50vw)] ez:bg-surface-alt ez:text-fg">
       <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-8 ez:px-page ez:py-16 ez:lg:py-24">
-        <h2 className="ez:m-0 ez:text-site-section">{title}</h2>
+        <h2 data-script={scriptOf(title)} className="ez:m-0 ez:text-site-section">{title}</h2>
         <div className="ez:grid ez:gap-gutter ez:md:grid-cols-2">
           {rooms.slice(0, 2).map((r, i) => (
             <NextLink key={r.id} href={`/products/${r.id}`} className="ez:grid ez:gap-4 ez:text-fg ez:no-underline">
               <Photo src={r.image} alt={r.name} tone={i} sizes="(max-width: 768px) 100vw, 640px" className="ez:aspect-[16/9]" />
               <span className="ez:flex ez:items-baseline ez:justify-between ez:gap-4">
-                <span className="ez:text-site-heading">{r.name}</span>
+                <span data-script={scriptOf(r.name)} className="ez:text-site-heading">{r.name}</span>
                 <span className="ez:font-normal ez:tabular-nums">
-                  {r.price}
+                  <Won value={r.price} />
                   <span className="ez:text-site-small ez:font-normal ez:text-muted"> / {r.unit}</span>
                 </span>
               </span>

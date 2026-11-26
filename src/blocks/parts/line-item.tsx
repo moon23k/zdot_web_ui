@@ -2,6 +2,7 @@ import NextLink from "next/link";
 import type { ReactNode } from "react";
 import { cn } from "../../utils/cn";
 import { Notice } from "./notice";
+import { scriptOf } from "../../utils/writing";
 
 export const lineList = "ez:m-0 ez:p-0 ez:list-none";
 
@@ -38,13 +39,13 @@ export function LineItem({
       {media}
       <div className="ez:grid ez:gap-0.5 ez:min-w-0">
         {href ? (
-          <NextLink href={href} className="ez:text-site-body ez:text-fg ez:no-underline ez:hover:underline">
+          <NextLink data-script={scriptOf(name)} href={href} className="ez:text-site-body ez:text-fg ez:no-underline ez:hover:underline">
             {name}
           </NextLink>
         ) : (
-          <span className="ez:text-site-body ez:text-fg">{name}</span>
+          <span data-script={scriptOf(name)} className="ez:text-site-body ez:text-fg">{name}</span>
         )}
-        {option && <span className="ez:text-site-small ez:text-muted">{option}</span>}
+        {option && <span data-script={scriptOf(option)} className="ez:text-site-small ez:text-muted">{option}</span>}
         {meta}
         {problem && <Notice tone="error">{problem}</Notice>}
       </div>

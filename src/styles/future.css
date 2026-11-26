@@ -96,16 +96,16 @@
   }
 }
 @utility fx-title {
-  font-size: calc(clamp(2.75rem, 6.4vw, 5.75rem) * var(--ezd-title-scale, 1));
-  line-height: 1.18;
-  letter-spacing: calc(-0.03em + var(--ezd-title-tracking, 0em));
+  font-size: calc(clamp(2.75rem, 6.4vw, 5.75rem) * var(--ezd-title-scale, 1) * var(--ez-fx-scale, 1));
+  line-height: var(--ez-fx-leading, 1.18);
+  letter-spacing: calc(var(--ez-fx-tracking, -0.03em) + var(--ezd-title-tracking, 0em));
   font-weight: var(--ezd-title-weight, 400);
   text-wrap: balance;
 }
 @utility fx-title-xl {
-  font-size: calc(clamp(3rem, 7.2vw, 6.5rem) * var(--ezd-title-scale, 1));
-  line-height: 1.18;
-  letter-spacing: calc(-0.03em + var(--ezd-title-tracking, 0em));
+  font-size: calc(clamp(3rem, 7.2vw, 6.5rem) * var(--ezd-title-scale, 1) * var(--ez-fx-scale, 1));
+  line-height: var(--ez-fx-leading, 1.18);
+  letter-spacing: calc(var(--ez-fx-tracking, -0.03em) + var(--ezd-title-tracking, 0em));
   font-weight: var(--ezd-title-weight, 400);
   text-wrap: balance;
 }

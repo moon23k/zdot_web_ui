@@ -8,6 +8,8 @@ import { caseHref, menuItems } from "../landing/shared";
 import type { Case, MenuItem } from "../template/data";
 import { AuroraHero, AuroraIntro, AuroraStore, card as photoCard, glass, Head, wash } from "../place/d-parts";
 import { OFFICE_ID, OFFICE_TITLE } from "./shared";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 export { AuroraFooter as Footer, AuroraHeader as Header } from "../place/d-parts";
 
@@ -30,8 +32,8 @@ export function Menu({ data }: SectionProps<"menu">) {
           {shown.map((m, i) =>
             m ? (
               <li key={m.id} className={card}>
-                <h3 className="ez:m-0 ez:text-site-item ez:font-normal">{m.name}</h3>
-                {m.price && <p className={price}>{m.price}</p>}
+                <h3 data-script={scriptOf(m.name)} className="ez:m-0 ez:text-site-item ez:font-normal">{m.name}</h3>
+                {m.price && <p className={price}><Won value={m.price} /></p>}
               </li>
             ) : (
               <li key={i} aria-hidden="true" className={card}>
@@ -76,8 +78,8 @@ export function Cases({ data }: SectionProps<"case_grid">) {
             <li key={c.id} className="ez:min-w-0">
               <NextLink href={caseHref(c.id)} className={cn("ez:group ez:grid ez:content-start ez:text-fg ez:no-underline", focusRing)}>
                 <Pic src={c.image} ratio={4 / 3} tone={i} className={photoCard} />
-                <span className="ez:px-1.5 ez:pt-4 ez:text-site-item ez:font-normal ez:group-hover:text-muted">{c.title}</span>
-                {line && <span className="ez:px-1.5 ez:pt-1 ez:text-site-body ez:text-muted">{line}</span>}
+                <span data-script={scriptOf(c.title)} className="ez:px-1.5 ez:pt-4 ez:text-site-item ez:font-normal ez:group-hover:text-muted">{c.title}</span>
+                {line && <span data-script={scriptOf(line)} className="ez:px-1.5 ez:pt-1 ez:text-site-body ez:text-muted">{line}</span>}
               </NextLink>
             </li>
           );

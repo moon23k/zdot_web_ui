@@ -6,7 +6,6 @@ import { Icon } from "../../components/icon";
 import { Photo } from "../../components/photo";
 import type { SectionProps } from "../../renderer/registry";
 import { cn } from "../../utils/cn";
-import { won } from "../../utils/format";
 import { focusRing } from "../../utils/styles";
 import { Bar, BlankButton, BlankPrice, BlankStars, Lines } from "../kit";
 import type { FooterLink } from "../shop/types";
@@ -16,6 +15,8 @@ import { MAP_LABEL, SampleMap } from "./map";
 import { StayNavLinks } from "./nav";
 import { addOnView, roomNotes, ROOMS_HREF, roomView, sameExtra, STAY_TITLE, stayDates } from "./shared";
 import type { StayFooterProps, StayHeaderProps, StayListProps, StaySearch } from "./types";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:box-border ez:px-page";
 
@@ -35,7 +36,7 @@ const sky = "ez:fx-aurora ez:absolute ez:-top-40 ez:left-[calc(50%-50vw)] ez:-z-
 function Head({ title, aside, href }: { title: string; aside?: ReactNode; href?: string }) {
   return (
     <div className="ez:flex ez:flex-wrap ez:items-end ez:justify-between ez:gap-x-6 ez:gap-y-3">
-      <h2 className={h2}>{title}</h2>
+      <h2 data-script={scriptOf(title)} className={h2}>{title}</h2>
       {aside}
       {href && (
         <NextLink href={href} className={more}>
@@ -52,7 +53,7 @@ export function Header({ name, logoUrl, nav, links }: StayHeaderProps) {
     <header data-slot="site-header" data-variant="aurora" className="ez:relative ez:z-10 ez:bg-transparent ez:text-fg">
       <div className={cn(wrap, "ez:pt-4 ez:lg:pt-6")}>
         <div className="ez:fx-glass ez:grid ez:h-14 ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-4 ez:rounded-full ez:pr-2 ez:pl-5 ez:lg:h-17 ez:lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] ez:lg:pr-3 ez:lg:pl-8">
-          <NextLink href="/" className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-item ez:font-normal ez:text-fg ez:no-underline", focusRing)}>
+          <NextLink data-script={scriptOf(name)} href="/" className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-item ez:font-normal ez:text-fg ez:no-underline", focusRing)}>
             <SiteLogo name={name} src={logoUrl} />
           </NextLink>
           <nav aria-label="주요 메뉴" className="ez:flex ez:min-w-0 ez:justify-center ez:gap-9 ez:overflow-hidden ez:whitespace-nowrap ez:max-lg:hidden">
@@ -79,7 +80,7 @@ export function Header({ name, logoUrl, nav, links }: StayHeaderProps) {
 function FooterColumn({ title, items }: { title: string; items: FooterLink[] }) {
   return (
     <nav aria-label={title} className="ez:grid ez:content-start ez:gap-2">
-      <span className="ez:mb-2 ez:text-site-note ez:text-muted">{title}</span>
+      <span data-script={scriptOf(title)} className="ez:mb-2 ez:text-site-note ez:text-muted">{title}</span>
       {items.map((l) => (
         <NextLink
           key={l.href}
@@ -99,7 +100,7 @@ export function Footer({ storeName, phone, hours, legal, stay, guide, account, t
       <div className={cn(wrap, "ez:pt-10 ez:pb-12")}>
         <div className="ez:grid ez:grid-cols-2 ez:gap-x-8 ez:gap-y-10 ez:md:grid-cols-4 ez:lg:grid-cols-[2fr_1fr_1fr_1fr_1fr]">
           <div className="ez:col-span-2 ez:grid ez:content-start ez:gap-4 ez:md:col-span-4 ez:lg:col-span-1">
-            <span className="ez:text-site-item ez:font-normal ez:text-fg">{storeName}</span>
+            <span data-script={scriptOf(storeName)} className="ez:text-site-item ez:font-normal ez:text-fg">{storeName}</span>
             {(phone || hours) && (
               <div className="ez:grid ez:gap-1">
                 <span className="ez:text-site-note ez:text-muted">{STAY_TITLE.center}</span>
@@ -108,7 +109,7 @@ export function Footer({ storeName, phone, hours, legal, stay, guide, account, t
                     {phone}
                   </a>
                 )}
-                {hours && <span className="ez:text-site-note ez:text-muted">{hours}</span>}
+                {hours && <span data-script={scriptOf(hours)} className="ez:text-site-note ez:text-muted">{hours}</span>}
               </div>
             )}
           </div>
@@ -211,12 +212,12 @@ function StayBox({ room, storeName }: { room: Room; storeName?: string }) {
   return (
     <div data-slot="hero-stay" className="ez:fx-glass ez:fx-round-md ez:relative ez:mt-3 ez:px-6 ez:pt-5.5 ez:pb-3 ez:text-fg ez:lg:absolute ez:lg:bottom-12 ez:lg:-left-18 ez:lg:mt-0 ez:lg:w-75">
       <span className="ez:text-site-small ez:text-muted">{STAY_TITLE.info}</span>
-      {storeName && <p className="ez:m-0 ez:mt-1 ez:truncate ez:text-site-heading ez:text-fg">{storeName}</p>}
+      {storeName && <p data-script={scriptOf(storeName)} className="ez:m-0 ez:mt-1 ez:truncate ez:text-site-heading ez:text-fg">{storeName}</p>}
       <dl className="ez:m-0 ez:mt-3.5 ez:text-site-body">
         {rows.map((r) => (
           <div key={r.label} className={cn(hair, "ez:flex ez:justify-between ez:gap-4 ez:border-t ez:py-2.5")}>
             <dt className="ez:text-muted">{r.label}</dt>
-            <dd className="ez:m-0 ez:text-right ez:text-fg ez:tabular-nums">{r.value}</dd>
+            <dd className="ez:m-0 ez:text-right ez:text-fg ez:tabular-nums"><Won value={r.value} /></dd>
           </div>
         ))}
       </dl>
@@ -243,7 +244,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
       <div aria-hidden="true" className={sky} />
       <div className="ez:flex ez:min-w-0 ez:flex-col ez:lg:self-end ez:lg:pb-52">
         {context.storeName ? (
-          <p className="ez:fx-title ez:m-0 ez:break-keep ez:text-fg">{context.storeName}</p>
+          <p data-script={scriptOf(context.storeName)} className="ez:fx-title ez:m-0 ez:break-keep ez:text-fg">{context.storeName}</p>
         ) : (
           <span className="ez:fx-title">
             <Bar size="long" strong />
@@ -251,7 +252,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
         )}
         {title ? (
           <div className="ez:mt-6 ez:grid ez:max-w-118 ez:gap-1">
-            <h1 className="ez:m-0 ez:text-site-item ez:leading-relaxed ez:font-normal ez:text-pretty ez:text-muted">{title}</h1>
+            <h1 data-script={scriptOf(title)} className="ez:m-0 ez:text-site-item ez:leading-relaxed ez:font-normal ez:text-pretty ez:text-muted">{title}</h1>
             {sub && (
               <p data-slot="hero-sub" className="ez:m-0 ez:text-site-item ez:leading-relaxed ez:text-muted">
                 {sub}
@@ -309,7 +310,7 @@ function RoomCard({ room, tone }: { room: Room; tone: number }) {
         <Photo src={v.image} alt={v.name} tone={tone} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 432px" className={cn("ez:aspect-4/3 ez:rounded-none", out && "ez:opacity-45")} />
       </span>
       <span className="ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:items-baseline ez:gap-x-3 ez:gap-y-0.5 ez:px-1.5 ez:pt-4">
-        <span className={cn("ez:truncate ez:text-site-item ez:font-normal ez:underline-offset-4 ez:group-hover:underline", out ? "ez:text-muted" : "ez:text-fg")}>{v.name}</span>
+        <span data-script={scriptOf(v.name)} className={cn("ez:truncate ez:text-site-item ez:font-normal ez:underline-offset-4 ez:group-hover:underline", out ? "ez:text-muted" : "ez:text-fg")}>{v.name}</span>
         <span className={cn("ez:inline-flex ez:items-baseline ez:gap-1.5 ez:text-site-item ez:font-normal ez:tabular-nums", out ? "ez:text-muted" : "ez:text-fg")}>
           {unit && <span className="ez:text-site-small ez:text-muted">{unit}</span>}
           {amount}
@@ -385,7 +386,7 @@ function ReviewCard({ item, room }: { item: ReviewItem; room?: string }) {
         <Icon name="star" size="sm" className="ez:fill-current ez:text-star" />
         {item.rating.toFixed(1)}
       </span>
-      <p className="ez:m-0 ez:mt-4.5 ez:line-clamp-4 ez:text-site-item ez:leading-relaxed ez:whitespace-pre-line ez:text-fg">{item.body}</p>
+      <p data-script={scriptOf(item.body)} className="ez:m-0 ez:mt-4.5 ez:line-clamp-4 ez:text-site-item ez:leading-relaxed ez:whitespace-pre-line ez:text-fg">{item.body}</p>
       <span className="ez:mt-auto ez:truncate ez:pt-5.5 ez:text-site-small ez:text-site-off">{[item.name, room, item.date].filter(Boolean).join(" · ")}</span>
     </article>
   );
@@ -518,7 +519,7 @@ function RoomRow({ room, search, tone }: { room: Room; search: StaySearch; tone:
             {v.sample && <span>{STAY_TITLE.sample}</span>}
           </p>
         )}
-        <h2 className={cn("ez:m-0 ez:mb-2 ez:text-site-section", full ? "ez:text-muted" : "ez:text-fg")}>{v.name}</h2>
+        <h2 data-script={scriptOf(v.name)} className={cn("ez:m-0 ez:mb-2 ez:text-site-section", full ? "ez:text-muted" : "ez:text-fg")}>{v.name}</h2>
         {times && (
           <p className="ez:m-0 ez:flex ez:items-center ez:gap-2 ez:text-site-body ez:text-muted ez:tabular-nums">
             <Icon name="clock" size="sm" />
@@ -539,7 +540,7 @@ function RoomRow({ room, search, tone }: { room: Room; search: StaySearch; tone:
             ].map((r) => (
               <div key={r.label} className="ez:flex ez:justify-between ez:gap-4">
                 <dt className="ez:text-muted">{r.label}</dt>
-                <dd className="ez:m-0 ez:text-muted">{r.value}</dd>
+                <dd className="ez:m-0 ez:text-muted"><Won value={r.value} /></dd>
               </div>
             ))}
           </dl>
@@ -548,9 +549,9 @@ function RoomRow({ room, search, tone }: { room: Room; search: StaySearch; tone:
           {q && search.check_in && <p className="ez:m-0 ez:text-site-small ez:text-muted ez:tabular-nums">{[stayDates(search.check_in, search.check_out), q.nights].filter(Boolean).join(" · ")}</p>}
           <p className="ez:m-0 ez:flex ez:items-baseline ez:gap-1.5 ez:tabular-nums">
             {!q && unit && <span className="ez:text-site-small ez:text-muted">{unit}</span>}
-            <span className={cn("ez:text-site-heading", full ? "ez:text-muted" : "ez:text-fg")}>{q ? q.price : amount}</span>
+            <span className={cn("ez:text-site-heading", full ? "ez:text-muted" : "ez:text-fg")}><Won value={q ? q.price : amount} /></span>
           </p>
-          {note && <p className="ez:m-0 ez:text-site-small ez:text-muted">{note}</p>}
+          {note && <p data-script={scriptOf(note)} className="ez:m-0 ez:text-site-small ez:text-muted">{note}</p>}
         </div>
         {v.book && (
           <ButtonLink href={v.book} block className="ez:fx-press ez:mt-6 ez:min-h-12 ez:rounded-lg ez:text-site-body ez:lg:mt-auto">
@@ -609,10 +610,10 @@ function RateTable({ rooms, peak }: { rooms: Room[]; peak: boolean }) {
           <p className={cn(hair, "ez:m-0 ez:flex ez:flex-wrap ez:items-center ez:gap-x-8 ez:gap-y-1 ez:border-t ez:px-6 ez:py-3.5 ez:text-site-body ez:text-muted ez:tabular-nums")}>
             <span className="ez:mr-auto ez:text-site-note">{STAY_TITLE.extra}</span>
             <span>
-              {STAY_TITLE.adults} <span className="ez:ml-1.5 ez:text-fg">{won(first.extra_adult_fee ?? 0)}</span>
+              {STAY_TITLE.adults} <span className="ez:ml-1.5 ez:text-fg"><Won amount={first.extra_adult_fee ?? 0} /></span>
             </span>
             <span>
-              {STAY_TITLE.children} <span className="ez:ml-1.5 ez:text-fg">{won(first.extra_child_fee ?? 0)}</span>
+              {STAY_TITLE.children} <span className="ez:ml-1.5 ez:text-fg"><Won amount={first.extra_child_fee ?? 0} /></span>
             </span>
           </p>
         )}
@@ -631,10 +632,10 @@ function AddOnList({ items, photo }: { items: StayListProps["addOns"]; photo?: s
           {views.map((a, i) => (
             <li key={`${a.name}-${i}`} className={cn(hair, "ez:grid ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-4 ez:border-t ez:py-4.5")}>
               <span className="ez:grid ez:min-w-0 ez:gap-0.5">
-                <span className="ez:text-site-item ez:font-normal ez:text-fg">{a.name}</span>
+                <span data-script={scriptOf(a.name)} className="ez:text-site-item ez:font-normal ez:text-fg">{a.name}</span>
                 <span className="ez:text-site-small ez:text-muted">{`${a.unit} · ${a.pay}`}</span>
               </span>
-              <span className="ez:text-site-item ez:text-fg ez:tabular-nums">{a.price}</span>
+              <span className="ez:text-site-item ez:text-fg ez:tabular-nums"><Won value={a.price} /></span>
             </li>
           ))}
         </ul>
@@ -653,7 +654,7 @@ export function List({ title, count, crumbs, search, rooms, peak, addOns, photo 
     <div data-slot="stay-rooms" data-variant="aurora" className="ez:grid ez:grid-cols-1 ez:pt-6 ez:text-fg">
       <Crumbs items={crumbs} />
       <div className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3 ez:gap-y-1 ez:pt-4">
-        <h1 className="ez:m-0 ez:text-site-section ez:text-fg ez:md:text-site-page">{title}</h1>
+        <h1 data-script={scriptOf(title)} className="ez:m-0 ez:text-site-section ez:text-fg ez:md:text-site-page">{title}</h1>
         {count ? <span className="ez:text-site-item ez:font-normal ez:text-muted ez:tabular-nums">{count}</span> : null}
       </div>
       <div data-slot="stay-search" className="ez:pt-8">

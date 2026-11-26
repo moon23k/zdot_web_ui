@@ -3,6 +3,7 @@
 import { Fragment, useState, type ReactNode } from "react";
 import { cn } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
+import { scriptOf } from "../../utils/writing";
 
 export type TabItem = { key: string; cat: string | null; node: ReactNode };
 
@@ -18,6 +19,7 @@ export function CaseTabs({ title, all, items, className }: { title: ReactNode; a
           <div role="group" className="ez:flex ez:flex-wrap ez:gap-x-7 ez:gap-y-2">
             {[null, ...cats].map((c) => (
               <button
+                data-script={scriptOf(c ?? all)}
                 key={c ?? ""}
                 type="button"
                 aria-pressed={on === c}

@@ -6,6 +6,7 @@ import { cn } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
 import { reviewWord } from "../../utils/words";
 import { LogoutButton } from "./logout-button";
+import { Won } from "../../components/price";
 
 const TABS = [
   { href: "/orders", label: "주문 내역" },
@@ -53,7 +54,7 @@ export function AccountShell({
             <span className="ez:flex ez:flex-wrap ez:gap-x-3.5 ez:text-site-small">
               {summary.map((s) => (
                 <span key={s.label}>
-                  {s.label} <span className="ez:font-normal ez:text-primary">{s.value}</span>
+                  {s.label} <span className="ez:font-normal ez:text-primary"><Won value={s.value} /></span>
                 </span>
               ))}
             </span>

@@ -3,6 +3,7 @@ import { Children, type ReactNode } from "react";
 import { Photo } from "../../components/photo";
 import { cn } from "../../utils/cn";
 import { focusRing, infoRows, pcCols } from "../../utils/styles";
+import { scriptOf } from "../../utils/writing";
 
 export { Bar, BlankButton, BlankPrice, BlankStars, Lines } from "./blank";
 
@@ -13,7 +14,7 @@ export const line = "ez:border-solid ez:border-primary-border ez:[border-width:v
 export function Title({ children, aside }: { children: ReactNode; aside?: ReactNode }) {
   return (
     <div className="ez:flex ez:items-baseline ez:justify-between ez:gap-3">
-      <h2 className="ez:m-0 ez:font-display ez:text-site-section">{children}</h2>
+      <h2 data-script={scriptOf(children)} className="ez:m-0 ez:font-display ez:text-site-section">{children}</h2>
       {aside}
     </div>
   );
@@ -22,7 +23,7 @@ export function Title({ children, aside }: { children: ReactNode; aside?: ReactN
 export function Split({ slot, id, title, children, blank }: { slot: string; id?: string; title: ReactNode; children: ReactNode; blank?: boolean }) {
   return (
     <section data-slot={slot} data-variant="gallery" id={id} data-blank={blank ? "" : undefined} className="ez:grid ez:gap-6 ez:text-fg ez:lg:grid-cols-[4fr_8fr]">
-      <h2 className="ez:m-0 ez:text-site-section">{title}</h2>
+      <h2 data-script={scriptOf(title)} className="ez:m-0 ez:text-site-section">{title}</h2>
       <div className="ez:min-w-0">{children}</div>
     </section>
   );
@@ -121,6 +122,7 @@ export function Chips({ items, current = 0 }: { items: string[]; current?: numbe
     <ul className="ez:m-0 ez:flex ez:list-none ez:gap-2 ez:overflow-x-auto ez:p-0">
       {items.map((c, i) => (
         <li
+          data-script={scriptOf(c)}
           key={c}
           className={cn(
             "ez:shrink-0 ez:rounded-button ez:border ez:border-solid ez:px-4 ez:py-1.5 ez:text-site-note ez:whitespace-nowrap",

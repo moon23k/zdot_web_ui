@@ -10,6 +10,7 @@ import { cn } from "../../utils/cn";
 import { fieldset, legend } from "../parts/choice";
 import { form } from "../parts/form";
 import { Notice } from "../parts/notice";
+import { scriptOf } from "../../utils/writing";
 
 export function ReviewForm({
   orderItemId,
@@ -44,7 +45,7 @@ export function ReviewForm({
         {imageSrc !== undefined && <Photo src={imageSrc} alt="" sizes="40px" className="ez:w-10 ez:shrink-0 ez:aspect-[4/5]" />}
         <span className="ez:grid">
           <span>{productName}</span>
-          {option && <span className="ez:text-site-small ez:text-muted">{option}</span>}
+          {option && <span data-script={scriptOf(option)} className="ez:text-site-small ez:text-muted">{option}</span>}
         </span>
       </div>
       <fieldset className={fieldset}>

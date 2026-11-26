@@ -16,6 +16,8 @@ import {
   telHref,
 } from "./shared";
 import type { PlaceFooterProps, PlaceHeaderProps } from "./types";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const line = "ez:border-0 ez:border-solid ez:border-site-line";
 
@@ -81,6 +83,7 @@ function OutLink({
 }) {
   return (
     <a
+      data-script={scriptOf(children)}
       href={href}
       target="_blank"
       rel="noopener noreferrer"
@@ -111,6 +114,7 @@ export function Header({
         )}
       >
         <NextLink
+          data-script={scriptOf(storeName)}
           href="/"
           className={cn(
             "ez:min-w-0 ez:justify-self-start ez:text-site-body ez:no-underline",
@@ -195,7 +199,7 @@ export function Footer({
         )}
       >
         <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-6 ez:md:col-span-8 ez:lg:col-span-6">
-          <p className={cn("ez:m-0 ez:text-site-body", logo)}>{storeName}</p>
+          <p data-script={scriptOf(storeName)} className={cn("ez:m-0 ez:text-site-body", logo)}>{storeName}</p>
           {contact.length > 0 && (
             <ul className={small}>
               {contact.map((c) => (
@@ -269,9 +273,9 @@ export function Hero({ data, context }: SectionProps<"hero">) {
       <Pair
         head={
           title ? (
-            <h1 className={name}>{title}</h1>
+            <h1 data-script={scriptOf(title)} className={name}>{title}</h1>
           ) : context.storeName ? (
-            <p className={name}>{context.storeName}</p>
+            <p data-script={scriptOf(context.storeName)} className={name}>{context.storeName}</p>
           ) : (
             <Bar className="ez:text-site-heading" />
           )
@@ -300,7 +304,7 @@ export function Intro({ data }: SectionProps<"intro">) {
         <div className="ez:grid ez:gap-5">
           {text.length ? (
             text.map((p, i) => (
-              <p key={i} className={cn(body, "ez:whitespace-pre-line")}>
+              <p data-script={scriptOf(p)} key={i} className={cn(body, "ez:whitespace-pre-line")}>
                 {p}
               </p>
             ))
@@ -337,8 +341,8 @@ function Signature({ items }: { items: MenuItem[] }) {
               className="ez:mb-5"
             />
           )}
-          <h3 className={item}>{m.name}</h3>
-          <p className={cn(body, "ez:mt-4 ez:tabular-nums")}>{m.price}</p>
+          <h3 data-script={scriptOf(m.name)} className={item}>{m.name}</h3>
+          <p className={cn(body, "ez:mt-4 ez:tabular-nums")}><Won value={m.price} /></p>
         </li>
       ))}
     </ul>
@@ -353,16 +357,16 @@ function FullMenu({ groups }: { groups: MenuGroup[] }) {
           key={g.id ?? "all"}
           className="ez:grid ez:min-w-0 ez:content-start ez:gap-4"
         >
-          {g.name && <h4 className={item}>{g.name}</h4>}
+          {g.name && <h4 data-script={scriptOf(g.name)} className={item}>{g.name}</h4>}
           <dl className="ez:m-0 ez:grid ez:gap-2">
             {g.items.map((m) => (
               <div
                 key={m.id}
                 className="ez:flex ez:items-baseline ez:justify-between ez:gap-4"
               >
-                <dt className={cn(body, "ez:min-w-0")}>{m.name}</dt>
+                <dt data-script={scriptOf(m.name)} className={cn(body, "ez:min-w-0")}>{m.name}</dt>
                 <dd className={cn(body, "ez:shrink-0 ez:tabular-nums")}>
-                  {m.price}
+                  <Won value={m.price} />
                 </dd>
               </div>
             ))}
@@ -440,8 +444,8 @@ export function Menu({ data }: SectionProps<"menu">) {
 function VisitRow({ term, children }: { term: string; children: ReactNode }) {
   return (
     <div className="ez:grid ez:gap-3">
-      <dt className={item}>{term}</dt>
-      <dd className={body}>{children}</dd>
+      <dt data-script={scriptOf(term)} className={item}>{term}</dt>
+      <dd data-script={scriptOf(children)} className={body}>{children}</dd>
     </div>
   );
 }

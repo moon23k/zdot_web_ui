@@ -1,5 +1,6 @@
 import { cn } from "../../utils/cn";
 import { won } from "../../utils/format";
+import { Won } from "../../components/price";
 
 export type SummaryRow = { label: string; value: number | string; minus?: boolean; strong?: boolean };
 
@@ -11,19 +12,19 @@ export function SummaryRows({ rows, total, after }: { rows: SummaryRow[]; total?
       {rows.map((row, i) => (
         <div key={`${i}-${row.label}`} className="ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:text-site-lead">
           <dt className={row.strong ? undefined : "ez:text-muted"}>{row.label}</dt>
-          <dd className={cn("ez:m-0", typeof row.value === "string" && "ez:text-muted", row.minus && "ez:text-primary")}>{amount(row)}</dd>
+          <dd className={cn("ez:m-0", typeof row.value === "string" && "ez:text-muted", row.minus && "ez:text-primary")}><Won value={amount(row)} /></dd>
         </div>
       ))}
       {total && (
         <div className="ez:mt-4 ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:border-0 ez:border-t ez:border-solid ez:border-site-field ez:pt-7">
           <dt className="ez:text-site-lead">{total.label}</dt>
-          <dd className="ez:m-0 ez:text-site-title">{won(total.value)}</dd>
+          <dd className="ez:m-0 ez:text-site-title"><Won amount={total.value} /></dd>
         </div>
       )}
       {after?.map((row, i) => (
         <div key={`${i}-${row.label}`} className="ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:text-site-small ez:text-muted">
           <dt>{row.label}</dt>
-          <dd className="ez:m-0">{amount(row)}</dd>
+          <dd className="ez:m-0"><Won value={amount(row)} /></dd>
         </div>
       ))}
     </dl>

@@ -13,6 +13,8 @@ import type { MenuGroup, MenuItem, PlaceLink } from "../template/data";
 import { CareNavLinks } from "./nav";
 import { CARE_ID, CARE_TITLE } from "./shared";
 import type { CareFooterProps, CareHeaderProps } from "./types";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:px-page";
 
@@ -76,7 +78,7 @@ export function Header({ name: storeName, logoUrl, phone, nav, links }: CareHead
   return (
     <header data-slot="site-header" data-variant="catalog" className="ez:bg-surface ez:text-fg">
       <div className={cn(wrap, "ez:flex ez:h-16 ez:items-center ez:gap-6 ez:lg:grid ez:lg:h-24 ez:lg:grid-cols-12 ez:lg:gap-x-gutter")}>
-        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-body ez:no-underline ez:lg:col-span-3", logo, focusRing)}>
+        <NextLink data-script={scriptOf(storeName)} href="/" className={cn("ez:min-w-0 ez:text-site-body ez:no-underline ez:lg:col-span-3", logo, focusRing)}>
           <SiteLogo name={storeName} src={logoUrl} />
         </NextLink>
         <div className="ez:ml-auto ez:flex ez:min-w-0 ez:items-center ez:justify-end ez:gap-8 ez:lg:col-span-9 ez:lg:col-start-4 ez:lg:ml-0">
@@ -107,7 +109,7 @@ export function Footer({ storeName, phone, hours, address, business, links, term
   return (
     <footer data-slot="site-footer" data-variant="catalog" className="ez:text-fg">
       <div className={cn(wrap, "ez:grid ez:gap-y-10 ez:pt-24 ez:pb-12 ez:lg:grid-cols-12 ez:lg:gap-x-gutter")}>
-        <p className={cn("ez:min-w-0 ez:text-site-body ez:lg:col-span-3", logo)}>{storeName}</p>
+        <p data-script={scriptOf(storeName)} className={cn("ez:min-w-0 ez:text-site-body ez:lg:col-span-3", logo)}>{storeName}</p>
         <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-6 ez:lg:col-span-4 ez:lg:col-start-5">
           {contact.length > 0 && (
             <ul className={list}>
@@ -170,7 +172,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
       className="ez:grid ez:gap-y-10 ez:text-fg ez:lg:grid-cols-12 ez:lg:grid-rows-[auto_minmax(0,1fr)] ez:lg:gap-x-gutter ez:lg:gap-y-0"
     >
       <div className="ez:min-w-0 ez:text-center ez:lg:col-span-3 ez:lg:row-start-1 ez:lg:pt-14">
-        {title ? <h1 className={cn(logo, mark)}>{title}</h1> : store ? <p className={cn(logo, mark)}>{store}</p> : <Bar className={mark} />}
+        {title ? <h1 data-script={scriptOf(title)} className={cn(logo, mark)}>{title}</h1> : store ? <p data-script={scriptOf(store)} className={cn(logo, mark)}>{store}</p> : <Bar className={mark} />}
       </div>
       <div style={{ aspectRatio: RATIO.hero }} className="ez:relative ez:min-w-0 ez:lg:col-span-9 ez:lg:col-start-4 ez:lg:row-span-2 ez:lg:row-start-1">
         <Photo src={image} alt="" preload sizes="(max-width: 1024px) 100vw, 75vw" tone={0} className="ez:absolute ez:inset-0 ez:aspect-auto ez:h-full ez:rounded-none" />
@@ -187,7 +189,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
               {hours && (
                 <div className={cn(dotted, "ez:grid ez:grid-cols-[minmax(0,5rem)_minmax(0,1fr)] ez:gap-3 ez:border-b ez:py-3")}>
                   <dt className={small}>{CARE_TITLE.hours}</dt>
-                  <dd className={body}>{hours}</dd>
+                  <dd data-script={scriptOf(hours)} className={body}>{hours}</dd>
                 </div>
               )}
               {phone && (
@@ -225,7 +227,7 @@ export function Intro({ data }: SectionProps<"intro">) {
                 {rest.length > 0 && (
                   <div className="ez:grid ez:gap-6">
                     {rest.map((p, i) => (
-                      <p key={i} className={cn(body, "ez:whitespace-pre-line")}>
+                      <p data-script={scriptOf(p)} key={i} className={cn(body, "ez:whitespace-pre-line")}>
                         {p}
                       </p>
                     ))}
@@ -249,8 +251,8 @@ function Item({ item, photos, tone, heading: Heading }: { item: MenuItem; photos
   return (
     <li className={cn("ez:grid ez:min-w-0 ez:content-start", !photos && cn(dotted, "ez:border-b ez:py-6"))}>
       {photos && <Pic src={item.image} ratio={RATIO.item} tone={tone} className="ez:mb-8" />}
-      <Heading className={name}>{item.name}</Heading>
-      <p className={cn(price, "ez:mt-3")}>{item.price}</p>
+      <Heading data-script={scriptOf(item.name)} className={name}>{item.name}</Heading>
+      <p className={cn(price, "ez:mt-3")}><Won value={item.price} /></p>
     </li>
   );
 }
@@ -258,7 +260,7 @@ function Item({ item, photos, tone, heading: Heading }: { item: MenuItem; photos
 function Group({ group, photos, titled }: { group: MenuGroup; photos: boolean; titled: boolean }) {
   return (
     <div className="ez:grid ez:gap-8">
-      {titled && group.name && <h3 className={cn(small, "ez:font-display")}>{group.name}</h3>}
+      {titled && group.name && <h3 data-script={scriptOf(group.name)} className={cn(small, "ez:font-display")}>{group.name}</h3>}
       <ul className={cn("ez:m-0 ez:grid ez:list-none ez:gap-x-gutter ez:p-0 ez:sm:grid-cols-2", photos ? "ez:gap-y-16" : cn(dotted, "ez:border-t"))}>
         {group.items.map((m, i) => (
           <Item key={m.id} item={m} photos={photos} tone={i} heading={titled && group.name ? "h4" : "h3"} />

@@ -3,12 +3,14 @@ import { buttonVariants } from "../../components/button";
 import { Icon } from "../../components/icon";
 import { cn } from "../../utils/cn";
 import { numeralStep } from "../../utils/styles";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 export function FormLayout({ title, aside, children }: { title: string; aside?: ReactNode; children: ReactNode }) {
   return (
     <div data-slot="form-layout" className="ez:grid ez:gap-10 ez:pt-4 ez:text-fg ez:lg:grid-cols-[420px_minmax(0,1fr)] ez:lg:items-start ez:lg:gap-24 ez:lg:pt-10">
       <div className="ez:grid ez:gap-10 ez:lg:sticky ez:lg:top-8">
-        <h1 className="ez:m-0 ez:text-site-page">{title}</h1>
+        <h1 data-script={scriptOf(title)} className="ez:m-0 ez:text-site-page">{title}</h1>
         {aside}
       </div>
       <div className="ez:grid ez:min-w-0 ez:gap-10 ez:lg:gap-14">{children}</div>
@@ -25,7 +27,7 @@ export function StepList({ items }: { items: { label: string; value?: string | n
             <span className={numeralStep}>{i + 1}</span>
             <span>{it.label}</span>
           </span>
-          {it.value && <span className="ez:truncate ez:text-site-body ez:text-fg">{it.value}</span>}
+          {it.value && <span className="ez:truncate ez:text-site-body ez:text-fg"><Won value={it.value} /></span>}
         </li>
       ))}
     </ol>

@@ -11,6 +11,7 @@ import { cn } from "../../utils/cn";
 import { focusRing, textLink } from "../../utils/styles";
 import { kstToday } from "../../utils/format";
 import { popupStyleOf, type PopupSize, type PopupStyleSetting } from "./style";
+import { scriptOf } from "../../utils/writing";
 
 export type StorePopupItem = {
   id: string;
@@ -146,8 +147,8 @@ export function StorePopup({ popups, store, shape, preview = false }: { popups: 
       오늘 하루 열지 않기
     </button>
   );
-  const title = (className: string) => <DialogPrimitive.Title className={cn("ez:m-0 ez:text-fg", className)}>{item.title}</DialogPrimitive.Title>;
-  const body = (className: string) => item.body && <DialogPrimitive.Description className={cn("ez:m-0 ez:text-muted", className)}>{item.body}</DialogPrimitive.Description>;
+  const title = (className: string) => <DialogPrimitive.Title data-script={scriptOf(item.title)} className={cn("ez:m-0 ez:text-fg", className)}>{item.title}</DialogPrimitive.Title>;
+  const body = (className: string) => item.body && <DialogPrimitive.Description data-script={scriptOf(item.body)} className={cn("ez:m-0 ez:text-muted", className)}>{item.body}</DialogPrimitive.Description>;
   const go = (className?: string) =>
     item.href && (
       <NextLink href={item.href} onClick={close} className={cn(textLink, "ez:pb-0.5 ez:text-site-small", focusRing, className)} {...external}>

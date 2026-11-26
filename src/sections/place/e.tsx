@@ -19,6 +19,8 @@ import {
 import type { LandingFooterProps, LandingHeaderProps } from "../landing/types";
 import type { MenuGroup, MenuItem, PlaceLink } from "../template/data";
 import { PLACE_ID, PLACE_TITLE } from "./shared";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 export const nightRule = "ez:border-0 ez:border-solid ez:border-site-line";
 
@@ -98,7 +100,7 @@ export function NightHead({
 }) {
   return (
     <div className="ez:flex ez:flex-wrap ez:items-baseline ez:justify-between ez:gap-x-8 ez:gap-y-3">
-      <h2 className={nightHeading}>{title}</h2>
+      <h2 data-script={scriptOf(title)} className={nightHeading}>{title}</h2>
       {aside}
     </div>
   );
@@ -126,6 +128,7 @@ export function Header({
         )}
       >
         <NextLink
+          data-script={scriptOf(name)}
           href="/"
           className={cn(
             "ez:min-w-0 ez:font-display ez:text-site-counter ez:font-normal ez:leading-none ez:text-fg ez:no-underline ez:lg:w-51 ez:lg:shrink-0",
@@ -221,7 +224,7 @@ export function NightBox({
   const body = (
     <>
       {title && (
-        <b className="ez:block ez:font-display ez:text-site-heading ez:text-fg">
+        <b data-script={scriptOf(title)} className="ez:block ez:font-display ez:text-site-heading ez:text-fg">
           {title}
         </b>
       )}
@@ -323,14 +326,14 @@ export function NightHero({
           )}
         >
           {name ? (
-            <p className={big}>{name}</p>
+            <p data-script={scriptOf(name)} className={big}>{name}</p>
           ) : heading ? (
-            <h1 className={big}>{heading}</h1>
+            <h1 data-script={scriptOf(heading)} className={big}>{heading}</h1>
           ) : (
             <Bar size="long" className="ez:fx-title-xl ez:mt-5" />
           )}
           {name && heading && (
-            <h1 className="ez:m-0 ez:mt-5 ez:max-w-140 ez:text-site-item ez:font-normal ez:leading-relaxed ez:text-muted">
+            <h1 data-script={scriptOf(heading)} className="ez:m-0 ez:mt-5 ez:max-w-140 ez:text-site-item ez:font-normal ez:leading-relaxed ez:text-muted">
               {heading}
             </h1>
           )}
@@ -395,6 +398,7 @@ export function NightAbout({
               </p>
               {rest.map((p, i) => (
                 <p
+                  data-script={scriptOf(p)}
                   key={i}
                   className="ez:m-0 ez:whitespace-pre-line ez:text-site-body ez:leading-loose ez:text-muted"
                 >
@@ -560,7 +564,7 @@ export function NightTable({ groups }: { groups: MenuGroup[] }) {
         <div key={g ? g.id ?? "rest" : i} className={groupCell}>
           {g ? (
             g.name && (
-              <h3 className="ez:m-0 ez:pb-3.5 ez:text-site-small ez:font-normal ez:text-site-off">
+              <h3 data-script={scriptOf(g.name)} className="ez:m-0 ez:pb-3.5 ez:text-site-small ez:font-normal ez:text-site-off">
                 {g.name}
               </h3>
             )
@@ -580,7 +584,7 @@ export function NightTable({ groups }: { groups: MenuGroup[] }) {
                       <Leader />
                     </dt>
                     <dd className="ez:m-0 ez:shrink-0 ez:text-site-body ez:text-muted ez:tabular-nums">
-                      {item.price}
+                      <Won value={item.price} />
                     </dd>
                   </div>
                 ))
@@ -614,12 +618,12 @@ function MenuCard({ item, index }: { item: MenuItem; index: number }) {
         <Pic src={item.image} ratio={1} tone={index} />
       </div>
       <div className="ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:px-0.5 ez:pt-4">
-        <span className="ez:min-w-0 ez:text-site-item ez:text-fg">
+        <span data-script={scriptOf(item.name)} className="ez:min-w-0 ez:text-site-item ez:text-fg">
           {item.name}
         </span>
         {item.price && (
           <span className="ez:shrink-0 ez:text-site-body ez:text-fg ez:tabular-nums">
-            {item.price}
+            <Won value={item.price} />
           </span>
         )}
       </div>
@@ -709,7 +713,7 @@ export function Footer({
           )}
         >
           <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-3 ez:md:col-span-4">
-            <p className="ez:m-0 ez:font-display ez:text-site-item ez:font-normal ez:text-fg">
+            <p data-script={scriptOf(storeName)} className="ez:m-0 ez:font-display ez:text-site-item ez:font-normal ez:text-fg">
               {storeName}
             </p>
             {(phone || contact.length > 0) && (

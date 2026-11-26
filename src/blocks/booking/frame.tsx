@@ -5,6 +5,7 @@ import { Button } from "../../components/button";
 import { Sheet } from "../../components/sheet";
 import { cn } from "../../utils/cn";
 import { pointTag } from "../../utils/styles";
+import { Won } from "../../components/price";
 
 const InSheet = createContext(false);
 
@@ -15,7 +16,7 @@ export type BookingBar = { title: string; label: string; amount?: string | null;
 function Amount({ amount, unit }: { amount: string; unit?: string }) {
   return (
     <p className="ez:m-0 ez:text-site-heading ez:tabular-nums">
-      {amount}
+      <Won value={amount} />
       {unit && <span className="ez:text-site-small ez:font-normal ez:text-muted"> / {unit}</span>}
     </p>
   );

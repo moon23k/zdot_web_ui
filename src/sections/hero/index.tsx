@@ -4,9 +4,10 @@ import { Icon } from "../../components/icon";
 import { Photo } from "../../components/photo";
 import type { SectionProps } from "../../renderer/registry";
 import { cn } from "../../utils/cn";
-import { won } from "../../utils/format";
 import { textLink } from "../../utils/styles";
 import { Bar, BlankButton } from "../kit";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const BUTTON: Record<string, string> = { shop: "상품 보기", stay: "객실 보기", class: "클래스 보기", quote: "작업 보기" };
 
@@ -26,7 +27,7 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
   const mark = (name: string, empty = blank) => ({ "data-slot": "hero", "data-variant": name, "data-blank": empty ? "" : undefined });
   const sub = title ? data.sub?.trim() || null : null;
   const heading = (size: string, inverse?: boolean) => {
-    const h1 = <h1 className={cn("ez:m-0 ez:text-balance", size)}>{title}</h1>;
+    const h1 = <h1 data-script={scriptOf(title)} className={cn("ez:m-0 ez:text-balance", size)}>{title}</h1>;
     if (!sub) return h1;
     return (
       <div className="ez:grid ez:gap-5">
@@ -69,7 +70,7 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
             <dl className="ez:m-0 ez:mt-4 ez:flex ez:gap-10 ez:self-stretch ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-7">
               {facts.map((f) => (
                 <div key={f.label} className="ez:flex ez:flex-col">
-                  <dd className="ez:order-1 ez:m-0 ez:font-body ez:text-site-figure-lg ez:tabular-nums">{f.value}</dd>
+                  <dd className="ez:order-1 ez:m-0 ez:font-body ez:text-site-figure-lg ez:tabular-nums"><Won value={f.value} /></dd>
                   <dt className="ez:order-2 ez:text-site-small ez:text-muted">{f.label}</dt>
                 </div>
               ))}
@@ -91,7 +92,7 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
                 {facts.map((f) => (
                   <div key={f.label} className="ez:flex ez:justify-between ez:gap-6">
                     <dt className="ez:text-muted">{f.label}</dt>
-                    <dd className="ez:m-0 ez:text-right">{f.value}</dd>
+                    <dd className="ez:m-0 ez:text-right"><Won value={f.value} /></dd>
                   </div>
                 ))}
               </dl>
@@ -115,7 +116,7 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
             <Photo src={pick.cover_url} alt="" sizes="56px" tone={1} className="ez:size-14 ez:rounded-sm" />
             <span className="ez:flex ez:flex-col ez:text-site-small">
               <span>{pick.name}</span>
-              {pick.sale_price != null && <span className="ez:font-normal ez:tabular-nums">{won(pick.sale_price)}</span>}
+              {pick.sale_price != null && <span className="ez:font-normal ez:tabular-nums"><Won amount={pick.sale_price} /></span>}
             </span>
           </NextLink>
         )}
@@ -184,8 +185,8 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
             {side.map((p, i) => (
               <NextLink key={p.id} href={productHref(p)} className="ez:grid ez:grid-cols-[1fr_auto] ez:items-end ez:gap-4 ez:rounded-md ez:bg-surface-alt ez:p-5 ez:text-fg ez:no-underline">
                 <span className="ez:grid ez:gap-1">
-                  <span className="ez:text-site-item ez:font-normal">{p.name}</span>
-                  {p.sale_price != null && <span className="ez:text-site-small ez:text-muted ez:tabular-nums">{won(p.sale_price)}</span>}
+                  <span data-script={scriptOf(p.name)} className="ez:text-site-item ez:font-normal">{p.name}</span>
+                  {p.sale_price != null && <span className="ez:text-site-small ez:text-muted ez:tabular-nums"><Won amount={p.sale_price} /></span>}
                 </span>
                 <Photo src={p.cover_url} alt="" sizes="160px" tone={i + 1} className="ez:size-24 ez:lg:size-36" />
               </NextLink>
@@ -209,7 +210,7 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
         />
         {variant === "card" && pick && (
           <NextLink href={productHref(pick)} className="ez:absolute ez:inset-x-5 ez:bottom-5 ez:flex ez:items-center ez:justify-between ez:gap-4 ez:rounded-sm ez:bg-surface ez:px-5 ez:py-3.5 ez:text-fg ez:no-underline ez:max-md:hidden">
-            <span className="ez:text-site-small">{pick.name}</span>
+            <span data-script={scriptOf(pick.name)} className="ez:text-site-small">{pick.name}</span>
             <Icon name="right" size="sm" />
           </NextLink>
         )}
@@ -256,7 +257,7 @@ export function Hero({ data, context, variant }: SectionProps<"hero">) {
           {facts.map((f, i) => (
             <div key={f.label} className={cn("ez:flex ez:justify-between ez:gap-6", title && "ez:border-0 ez:border-solid ez:border-site-line ez:pb-3", title && i < facts.length - 1 && "ez:border-b")}>
               <dt className="ez:text-muted">{f.label}</dt>
-              <dd className="ez:m-0 ez:text-right">{f.value}</dd>
+              <dd className="ez:m-0 ez:text-right"><Won value={f.value} /></dd>
             </div>
           ))}
         </dl>

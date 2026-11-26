@@ -5,6 +5,8 @@ import type { ProductSummary } from "../../types";
 import { cn } from "../../utils/cn";
 import { discountRate, won } from "../../utils/format";
 import { focusRing, pointTag } from "../../utils/styles";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 export function ProductCard({
   product,
@@ -46,10 +48,10 @@ export function ProductCard({
         )}
         <span className="ez:flex ez:items-baseline ez:gap-2.5">
           {rank != null && <span className="ez:font-body ez:text-site-rank ez:font-normal ez:tabular-nums ez:text-primary">{rank}</span>}
-          <span className="ez:line-clamp-2 ez:text-site-lead ez:group-hover:underline ez:underline-offset-4">{product.name}</span>
+          <span data-script={scriptOf(product.name)} className="ez:line-clamp-2 ez:text-site-lead ez:group-hover:underline ez:underline-offset-4">{product.name}</span>
         </span>
         <span className="ez:flex ez:items-baseline ez:tabular-nums ez:whitespace-nowrap">
-          <strong className={cn("ez:text-site-lead ez:font-medium", product.sold_out ? "ez:text-muted" : "ez:text-fg")}>{won(product.sale_price)}</strong>
+          <strong className={cn("ez:text-site-lead ez:font-medium", product.sold_out ? "ez:text-muted" : "ez:text-fg")}><Won amount={product.sale_price} /></strong>
           {sale > 0 && !product.sold_out && (
             <s className="ez:ml-2 ez:text-site-small ez:text-muted">
               <span className="ez:sr-only">정가 </span>

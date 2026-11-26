@@ -12,6 +12,7 @@ import { PortfolioNavLinks } from "./nav";
 import { businessLine } from "../quote/shared";
 import { PORTFOLIO_ID, PORTFOLIO_TITLE } from "./shared";
 import type { PortfolioFooterProps, PortfolioHeaderProps } from "./types";
+import { scriptOf } from "../../utils/writing";
 
 const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:px-page";
 
@@ -46,7 +47,7 @@ export function Header({ name, logoUrl, nav }: PortfolioHeaderProps) {
   return (
     <header data-slot="site-header" data-variant="showroom" className="ez:bg-transparent">
       <div className={cn(wrap, "ez:flex ez:min-h-16 ez:items-center ez:gap-8 ez:lg:min-h-24")}>
-        <NextLink href="/" className={cn("ez:min-w-0 ez:font-display ez:text-site-heading ez:text-fg ez:no-underline", focusRing)}>
+        <NextLink data-script={scriptOf(name)} href="/" className={cn("ez:min-w-0 ez:font-display ez:text-site-heading ez:text-fg ez:no-underline", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         {nav.length > 0 && (
@@ -65,7 +66,7 @@ export function Footer({ storeName, phone, hours, address, legal, business, nav,
   return (
     <footer data-slot="site-footer" data-variant="showroom" className="ez:bg-surface-alt ez:text-fg">
       <div className={cn(wrap, "ez:grid ez:gap-8 ez:py-16")}>
-        <p className="ez:m-0 ez:text-site-body ez:font-normal">{storeName}</p>
+        <p data-script={scriptOf(storeName)} className="ez:m-0 ez:text-site-body ez:font-normal">{storeName}</p>
         {nav.length > 0 && (
           <nav aria-label="바닥글 메뉴" className="ez:flex ez:flex-wrap ez:gap-x-6 ez:gap-y-2 ez:text-site-body">
             <PortfolioNavLinks items={nav} className={plain} currentClassName="ez:font-medium" />
@@ -161,7 +162,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
       <div className={cn(main, "ez:grid ez:content-start ez:gap-10 ez:lg:row-start-1")}>
         {(heading || storeName) && (
           <div className="ez:grid ez:content-start ez:gap-2">
-            {heading ? <h1 className={cn(title, "ez:text-balance")}>{heading}</h1> : <p className={title}>{storeName}</p>}
+            {heading ? <h1 data-script={scriptOf(heading)} className={cn(title, "ez:text-balance")}>{heading}</h1> : <p data-script={scriptOf(storeName)} className={title}>{storeName}</p>}
             {sub && (
               <p data-slot="hero-sub" className="ez:m-0 ez:text-site-body ez:text-muted">
                 {sub}
@@ -214,7 +215,7 @@ export function Work({ data }: SectionProps<"case_grid">) {
               <NextLink href={caseHref(c.id)} className={cn("ez:grid ez:gap-3 ez:text-fg ez:no-underline ez:hover:text-muted", focusRing)}>
                 <Pic src={c.image} ratio={0.8} tone={i} />
                 <span className="ez:grid ez:gap-1">
-                  <span className="ez:text-site-body">{c.title}</span>
+                  <span data-script={scriptOf(c.title)} className="ez:text-site-body">{c.title}</span>
                   {sub && <span className="ez:text-site-note ez:text-muted">{sub}</span>}
                 </span>
               </NextLink>

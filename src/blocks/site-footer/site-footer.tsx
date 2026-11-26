@@ -12,6 +12,7 @@ import { LANDINGS, landingDesign, landingFooter, landingLinks, type StoreLinks }
 import { bySkin } from "../../templates/skin";
 import type { ShopSkin } from "../../templates/types";
 import { PathSwitch } from "../site-header/path-switch";
+import { scriptOf } from "../../utils/writing";
 
 const link = "ez:text-fg ez:no-underline ez:hover:text-primary";
 
@@ -63,7 +64,7 @@ export function SiteFooter({
   ];
   const line = (
     <footer data-slot="site-footer" data-variant="line" className="ez:border-0 ez:border-t ez:border-solid ez:border-site-line">
-      <p className="ez:m-0 ez:mx-auto ez:max-w-wrap ez:px-page ez:py-10 ez:text-site-small ez:text-muted">{legal}</p>
+      <p data-script={scriptOf(legal)} className="ez:m-0 ez:mx-auto ez:max-w-wrap ez:px-page ez:py-10 ez:text-site-small ez:text-muted">{legal}</p>
     </footer>
   );
   const full = Skin ? (
@@ -89,7 +90,7 @@ export function SiteFooter({
                 </a>
               </>
             )}
-            {hours && <span className="ez:text-site-small ez:text-muted">{hours}</span>}
+            {hours && <span data-script={scriptOf(hours)} className="ez:text-site-small ez:text-muted">{hours}</span>}
             <div className="ez:mt-2.5 ez:flex ez:flex-wrap ez:gap-2">
               <ButtonLink href="/inquiries/new" variant="outline" size="sm">
                 1:1 문의
@@ -101,7 +102,7 @@ export function SiteFooter({
           </div>
           {columns.map((c) => (
             <nav key={c.title} aria-label={c.title} className="ez:flex ez:flex-col ez:gap-3">
-              <span className="ez:mb-1 ez:text-site-small ez:text-muted">{c.title}</span>
+              <span data-script={scriptOf(c.title)} className="ez:mb-1 ez:text-site-small ez:text-muted">{c.title}</span>
               {c.items.map(([label, href, strong]) => (
                 <NextLink key={href} href={href} className={cn(link, strong && "ez:font-medium")}>
                   {label}
@@ -114,7 +115,7 @@ export function SiteFooter({
           <div className="ez:grid ez:max-w-180 ez:gap-2 ez:text-site-small ez:text-muted">
             <p className="ez:m-0">{legal}</p>
           </div>
-          <span aria-hidden="true" className={cn("ez:text-site-faint ez:max-md:hidden", footerMark(storeName))}>
+          <span data-script={scriptOf(storeName)} aria-hidden="true" className={cn("ez:text-site-faint ez:max-md:hidden", footerMark(storeName))}>
             {storeName}
           </span>
         </div>

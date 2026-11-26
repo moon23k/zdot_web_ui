@@ -3,6 +3,7 @@ import { Pic } from "../kit";
 import type { MenuGroup } from "../template/data";
 import { AuroraHero, AuroraIntro, AuroraStore, card, Head, MenuPanel } from "./d-parts";
 import { menuItems, PLACE_ID, PLACE_TITLE } from "./shared";
+import { Won } from "../../components/price";
 
 export { AuroraFooter as Footer, AuroraHeader as Header } from "./d-parts";
 
@@ -27,7 +28,7 @@ export function Menu({ data }: SectionProps<"menu">) {
                 <Pic src={item.image} ratio={1} tone={i} className={card} />
                 <div className="ez:flex ez:flex-wrap ez:items-baseline ez:justify-between ez:gap-x-3 ez:px-1.5 ez:pt-4 ez:text-site-item ez:font-normal">
                   <span className="ez:min-w-0">{item.name}</span>
-                  <span className="ez:shrink-0 ez:tabular-nums">{item.price}</span>
+                  <span className="ez:shrink-0 ez:tabular-nums"><Won value={item.price} /></span>
                 </div>
               </li>
             ))}

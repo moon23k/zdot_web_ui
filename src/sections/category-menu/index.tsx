@@ -4,6 +4,7 @@ import type { Category } from "../../types";
 import { cn } from "../../utils/cn";
 import { focusRing } from "../../utils/styles";
 import { Bar } from "../kit";
+import { scriptOf } from "../../utils/writing";
 
 const chip = cn(
   "ez:inline-flex ez:h-9.5 ez:shrink-0 ez:items-center ez:rounded-button ez:border ez:border-solid ez:border-site-line ez:px-4 ez:text-site-note ez:text-fg ez:no-underline ez:hover:border-site-edge",
@@ -19,7 +20,7 @@ export function CategoryChips({ categories, current }: { categories: Category[];
         전체
       </NextLink>
       {categories.map((c) => (
-        <NextLink key={c.id} href={`/products?category=${c.id}`} aria-current={current === c.id ? "page" : undefined} className={chip}>
+        <NextLink data-script={scriptOf(c.name)} key={c.id} href={`/products?category=${c.id}`} aria-current={current === c.id ? "page" : undefined} className={chip}>
           {c.name}
         </NextLink>
       ))}

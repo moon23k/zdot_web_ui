@@ -16,6 +16,8 @@ import { ShopNavLinks } from "./nav";
 import { BEST_HREF, categoryHref, fillCols, FRESH_HREF, lastOdd, PRODUCTS_HREF, productView, ROW_ITEM, SHOP_TITLE, shownCount } from "./shared";
 import { SHELF_DEFAULTS, SHELF_RATIO, shelfCols, shelfOf, shelfSizes, shelfView, type Shelf } from "./shelf";
 import type { FooterLink, ShopFooterProps, ShopHeaderProps, ShopListProps } from "./types";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const CARD_SIZES = "(max-width: 1024px) 50vw, 320px";
 
@@ -56,7 +58,7 @@ const topLink = cn("ez:inline-flex ez:h-10 ez:min-w-10 ez:items-center ez:justif
 function Head({ title, aside }: { title: string; aside?: ReactNode }) {
   return (
     <div className="ez:mb-7 ez:flex ez:flex-wrap ez:items-end ez:justify-between ez:gap-x-6 ez:gap-y-3 ez:lg:mb-9">
-      <h2 className="ez:m-0 ez:text-site-section ez:text-fg ez:lg:text-site-display-md">{title}</h2>
+      <h2 data-script={scriptOf(title)} className="ez:m-0 ez:text-site-section ez:text-fg ez:lg:text-site-display-md">{title}</h2>
       {aside}
     </div>
   );
@@ -93,7 +95,7 @@ function Card({ product, rank, shelf, preload, sizes = CARD_SIZES }: { product: 
       </span>
       <span className="ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:px-1 ez:pt-4">
         <span className="ez:flex ez:min-w-0 ez:items-baseline ez:gap-2">
-          <span className={cn("ez:truncate ez:text-site-lead ez:underline-offset-4 ez:group-hover:underline", v.soldOut ? "ez:text-muted" : "ez:text-fg")}>{v.name}</span>
+          <span data-script={scriptOf(v.name)} className={cn("ez:truncate ez:text-site-lead ez:underline-offset-4 ez:group-hover:underline", v.soldOut ? "ez:text-muted" : "ez:text-fg")}>{v.name}</span>
           {tags.map((t) => (
             <span key={t} className="ez:shrink-0 ez:text-site-small ez:text-site-off">
               {t}
@@ -102,7 +104,7 @@ function Card({ product, rank, shelf, preload, sizes = CARD_SIZES }: { product: 
         </span>
         <span className="ez:flex ez:shrink-0 ez:flex-wrap ez:items-baseline ez:justify-end ez:gap-x-1.5 ez:text-site-lead ez:text-muted ez:tabular-nums">
           {v.rate > 0 && <span className="ez:font-medium ez:text-fg">{v.rate}%</span>}
-          <span>{v.price}</span>
+          <span><Won value={v.price} /></span>
           {v.list && (
             <s className="ez:text-site-small ez:text-site-off">
               <span className="ez:sr-only">정가 </span>
@@ -174,6 +176,7 @@ export function Header({ name, logoUrl, cartCount, nav, links }: ShopHeaderProps
           />
         </nav>
         <NextLink
+          data-script={scriptOf(name)}
           href="/"
           className={cn("ez:min-w-0 ez:text-site-heading ez:leading-none ez:text-fg ez:no-underline ez:lg:justify-self-center ez:lg:text-center", focusRing)}
         >
@@ -206,7 +209,7 @@ export function Header({ name, logoUrl, cartCount, nav, links }: ShopHeaderProps
 function FooterColumn({ title, items }: { title: string; items: FooterLink[] }) {
   return (
     <nav aria-label={title} className="ez:grid ez:content-start ez:gap-2.5">
-      <span className="ez:text-site-note ez:text-muted">{title}</span>
+      <span data-script={scriptOf(title)} className="ez:text-site-note ez:text-muted">{title}</span>
       <ul className="ez:m-0 ez:grid ez:list-none ez:gap-1 ez:p-0 ez:text-site-note ez:leading-relaxed">
         {items.map((l) => (
           <li key={l.href}>
@@ -226,7 +229,7 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-14 ez:pb-14 ez:lg:pt-18 ez:lg:pb-16">
         <div className="ez:grid ez:grid-cols-2 ez:gap-x-6 ez:gap-y-10 ez:md:grid-cols-4 ez:lg:grid-cols-12">
           <div className="ez:col-span-2 ez:grid ez:content-start ez:gap-4 ez:md:col-span-4 ez:lg:col-span-4">
-            <p className="ez:m-0 ez:text-site-item ez:font-normal ez:text-fg">{storeName}</p>
+            <p data-script={scriptOf(storeName)} className="ez:m-0 ez:text-site-item ez:font-normal ez:text-fg">{storeName}</p>
             {(phone || hours) && (
               <div className="ez:grid ez:gap-1">
                 <span className="ez:text-site-note ez:text-muted">고객센터</span>
@@ -235,7 +238,7 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
                     {phone}
                   </a>
                 )}
-                {hours && <span className="ez:text-site-note ez:text-site-off">{hours}</span>}
+                {hours && <span data-script={scriptOf(hours)} className="ez:text-site-note ez:text-site-off">{hours}</span>}
               </div>
             )}
           </div>
@@ -257,7 +260,7 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
         <div className="ez:mt-12 ez:grid ez:gap-2.5 ez:md:grid-cols-[minmax(0,1fr)_auto] ez:md:gap-10 ez:lg:mt-14">
           <div className="ez:grid ez:gap-2.5">
             <span className="ez:text-site-note ez:text-muted">사업자 정보</span>
-            <p className="ez:m-0 ez:text-site-note ez:leading-relaxed ez:text-site-off">{legal}</p>
+            <p data-script={scriptOf(legal)} className="ez:m-0 ez:text-site-note ez:leading-relaxed ez:text-site-off">{legal}</p>
           </div>
           <span className="ez:self-end ez:text-site-note ez:text-site-off">© {storeName}</span>
         </div>
@@ -338,7 +341,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
         ) : (
           <>
             {label && <p className="ez:m-0 ez:line-clamp-1 ez:text-site-small ez:text-muted">{label}</p>}
-            {heading && <h1 className="ez:m-0 ez:line-clamp-2 ez:text-site-page-sm ez:text-balance ez:text-fg ez:lg:text-site-page">{heading}</h1>}
+            {heading && <h1 data-script={scriptOf(heading)} className="ez:m-0 ez:line-clamp-2 ez:text-site-page-sm ez:text-balance ez:text-fg ez:lg:text-site-page">{heading}</h1>}
             {sub && (
               <p data-slot="hero-sub" className="ez:m-0 ez:text-site-lead ez:text-muted">
                 {sub}
@@ -347,7 +350,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
             {pick && sale != null && (
               <p className="ez:m-0 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2 ez:text-site-item ez:font-normal ez:tabular-nums">
                 {rate > 0 && <span className="ez:font-medium">{rate}%</span>}
-                {won(sale)}
+                <Won amount={sale} />
                 {pick.sold_out && <span className="ez:text-site-small ez:text-muted">품절</span>}
               </p>
             )}
@@ -372,7 +375,7 @@ function BestTabs({ categories }: { categories: SectionProps["context"]["categor
         {ALL}
       </NextLink>
       {items.map((c) => (
-        <NextLink key={c.id} href={`${categoryHref(c.id)}&sort=popular`} className={cn(tab, "ez:text-site-off")}>
+        <NextLink data-script={scriptOf(c.name)} key={c.id} href={`${categoryHref(c.id)}&sort=popular`} className={cn(tab, "ez:text-site-off")}>
           {c.name}
         </NextLink>
       ))}
@@ -416,8 +419,8 @@ export function Band({ data, context }: SectionProps<"photo_band">) {
       </div>
       {image ? (
         <div className="ez:grid ez:justify-items-start ez:gap-5 ez:lg:col-span-5 ez:lg:pl-12">
-          {name && <h2 className="ez:m-0 ez:text-site-section ez:text-fg ez:lg:text-site-display-md">{name}</h2>}
-          {body && <p className="ez:m-0 ez:max-w-100 ez:text-site-body ez:leading-relaxed ez:whitespace-pre-line ez:text-muted">{body}</p>}
+          {name && <h2 data-script={scriptOf(name)} className="ez:m-0 ez:text-site-section ez:text-fg ez:lg:text-site-display-md">{name}</h2>}
+          {body && <p data-script={scriptOf(body)} className="ez:m-0 ez:max-w-100 ez:text-site-body ez:leading-relaxed ez:whitespace-pre-line ez:text-muted">{body}</p>}
           <NextLink href={PRODUCTS_HREF} className={cn(moreLink, "ez:mt-4 ez:text-fg")}>
             {SHOP_TITLE.more}
             <Icon name="right" size="sm" />
@@ -445,8 +448,8 @@ function ReviewCard({ item, product }: { item: ReviewItem; product?: ProductSumm
   return (
     <article className={reviewCell}>
       <StarRow rating={item.rating} className="ez:text-muted" />
-      <p className="ez:m-0 ez:line-clamp-4 ez:text-site-item ez:leading-relaxed ez:text-pretty ez:text-fg">{item.body}</p>
-      <p className="ez:m-0 ez:truncate ez:text-site-small ez:text-site-off">{[item.name, product?.name].filter(Boolean).join(" · ")}</p>
+      <p data-script={scriptOf(item.body)} className="ez:m-0 ez:line-clamp-4 ez:text-site-item ez:leading-relaxed ez:text-pretty ez:text-fg">{item.body}</p>
+      <p data-script={scriptOf([item.name, product?.name].filter(Boolean).join(" · "))} className="ez:m-0 ez:truncate ez:text-site-small ez:text-site-off">{[item.name, product?.name].filter(Boolean).join(" · ")}</p>
     </article>
   );
 }
@@ -470,7 +473,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
   const summary = items.length && data.average != null && data.count ? `${data.average.toFixed(1)} · ${SHOP_TITLE.reviews} ${data.count}` : null;
   return (
     <section data-slot="reviews" data-variant="stage" data-blank={items.length ? undefined : ""} className="ez:text-fg">
-      <Head title={SHOP_TITLE.reviews} aside={summary ? <span className="ez:text-site-lead ez:text-muted ez:tabular-nums">{summary}</span> : undefined} />
+      <Head title={SHOP_TITLE.reviews} aside={summary ? <span data-script={scriptOf(summary)} className="ez:text-site-lead ez:text-muted ez:tabular-nums">{summary}</span> : undefined} />
       <div className={cn("ez:grid ez:gap-x-6 ez:gap-y-10", fillCols(items.length || 3))}>
         {items.length
           ? items.map((r, i) => <ReviewCard key={`${r.name}-${r.date ?? ""}-${i}`} item={r} product={r.product ? context.products.find((p) => p.id === r.product) : undefined} />)
@@ -487,13 +490,13 @@ function GuideBody({ cell }: { cell: GuideCell }) {
     <>
       <span className="ez:text-site-small ez:text-muted">{cell.label}</span>
       {cell.value ? (
-        <span className="ez:mt-2 ez:text-site-heading ez:tabular-nums">{cell.value}</span>
+        <span className="ez:mt-2 ez:text-site-heading ez:tabular-nums"><Won value={cell.value} /></span>
       ) : (
         <span className="ez:mt-2 ez:text-site-heading">
           <Bar />
         </span>
       )}
-      {cell.note && <span className="ez:mt-1 ez:text-site-small ez:text-muted ez:tabular-nums">{cell.note}</span>}
+      {cell.note && <span data-script={scriptOf(cell.note)} className="ez:mt-1 ez:text-site-small ez:text-muted ez:tabular-nums">{cell.note}</span>}
     </>
   );
 }
@@ -557,7 +560,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
     <div data-slot="catalog-view" data-variant="stage" className="ez:grid ez:grid-cols-1 ez:text-fg">
       <Crumbs items={crumbs} />
       <div className="ez:mt-4 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3 ez:gap-y-1">
-        <h1 className="ez:m-0 ez:text-site-page-sm ez:text-fg ez:lg:text-site-display-md">{title}</h1>
+        <h1 data-script={scriptOf(title)} className="ez:m-0 ez:text-site-page-sm ez:text-fg ez:lg:text-site-display-md">{title}</h1>
         {count != null && <span className="ez:text-site-item ez:font-normal ez:text-muted ez:tabular-nums">{count}</span>}
       </div>
       {search && <div className="ez:mt-6">{search}</div>}

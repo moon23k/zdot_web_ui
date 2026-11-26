@@ -12,6 +12,7 @@ import { OfficeNavLinks } from "./nav";
 import { businessLine } from "../quote/shared";
 import { OFFICE_ID, OFFICE_TITLE } from "./shared";
 import type { OfficeFooterProps, OfficeHeaderProps } from "./types";
+import { scriptOf } from "../../utils/writing";
 
 const rule = "ez:border-0 ez:border-solid ez:border-site-line";
 
@@ -51,6 +52,7 @@ export function Header({ name, logoUrl, phone, nav, links }: OfficeHeaderProps) 
     <header data-slot="site-header" className="ez:bg-surface">
       <div className="ez:mx-auto ez:flex ez:min-h-16 ez:max-w-wrap ez:items-center ez:gap-8 ez:px-page ez:lg:grid ez:lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
         <NextLink
+          data-script={scriptOf(name)}
           href="/"
           className={cn(
             "ez:min-w-0 ez:justify-self-start ez:font-display ez:text-site-heading ez:leading-none ez:text-fg ez:no-underline",
@@ -99,9 +101,9 @@ export function Hero({ data, context }: SectionProps<"hero">) {
       </div>
       <div className="ez:mx-auto ez:grid ez:w-full ez:max-w-165 ez:justify-items-center ez:gap-6 ez:text-center">
         {heading ? (
-          <h1 className={statement}>{heading}</h1>
+          <h1 data-script={scriptOf(heading)} className={statement}>{heading}</h1>
         ) : name ? (
-          <p className={statement}>{name}</p>
+          <p data-script={scriptOf(name)} className={statement}>{name}</p>
         ) : (
           <Bar size="long" className="ez:text-site-section ez:lg:text-site-name" />
         )}
@@ -131,8 +133,8 @@ export function Cases({ data }: SectionProps<"case_grid">) {
                     <Pic src={c.image} ratio={0.8} tone={i} />
                     <span className={caption}>
                       <span className="ez:grid ez:min-w-0">
-                        <span className="ez:text-site-item ez:font-normal ez:text-fg">{c.title}</span>
-                        {meta && <span className="ez:text-site-small ez:text-muted">{meta}</span>}
+                        <span data-script={scriptOf(c.title)} className="ez:text-site-item ez:font-normal ez:text-fg">{c.title}</span>
+                        {meta && <span data-script={scriptOf(meta)} className="ez:text-site-small ez:text-muted">{meta}</span>}
                       </span>
                       <Icon name="right" size="sm" className="ez:shrink-0 ez:text-muted ez:group-hover:text-fg" />
                     </span>
@@ -190,7 +192,7 @@ export function Footer({ storeName, phone, hours, address, business, nav, links,
     <footer data-slot="site-footer" className={cn(rule, "ez:border-t ez:text-fg")}>
       <div className="ez:mx-auto ez:grid ez:max-w-wrap ez:gap-10 ez:px-page ez:pt-16 ez:pb-24 ez:text-site-body ez:md:grid-cols-12 ez:md:gap-x-gutter">
         <div className="ez:grid ez:content-between ez:gap-10 ez:md:col-span-6 ez:lg:col-span-4 ez:lg:col-start-3">
-          <p className="ez:m-0 ez:font-display ez:text-site-heading ez:text-fg">{storeName}</p>
+          <p data-script={scriptOf(storeName)} className="ez:m-0 ez:font-display ez:text-site-heading ez:text-fg">{storeName}</p>
           {links.length > 0 && (
             <ul className="ez:m-0 ez:flex ez:list-none ez:flex-wrap ez:gap-x-6 ez:gap-y-2 ez:p-0 ez:text-site-small">
               {links.map((l) => (

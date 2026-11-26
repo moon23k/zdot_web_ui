@@ -16,6 +16,8 @@ import {
   telHref,
 } from "./shared";
 import type { PlaceFooterProps, PlaceHeaderProps } from "./types";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const rule = "ez:border-0 ez:border-solid ez:border-site-line";
 
@@ -82,6 +84,7 @@ export function Header({ name, logoUrl, phone, nav, links }: PlaceHeaderProps) {
       <div className={cn(rule, "ez:border-b")}>
         <div className="ez:mx-auto ez:flex ez:min-h-16 ez:max-w-wrap ez:items-center ez:gap-8 ez:px-page ez:lg:min-h-22">
           <NextLink
+            data-script={scriptOf(name)}
             href="/"
             className={cn(
               "ez:min-w-0 ez:font-display ez:text-site-counter ez:font-normal ez:leading-none ez:text-fg ez:no-underline",
@@ -182,11 +185,11 @@ export function Hero({ data, context }: SectionProps<"hero">) {
           {heading ? (
             <>
               {name && (
-                <p className="ez:m-0 ez:mb-6 ez:text-site-small ez:font-normal ez:text-muted">
+                <p data-script={scriptOf(name)} className="ez:m-0 ez:mb-6 ez:text-site-small ez:font-normal ez:text-muted">
                   {name}
                 </p>
               )}
-              <h1 className={logo}>{heading}</h1>
+              <h1 data-script={scriptOf(heading)} className={logo}>{heading}</h1>
               {sub && (
                 <p
                   data-slot="hero-sub"
@@ -197,7 +200,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
               )}
             </>
           ) : name ? (
-            <p className={logo}>{name}</p>
+            <p data-script={scriptOf(name)} className={logo}>{name}</p>
           ) : (
             <Bar
               size="long"
@@ -284,7 +287,7 @@ function MenuColumn({
     <div className="ez:grid ez:min-w-0 ez:content-start">
       <Pic src={cover} ratio={1.5} tone={index} />
       {group ? (
-        group.name && <h3 className={cn(title, "ez:mt-8")}>{group.name}</h3>
+        group.name && <h3 data-script={scriptOf(group.name)} className={cn(title, "ez:mt-8")}>{group.name}</h3>
       ) : (
         <span className="ez:mt-8 ez:text-site-heading ez:lg:text-site-title">
           <Bar size="short" />
@@ -296,7 +299,7 @@ function MenuColumn({
               <div key={item.id} className={row}>
                 <dt className="ez:min-w-0 ez:text-fg">{item.name}</dt>
                 <dd className="ez:m-0 ez:shrink-0 ez:text-muted ez:tabular-nums">
-                  {item.price}
+                  <Won value={item.price} />
                 </dd>
               </div>
             ))
@@ -373,7 +376,7 @@ export function Store({ data, context }: SectionProps<"store_info">) {
         </div>
         <div className="ez:grid ez:min-w-0 ez:content-start ez:lg:col-span-5 ez:lg:col-start-8">
           {name ? (
-            <h3 className={title}>{name}</h3>
+            <h3 data-script={scriptOf(name)} className={title}>{name}</h3>
           ) : (
             <span className="ez:text-site-heading ez:lg:text-site-title">
               <Bar />
@@ -442,7 +445,7 @@ export function Footer({
     >
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-18 ez:pb-12 ez:lg:pt-24 ez:lg:pb-16">
         <div className="ez:grid ez:gap-10 ez:text-site-small ez:md:grid-cols-12 ez:md:gap-x-gutter">
-          <p className="ez:m-0 ez:font-display ez:text-site-heading ez:text-fg ez:md:col-span-5 ez:lg:text-site-title">
+          <p data-script={scriptOf(storeName)} className="ez:m-0 ez:font-display ez:text-site-heading ez:text-fg ez:md:col-span-5 ez:lg:text-site-title">
             {storeName}
           </p>
           {(nav.length > 0 || links.length > 0) && (

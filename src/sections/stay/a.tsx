@@ -16,6 +16,8 @@ import { StayNavLinks } from "./nav";
 import { roomNotes, ROOMS_HREF, roomView, STAY_TITLE, stayDates } from "./shared";
 import type { RoomView, StayFooterProps, StayHeaderProps, StayListProps } from "./types";
 import { MAP_LABEL, SampleMap } from "./map";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const bleed = "ez:mx-[calc(50%-50vw)]";
 
@@ -32,7 +34,7 @@ const select = cn("ez:m-0 ez:cursor-pointer ez:appearance-none ez:border-0 ez:bg
 function Head({ title }: { title: string }) {
   return (
     <div className="ez:grid ez:justify-items-center ez:text-center">
-      <h2 className="ez:m-0 ez:font-display ez:text-site-heading ez:lg:text-site-title">{title}</h2>
+      <h2 data-script={scriptOf(title)} className="ez:m-0 ez:font-display ez:text-site-heading ez:lg:text-site-title">{title}</h2>
     </div>
   );
 }
@@ -58,6 +60,7 @@ export function Header({ name, logoUrl, nav, links }: StayHeaderProps) {
             <StayNavLinks items={nav} className="ez:py-1.5 ez:text-fg ez:no-underline" currentClassName="ez:font-medium" />
           </nav>
           <NextLink
+            data-script={scriptOf(name)}
             href="/"
             className={cn(
               "ez:min-w-0 ez:font-display ez:text-site-heading ez:leading-none ez:text-fg ez:no-underline ez:lg:justify-self-center ez:lg:text-center ez:lg:text-site-logo",
@@ -100,7 +103,7 @@ export function Hero({ data }: SectionProps<"hero">) {
       {title && (
         <div className="ez:absolute ez:inset-x-0 ez:bottom-12 ez:mx-auto ez:max-w-wrap ez:px-page ez:lg:bottom-28">
           <div className="ez:flex ez:flex-col ez:items-start ez:gap-5 ez:text-fg">
-            <h1 className="ez:m-0 ez:max-w-4xl ez:font-display ez:text-site-page ez:text-balance ez:lg:text-site-display-lg">{title}</h1>
+            <h1 data-script={scriptOf(title)} className="ez:m-0 ez:max-w-4xl ez:font-display ez:text-site-page ez:text-balance ez:lg:text-site-display-lg">{title}</h1>
             {sub && (
               <p data-slot="hero-sub" className="ez:m-0 ez:max-w-xl ez:text-site-body">
                 {sub}
@@ -212,7 +215,7 @@ export function Story({ data }: SectionProps<"testimonial">) {
         {review ? (
           <figure className="ez:m-0 ez:grid ez:max-w-130 ez:gap-6 ez:lg:gap-7">
             {review.rating != null && <StarRow rating={review.rating} className="ez:text-muted" />}
-            <blockquote className="ez:m-0 ez:line-clamp-6 ez:font-display ez:text-site-heading ez:lg:text-site-name">{review.body}</blockquote>
+            <blockquote data-script={scriptOf(review.body)} className="ez:m-0 ez:line-clamp-6 ez:font-display ez:text-site-heading ez:lg:text-site-name">{review.body}</blockquote>
             {(review.name || review.date) && (
               <figcaption className="ez:flex ez:flex-wrap ez:gap-x-3 ez:text-site-body ez:text-muted">
                 {review.name && <span>{review.name}</span>}
@@ -291,7 +294,7 @@ function RoomRow({ v, index, list, dates }: { v: RoomView; index: number; list?:
       </NextLink>
       <div className={rowText(flip)}>
         {v.sample && <span className="ez:mb-3 ez:block ez:text-site-small ez:text-muted">{STAY_TITLE.sample}</span>}
-        <Name className={cn(rowName, full ? "ez:text-muted" : "ez:text-fg")}>{v.name}</Name>
+        <Name data-script={scriptOf(v.name)} className={cn(rowName, full ? "ez:text-muted" : "ez:text-fg")}>{v.name}</Name>
         {list ? (
           <>
             <Facts
@@ -302,10 +305,10 @@ function RoomRow({ v, index, list, dates }: { v: RoomView; index: number; list?:
             />
             <div className="ez:mt-7 ez:mb-1.5 ez:flex ez:flex-col">
               {q && <span className="ez:text-site-note ez:text-muted ez:tabular-nums">{[dates, q.nights].filter(Boolean).join(" · ")}</span>}
-              <span className={cn("ez:text-site-heading ez:tabular-nums", q ? "ez:font-medium" : "ez:font-normal", full ? "ez:text-muted" : "ez:text-fg")}>{q ? q.price : v.from}</span>
+              <span className={cn("ez:text-site-heading ez:tabular-nums", q ? "ez:font-medium" : "ez:font-normal", full ? "ez:text-muted" : "ez:text-fg")}><Won value={q ? q.price : v.from} /></span>
             </div>
             <div className="ez:mb-8 ez:min-h-5">
-              {full ? <p className="ez:m-0 ez:text-site-note ez:font-normal ez:text-fg">{q?.note}</p> : <Small items={state} />}
+              {full ? <p data-script={scriptOf(q?.note)} className="ez:m-0 ez:text-site-note ez:font-normal ez:text-fg">{q?.note}</p> : <Small items={state} />}
             </div>
             <div className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-8">
               {v.book && (
@@ -477,7 +480,7 @@ export function Info({ data }: SectionProps<"house_rules">) {
           <ul className="ez:m-0 ez:grid ez:list-none ez:p-0">
             {rules.length ? (
               rules.map((r, i) => (
-                <li key={`${r}-${i}`} className={cn(line, "ez:border-b ez:py-2.5 ez:text-site-body ez:text-muted ez:first:pt-0 ez:last:border-b-0")}>
+                <li data-script={scriptOf(r)} key={`${r}-${i}`} className={cn(line, "ez:border-b ez:py-2.5 ez:text-site-body ez:text-muted ez:first:pt-0 ez:last:border-b-0")}>
                   {r}
                 </li>
               ))
@@ -550,7 +553,7 @@ export function Location({ data }: SectionProps<"location">) {
         <dl className={cn(line, "ez:m-0 ez:border-t")}>
           <div className={cn(line, "ez:grid ez:gap-1.5 ez:border-b ez:py-5")}>
             <dt className="ez:text-site-note ez:text-muted">{STAY_TITLE.address}</dt>
-            <dd className="ez:m-0 ez:text-site-item ez:font-normal ez:leading-relaxed">{address ?? <Bar size="long" />}</dd>
+            <dd data-script={scriptOf(address)} className="ez:m-0 ez:text-site-item ez:font-normal ez:leading-relaxed">{address ?? <Bar size="long" />}</dd>
           </div>
           <div className={cn(line, "ez:grid ez:gap-1.5 ez:border-b ez:py-5")}>
             <dt className="ez:text-site-note ez:text-muted">{STAY_TITLE.phone}</dt>
@@ -600,7 +603,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
                 <div key={`${r.name}-${i}`} className="ez:w-full ez:px-3 ez:md:w-1/3">
                   <article className={cn(line, "ez:grid ez:content-start ez:gap-5 ez:border-t ez:pt-8")}>
                     <StarRow rating={r.rating} className="ez:text-muted" />
-                    <p className="ez:m-0 ez:line-clamp-4 ez:text-site-item ez:font-normal ez:leading-relaxed">{r.body}</p>
+                    <p data-script={scriptOf(r.body)} className="ez:m-0 ez:line-clamp-4 ez:text-site-item ez:font-normal ez:leading-relaxed">{r.body}</p>
                     {meta.length > 0 && <Small items={meta} className="ez:mt-1" />}
                   </article>
                 </div>
@@ -625,7 +628,7 @@ export function Reviews({ data, context }: SectionProps<"reviews">) {
 function FooterNav({ title, items }: { title: string; items: FooterLink[] }) {
   return (
     <nav aria-label={title} className="ez:grid ez:content-start ez:gap-4 ez:lg:gap-5">
-      <span className="ez:text-site-note ez:text-muted">{title}</span>
+      <span data-script={scriptOf(title)} className="ez:text-site-note ez:text-muted">{title}</span>
       <ul className="ez:m-0 ez:grid ez:list-none ez:gap-1 ez:p-0">
         {items.map((l) => (
           <li key={l.href} className="ez:text-site-body ez:leading-loose">
@@ -643,7 +646,7 @@ export function Footer({ storeName, phone, hours, legal, stay, guide, account, t
   return (
     <footer data-slot="site-footer" data-variant="editorial" className={cn(line, "ez:border-t ez:text-fg")}>
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-16 ez:pb-10 ez:lg:pt-28 ez:lg:pb-14">
-        <p className="ez:m-0 ez:mb-12 ez:font-display ez:text-site-name ez:wrap-break-word ez:md:text-site-display ez:lg:mb-22 ez:lg:text-site-hero">{storeName}</p>
+        <p data-script={scriptOf(storeName)} className="ez:m-0 ez:mb-12 ez:font-display ez:text-site-name ez:wrap-break-word ez:md:text-site-display ez:lg:mb-22 ez:lg:text-site-hero">{storeName}</p>
         <div className="ez:grid ez:grid-cols-2 ez:gap-x-gutter ez:gap-y-10 ez:pb-12 ez:md:grid-cols-[7fr_5fr_5fr_5fr] ez:lg:pb-18">
           <div className="ez:col-span-2 ez:grid ez:content-start ez:gap-4 ez:md:col-span-1 ez:lg:gap-5">
             <span className="ez:text-site-note ez:text-muted">{STAY_TITLE.center}</span>
@@ -654,7 +657,7 @@ export function Footer({ storeName, phone, hours, legal, stay, guide, account, t
                     {phone}
                   </a>
                 )}
-                {hours && <span className="ez:text-site-body ez:text-muted">{hours}</span>}
+                {hours && <span data-script={scriptOf(hours)} className="ez:text-site-body ez:text-muted">{hours}</span>}
               </div>
             )}
           </div>
@@ -673,7 +676,7 @@ export function Footer({ storeName, phone, hours, legal, stay, guide, account, t
                 ))}
               </nav>
             )}
-            <p className="ez:m-0 ez:max-w-225 ez:text-site-note ez:leading-relaxed ez:text-muted">{legal}</p>
+            <p data-script={scriptOf(legal)} className="ez:m-0 ez:max-w-225 ez:text-site-note ez:leading-relaxed ez:text-muted">{legal}</p>
           </div>
           <span className="ez:text-site-note ez:text-muted">© {storeName}</span>
         </div>

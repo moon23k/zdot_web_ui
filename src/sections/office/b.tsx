@@ -12,6 +12,8 @@ import type { PlaceLink } from "../template/data";
 import { OfficeNavLinks } from "./nav";
 import { OFFICE_ID, OFFICE_TITLE } from "./shared";
 import type { OfficeFooterProps, OfficeHeaderProps } from "./types";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const HOME = {
   header:
@@ -73,7 +75,7 @@ export function Header({ name, logoUrl, phone, address, nav, links }: OfficeHead
     <header data-slot="site-header" data-variant="catalog" className={cn("ez:text-fg", HOME.header)}>
       <div className={cn(row, "ez:border-b ez:bg-surface", HOME.hide)}>
         <div className={cn(wrap, "ez:flex ez:min-h-16 ez:items-center ez:gap-6")}>
-          <NextLink href="/" className={cn("ez:min-w-0 ez:font-display ez:text-site-counter ez:text-fg ez:no-underline", focusRing)}>
+          <NextLink data-script={scriptOf(name)} href="/" className={cn("ez:min-w-0 ez:font-display ez:text-site-counter ez:text-fg ez:no-underline", focusRing)}>
             <SiteLogo name={name} src={logoUrl} />
           </NextLink>
           <nav aria-label="주요 메뉴" className="ez:flex ez:min-w-0 ez:flex-1 ez:flex-wrap ez:gap-x-8 ez:text-site-body ez:max-lg:hidden">
@@ -91,7 +93,7 @@ export function Header({ name, logoUrl, phone, address, nav, links }: OfficeHead
       </div>
       <div className={cn("ez:hidden ez:h-0", wrap, HOME.show)}>
         <aside className="ez:ml-auto ez:flex ez:h-screen ez:w-1/3 ez:flex-col ez:overflow-y-auto ez:py-8 ez:pl-gutter">
-          <NextLink href="/" className={cn("ez:min-w-0 ez:font-display ez:text-site-name ez:text-fg ez:no-underline", focusRing)}>
+          <NextLink data-script={scriptOf(name)} href="/" className={cn("ez:min-w-0 ez:font-display ez:text-site-name ez:text-fg ez:no-underline", focusRing)}>
             {logoUrl ? <SiteLogo name={name} src={logoUrl} /> : name}
           </NextLink>
           {nav.length > 0 && (
@@ -184,7 +186,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
     >
       <Pic src={data.image} ratio={1} className="ez:col-span-full ez:row-start-1 ez:lg:col-start-1 ez:lg:col-end-3" />
       <div className="ez:relative ez:col-start-2 ez:row-start-1 ez:grid ez:gap-4 ez:self-start ez:pt-10 ez:lg:w-3/4 ez:lg:pt-40">
-        {head ? <h1 className={line}>{head}</h1> : context.storeName ? <p className={line}>{context.storeName}</p> : <Bar className="ez:text-site-page-sm ez:lg:text-site-page" />}
+        {head ? <h1 data-script={scriptOf(head)} className={line}>{head}</h1> : context.storeName ? <p data-script={scriptOf(context.storeName)} className={line}>{context.storeName}</p> : <Bar className="ez:text-site-page-sm ez:lg:text-site-page" />}
         {head && sub && (
           <p data-slot="hero-sub" className="ez:m-0 ez:text-site-body ez:text-fg">
             {sub}
@@ -203,7 +205,7 @@ export function Intro({ data }: SectionProps<"intro">) {
       <div className="ez:grid ez:gap-6 ez:lg:w-3/4 ez:lg:gap-8">
         {text.length ? (
           text.map((p, i) => (
-            <p key={i} className="ez:m-0 ez:whitespace-pre-line ez:text-site-body ez:font-normal ez:leading-relaxed ez:text-fg ez:lg:text-site-counter">
+            <p data-script={scriptOf(p)} key={i} className="ez:m-0 ez:whitespace-pre-line ez:text-site-body ez:font-normal ez:leading-relaxed ez:text-fg ez:lg:text-site-counter">
               {p}
             </p>
           ))
@@ -236,8 +238,8 @@ export function Services({ data }: SectionProps<"menu">) {
           ? items.map((m, i) => (
               <li key={m.id} className={serviceRow}>
                 <span className={serviceNo}>{String(i + 1).padStart(2, "0")}</span>
-                <h3 className={serviceName}>{m.name}</h3>
-                {m.price && <p className={servicePrice}>{m.price}</p>}
+                <h3 data-script={scriptOf(m.name)} className={serviceName}>{m.name}</h3>
+                {m.price && <p className={servicePrice}><Won value={m.price} /></p>}
               </li>
             ))
           : [0, 1, 2].map((i) => (

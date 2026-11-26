@@ -6,6 +6,8 @@ import { cn } from "../../utils/cn";
 import { discountRate, won } from "../../utils/format";
 import { focusRing } from "../../utils/styles";
 import { Status } from "../parts/status";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const LOW_STOCK = 5;
 
@@ -47,6 +49,7 @@ export function CartLine({
       <div className="ez:flex ez:min-w-0 ez:flex-1 ez:flex-col">
         <div className="ez:flex ez:items-start ez:gap-1">
           <NextLink
+            data-script={scriptOf(line.name)}
             href={`/products/${line.product_id}`}
             className={cn(
               "ez:flex-1 ez:text-site-item ez:font-normal ez:no-underline ez:hover:underline ez:underline-offset-4",
@@ -92,7 +95,7 @@ export function CartLine({
         </div>
         <strong className={cn("ez:mt-1 ez:block ez:text-site-body ez:font-medium ez:tabular-nums", available ? "ez:text-fg" : "ez:text-muted")}>
           {discount > 0 && available && <span className="ez:sr-only">할인가 </span>}
-          {won(line.line_total)}
+          <Won amount={line.line_total} />
         </strong>
         <div className="ez:mt-auto ez:flex ez:items-center ez:pt-2">
           {available ? (

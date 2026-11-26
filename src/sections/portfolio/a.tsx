@@ -12,6 +12,7 @@ import type { Case } from "../template/data";
 import { PortfolioNavLinks } from "./nav";
 import { PORTFOLIO_ID, PORTFOLIO_TITLE } from "./shared";
 import type { PortfolioFooterProps, PortfolioHeaderProps } from "./types";
+import { scriptOf } from "../../utils/writing";
 
 const rule = "ez:border-0 ez:border-solid ez:border-site-line";
 
@@ -50,7 +51,7 @@ export function Header({ name: storeName, logoUrl, nav, links }: PortfolioHeader
   return (
     <header data-slot="site-header" className="ez:bg-surface">
       <div className={cn(wrap, "ez:flex ez:min-h-16 ez:items-center ez:gap-8 ez:lg:min-h-20")}>
-        <NextLink href="/" className={cn("ez:min-w-0 ez:font-display ez:text-site-item ez:font-normal ez:leading-none ez:text-fg ez:no-underline", focusRing)}>
+        <NextLink data-script={scriptOf(storeName)} href="/" className={cn("ez:min-w-0 ez:font-display ez:text-site-item ez:font-normal ez:leading-none ez:text-fg ez:no-underline", focusRing)}>
           <SiteLogo name={storeName} src={logoUrl} />
         </NextLink>
         {(nav.length > 0 || links.length > 0) && (
@@ -79,9 +80,9 @@ export function Hero({ data, context }: SectionProps<"hero">) {
       <div className={cn(wrap, grid, "ez:pt-6")}>
         <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-1 ez:lg:col-span-8">
           {heading ? (
-            <h1 className={lead}>{heading}</h1>
+            <h1 data-script={scriptOf(heading)} className={lead}>{heading}</h1>
           ) : storeName ? (
-            <p className={lead}>{storeName}</p>
+            <p data-script={scriptOf(storeName)} className={lead}>{storeName}</p>
           ) : (
             <Bar size="long" className="ez:text-site-heading ez:lg:text-site-rank" />
           )}
@@ -116,9 +117,9 @@ function WorkItem({ item, index }: { item: Case | null; index: number }) {
     <li className="ez:min-w-0">
       <NextLink href={caseHref(item.id)} className={cn("ez:group ez:grid ez:content-start ez:no-underline", focusRing)}>
         <Pic src={item.image} ratio={1.5} tone={index} />
-        <h3 className={cn(name, "ez:pt-4 ez:group-hover:text-muted")}>{item.title}</h3>
-        {scope && <p className={cn(desc, "ez:pt-1")}>{scope}</p>}
-        {line && <p className={cn(meta, "ez:pt-1")}>{line}</p>}
+        <h3 data-script={scriptOf(item.title)} className={cn(name, "ez:pt-4 ez:group-hover:text-muted")}>{item.title}</h3>
+        {scope && <p data-script={scriptOf(scope)} className={cn(desc, "ez:pt-1")}>{scope}</p>}
+        {line && <p data-script={scriptOf(line)} className={cn(meta, "ez:pt-1")}>{line}</p>}
       </NextLink>
     </li>
   );
@@ -147,12 +148,12 @@ export function Intro({ data, context }: SectionProps<"intro">) {
       <h2 className={label}>{PORTFOLIO_TITLE.intro}</h2>
       <div className={grid}>
         <div className="ez:min-w-0 ez:lg:col-span-5">
-          {storeName ? <h3 className="ez:m-0 ez:font-display ez:text-site-title ez:text-fg">{storeName}</h3> : <Bar className="ez:text-site-title" />}
+          {storeName ? <h3 data-script={scriptOf(storeName)} className="ez:m-0 ez:font-display ez:text-site-title ez:text-fg">{storeName}</h3> : <Bar className="ez:text-site-title" />}
         </div>
         <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-6 ez:lg:col-span-5 ez:lg:col-start-7">
           {body.length ? (
             body.map((p, i) => (
-              <p key={i} className="ez:m-0 ez:whitespace-pre-line ez:text-site-body ez:leading-loose ez:text-fg">
+              <p data-script={scriptOf(p)} key={i} className="ez:m-0 ez:whitespace-pre-line ez:text-site-body ez:leading-loose ez:text-fg">
                 {p}
               </p>
             ))
@@ -182,7 +183,7 @@ export function Contact({ data }: SectionProps<"store_info">) {
           {actions.length > 0 && (
             <div className="ez:flex ez:flex-wrap ez:gap-4">
               {actions.map((a) => (
-                <a key={a.key} href={a.href} {...(a.external ? out : {})} className={outline}>
+                <a data-script={scriptOf(a.text)} key={a.key} href={a.href} {...(a.external ? out : {})} className={outline}>
                   {a.text}
                 </a>
               ))}
@@ -205,7 +206,7 @@ export function Contact({ data }: SectionProps<"store_info">) {
 function FooterItem({ head, children, className }: { head: string; children: ReactNode; className?: string }) {
   return (
     <div className={cn("ez:grid ez:min-w-0 ez:content-start ez:gap-1", className)}>
-      <p className="ez:m-0 ez:text-site-small ez:font-normal ez:text-muted">{head}</p>
+      <p data-script={scriptOf(head)} className="ez:m-0 ez:text-site-small ez:font-normal ez:text-muted">{head}</p>
       {children}
     </div>
   );

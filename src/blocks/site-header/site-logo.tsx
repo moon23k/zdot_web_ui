@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
 import { cn } from "../../utils/cn";
+import { scriptOf } from "../../utils/writing";
 
 const markName = "ez:font-body ez:text-site-heading ez:normal-case";
 
@@ -29,7 +30,7 @@ function FitName({ name, className }: { name: string; className?: string }) {
     return () => watch.disconnect();
   }, [name]);
   return (
-    <span ref={ref} data-wrap={wrap || undefined} className={cn("ez:block ez:min-w-0 ez:max-lg:line-clamp-2 ez:lg:whitespace-nowrap", className, wrap && "ez:max-lg:text-site-heading")}>
+    <span data-script={scriptOf(name)} ref={ref} data-wrap={wrap || undefined} className={cn("ez:block ez:min-w-0 ez:max-lg:line-clamp-2 ez:lg:whitespace-nowrap", className, wrap && "ez:max-lg:text-site-heading")}>
       {name}
     </span>
   );

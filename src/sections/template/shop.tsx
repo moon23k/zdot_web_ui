@@ -6,6 +6,7 @@ import { cn } from "../../utils/cn";
 import { countSup, focusRing, textLink } from "../../utils/styles";
 import { Bar, Pairs, Pic, type Row } from "../kit";
 import type { Tile } from "./data";
+import { scriptOf } from "../../utils/writing";
 
 function GalleryTiles({ items }: { items: (Tile & { count?: number | null })[] }) {
   if (!items.length) {
@@ -54,7 +55,7 @@ function Bundle({ items }: { items: (Tile | null)[] }) {
         t ? (
           <NextLink key={`${t.title}-${i}`} href={t.href ?? "/products"} className={cn("ez:group ez:grid ez:content-start ez:gap-2.5 ez:text-fg ez:no-underline", focusRing)}>
             <Pic src={t.image} alt={t.title} ratio={1} tone={i} />
-            <span className="ez:line-clamp-2 ez:text-site-small ez:group-hover:underline ez:underline-offset-4">{t.title}</span>
+            <span data-script={scriptOf(t.title)} className="ez:line-clamp-2 ez:text-site-small ez:group-hover:underline ez:underline-offset-4">{t.title}</span>
           </NextLink>
         ) : (
           <span key={i} className="ez:grid ez:content-start ez:gap-2.5">

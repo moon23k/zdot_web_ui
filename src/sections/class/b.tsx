@@ -17,6 +17,8 @@ import { DayStrip, SessionGroups } from "./b-days";
 import { ClassNavLinks } from "./nav";
 import { CLASS_TITLE, CLASSES_HREF, mapHref, SCHEDULE_HREF, sessionView } from "./shared";
 import type { ClassFooterProps, ClassHeaderProps, ClassListProps, SessionView } from "./types";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const WEEK = "일월화수목금토";
 
@@ -62,7 +64,7 @@ export function Header({ name, logoUrl, nav, links }: ClassHeaderProps) {
   return (
     <header data-slot="site-header" data-variant="catalog" className="ez:bg-surface ez:text-fg">
       <div className={cn(wrap, "ez:grid ez:h-16 ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-4 ez:lg:h-21 ez:lg:grid-cols-[1fr_minmax(0,30rem)_1fr] ez:lg:gap-10")}>
-        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:text-fg ez:no-underline", focusRing)}>
+        <NextLink data-script={scriptOf(name)} href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:text-fg ez:no-underline", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         <form
@@ -113,7 +115,7 @@ export function Header({ name, logoUrl, nav, links }: ClassHeaderProps) {
 function FooterColumn({ title, items }: { title: string; items: FooterLink[] }) {
   return (
     <nav aria-label={title} className="ez:flex ez:flex-col">
-      <span className="ez:mb-3.5 ez:text-site-note ez:font-normal ez:text-fg">{title}</span>
+      <span data-script={scriptOf(title)} className="ez:mb-3.5 ez:text-site-note ez:font-normal ez:text-fg">{title}</span>
       {items.map((l) => (
         <NextLink
           key={l.href}
@@ -138,7 +140,7 @@ export function Footer({ storeName, phone, hours, legal, classes, guide, account
               {phone}
             </a>
           )}
-          {hours && <span className="ez:text-site-note ez:text-muted">{hours}</span>}
+          {hours && <span data-script={scriptOf(hours)} className="ez:text-site-note ez:text-muted">{hours}</span>}
         </div>
         <FooterColumn title={CLASS_TITLE.classes} items={classes} />
         <FooterColumn title="계정" items={account} />
@@ -147,8 +149,8 @@ export function Footer({ storeName, phone, hours, legal, classes, guide, account
       </div>
       <div className={wrap}>
         <div className={cn(line, "ez:grid ez:gap-x-8 ez:gap-y-1.5 ez:border-t ez:pt-7 ez:pb-10 ez:lg:grid-cols-[1.6fr_4fr]")}>
-          <p className="ez:m-0 ez:text-site-item ez:font-normal ez:text-fg ez:lg:row-span-2">{storeName}</p>
-          <p className="ez:m-0 ez:text-site-small ez:text-muted">{legal}</p>
+          <p data-script={scriptOf(storeName)} className="ez:m-0 ez:text-site-item ez:font-normal ez:text-fg ez:lg:row-span-2">{storeName}</p>
+          <p data-script={scriptOf(legal)} className="ez:m-0 ez:text-site-small ez:text-muted">{legal}</p>
           <p className="ez:m-0 ez:text-site-small ez:text-muted">© {storeName}. All rights reserved.</p>
         </div>
       </div>
@@ -159,7 +161,7 @@ export function Footer({ storeName, phone, hours, legal, classes, guide, account
 function Head({ title, href, label = CLASS_TITLE.more }: { title: string; href?: string; label?: string }) {
   return (
     <div className="ez:mb-6 ez:flex ez:items-end ez:justify-between ez:gap-3">
-      <h2 className={heading}>{title}</h2>
+      <h2 data-script={scriptOf(title)} className={heading}>{title}</h2>
       {href && (
         <NextLink href={href} className={moreLink}>
           {label}
@@ -185,10 +187,10 @@ function Near({ session }: { session: Session }) {
         {t.week && <span>{t.week}</span>}
         <span>{v.time}</span>
       </span>
-      <span className="ez:truncate ez:text-site-body ez:text-fg ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
+      <span data-script={scriptOf(v.name)} className="ez:truncate ez:text-site-body ez:text-fg ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
       <span className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3">
         <Seats v={v} />
-        {v.price && <span className={price}>{v.price}</span>}
+        {v.price && <span className={price}><Won value={v.price} /></span>}
       </span>
       <span className={cn(tlink, "ez:mt-1.5 ez:group-hover:border-fg ez:group-hover:text-fg")}>{CLASS_TITLE.book}</span>
     </NextLink>
@@ -235,9 +237,9 @@ export function Hero({ data }: SectionProps<"hero">) {
         </div>
         {title && (
           <div className="ez:grid ez:content-end ez:gap-2 ez:p-6 ez:md:px-10 ez:md:pt-10 ez:md:pb-14">
-            <h1 className="ez:m-0 ez:font-body ez:text-site-heading ez:whitespace-pre-line ez:text-fg ez:md:text-site-name">{title}</h1>
+            <h1 data-script={scriptOf(title)} className="ez:m-0 ez:font-body ez:text-site-heading ez:whitespace-pre-line ez:text-fg ez:md:text-site-name">{title}</h1>
             {data.sub && (
-              <p data-slot="hero-sub" className="ez:m-0 ez:text-site-lead ez:text-muted">
+              <p data-script={scriptOf(data.sub)} data-slot="hero-sub" className="ez:m-0 ez:text-site-lead ez:text-muted">
                 {data.sub}
               </p>
             )}
@@ -316,17 +318,17 @@ function ClassItem({ item, tone, preload }: { item: ClassCard; tone: number; pre
     >
       <Photo src={item.image} alt={item.name} tone={tone} preload={preload} sizes="(max-width: 768px) 50vw, 320px" className="ez:aspect-square ez:rounded-sm" />
       <span className="ez:grid ez:min-w-0 ez:content-start ez:gap-0.5">
-        {item.kind && <span className="ez:truncate ez:text-site-small ez:text-muted">{item.kind}</span>}
+        {item.kind && <span data-script={scriptOf(item.kind)} className="ez:truncate ez:text-site-small ez:text-muted">{item.kind}</span>}
         {item.sample ? (
           <span className="ez:flex ez:items-baseline ez:gap-2">
-            <span className="ez:min-w-0 ez:flex-1 ez:truncate ez:text-site-body ez:underline-offset-4 ez:group-hover:underline">{item.name}</span>
+            <span data-script={scriptOf(item.name)} className="ez:min-w-0 ez:flex-1 ez:truncate ez:text-site-body ez:underline-offset-4 ez:group-hover:underline">{item.name}</span>
             <span className="ez:shrink-0 ez:text-site-small ez:text-muted">예시</span>
           </span>
         ) : (
-          <span className="ez:truncate ez:text-site-body ez:underline-offset-4 ez:group-hover:underline">{item.name}</span>
+          <span data-script={scriptOf(item.name)} className="ez:truncate ez:text-site-body ez:underline-offset-4 ez:group-hover:underline">{item.name}</span>
         )}
-        {detail && <span className="ez:truncate ez:text-site-small ez:text-muted">{detail}</span>}
-        {item.price && <span className={cn(price, "ez:mt-1.5")}>{item.price}</span>}
+        {detail && <span data-script={scriptOf(detail)} className="ez:truncate ez:text-site-small ez:text-muted">{detail}</span>}
+        {item.price && <span className={cn(price, "ez:mt-1.5")}><Won value={item.price} /></span>}
         {next && (
           <span className={cn(line, "ez:mt-2 ez:flex ez:min-w-0 ez:gap-1.5 ez:border-t ez:pt-2 ez:text-site-small")}>
             <span className="ez:shrink-0 ez:text-muted">{CLASS_TITLE.next}</span>
@@ -374,7 +376,7 @@ function ReviewCard({ item, cls }: { item: ReviewItem; cls?: ReviewClass }) {
     <article className="ez:flex ez:min-w-0 ez:gap-4 ez:rounded-md ez:border ez:border-solid ez:border-site-line ez:bg-surface ez:p-5">
       <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-1.5">
         <StarRow rating={item.rating} className="ez:text-muted" />
-        <p className="ez:m-0 ez:line-clamp-2 ez:text-site-body ez:text-fg">{item.body}</p>
+        <p data-script={scriptOf(item.body)} className="ez:m-0 ez:line-clamp-2 ez:text-site-body ez:text-fg">{item.body}</p>
         <p className="ez:m-0 ez:flex ez:min-w-0 ez:gap-2 ez:text-site-small ez:text-muted">
           {cls && <span className="ez:truncate">{cls.name}</span>}
           <span className="ez:shrink-0">{[item.name, item.date].filter(Boolean).join(" · ")}</span>
@@ -452,7 +454,7 @@ export function Faq({ context }: SectionProps<"faq">) {
               {f.question}
               <Icon name="plus" size="sm" className="ez:text-muted ez:transition-transform ez:group-open:rotate-45" />
             </summary>
-            <p className="ez:m-0 ez:pb-5 ez:whitespace-pre-line ez:text-site-body ez:text-muted">{f.answer}</p>
+            <p data-script={scriptOf(f.answer)} className="ez:m-0 ez:pb-5 ez:whitespace-pre-line ez:text-site-body ez:text-muted">{f.answer}</p>
           </details>
         ))}
       </div>
@@ -464,7 +466,7 @@ function Fact({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="ez:grid ez:min-w-0 ez:gap-1">
       <dt className="ez:text-site-note ez:text-muted">{label}</dt>
-      <dd className="ez:m-0 ez:text-site-body ez:text-fg ez:lg:whitespace-nowrap">{children}</dd>
+      <dd data-script={scriptOf(children)} className="ez:m-0 ez:text-site-body ez:text-fg ez:lg:whitespace-nowrap">{children}</dd>
     </div>
   );
 }
@@ -529,7 +531,7 @@ function Upcoming({ sessions, href }: { sessions: Session[]; href: string }) {
                   <span>{v.time}</span>
                 </span>
                 <span className="ez:grid ez:min-w-0">
-                  <span className="ez:truncate ez:text-site-note ez:text-fg ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
+                  <span data-script={scriptOf(v.name)} className="ez:truncate ez:text-site-note ez:text-fg ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
                   {v.seats && <span className={cn("ez:text-site-small", v.few ? "ez:text-fg" : "ez:text-muted")}>{v.seats}</span>}
                 </span>
               </NextLink>
@@ -565,7 +567,7 @@ export function List({ view, title, count, crumbs, tabs, sorts, classes, session
         ))}
       </nav>
       <div className={cn(line, "ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2.5 ez:gap-y-1 ez:border-b ez:pt-3 ez:pb-7")}>
-        <h1 className="ez:m-0 ez:font-body ez:text-site-heading ez:text-fg ez:md:text-site-title">{title}</h1>
+        <h1 data-script={scriptOf(title)} className="ez:m-0 ez:font-body ez:text-site-heading ez:text-fg ez:md:text-site-title">{title}</h1>
         {count != null && <span className="ez:text-site-body ez:text-muted ez:tabular-nums">{count}</span>}
       </div>
       {search && <div className="ez:pt-6">{search}</div>}

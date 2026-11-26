@@ -10,6 +10,8 @@ import type { MenuGroup, PlaceLink } from "../template/data";
 import { CareNavLinks } from "./nav";
 import { CARE_ID, CARE_TITLE } from "./shared";
 import type { CareFooterProps, CareHeaderProps } from "./types";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const rule = "ez:border-0 ez:border-solid ez:border-site-line";
 
@@ -70,6 +72,7 @@ export function Header({ name, logoUrl, phone, nav, links }: CareHeaderProps) {
     <header data-slot="site-header" data-variant="float" className="ez:bg-surface">
       <div className="ez:mx-auto ez:flex ez:min-h-20 ez:max-w-wrap ez:items-center ez:gap-8 ez:px-page ez:lg:min-h-40">
         <NextLink
+          data-script={scriptOf(name)}
           href="/"
           className={cn("ez:min-w-0 ez:font-display ez:text-site-heading ez:leading-none ez:text-fg ez:no-underline ez:lg:text-site-title", focusRing)}
         >
@@ -120,7 +123,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
         <div className="ez:grid ez:min-w-0 ez:flex-1 ez:content-start ez:gap-6">
           {heading ? (
             <>
-              <h1 className="ez:m-0 ez:font-display ez:text-site-heading ez:text-balance">{heading}</h1>
+              <h1 data-script={scriptOf(heading)} className="ez:m-0 ez:font-display ez:text-site-heading ez:text-balance">{heading}</h1>
               {sub && (
                 <p data-slot="hero-sub" className="ez:m-0 ez:whitespace-pre-line ez:leading-loose">
                   {sub}
@@ -137,7 +140,7 @@ export function Hero({ data, context }: SectionProps<"hero">) {
           )}
         </div>
         {name ? (
-          <p className={cn(vertical, "ez:m-0 ez:shrink-0 ez:font-display ez:text-site-title")}>{name}</p>
+          <p data-script={scriptOf(name)} className={cn(vertical, "ez:m-0 ez:shrink-0 ez:font-display ez:text-site-title")}>{name}</p>
         ) : (
           blank && <VerticalBlank />
         )}
@@ -203,7 +206,7 @@ function MenuCard({ group }: { group: MenuGroup | null }) {
   return (
     <div className={cn(rule, "ez:grid ez:min-w-0 ez:content-start ez:border ez:px-8 ez:pt-12 ez:pb-8")}>
       {group ? (
-        <h3 className={cn(rule, "ez:m-0 ez:justify-self-start ez:border-b ez:pb-1 ez:font-display ez:text-site-item ez:font-normal ez:text-fg")}>
+        <h3 data-script={scriptOf(group.name ?? CARE_TITLE.all)} className={cn(rule, "ez:m-0 ez:justify-self-start ez:border-b ez:pb-1 ez:font-display ez:text-site-item ez:font-normal ez:text-fg")}>
           {group.name ?? CARE_TITLE.all}
         </h3>
       ) : (
@@ -216,7 +219,7 @@ function MenuCard({ group }: { group: MenuGroup | null }) {
           ? group.items.map((item) => (
               <div key={item.id} className={row}>
                 <dt className="ez:min-w-0 ez:leading-relaxed ez:text-fg">{item.name}</dt>
-                <dd className="ez:m-0 ez:shrink-0 ez:text-muted ez:tabular-nums">{item.price}</dd>
+                <dd className="ez:m-0 ez:shrink-0 ez:text-muted ez:tabular-nums"><Won value={item.price} /></dd>
               </div>
             ))
           : [0, 1, 2].map((i) => (
@@ -265,7 +268,7 @@ export function Store({ data, context }: SectionProps<"store_info">) {
       </div>
       <div className="ez:grid ez:min-w-0 ez:content-start ez:lg:col-span-4 ez:lg:col-start-8 ez:lg:row-start-1">
         {name ? (
-          <h3 className={title}>{name}</h3>
+          <h3 data-script={scriptOf(name)} className={title}>{name}</h3>
         ) : (
           <span className="ez:text-site-heading ez:lg:text-site-title">
             <Bar />
@@ -341,7 +344,7 @@ export function Footer({ storeName, phone, hours, address, legal, nav, links, te
     <footer data-slot="site-footer" className={cn(rule, "ez:border-t ez:text-fg")}>
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-18 ez:pb-12 ez:lg:pt-24 ez:lg:pb-16">
         <div className="ez:grid ez:gap-10 ez:text-site-small ez:md:grid-cols-12 ez:md:gap-x-gutter">
-          <p className="ez:m-0 ez:font-display ez:text-site-heading ez:text-fg ez:md:col-span-5 ez:lg:text-site-title">{storeName}</p>
+          <p data-script={scriptOf(storeName)} className="ez:m-0 ez:font-display ez:text-site-heading ez:text-fg ez:md:col-span-5 ez:lg:text-site-title">{storeName}</p>
           {(nav.length > 0 || links.length > 0) && (
             <nav aria-label={CARE_TITLE.links} className="ez:grid ez:content-start ez:gap-6 ez:md:col-span-3 ez:md:col-start-7">
               {nav.length > 0 && (

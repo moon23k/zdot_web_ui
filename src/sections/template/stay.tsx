@@ -1,5 +1,6 @@
 import type { SectionProps } from "../../renderer/registry";
 import { Bar, Block, Pairs, Rows, Split, Title } from "../kit";
+import { scriptOf } from "../../utils/writing";
 
 export function Amenities({ data, variant }: SectionProps<"amenities">) {
   const items = data.items ?? [];
@@ -10,7 +11,7 @@ export function Amenities({ data, variant }: SectionProps<"amenities">) {
           {(items.length ? items : [null, null, null]).map((it, i) => (
             <li key={it?.name ?? i} className="ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:py-4.5">
               <span>{it ? it.name : <Bar />}</span>
-              {it?.group && <span className="ez:text-site-small ez:text-muted">{it.group}</span>}
+              {it?.group && <span data-script={scriptOf(it.group)} className="ez:text-site-small ez:text-muted">{it.group}</span>}
             </li>
           ))}
         </ul>
@@ -25,7 +26,7 @@ export function Amenities({ data, variant }: SectionProps<"amenities">) {
         {(empty ? [null, null, null, null] : items).map((it, i) => (
           <li key={it?.name ?? i} className="ez:flex ez:flex-col ez:gap-1.5 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:py-5">
             <span>{it ? it.name : <Bar />}</span>
-            {it?.group && <span className="ez:text-site-small ez:text-muted">{it.group}</span>}
+            {it?.group && <span data-script={scriptOf(it.group)} className="ez:text-site-small ez:text-muted">{it.group}</span>}
           </li>
         ))}
       </ul>

@@ -15,6 +15,8 @@ import { ShopNavLinks } from "./nav";
 import { BEST_HREF, categoryHref, FRESH_HREF, lastOdd, PRODUCTS_HREF, productView, ROW_ITEM, SHOP_TITLE, shownCount, STRIP, type ProductView } from "./shared";
 import { SHELF_DEFAULTS, SHELF_RATIO, shelfCols, shelfOf, shelfSizes, shelfView, type Shelf } from "./shelf";
 import type { FooterLink, ShopFooterProps, ShopHeaderProps, ShopListProps } from "./types";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const bleed = "ez:mx-[calc(50%-50vw)]";
 
@@ -25,7 +27,7 @@ const iconLink = cn("ez:relative ez:inline-flex ez:size-11 ez:items-center ez:ju
 function Head({ title }: { title: string }) {
   return (
     <div className="ez:grid ez:justify-items-center ez:text-center">
-      <h2 className="ez:m-0 ez:font-display ez:text-site-heading ez:lg:text-site-title">{title}</h2>
+      <h2 data-script={scriptOf(title)} className="ez:m-0 ez:font-display ez:text-site-heading ez:lg:text-site-title">{title}</h2>
     </div>
   );
 }
@@ -44,7 +46,7 @@ function Price({ v }: { v: ProductView }) {
   return (
     <span className="ez:mt-1.5 ez:flex ez:flex-wrap ez:items-baseline ez:justify-center ez:gap-x-2 ez:text-site-body ez:tabular-nums">
       {v.rate > 0 && <span className="ez:font-medium ez:text-fg">{v.rate}%</span>}
-      <span>{v.price}</span>
+      <span><Won value={v.price} /></span>
       {v.list && (
         <s className="ez:text-site-note ez:text-muted">
           <span className="ez:sr-only">정가 </span>
@@ -73,7 +75,7 @@ function Card({ product, sizes, preload, shelf, tags }: { product: ProductSummar
       <Photo src={v.cover} alt={v.name} sizes={sizes} preload={preload} className={cn(SHELF_RATIO[shelf.ratio], v.soldOut && "ez:opacity-45")} />
       <span className="ez:grid ez:justify-items-center ez:pt-5 ez:text-center ez:lg:pt-6">
         {tags && <span className="ez:mb-3 ez:block ez:h-4 ez:text-site-small ez:leading-none ez:text-muted">{labels}</span>}
-        <span className="ez:line-clamp-2 ez:text-site-item ez:font-normal ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
+        <span data-script={scriptOf(v.name)} className="ez:line-clamp-2 ez:text-site-item ez:font-normal ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
         <Price v={v} />
       </span>
     </NextLink>
@@ -149,6 +151,7 @@ export function Header({ name, logoUrl, cartCount, nav, links }: ShopHeaderProps
             <ShopNavLinks items={items} className="ez:py-1.5 ez:text-fg ez:no-underline" currentClassName="ez:font-medium ez:text-fg" />
           </nav>
           <NextLink
+            data-script={scriptOf(name)}
             href="/"
             className={cn(
               "ez:min-w-0 ez:font-display ez:text-site-heading ez:leading-none ez:text-fg ez:no-underline ez:lg:justify-self-center ez:lg:text-center ez:lg:text-site-logo",
@@ -205,7 +208,7 @@ export function Hero({ data }: SectionProps<"hero">) {
       {title && (
         <div className="ez:absolute ez:inset-x-0 ez:bottom-12 ez:mx-auto ez:max-w-wrap ez:px-page ez:lg:bottom-37.5">
           <div className="ez:flex ez:flex-col ez:items-start ez:gap-5 ez:text-fg ez:lg:gap-7">
-            <h1 className="ez:m-0 ez:max-w-4xl ez:font-display ez:text-site-page ez:text-balance ez:lg:text-site-display-lg">{title}</h1>
+            <h1 data-script={scriptOf(title)} className="ez:m-0 ez:max-w-4xl ez:font-display ez:text-site-page ez:text-balance ez:lg:text-site-display-lg">{title}</h1>
             {sub && (
               <p data-slot="hero-sub" className="ez:m-0 ez:max-w-xl ez:text-site-body">
                 {sub}
@@ -267,7 +270,7 @@ export function Story({ data, context }: SectionProps<"testimonial">) {
         {review ? (
           <figure className="ez:m-0 ez:grid ez:max-w-100 ez:gap-6 ez:lg:gap-7">
             {review.rating != null && <StarRow rating={review.rating} className="ez:text-fg" />}
-            <blockquote className="ez:m-0 ez:line-clamp-6 ez:font-display ez:text-site-heading ez:lg:text-site-name">{review.body}</blockquote>
+            <blockquote data-script={scriptOf(review.body)} className="ez:m-0 ez:line-clamp-6 ez:font-display ez:text-site-heading ez:lg:text-site-name">{review.body}</blockquote>
             {(review.name || review.date) && (
               <figcaption className="ez:flex ez:flex-wrap ez:gap-x-3 ez:text-site-body ez:text-muted">
                 {review.name && <span>{review.name}</span>}
@@ -285,7 +288,7 @@ export function Story({ data, context }: SectionProps<"testimonial">) {
           </div>
         )}
         {product && (
-          <NextLink href={`/products/${product.id}`} className={cn(link, focusRing, "ez:mt-2")}>
+          <NextLink data-script={scriptOf(product.name)} href={`/products/${product.id}`} className={cn(link, focusRing, "ez:mt-2")}>
             {product.name}
           </NextLink>
         )}
@@ -302,7 +305,7 @@ export function Categories({ data, context }: SectionProps<"category_tiles">) {
   const caption = (name: ReactNode, count?: number | null) => (
     <span className="ez:flex ez:items-center ez:justify-between ez:gap-3 ez:pt-4 ez:lg:pt-5">
       <span className="ez:flex ez:min-w-0 ez:items-baseline ez:gap-2.5">
-        <span className="ez:truncate ez:font-display ez:text-site-item ez:font-normal ez:lg:text-site-heading">{name}</span>
+        <span data-script={scriptOf(name)} className="ez:truncate ez:font-display ez:text-site-item ez:font-normal ez:lg:text-site-heading">{name}</span>
         {count != null && <span className="ez:text-site-note ez:text-muted ez:tabular-nums">{count}</span>}
       </span>
       <Icon name="right" size="sm" className="ez:shrink-0 ez:text-muted" />
@@ -344,7 +347,7 @@ export function Wide({ data }: SectionProps<"photo_band">) {
 function FooterNav({ title, items }: { title: string; items: FooterLink[] }) {
   return (
     <nav aria-label={title} className="ez:grid ez:content-start ez:gap-4 ez:lg:gap-5">
-      <span className="ez:text-site-note ez:text-muted">{title}</span>
+      <span data-script={scriptOf(title)} className="ez:text-site-note ez:text-muted">{title}</span>
       <ul className="ez:m-0 ez:grid ez:list-none ez:gap-1 ez:p-0">
         {items.map((l) => (
           <li key={l.href} className="ez:text-site-body ez:leading-loose">
@@ -362,7 +365,7 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
   return (
     <footer data-slot="site-footer" data-variant="editorial" className="ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:text-fg">
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-16 ez:pb-10 ez:lg:pt-28 ez:lg:pb-14">
-        <p className="ez:m-0 ez:mb-12 ez:font-display ez:text-site-name ez:wrap-break-word ez:md:text-site-display ez:lg:mb-22 ez:lg:text-site-hero">{storeName}</p>
+        <p data-script={scriptOf(storeName)} className="ez:m-0 ez:mb-12 ez:font-display ez:text-site-name ez:wrap-break-word ez:md:text-site-display ez:lg:mb-22 ez:lg:text-site-hero">{storeName}</p>
         <div className="ez:grid ez:grid-cols-2 ez:gap-x-gutter ez:gap-y-10 ez:pb-12 ez:md:grid-cols-[7fr_5fr_5fr_5fr] ez:lg:pb-18">
           <div className="ez:col-span-2 ez:grid ez:content-start ez:gap-4 ez:md:col-span-1 ez:lg:gap-5">
             <span className="ez:text-site-note ez:text-muted">고객센터</span>
@@ -373,7 +376,7 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
                     {phone}
                   </a>
                 )}
-                {hours && <span className="ez:text-site-body ez:text-muted">{hours}</span>}
+                {hours && <span data-script={scriptOf(hours)} className="ez:text-site-body ez:text-muted">{hours}</span>}
               </div>
             )}
           </div>
@@ -392,7 +395,7 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
                 ))}
               </nav>
             )}
-            <p className="ez:m-0 ez:max-w-225 ez:text-site-note ez:leading-relaxed ez:text-muted">{legal}</p>
+            <p data-script={scriptOf(legal)} className="ez:m-0 ez:max-w-225 ez:text-site-note ez:leading-relaxed ez:text-muted">{legal}</p>
           </div>
           <span className="ez:text-site-note ez:text-muted">© {storeName}</span>
         </div>
@@ -427,7 +430,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
     <div data-slot="catalog-view" className="ez:grid ez:grid-cols-1 ez:text-fg">
       <div className="ez:grid ez:justify-items-center ez:pt-8 ez:text-center ez:lg:pt-18">
         <Crumbs items={crumbs} />
-        <h1 className="ez:m-0 ez:mt-5 ez:font-display ez:text-site-page-sm ez:lg:mt-7 ez:lg:text-site-display-md">{title}</h1>
+        <h1 data-script={scriptOf(title)} className="ez:m-0 ez:mt-5 ez:font-display ez:text-site-page-sm ez:lg:mt-7 ez:lg:text-site-display-md">{title}</h1>
         {search && <div className="ez:mt-8 ez:w-full ez:max-w-130 ez:text-left">{search}</div>}
         {tabs.length > 1 && (
           <nav aria-label="카테고리" className="ez:mt-8 ez:flex ez:flex-wrap ez:justify-center ez:gap-x-10 ez:gap-y-1 ez:text-site-body ez:lg:mt-11">

@@ -8,6 +8,7 @@ import { NightAbout, NightBox, NightHead, NightHero, nightRule, NightVisit } fro
 import { caseView, CASES_HREF, QUOTE_TITLE } from "../quote/shared";
 import type { Case } from "../template/data";
 import { PORTFOLIO_ID, PORTFOLIO_TITLE } from "./shared";
+import { scriptOf } from "../../utils/writing";
 
 export { Footer, Header } from "../place/e";
 
@@ -61,10 +62,10 @@ function Item({ item, index }: { item: Case; index: number }) {
             {first && <span aria-hidden="true" className="ez:fx-glow ez:size-2 ez:shrink-0 ez:rounded-full ez:bg-primary" />}
             <span className="ez:min-w-0 ez:truncate">{item.title}</span>
           </span>
-          {line && <span className="ez:text-site-small ez:md:hidden">{line}</span>}
+          {line && <span data-script={scriptOf(line)} className="ez:text-site-small ez:md:hidden">{line}</span>}
         </span>
-        <span className="ez:min-w-0 ez:truncate ez:text-site-small ez:max-md:hidden">{item.category}</span>
-        <span className="ez:min-w-0 ez:truncate ez:text-site-small ez:tabular-nums ez:max-md:hidden">{item.meta}</span>
+        <span data-script={scriptOf(item.category)} className="ez:min-w-0 ez:truncate ez:text-site-small ez:max-md:hidden">{item.category}</span>
+        <span data-script={scriptOf(item.meta)} className="ez:min-w-0 ez:truncate ez:text-site-small ez:tabular-nums ez:max-md:hidden">{item.meta}</span>
         <div className={cn(thumb, !first && "ez:opacity-60 ez:group-hover:opacity-100")}>
           <Pic src={item.image} ratio={200 / 116} tone={index} />
         </div>

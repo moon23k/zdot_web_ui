@@ -14,6 +14,8 @@ import { discountRate, won } from "../../utils/format";
 import { chip, pointTag } from "../../utils/styles";
 import { Notice } from "../parts/notice";
 import { Status } from "../parts/status";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const bell = (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -70,7 +72,7 @@ export function BuyBox({
             품절
           </span>
         )}
-        <h1 className="ez:m-0 ez:text-site-page-sm ez:lg:text-site-page">{product.name}</h1>
+        <h1 data-script={scriptOf(product.name)} className="ez:m-0 ez:text-site-page-sm ez:lg:text-site-page">{product.name}</h1>
         {rating && rating.count > 0 && (
           <NextLink href="#reviews" className="ez:flex ez:items-center ez:gap-2 ez:text-site-small ez:text-fg ez:no-underline">
             <StarRow rating={rating.average} />
@@ -82,7 +84,7 @@ export function BuyBox({
       <p className="ez:m-0 ez:flex ez:flex-wrap ez:items-baseline ez:gap-2 ez:text-site-heading ez:tabular-nums">
         {sale > 0 && !soldOut && <span className="ez:text-primary">{sale}%</span>}
         <span className={soldOut ? "ez:text-muted" : undefined}>
-          {won(from ?? unit)}
+          <Won amount={from ?? unit} />
           {from !== null && <span className="ez:text-site-lead ez:font-normal ez:text-muted"> 부터</span>}
         </span>
         {sale > 0 && !soldOut && <s className="ez:text-site-small ez:font-normal ez:text-muted">{won(product.list_price)}</s>}
@@ -90,7 +92,7 @@ export function BuyBox({
       {lead && lead.length > 0 && (
         <div data-slot="buy-lead" className="ez:grid ez:gap-2 ez:text-site-body">
           {lead.map((line, i) => (
-            <p key={i} className={cn("ez:m-0 ez:whitespace-pre-line", i > 0 && "ez:text-muted")}>
+            <p data-script={scriptOf(line)} key={i} className={cn("ez:m-0 ez:whitespace-pre-line", i > 0 && "ez:text-muted")}>
               {line}
             </p>
           ))}
@@ -163,7 +165,7 @@ export function BuyBox({
               {quantity > 1 && (
                 <p className="ez:m-0 ez:flex ez:items-baseline ez:gap-3.5">
                   <span className="ez:text-site-small ez:text-muted">총 상품 금액</span>
-                  <strong className="ez:text-site-heading ez:font-medium ez:tabular-nums ez:whitespace-nowrap">{won(unit * quantity)}</strong>
+                  <strong className="ez:text-site-heading ez:font-medium ez:tabular-nums ez:whitespace-nowrap"><Won amount={unit * quantity} /></strong>
                 </p>
               )}
             </div>
@@ -195,7 +197,7 @@ export function BuyBox({
             <span className="ez:text-site-small ez:text-muted">
               {[options ? variant?.label : null, `${quantity}개`].filter(Boolean).join(" · ")}
             </span>
-            <strong className="ez:font-medium ez:tabular-nums">{won(unit * quantity)}</strong>
+            <strong className="ez:font-medium ez:tabular-nums"><Won amount={unit * quantity} /></strong>
           </div>
         </div>
         <div className="ez:grid ez:grid-cols-2 ez:gap-2">

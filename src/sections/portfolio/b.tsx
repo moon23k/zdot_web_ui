@@ -10,6 +10,7 @@ import type { Case } from "../template/data";
 import { PortfolioNavLinks } from "./nav";
 import { PORTFOLIO_ID, PORTFOLIO_TITLE } from "./shared";
 import type { PortfolioFooterProps, PortfolioHeaderProps } from "./types";
+import { scriptOf } from "../../utils/writing";
 
 const COLUMN = { no: "번호", name: "이름", category: "분류", area: "지역 · 규모", list: "작업 목록" } as const;
 
@@ -53,7 +54,7 @@ export function Header({ name, logoUrl, nav }: PortfolioHeaderProps) {
     <header data-slot="site-header" className="ez:bg-surface">
       <div className={wrap}>
         <div className={cn(rule, "ez:flex ez:min-h-16 ez:items-center ez:gap-8 ez:border-b ez:py-4 ez:lg:py-6")}>
-          <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-item ez:font-normal ez:leading-normal ez:text-fg ez:no-underline", focusRing)}>
+          <NextLink data-script={scriptOf(name)} href="/" className={cn("ez:min-w-0 ez:text-site-item ez:font-normal ez:leading-normal ez:text-fg ez:no-underline", focusRing)}>
             <SiteLogo name={name} src={logoUrl} />
           </NextLink>
           {nav.length > 0 && (
@@ -120,9 +121,9 @@ function ListRow({ item, index }: { item: Case | null; index: number }) {
     <li>
       <NextLink href={caseHref(item.id)} className={cn(line, "ez:group ez:no-underline", focusRing)}>
         <span className={cn(cell.no, "ez:text-muted")}>{serial(index)}</span>
-        <span className={cn(cell.name, "ez:text-fg ez:group-hover:text-muted")}>{item.title}</span>
-        <span className={cn(cell.category, "ez:text-fg")}>{item.category}</span>
-        <span className={cn(cell.area, "ez:text-muted")}>{item.meta}</span>
+        <span data-script={scriptOf(item.title)} className={cn(cell.name, "ez:text-fg ez:group-hover:text-muted")}>{item.title}</span>
+        <span data-script={scriptOf(item.category)} className={cn(cell.category, "ez:text-fg")}>{item.category}</span>
+        <span data-script={scriptOf(item.meta)} className={cn(cell.area, "ez:text-muted")}>{item.meta}</span>
       </NextLink>
     </li>
   );
@@ -179,7 +180,7 @@ export function Intro({ data }: SectionProps<"intro">) {
       <h2 className="ez:sr-only">{PORTFOLIO_TITLE.intro}</h2>
       {body.length ? (
         body.map((p, i) => (
-          <p key={i} className="ez:m-0 ez:whitespace-pre-line ez:text-site-item ez:font-normal ez:leading-relaxed ez:text-fg">
+          <p data-script={scriptOf(p)} key={i} className="ez:m-0 ez:whitespace-pre-line ez:text-site-item ez:font-normal ez:leading-relaxed ez:text-fg">
             {p}
           </p>
         ))
@@ -213,7 +214,7 @@ export function Contact({ data }: SectionProps<"store_info">) {
       {actions.length > 0 && (
         <div className="ez:flex ez:flex-wrap ez:gap-4">
           {actions.map((a) => (
-            <a key={a.key} href={a.href} {...(a.external ? out : {})} className={outline}>
+            <a data-script={scriptOf(a.text)} key={a.key} href={a.href} {...(a.external ? out : {})} className={outline}>
               {a.text}
             </a>
           ))}
@@ -260,7 +261,7 @@ export function Footer({ storeName, phone, hours, address, legal, links, terms }
               ))}
             </nav>
           </div>
-          <p className="ez:m-0 ez:mt-12 ez:max-w-225 ez:text-site-small ez:leading-relaxed ez:text-muted">{legal}</p>
+          <p data-script={scriptOf(legal)} className="ez:m-0 ez:mt-12 ez:max-w-225 ez:text-site-small ez:leading-relaxed ez:text-muted">{legal}</p>
         </div>
       </div>
     </footer>

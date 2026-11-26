@@ -10,6 +10,8 @@ import type { Session } from "../template/data";
 import { useScheduleDays } from "./days";
 import { CLASS_TITLE, sessionView } from "./shared";
 import type { SessionView } from "./types";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const WEEK = "일월화수목금토";
 
@@ -61,18 +63,18 @@ function Row({ session }: { session: Session }) {
     >
       <span className="ez:col-span-2 ez:text-site-item ez:tabular-nums ez:text-muted ez:lg:col-span-1">{v.time}</span>
       <span className="ez:grid ez:min-w-0 ez:gap-1.5 ez:lg:pr-6">
-        <span className={cn("ez:truncate ez:text-site-heading", v.full ? "ez:text-muted" : "ez:text-fg")}>{v.name}</span>
+        <span data-script={scriptOf(v.name)} className={cn("ez:truncate ez:text-site-heading", v.full ? "ez:text-muted" : "ez:text-fg")}>{v.name}</span>
         <span className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3 ez:gap-y-1 ez:lg:hidden">
-          {spec && <span className="ez:text-site-small ez:text-site-off">{spec}</span>}
+          {spec && <span data-script={scriptOf(spec)} className="ez:text-site-small ez:text-site-off">{spec}</span>}
           <Seats v={v} />
-          {v.price && <span className={price}>{v.price}</span>}
+          {v.price && <span className={price}><Won value={v.price} /></span>}
         </span>
       </span>
-      <span className="ez:truncate ez:pr-6 ez:text-site-small ez:text-site-off ez:max-lg:hidden">{spec}</span>
+      <span data-script={scriptOf(spec)} className="ez:truncate ez:pr-6 ez:text-site-small ez:text-site-off ez:max-lg:hidden">{spec}</span>
       <span className="ez:max-lg:hidden">
         <Seats v={v} />
       </span>
-      <span className={cn(price, "ez:pr-6 ez:text-right ez:max-lg:hidden")}>{v.price}</span>
+      <span className={cn(price, "ez:pr-6 ez:text-right ez:max-lg:hidden")}><Won value={v.price} /></span>
       {v.full ? (
         <span aria-hidden="true" className={cn(pick, "ez:cursor-default ez:border-hairline ez:text-site-off")}>
           {CLASS_TITLE.full}

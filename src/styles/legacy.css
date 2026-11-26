@@ -127,6 +127,13 @@
   color: var(--ezd-error, #b42318);
   font-size: 0.875rem;
 }
+.ez-won-unit {
+  margin-left: 0.03em;
+  font-size: 0.9em;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0;
+}
 .ez-check {
   display: flex;
   gap: 10px;

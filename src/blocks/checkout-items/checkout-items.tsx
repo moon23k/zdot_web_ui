@@ -1,9 +1,9 @@
 import { Photo } from "../../components/photo";
 import type { CartLineData } from "../../types";
 import { cn } from "../../utils/cn";
-import { won } from "../../utils/format";
 import { focusRing } from "../../utils/styles";
 import { LineItem, lineList } from "../parts/line-item";
+import { Won } from "../../components/price";
 
 export type CheckoutLine = Pick<CartLineData, "variant_id" | "name" | "option_label" | "quantity" | "line_total">;
 
@@ -16,7 +16,7 @@ export function CheckoutItems({ lines, imageSrc }: { lines: CheckoutLine[]; imag
         <span className="ez:flex ez:items-center ez:justify-between ez:gap-3">
           <strong className="ez:font-medium">주문 상품 {lines.length}개</strong>
           <span className="ez:flex ez:items-center ez:gap-1.5 ez:tabular-nums ez:whitespace-nowrap">
-            {won(lines.reduce((sum, l) => sum + l.line_total, 0))}
+            <Won amount={lines.reduce((sum, l) => sum + l.line_total, 0)} />
             <svg
               width="16"
               height="16"
@@ -49,7 +49,7 @@ export function CheckoutItems({ lines, imageSrc }: { lines: CheckoutLine[]; imag
             key={line.variant_id}
             name={line.name}
             option={[line.option_label, `${line.quantity}개`].filter(Boolean).join(" · ")}
-            amount={won(line.line_total)}
+            amount={<Won amount={line.line_total} />}
             media={<Photo src={imageSrc?.[line.variant_id]} alt="" sizes="40px" className="ez:w-10 ez:aspect-[4/5]" />}
           />
         ))}

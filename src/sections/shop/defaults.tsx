@@ -4,6 +4,7 @@ import type { SectionProps } from "../../renderer/registry";
 import { won } from "../../utils/format";
 import { Bar, BlankPrice, Pic } from "../kit";
 import { BEST_HREF, SHOP_TITLE } from "./shared";
+import { Won } from "../../components/price";
 
 export function BestGrid({ data, grid }: SectionProps<"best_grid">) {
   const items = data.items ?? [];
@@ -67,7 +68,7 @@ export function ShopGuide({ data, context }: SectionProps<"shop_guide">) {
       {items.map((r) => (
         <div key={r.label} className="ez:grid ez:gap-1">
           <span className="ez:text-site-small ez:text-muted">{r.label}</span>
-          <span>{r.value}</span>
+          <span><Won value={r.value} /></span>
         </div>
       ))}
     </section>

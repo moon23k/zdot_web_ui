@@ -13,7 +13,7 @@ export const pointTag = "ez:inline-flex ez:items-center ez:gap-1.5 ez:text-site-
 
 export const countSup = "ez:ml-1.5 ez:align-top ez:text-site-small ez:font-normal ez:text-primary";
 
-export const figure = "ez:font-figure ez:italic ez:font-normal";
+export const figure = "ez:font-figure ez:font-normal";
 
 export const numeral = "ez:font-body ez:not-italic ez:tabular-nums";
 

@@ -4,8 +4,9 @@ import { useState } from "react";
 import { Icon } from "../../components/icon";
 import type { Schemas } from "../../types";
 import { cn } from "../../utils/cn";
-import { won, kstDueTime } from "../../utils/format";
+import { kstDueTime } from "../../utils/format";
 import { focusRing, numeralStep } from "../../utils/styles";
+import { Won } from "../../components/price";
 
 function useCopy(text: string) {
   const [copied, setCopied] = useState(false);
@@ -73,7 +74,7 @@ export function DepositInfo({ deposit }: { deposit: Schemas["DepositOut"] }) {
           </>
         )}
         <dt className="ez:text-muted">입금 금액</dt>
-        <dd className="ez:m-0 ez:font-medium">{won(deposit.amount)}</dd>
+        <dd className="ez:m-0 ez:font-medium"><Won amount={deposit.amount} /></dd>
       </dl>
       <span className="ez:text-muted">기한이 지나면 주문이 자동으로 취소돼요.</span>
     </section>

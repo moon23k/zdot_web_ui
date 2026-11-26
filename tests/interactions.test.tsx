@@ -236,10 +236,10 @@ describe("ClaimForm", () => {
     const total = await screen.findByText("환불 예정 금액");
     expect(preview).toHaveBeenLastCalledWith({ kind: "return", fault: "customer", items: [{ order_item_id: "v", quantity: 2 }] });
     const summary = total.closest("dl") as HTMLElement;
-    expect(within(summary).getByText("6,667원")).toBeInTheDocument();
+    expect(within(summary).getByText((_, el) => el?.getAttribute("data-slot") === "won" && el.textContent === "6,667원")).toBeInTheDocument();
     expect(within(summary).getByText("− 3,000원")).toBeInTheDocument();
     expect(within(summary).getByText("− 1,000원")).toBeInTheDocument();
-    expect(within(summary).getByText("2,667원")).toBeInTheDocument();
+    expect(within(summary).getByText((_, el) => el?.getAttribute("data-slot") === "won" && el.textContent === "2,667원")).toBeInTheDocument();
     expect(within(summary).queryByText("최초 배송비")).toBeNull();
     expect(screen.getByText("적립금 복원").closest("dl")).not.toBe(summary);
     await userEvent.click(screen.getByRole("radio", { name: /상품 문제/ }));

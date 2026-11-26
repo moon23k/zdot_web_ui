@@ -2,12 +2,14 @@ import type { ReactNode } from "react";
 import { Photo } from "../../components/photo";
 import type { OrderStatus, Schemas } from "../../types";
 import { cn } from "../../utils/cn";
-import { kstDate, won, kstSchedule } from "../../utils/format";
+import { kstDate, kstSchedule } from "../../utils/format";
 import { focusRing } from "../../utils/styles";
 import { DepositInfo } from "../parts/deposit-info";
 import { LineItem, lineList } from "../parts/line-item";
 import { Status } from "../parts/status";
 import { SummaryRows, type SummaryRow } from "../parts/summary-rows";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 export const STATUS_LABEL: Record<OrderStatus, string> = {
   pending_payment: "결제 대기",
@@ -230,7 +232,7 @@ export function OrderDetail({
             <LineItem
               key={item.id}
               name={item.product_name}
-              amount={won(item.line_total)}
+              amount={<Won amount={item.line_total} />}
               media={
                 imageSrc && <Photo src={imageSrc[item.id]} alt={item.product_name} sizes="56px" className="ez:w-14 ez:aspect-[4/5]" />
               }
@@ -262,8 +264,8 @@ export function OrderDetail({
             <div data-slot="pickup-place" className="ez:grid ez:gap-0.5">
               <span className="ez:text-site-small ez:text-muted">픽업 장소</span>
               <span>{order.pickup.name}</span>
-              <span className="ez:text-site-small">{order.pickup.address}</span>
-              {order.pickup.hours && <span className="ez:text-site-small ez:text-muted">{order.pickup.hours}</span>}
+              <span data-script={scriptOf(order.pickup.address)} className="ez:text-site-small">{order.pickup.address}</span>
+              {order.pickup.hours && <span data-script={scriptOf(order.pickup.hours)} className="ez:text-site-small ez:text-muted">{order.pickup.hours}</span>}
             </div>
           )}
           {(order.ship_address || order.shipments.length > 0) && (

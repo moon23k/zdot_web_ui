@@ -5,6 +5,8 @@ import { Button, ButtonLink } from "../components/button";
 import { Fold, statusText } from "../sections/kit";
 import { cn } from "../utils/cn";
 import type { DetailData } from "./data";
+import { Won } from "../components/price";
+import { scriptOf } from "../utils/writing";
 
 export type DetailBlockProps = { data: DetailData; variant?: string };
 
@@ -28,6 +30,7 @@ export function Info({ data, variant }: DetailBlockProps) {
         <div role="tablist" onKeyDown={move} className="ez:flex ez:gap-9 ez:overflow-x-auto ez:border-0 ez:border-b ez:border-solid ez:border-site-line">
           {items.map((it, i) => (
             <button
+              data-script={scriptOf(it.title)}
               key={it.title}
               ref={(node) => {
                 tabs.current[i] = node;
@@ -102,7 +105,7 @@ export function QuoteForm({ data, variant }: DetailBlockProps) {
       <div className="ez:grid ez:gap-5">
         <ol className="ez:m-0 ez:grid ez:list-none ez:auto-cols-fr ez:grid-flow-col ez:gap-1 ez:p-0 ez:text-site-small">
           {f.steps.map((s, i) => (
-            <li key={s} className={cn("ez:border-0 ez:border-t-4 ez:border-solid ez:pt-1.5", i <= step ? "ez:border-primary ez:text-fg" : "ez:border-primary-border ez:text-muted")}>
+            <li data-script={scriptOf(s)} key={s} className={cn("ez:border-0 ez:border-t-4 ez:border-solid ez:pt-1.5", i <= step ? "ez:border-primary ez:text-fg" : "ez:border-primary-border ez:text-muted")}>
               {s}
             </li>
           ))}
@@ -137,7 +140,7 @@ export function QuoteForm({ data, variant }: DetailBlockProps) {
         {f.total && (
           <span className="ez:flex ez:items-baseline ez:justify-between">
             <span className="ez:text-site-small ez:text-muted">예상 금액</span>
-            <strong className="ez:text-site-heading ez:tabular-nums">{f.total}</strong>
+            <strong className="ez:text-site-heading ez:tabular-nums"><Won value={f.total} /></strong>
           </span>
         )}
         <Button type="submit">{f.button}</Button>

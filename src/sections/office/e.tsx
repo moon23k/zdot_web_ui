@@ -7,6 +7,8 @@ import { caseHref, menuItems } from "../landing/shared";
 import { NightAbout, NightBox, NightHead, NightHero, nightHair, nightHours, nightRule, NightVisit } from "../place/e";
 import type { Case, MenuItem } from "../template/data";
 import { OFFICE_ID, OFFICE_TITLE } from "./shared";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 export { Footer, Header } from "../place/e";
 
@@ -38,8 +40,8 @@ export function Menu({ data }: SectionProps<"menu">) {
             <span className={planNo}>{String(i + 1).padStart(2, "0")}</span>
             {m ? (
               <>
-                <h3 className={planName}>{m.name}</h3>
-                {m.price && <p className={planPrice}>{m.price}</p>}
+                <h3 data-script={scriptOf(m.name)} className={planName}>{m.name}</h3>
+                {m.price && <p className={planPrice}><Won value={m.price} /></p>}
               </>
             ) : (
               <>
@@ -81,8 +83,8 @@ function CaseCard({ item, index }: { item: Case | null; index: number }) {
     <li className="ez:min-w-0">
       <NextLink href={caseHref(item.id)} className={cn("ez:group ez:grid ez:content-start ez:text-fg ez:no-underline", focusRing)}>
         {image}
-        <span className="ez:px-0.5 ez:pt-4 ez:text-site-item ez:text-fg ez:group-hover:text-muted">{item.title}</span>
-        {meta && <span className="ez:px-0.5 ez:pt-1 ez:text-site-small ez:text-site-off">{meta}</span>}
+        <span data-script={scriptOf(item.title)} className="ez:px-0.5 ez:pt-4 ez:text-site-item ez:text-fg ez:group-hover:text-muted">{item.title}</span>
+        {meta && <span data-script={scriptOf(meta)} className="ez:px-0.5 ez:pt-1 ez:text-site-small ez:text-site-off">{meta}</span>}
       </NextLink>
     </li>
   );

@@ -6,7 +6,7 @@ export { designVars } from "./theme/tokens";
 export { SYSTEM_BRAND_COLOR } from "./theme/system";
 export { Button, ButtonLink, buttonVariants } from "./components/button";
 export { Icon, type IconName } from "./components/icon";
-export { Price } from "./components/price";
+export { Price, Won } from "./components/price";
 export { Field, Input, TextArea } from "./components/field";
 export { Select } from "./components/select";
 export { Quantity } from "./components/quantity";

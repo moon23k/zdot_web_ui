@@ -1,12 +1,14 @@
 import type { ReactNode } from "react";
 import { cn } from "../../utils/cn";
 import { numeralStep } from "../../utils/styles";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 export function CheckoutLayout({ title, main, aside }: { title?: string; main: ReactNode; aside: ReactNode }) {
   return (
     <div data-slot="checkout-layout" className="ez:grid ez:gap-10 ez:pt-4 ez:lg:grid-cols-[minmax(0,1fr)_440px] ez:lg:items-start ez:lg:gap-24 ez:lg:pt-10">
       <div className="ez:grid ez:min-w-0 ez:gap-10 ez:lg:gap-16">
-        {title && <h1 className="ez:m-0 ez:text-site-page">{title}</h1>}
+        {title && <h1 data-script={scriptOf(title)} className="ez:m-0 ez:text-site-page">{title}</h1>}
         {main}
       </div>
       <aside className="ez:grid ez:gap-6 ez:rounded-md ez:bg-deep ez:p-6 ez:lg:sticky ez:lg:top-8 ez:lg:p-8">{aside}</aside>
@@ -31,7 +33,7 @@ export function CheckoutSection({
 }) {
   const heading = (
     <h2 className="ez:m-0 ez:flex ez:items-baseline ez:gap-3.5 ez:text-site-heading">
-      <span className={cn(numeralStep, "ez:text-site-heading ez:leading-none ez:text-primary")}>{n}</span>
+      <span data-script={scriptOf(title)} className={cn(numeralStep, "ez:text-site-heading ez:leading-none ez:text-primary")}>{n}</span>
       {title}
     </h2>
   );
@@ -84,7 +86,7 @@ export function CheckoutLines({ lines }: { lines: { id: string; name: string; op
             <span>{l.name}</span>
             <span className="ez:text-site-small ez:text-muted">{[l.option, `${l.quantity}개`].filter(Boolean).join(" · ")}</span>
           </span>
-          <span className="ez:font-normal ez:tabular-nums ez:whitespace-nowrap">{l.amount}</span>
+          <span className="ez:font-normal ez:tabular-nums ez:whitespace-nowrap"><Won value={l.amount} /></span>
         </li>
       ))}
     </ul>

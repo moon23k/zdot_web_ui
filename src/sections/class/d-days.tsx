@@ -10,6 +10,8 @@ import type { Session } from "../template/data";
 import { useScheduleDays } from "./days";
 import { CLASS_TITLE, sessionView } from "./shared";
 import type { SessionView } from "./types";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const WEEK = "일월화수목금토";
 
@@ -40,18 +42,18 @@ function SessionRow({ session }: { session: Session }) {
     <li data-slot="session-row" data-full={v.full || undefined} className={cn(hair, rowGrid)}>
       <span className="ez:col-span-2 ez:text-site-item ez:font-normal ez:tabular-nums ez:text-fg ez:lg:col-span-1">{v.time}</span>
       <span className="ez:grid ez:min-w-0 ez:gap-1">
-        <span className="ez:truncate ez:text-site-item ez:font-normal ez:text-fg">{v.name}</span>
+        <span data-script={scriptOf(v.name)} className="ez:truncate ez:text-site-item ez:font-normal ez:text-fg">{v.name}</span>
         <span className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3 ez:gap-y-1 ez:text-site-note ez:lg:hidden">
           {meta && <span className="ez:text-muted">{meta}</span>}
           <State v={v} />
-          {v.price && <span className="ez:tabular-nums ez:text-fg">{v.price}</span>}
+          {v.price && <span className="ez:tabular-nums ez:text-fg"><Won value={v.price} /></span>}
         </span>
       </span>
-      <span className="ez:truncate ez:text-site-body ez:text-muted ez:max-lg:hidden">{meta}</span>
+      <span data-script={scriptOf(meta)} className="ez:truncate ez:text-site-body ez:text-muted ez:max-lg:hidden">{meta}</span>
       <span className="ez:max-lg:hidden">
         <State v={v} />
       </span>
-      <span className="ez:pr-6 ez:text-right ez:text-site-body ez:tabular-nums ez:text-fg ez:max-lg:hidden">{v.price}</span>
+      <span className="ez:pr-6 ez:text-right ez:text-site-body ez:tabular-nums ez:text-fg ez:max-lg:hidden"><Won value={v.price} /></span>
       {v.full ? (
         <span className={cn(pill, "ez:bg-surface ez:text-site-off")}>{CLASS_TITLE.full}</span>
       ) : (

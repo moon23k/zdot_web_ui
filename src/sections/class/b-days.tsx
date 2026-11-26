@@ -9,6 +9,8 @@ import type { Session } from "../template/data";
 import { useScheduleDays } from "./days";
 import { CLASS_TITLE, sessionView } from "./shared";
 import type { SessionView } from "./types";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const WEEK = "일월화수목금토";
 
@@ -53,17 +55,17 @@ function Row({ session }: { session: Session }) {
     >
       <span className={cn("ez:col-span-2 ez:text-site-item ez:font-normal ez:tabular-nums ez:text-fg ez:lg:col-span-1", dim)}>{v.time}</span>
       <span className="ez:grid ez:min-w-0 ez:gap-0.5">
-        <span className={cn("ez:truncate ez:text-site-item ez:text-fg", dim)}>{v.name}</span>
-        {spec && <span className={cn("ez:truncate ez:text-site-small ez:text-muted", dim)}>{spec}</span>}
+        <span data-script={scriptOf(v.name)} className={cn("ez:truncate ez:text-site-item ez:text-fg", dim)}>{v.name}</span>
+        {spec && <span data-script={scriptOf(spec)} className={cn("ez:truncate ez:text-site-small ez:text-muted", dim)}>{spec}</span>}
         <span className="ez:mt-1 ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-3 ez:lg:hidden">
           <Seats v={v} />
-          {v.price && <span className={cn(price, dim)}>{v.price}</span>}
+          {v.price && <span className={cn(price, dim)}><Won value={v.price} /></span>}
         </span>
       </span>
       <span className="ez:max-lg:hidden">
         <Seats v={v} />
       </span>
-      <span className={cn(price, "ez:text-right ez:max-lg:hidden", dim)}>{v.price}</span>
+      <span className={cn(price, "ez:text-right ez:max-lg:hidden", dim)}><Won value={v.price} /></span>
       {v.full ? (
         <span aria-hidden="true" />
       ) : (

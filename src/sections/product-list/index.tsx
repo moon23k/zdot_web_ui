@@ -4,13 +4,15 @@ import { Badge } from "../../components/badge";
 import { ButtonLink } from "../../components/button";
 import { countSup, chip, chipOn, focusRing, numeralStep, textLink } from "../../utils/styles";
 import { cn } from "../../utils/cn";
-import { discountRate, won } from "../../utils/format";
+import { discountRate } from "../../utils/format";
 import { ProductGrid } from "../../blocks/product-grid";
 import type { SectionProps } from "../../renderer/registry";
 import type { GridSpec } from "../../templates/types";
 import type { ProductSummary } from "../../types";
 import { Bar, BlankPrice, Card, Cols, Pic, Title } from "../kit";
 import { pcCols } from "../../utils/styles";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const SHOWN = 8;
 
@@ -72,10 +74,10 @@ function ShowcaseCard({ product, ratio, index }: { product: ProductSummary; rati
       </NextLink>
       <div className="ez:grid ez:gap-3.5">
         <div className="ez:flex ez:items-baseline ez:justify-between ez:gap-4">
-          <NextLink href={href} className="ez:line-clamp-2 ez:text-site-item ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4">
+          <NextLink data-script={scriptOf(product.name)} href={href} className="ez:line-clamp-2 ez:text-site-item ez:text-fg ez:no-underline ez:hover:underline ez:underline-offset-4">
             {product.name}
           </NextLink>
-          <span className={cn("ez:shrink-0 ez:text-site-lead ez:font-normal ez:tabular-nums", product.sold_out && "ez:text-muted")}>{won(product.sale_price)}</span>
+          <span className={cn("ez:shrink-0 ez:text-site-lead ez:font-normal ez:tabular-nums", product.sold_out && "ez:text-muted")}><Won amount={product.sale_price} /></span>
         </div>
         <div className="ez:flex ez:min-h-6 ez:items-center ez:justify-between ez:gap-3 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-3.5 ez:text-site-small">
           {product.sold_out ? (
@@ -108,10 +110,10 @@ function StoreCard({ product, ratio, index }: { product: ProductSummary; ratio: 
     >
       <Shot product={product} ratio={ratio} index={index} />
       <span className="ez:flex ez:flex-col ez:gap-0.5">
-        <span className="ez:line-clamp-2 ez:text-site-lead ez:group-hover:underline ez:underline-offset-4">{product.name}</span>
+        <span data-script={scriptOf(product.name)} className="ez:line-clamp-2 ez:text-site-lead ez:group-hover:underline ez:underline-offset-4">{product.name}</span>
         <span className="ez:flex ez:items-baseline ez:gap-2 ez:tabular-nums ez:whitespace-nowrap">
           {product.sold_out ? <span className="ez:text-site-small ez:text-muted">품절</span> : sale > 0 && <span className="ez:font-normal ez:text-primary">{`${sale}%`}</span>}
-          <strong className={cn("ez:text-site-lead ez:font-medium", product.sold_out && "ez:text-muted")}>{won(product.sale_price)}</strong>
+          <strong className={cn("ez:text-site-lead ez:font-medium", product.sold_out && "ez:text-muted")}><Won amount={product.sale_price} /></strong>
         </span>
       </span>
     </NextLink>

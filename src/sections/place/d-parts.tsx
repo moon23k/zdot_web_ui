@@ -11,6 +11,8 @@ import { LandingNavLinks } from "../landing/nav";
 import { bookingLink, LANDING_LABEL, paragraphs, telHref } from "../landing/shared";
 import type { LandingFooterProps, LandingHeaderProps } from "../landing/types";
 import type { MenuGroup } from "../template/data";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 export const glass = "ez:fx-glass";
 
@@ -53,7 +55,7 @@ export function Go({ act, primary, size = "big" }: { act: Act; primary?: boolean
 export function Head({ title, aside }: { title: ReactNode; aside?: ReactNode }) {
   return (
     <div className="ez:flex ez:flex-wrap ez:items-end ez:justify-between ez:gap-x-6 ez:gap-y-4">
-      <h2 className={heading}>{title}</h2>
+      <h2 data-script={scriptOf(title)} className={heading}>{title}</h2>
       {aside}
     </div>
   );
@@ -73,7 +75,7 @@ export function AuroraHeader({ name, logoUrl, phone, nav, links }: LandingHeader
     <header data-slot="site-header" data-variant="aurora" className="ez:relative ez:z-10">
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-4 ez:lg:pt-6">
         <div className={cn(glass, "ez:flex ez:h-14 ez:items-center ez:gap-6 ez:rounded-full ez:pr-2 ez:pl-5 ez:text-site-body ez:lg:grid ez:lg:h-17 ez:lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] ez:lg:pr-3 ez:lg:pl-8")}>
-          <NextLink href="/" className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-item ez:font-normal ez:text-fg ez:no-underline", focusRing)}>
+          <NextLink data-script={scriptOf(name)} href="/" className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-item ez:font-normal ez:text-fg ez:no-underline", focusRing)}>
             <SiteLogo name={name} src={logoUrl} />
           </NextLink>
           <nav aria-label="주요 메뉴" className="ez:flex ez:gap-9 ez:whitespace-nowrap ez:max-lg:hidden">
@@ -120,8 +122,8 @@ export function AuroraHero({ data, context, more }: SectionProps<"hero"> & { mor
     >
       <span aria-hidden="true" className="ez:fx-aurora ez:absolute ez:-top-31 ez:left-1/2 ez:-z-10 ez:h-285 ez:w-screen ez:-translate-x-1/2" />
       <div className="ez:grid ez:min-w-0 ez:content-start">
-        {title && name && <p className="ez:m-0 ez:text-site-body ez:text-muted">{name}</p>}
-        {title ? <h1 className={display}>{title}</h1> : name ? <p className={display}>{name}</p> : <Bar size="long" className="ez:fx-title" />}
+        {title && name && <p data-script={scriptOf(name)} className="ez:m-0 ez:text-site-body ez:text-muted">{name}</p>}
+        {title ? <h1 data-script={scriptOf(title)} className={display}>{title}</h1> : name ? <p data-script={scriptOf(name)} className={display}>{name}</p> : <Bar size="long" className="ez:fx-title" />}
         {sub && (
           <p data-slot="hero-sub" className="ez:m-0 ez:mt-6 ez:max-w-118 ez:text-site-item ez:font-normal ez:leading-relaxed ez:text-muted">
             {sub}
@@ -143,7 +145,7 @@ export function AuroraHero({ data, context, more }: SectionProps<"hero"> & { mor
             {rows.map((r) => (
               <div key={r.label} className={cn(hair, "ez:flex ez:items-baseline ez:justify-between ez:gap-6 ez:border-t ez:py-3 ez:first:border-t-0")}>
                 <dt className="ez:shrink-0 ez:text-muted">{r.label}</dt>
-                <dd className="ez:m-0 ez:min-w-0 ez:text-right ez:tabular-nums">{r.value}</dd>
+                <dd className="ez:m-0 ez:min-w-0 ez:text-right ez:tabular-nums"><Won value={r.value} /></dd>
               </div>
             ))}
           </dl>
@@ -160,7 +162,7 @@ export function MenuPanel({ groups }: { groups: (MenuGroup | null)[] }) {
         {groups.map((g, i) => (
           <div key={g ? g.id ?? "rest" : i} className={cn(glass, box, "ez:min-w-0 ez:px-7 ez:pt-7 ez:pb-4")}>
             {g ? (
-              g.name && <h3 className="ez:m-0 ez:pb-2.5 ez:text-site-small ez:font-normal ez:text-muted">{g.name}</h3>
+              g.name && <h3 data-script={scriptOf(g.name)} className="ez:m-0 ez:pb-2.5 ez:text-site-small ez:font-normal ez:text-muted">{g.name}</h3>
             ) : (
               <span className="ez:block ez:pb-2.5 ez:text-site-small">
                 <Bar size="short" />
@@ -171,7 +173,7 @@ export function MenuPanel({ groups }: { groups: (MenuGroup | null)[] }) {
                 ? g.items.map((item) => (
                     <li key={item.id} className={cn(hair, "ez:flex ez:items-baseline ez:justify-between ez:gap-3 ez:border-t ez:py-4 ez:text-site-item ez:font-normal")}>
                       <span className="ez:min-w-0">{item.name}</span>
-                      <span className="ez:shrink-0 ez:tabular-nums">{item.price}</span>
+                      <span className="ez:shrink-0 ez:tabular-nums"><Won value={item.price} /></span>
                     </li>
                   ))
                 : [0, 1, 2].map((n) => (
@@ -205,7 +207,7 @@ export function AuroraIntro({ data, title, id }: SectionProps<"intro"> & { title
             </>
           )}
           {rest.map((p, i) => (
-            <p key={i} className="ez:m-0 ez:whitespace-pre-line ez:text-site-body ez:leading-loose ez:text-muted">
+            <p data-script={scriptOf(p)} key={i} className="ez:m-0 ez:whitespace-pre-line ez:text-site-body ez:leading-loose ez:text-muted">
               {p}
             </p>
           ))}
@@ -277,7 +279,7 @@ export function AuroraFooter({ storeName, phone, hours, address, legal, business
       <div className="ez:mx-auto ez:max-w-wrap ez:px-page ez:pt-4 ez:pb-16">
         <div className="ez:grid ez:gap-10 ez:text-site-small ez:leading-loose ez:md:grid-cols-12 ez:md:gap-x-6">
           <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-2.5 ez:md:col-span-4">
-            <p className="ez:m-0 ez:text-site-item ez:font-normal">{storeName}</p>
+            <p data-script={scriptOf(storeName)} className="ez:m-0 ez:text-site-item ez:font-normal">{storeName}</p>
             {(address || phone || hours) && (
               <div className="ez:grid ez:content-start ez:text-muted">
                 {address && <span>{address}</span>}

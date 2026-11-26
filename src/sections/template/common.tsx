@@ -7,6 +7,7 @@ import { countSup, numeral } from "../../utils/styles";
 import { StarRow } from "../../components/star-row";
 import type { Review } from "./data";
 import { Bar, BlankStars, Lines, Pairs, Pic, Split } from "../kit";
+import { scriptOf } from "../../utils/writing";
 
 export function PhotoBand({ data }: SectionProps<"photo_band">) {
   const images = data.images?.length ? data.images.slice(0, 4) : data.image ? [data.image] : [];
@@ -45,7 +46,7 @@ function GalleryReviews({
           return (
             <article key={r ? `${r.name}-${r.body}` : i} className="ez:flex ez:flex-col ez:gap-5 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:py-8">
               {r ? <StarRow rating={r.rating} /> : <BlankStars />}
-              {r ? <p className="ez:m-0 ez:min-h-18.5 ez:text-site-item ez:font-normal">{r.body}</p> : <Lines />}
+              {r ? <p data-script={scriptOf(r.body)} className="ez:m-0 ez:min-h-18.5 ez:text-site-item ez:font-normal">{r.body}</p> : <Lines />}
               <span className="ez:flex ez:items-center ez:gap-3.5">
                 {product && <Photo src={product.cover_url} alt="" sizes="52px" tone={i} className="ez:size-13 ez:rounded-sm" />}
                 <span className="ez:flex ez:flex-col ez:text-site-small">
@@ -78,7 +79,7 @@ export function Testimonial({ data, context, variant }: SectionProps<"testimonia
   return (
     <figure data-slot="testimonial" className="ez:m-0 ez:grid ez:gap-3 ez:rounded-md ez:bg-surface-alt ez:p-6 ez:text-fg">
       <blockquote className="ez:m-0 ez:font-display ez:text-site-item">“{data.quote}”</blockquote>
-      {data.name && <figcaption className="ez:text-site-note ez:text-muted">{data.name}</figcaption>}
+      {data.name && <figcaption data-script={scriptOf(data.name)} className="ez:text-site-note ez:text-muted">{data.name}</figcaption>}
     </figure>
   );
 }
@@ -116,7 +117,7 @@ export function ProcessSteps({ data }: SectionProps<"process_steps">) {
               <span className="ez:h-px ez:flex-1 ez:bg-site-line" />
             </span>
             <span className={cn(numeral, "ez:text-site-section ez:leading-none")}>{i + 1}</span>
-            <span className="ez:text-site-heading">{s || <Bar size="short" />}</span>
+            <span data-script={scriptOf(s)} className="ez:text-site-heading">{s || <Bar size="short" />}</span>
           </li>
         ))}
       </ol>
@@ -168,7 +169,7 @@ export function Location({ data }: SectionProps<"location">) {
   return (
     <Split slot="location" id="location" title="오시는 길" blank={!data.address}>
       <div className="ez:grid ez:justify-items-start ez:gap-5">
-        <p className="ez:m-0 ez:text-site-heading">{data.address ?? <Bar size="long" />}</p>
+        <p data-script={scriptOf(data.address)} className="ez:m-0 ez:text-site-heading">{data.address ?? <Bar size="long" />}</p>
         {data.note && <p className="ez:m-0 ez:text-muted">{data.note}</p>}
         {data.href && (
           <ButtonLink href={data.href} variant="outline" size="sm">

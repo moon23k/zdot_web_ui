@@ -15,6 +15,8 @@ import { ShopNavLinks } from "./nav";
 import { alone, BEST_HREF, categoryHref, fillCols, fives, FRESH_HREF, PRODUCTS_HREF, productView, ROW_ITEM, SHOP_TITLE, shownCount } from "./shared";
 import { SHELF_DEFAULTS, SHELF_RATIO, shelfCols, shelfOf, shelfSizes, shelfView, type Shelf } from "./shelf";
 import type { FooterLink, ShopFooterProps, ShopHeaderProps, ShopListProps } from "./types";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const wrap = "ez:mx-auto ez:w-full ez:max-w-wrap ez:box-border ez:px-page";
 
@@ -49,7 +51,7 @@ export function Header({ name, logoUrl, cartCount, nav, links }: ShopHeaderProps
   return (
     <header data-slot="site-header" data-variant="catalog" className="ez:bg-surface ez:text-fg">
       <div className={cn(wrap, "ez:grid ez:h-16 ez:grid-cols-[minmax(0,1fr)_auto] ez:items-center ez:gap-4 ez:lg:h-21 ez:lg:grid-cols-[1fr_minmax(0,30rem)_1fr] ez:lg:gap-10")}>
-        <NextLink href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:text-fg ez:no-underline", focusRing)}>
+        <NextLink data-script={scriptOf(name)} href="/" className={cn("ez:min-w-0 ez:text-site-heading ez:text-fg ez:no-underline", focusRing)}>
           <SiteLogo name={name} src={logoUrl} />
         </NextLink>
         <form
@@ -107,7 +109,7 @@ export function Header({ name, logoUrl, cartCount, nav, links }: ShopHeaderProps
 function FooterColumn({ title, items }: { title: string; items: FooterLink[] }) {
   return (
     <nav aria-label={title} className="ez:flex ez:flex-col">
-      <span className="ez:mb-3.5 ez:text-site-note ez:font-normal ez:text-fg">{title}</span>
+      <span data-script={scriptOf(title)} className="ez:mb-3.5 ez:text-site-note ez:font-normal ez:text-fg">{title}</span>
       {items.map((l) => (
         <NextLink
           key={l.href}
@@ -132,7 +134,7 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
               {phone}
             </a>
           )}
-          {hours && <span className="ez:text-site-note ez:text-muted">{hours}</span>}
+          {hours && <span data-script={scriptOf(hours)} className="ez:text-site-note ez:text-muted">{hours}</span>}
         </div>
         <FooterColumn title="쇼핑 안내" items={shop} />
         <FooterColumn title="계정" items={account} />
@@ -141,8 +143,8 @@ export function Footer({ storeName, phone, hours, legal, shop, guide, account, t
       </div>
       <div className={wrap}>
         <div className="ez:grid ez:gap-x-8 ez:gap-y-1.5 ez:border-0 ez:border-t ez:border-solid ez:border-site-line ez:pt-7 ez:pb-10 ez:lg:grid-cols-[1.6fr_4fr]">
-          <p className="ez:m-0 ez:text-site-item ez:font-normal ez:text-fg ez:lg:row-span-2">{storeName}</p>
-          <p className="ez:m-0 ez:text-site-small ez:text-muted">{legal}</p>
+          <p data-script={scriptOf(storeName)} className="ez:m-0 ez:text-site-item ez:font-normal ez:text-fg ez:lg:row-span-2">{storeName}</p>
+          <p data-script={scriptOf(legal)} className="ez:m-0 ez:text-site-small ez:text-muted">{legal}</p>
           <p className="ez:m-0 ez:text-site-small ez:text-muted">© {storeName}. All rights reserved.</p>
         </div>
       </div>
@@ -154,7 +156,7 @@ function Price({ rate, price, list, soldOut }: { rate: number; price: string; li
   return (
     <span className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-1.5 ez:tabular-nums">
       {rate > 0 && <span className="ez:text-site-figure ez:font-medium ez:text-fg">{rate}%</span>}
-      <span className={cn("ez:text-site-figure ez:font-normal", soldOut ? "ez:text-muted" : "ez:text-fg")}>{price}</span>
+      <span className={cn("ez:text-site-figure ez:font-normal", soldOut ? "ez:text-muted" : "ez:text-fg")}><Won value={price} /></span>
       {list && (
         <s className="ez:text-site-small ez:text-muted">
           <span className="ez:sr-only">정가 </span>
@@ -188,7 +190,7 @@ function Card({ product, rank, tone, preload, shelf, sizes = CARD_SIZES }: { pro
         {rank != null && <span className="ez:w-6 ez:shrink-0 ez:text-site-name ez:leading-none ez:text-muted ez:tabular-nums">{rank}</span>}
         <span className="ez:grid ez:min-w-0 ez:flex-1 ez:content-start ez:gap-1.5">
           <span className="ez:flex ez:items-baseline ez:gap-2">
-            <span className="ez:min-w-0 ez:flex-1 ez:truncate ez:text-site-body ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
+            <span data-script={scriptOf(v.name)} className="ez:min-w-0 ez:flex-1 ez:truncate ez:text-site-body ez:underline-offset-4 ez:group-hover:underline">{v.name}</span>
             {tags.map((t) => (
               <span key={t} className="ez:shrink-0 ez:text-site-small ez:font-normal ez:text-muted">
                 {t}
@@ -219,7 +221,7 @@ function BlankCard({ tone }: { tone: number }) {
 function Head({ title, href }: { title: string; href?: string }) {
   return (
     <div className="ez:mb-6 ez:flex ez:items-end ez:justify-between ez:gap-3">
-      <h2 className={heading}>{title}</h2>
+      <h2 data-script={scriptOf(title)} className={heading}>{title}</h2>
       {href && (
         <NextLink href={href} className={cn("ez:inline-flex ez:shrink-0 ez:items-center ez:gap-0.5 ez:text-site-note ez:text-muted ez:no-underline ez:hover:text-fg", focusRing)}>
           {SHOP_TITLE.more}
@@ -306,7 +308,7 @@ export function List({ title, count, crumbs, tabs, sorts, products, more, search
         ))}
       </nav>
       <div className="ez:flex ez:flex-wrap ez:items-baseline ez:gap-x-2.5 ez:gap-y-1 ez:border-0 ez:border-b ez:border-solid ez:border-site-line ez:pt-3 ez:pb-7">
-        <h1 className="ez:m-0 ez:font-body ez:text-site-heading ez:text-fg ez:md:text-site-title">{title}</h1>
+        <h1 data-script={scriptOf(title)} className="ez:m-0 ez:font-body ez:text-site-heading ez:text-fg ez:md:text-site-title">{title}</h1>
         {count != null && <span className="ez:text-site-body ez:text-muted ez:tabular-nums">{count}</span>}
       </div>
       {search && <div className="ez:pt-6">{search}</div>}
@@ -394,7 +396,7 @@ function SideTile({ product, index }: { product: HeroProduct; index: number }) {
         <Photo src={product.cover_url} alt={product.name} tone={index + 1} sizes="(max-width: 1024px) 50vw, 210px" className="ez:absolute ez:inset-0 ez:aspect-auto ez:h-full ez:rounded-none" />
       </span>
       <span className="ez:grid ez:content-end ez:gap-1 ez:p-4 ez:md:p-6">
-        <span className="ez:line-clamp-2 ez:text-site-body ez:underline-offset-4 ez:group-hover:underline ez:md:text-site-item">{product.name}</span>
+        <span data-script={scriptOf(product.name)} className="ez:line-clamp-2 ez:text-site-body ez:underline-offset-4 ez:group-hover:underline ez:md:text-site-item">{product.name}</span>
         {product.sale_price != null && (
           <Price rate={rate} price={won(product.sale_price)} list={rate > 0 && product.list_price != null ? won(product.list_price) : null} soldOut={!!product.sold_out} />
         )}
@@ -443,9 +445,9 @@ export function Hero({ data }: SectionProps<"hero">) {
         </div>
         {title && (
           <div className="ez:grid ez:content-end ez:gap-2 ez:p-6 ez:md:p-10">
-            <h1 className="ez:m-0 ez:font-body ez:text-site-heading ez:text-fg ez:whitespace-pre-line ez:md:text-site-name">{title}</h1>
+            <h1 data-script={scriptOf(title)} className="ez:m-0 ez:font-body ez:text-site-heading ez:text-fg ez:whitespace-pre-line ez:md:text-site-name">{title}</h1>
             {data.sub && (
-              <p data-slot="hero-sub" className="ez:m-0 ez:text-site-lead ez:text-muted">
+              <p data-script={scriptOf(data.sub)} data-slot="hero-sub" className="ez:m-0 ez:text-site-lead ez:text-muted">
                 {data.sub}
               </p>
             )}
@@ -509,7 +511,7 @@ export function Categories({ data, context }: SectionProps<"category_tiles">) {
           <li key={`${c.href}-${i}`} className="ez:min-w-0">
             <NextLink href={c.href} className={cn(catItem, "ez:group ez:text-muted ez:no-underline ez:hover:text-fg", focusRing)}>
               <Circle src={c.image} alt={c.title} tone={i} />
-              <span className="ez:max-w-full ez:truncate ez:text-site-body ez:underline-offset-4 ez:group-hover:underline">{c.title}</span>
+              <span data-script={scriptOf(c.title)} className="ez:max-w-full ez:truncate ez:text-site-body ez:underline-offset-4 ez:group-hover:underline">{c.title}</span>
             </NextLink>
           </li>
         ))}
@@ -531,7 +533,7 @@ export function Strip({ data, context }: SectionProps<"photo_band">) {
   const name = context.storeName?.trim() || null;
   const copy: ReactNode = image ? (
     <>
-      {name ? <p className="ez:m-0 ez:text-site-heading ez:text-fg">{name}</p> : null}
+      {name ? <p data-script={scriptOf(name)} className="ez:m-0 ez:text-site-heading ez:text-fg">{name}</p> : null}
       <NextLink href={PRODUCTS_HREF} className={tlink}>
         {SHOP_TITLE.more}
       </NextLink>
@@ -563,8 +565,8 @@ function ReviewCard({ item, product }: { item: ReviewItem; product?: ProductSumm
     <article className="ez:flex ez:min-w-0 ez:gap-4 ez:rounded-md ez:border ez:border-solid ez:border-site-line ez:bg-surface ez:p-5">
       <div className="ez:grid ez:min-w-0 ez:content-start ez:gap-1.5">
         <StarRow rating={item.rating} className="ez:text-muted" />
-        <p className="ez:m-0 ez:line-clamp-2 ez:min-h-12 ez:text-site-body ez:text-pretty ez:text-fg">{item.body}</p>
-        <p className="ez:m-0 ez:truncate ez:text-site-small ez:text-muted">{product?.name ?? item.name}</p>
+        <p data-script={scriptOf(item.body)} className="ez:m-0 ez:line-clamp-2 ez:min-h-12 ez:text-site-body ez:text-pretty ez:text-fg">{item.body}</p>
+        <p data-script={scriptOf(product?.name ?? item.name)} className="ez:m-0 ez:truncate ez:text-site-small ez:text-muted">{product?.name ?? item.name}</p>
       </div>
     </article>
   );

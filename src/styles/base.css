@@ -11,3 +11,5 @@
 @import "./legacy.css" layer(components) source(none);
 
 @import "./kit.css" layer(components) source(none);
+
+@import "./script.css" layer(components) source(none);

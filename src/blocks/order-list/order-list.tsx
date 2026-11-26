@@ -11,6 +11,8 @@ import { focusRing, numeralStep } from "../../utils/styles";
 import { STATUS_LABEL } from "../order-detail/order-detail";
 import { emptyAction, ReceiptIcon } from "../parts/empty-icons";
 import { lineList } from "../parts/line-item";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 export type OrderRow = {
   number: string;
@@ -129,6 +131,7 @@ export function OrderList({
                   </NextLink>
                   <span className="ez:grid ez:min-w-0 ez:gap-1">
                     <NextLink
+                      data-script={scriptOf(o.first_item ?? o.number)}
                       href={href}
                       className={cn("ez:line-clamp-2 ez:text-site-item ez:text-fg ez:no-underline ez:hover:underline", canceled && "ez:text-muted", focusRing)}
                     >
@@ -140,7 +143,7 @@ export function OrderList({
                     {canceled ? (
                       <s className="ez:mt-1.5 ez:tabular-nums ez:text-muted">{won(o.total)}</s>
                     ) : (
-                      <span className="ez:mt-1.5 ez:font-normal ez:tabular-nums">{won(o.total)}</span>
+                      <span className="ez:mt-1.5 ez:font-normal ez:tabular-nums"><Won amount={o.total} /></span>
                     )}
                   </span>
                   {o.status === "completed" && (

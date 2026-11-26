@@ -11,6 +11,8 @@ import { PlaceNavLinks } from "./nav";
 import { businessLine } from "../quote/shared";
 import { menuItems, paragraphs, PLACE_ID, PLACE_TITLE, telHref } from "./shared";
 import type { PlaceFooterProps, PlaceHeaderProps } from "./types";
+import { Won } from "../../components/price";
+import { scriptOf } from "../../utils/writing";
 
 const rule = "ez:border-0 ez:border-solid ez:border-site-line";
 
@@ -46,6 +48,7 @@ export function Header({ name, logoUrl, phone, nav, links }: PlaceHeaderProps) {
           <PlaceNavLinks items={nav} className={cn(small, focusRing)} />
         </nav>
         <NextLink
+          data-script={scriptOf(name)}
           href="/"
           className={cn("ez:min-w-0 ez:justify-self-start ez:text-site-counter ez:font-normal ez:text-fg ez:no-underline ez:lg:justify-self-center", focusRing)}
         >
@@ -119,7 +122,7 @@ export function Hero({ data }: SectionProps<"hero">) {
       <Photo src={image} alt={title ?? ""} preload tone={0} sizes="(max-width: 1024px) 100vw, 1120px" className="ez:aspect-video ez:lg:col-span-10 ez:lg:col-start-2" />
       {title && (
         <div className="ez:grid ez:gap-2 ez:text-center ez:lg:col-span-10 ez:lg:col-start-2">
-          <h1 className="ez:m-0 ez:font-display ez:text-site-heading ez:text-balance ez:text-fg">{title}</h1>
+          <h1 data-script={scriptOf(title)} className="ez:m-0 ez:font-display ez:text-site-heading ez:text-balance ez:text-fg">{title}</h1>
           {sub && (
             <p data-slot="hero-sub" className="ez:m-0 ez:text-muted">
               {sub}
@@ -163,7 +166,7 @@ export function Intro({ data }: SectionProps<"intro">) {
 function Lead({ title }: { title: string }) {
   return (
     <div className="ez:flex ez:items-center ez:gap-6">
-      <h2 className={h2}>{title}</h2>
+      <h2 data-script={scriptOf(title)} className={h2}>{title}</h2>
       <span aria-hidden="true" className={cn(edge, "ez:min-w-8 ez:flex-1 ez:border-t ez:lg:-mr-gutter")} />
     </div>
   );
@@ -172,8 +175,8 @@ function Lead({ title }: { title: string }) {
 function Pair({ term, children }: { term: string; children: ReactNode }) {
   return (
     <div className="ez:grid ez:gap-1">
-      <dt className={label}>{term}</dt>
-      <dd className="ez:m-0 ez:min-w-0 ez:whitespace-pre-line ez:text-site-note ez:leading-relaxed ez:break-words ez:text-fg">{children}</dd>
+      <dt data-script={scriptOf(term)} className={label}>{term}</dt>
+      <dd data-script={scriptOf(children)} className="ez:m-0 ez:min-w-0 ez:whitespace-pre-line ez:text-site-note ez:leading-relaxed ez:break-words ez:text-fg">{children}</dd>
     </div>
   );
 }
@@ -248,12 +251,12 @@ export function Menu({ data }: SectionProps<"menu">) {
         <div className="ez:grid ez:gap-x-gutter ez:gap-y-12 ez:sm:grid-cols-2 ez:lg:grid-cols-3">
           {groups.map((g) => (
             <div key={g.id ?? "rest"} className="ez:grid ez:min-w-0 ez:content-start ez:gap-3">
-              {g.name && <h3 className={cn(label, "ez:m-0")}>{g.name}</h3>}
+              {g.name && <h3 data-script={scriptOf(g.name)} className={cn(label, "ez:m-0")}>{g.name}</h3>}
               <dl className="ez:m-0 ez:grid ez:gap-1.5">
                 {g.items.map((item) => (
                   <div key={item.id} className="ez:flex ez:items-baseline ez:justify-between ez:gap-6 ez:text-site-note ez:leading-relaxed">
                     <dt className="ez:min-w-0 ez:text-fg">{item.name}</dt>
-                    <dd className="ez:m-0 ez:shrink-0 ez:text-fg ez:tabular-nums">{item.price}</dd>
+                    <dd className="ez:m-0 ez:shrink-0 ez:text-fg ez:tabular-nums"><Won value={item.price} /></dd>
                   </div>
                 ))}
               </dl>

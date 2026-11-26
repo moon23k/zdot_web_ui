@@ -234,15 +234,24 @@ function resetVars(): Record<string, string> {
   return { ...Object.fromEntries(layered), "--ezd-error": LIGHT_ERROR };
 }
 
-function siteVars(look?: SiteLook): Record<string, string> {
+const BASE_SECTION = 64;
+
+const BASE_GUTTER = 16;
+
+const SITE_GUTTER = 24;
+
+function siteVars(look?: SiteLook, density?: Design["density"]): Record<string, string> {
+  const section = look?.section ?? SYSTEM_SITE["gallery-section"];
+  const spread = density?.section_gap ? density.section_gap / BASE_SECTION : 1;
+  const gutter = density?.grid_gutter ? density.grid_gutter / BASE_GUTTER : 1;
   return {
     "--ezd-wrap": `${SYSTEM_SITE.gallery}px`,
     "--ezd-wrap-home": `${SYSTEM_SITE.gallery}px`,
     "--ezd-pad-home": `${look?.pad ?? SYSTEM_SITE["gallery-pad"]}px`,
-    "--ezd-section-gap": `${look?.section ?? SYSTEM_SITE["gallery-section"]}px`,
+    "--ezd-section-gap": `${Math.round(section * spread)}px`,
     "--ezd-control": `${SYSTEM_SITE["gallery-control"]}px`,
     "--ezd-control-sm": `${SYSTEM_SITE["gallery-control-sm"]}px`,
-    "--ezd-gutter": "24px",
+    "--ezd-gutter": `${Math.round(SITE_GUTTER * gutter)}px`,
   };
 }
 
@@ -293,7 +302,7 @@ export function designVars(design: Design | null | undefined, site?: boolean | S
     "--ezd-control": "48px",
     "--ezd-control-sm": "40px",
     ...kitVars({ ...color, text: ink }, typeof site === "object" && site.kit === "off"),
-    ...(site ? siteVars(site === true ? undefined : site) : {}),
+    ...(site ? siteVars(site === true ? undefined : site, d.density) : {}),
     ...resetVars(),
     ...(typeof site === "object" && site.tone === NIGHT ? groundVars(color.text) : {}),
     ...fxVars(color),
@@ -377,7 +386,7 @@ export function applyTemplate(design: Design | null | undefined, template: Templ
   return {
     ...d,
     font: lookTitles(d.font, look),
-    shape: look.shape ? SHAPES[look.shape] : { radius_sm: 8, radius_md: 14, radius_lg: PHOTO_CORNER[String(look.radius)] ?? 0, button_shape: "pill", line: 0 },
+    shape: d.shape?.button_shape ? { ...d.shape, line: 0 } : look.shape ? SHAPES[look.shape] : { radius_sm: 8, radius_md: 14, radius_lg: PHOTO_CORNER[String(look.radius)] ?? 0, button_shape: "pill", line: 0 },
     color: look.kit === "off" ? plainKit(color) : color,
   };
 }

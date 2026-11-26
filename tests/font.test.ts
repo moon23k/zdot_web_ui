@@ -82,3 +82,26 @@ describe("store font", () => {
     expect(vars["--ezd-title-weight"]).toBe("300");
   });
 });
+
+describe("브랜드 분위기 값", () => {
+  const shop = resolveTemplate("shop", "a");
+  const round = { shape: { radius_sm: 11, radius_md: 22, radius_lg: 38, button_shape: "pill" as const }, density: { section_gap: 48, grid_gutter: 12 } };
+
+  it("템플릿 모양 대신 고른 모서리 · 버튼을 쓴다", () => {
+    const vars = designVars(applyTemplate(round, shop), shop?.look);
+    expect(vars["--ezd-radius-lg"]).toBe("38px");
+    expect(vars["--ezd-button-radius"]).toBe("999px");
+  });
+
+  it("고른 간격 비율만큼 섹션 간격 · 칸 간격을 줄이고 늘린다", () => {
+    const calm = designVars(applyTemplate({ ...round, density: { section_gap: 88, grid_gutter: 22 } }, shop), shop?.look);
+    const busy = designVars(applyTemplate(round, shop), shop?.look);
+    expect(parseInt(calm["--ezd-section-gap"]!)).toBeGreaterThan(parseInt(busy["--ezd-section-gap"]!));
+    expect(calm["--ezd-gutter"]).toBe("33px");
+    expect(busy["--ezd-gutter"]).toBe("18px");
+  });
+
+  it("분위기 값이 없으면 템플릿 모양 그대로", () => {
+    expect(applyTemplate({}, shop).shape?.button_shape).toBe("square");
+  });
+});
